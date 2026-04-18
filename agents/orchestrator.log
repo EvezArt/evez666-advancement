@@ -1851,82 +1851,7 @@
 [2026-04-18T18:57:16.336096] HEALTHY: ci_watcher (pid=17822)
 [2026-04-18T18:57:16.336120] HEALTHY: model_trainer (pid=17824)
 [2026-04-18T18:57:16.336144] HEALTHY: reasoning_pipeline (pid=17825)
-56] HEALTHY: reasoning_pipeline (pid=17825)
-[2026-04-18T18:55:36.327016] Cycle complete: 5 agents running
-[2026-04-18T18:55:46.327419] === CYCLE 258 ===
-[2026-04-18T18:55:46.327593] HEALTHY: quantum_runner (pid=17818)
-[2026-04-18T18:55:46.327637] HEALTHY: wealth_hunter (pid=17819)
-[2026-04-18T18:55:46.327670] HEALTHY: ci_watcher (pid=17822)
-[2026-04-18T18:55:46.327702] HEALTHY: model_trainer (pid=17824)
-[2026-04-18T18:55:46.327732] HEALTHY: reasoning_pipeline (pid=17825)
-[2026-04-18T18:55:46.327968] Cycle complete: 5 agents running
-[2026-04-18T18:55:54.196740] CYCLE 84: 3 agents running
-[2026-04-18T18:55:56.328250] === CYCLE 259 ===
-[2026-04-18T18:55:56.328443] HEALTHY: quantum_runner (pid=17818)
-[2026-04-18T18:55:56.328495] HEALTHY: wealth_hunter (pid=17819)
-[2026-04-18T18:55:56.328534] HEALTHY: ci_watcher (pid=17822)
-[2026-04-18T18:55:56.328570] HEALTHY: model_trainer (pid=17824)
-[2026-04-18T18:55:56.328608] HEALTHY: reasoning_pipeline (pid=17825)
-[2026-04-18T18:55:56.328893] Cycle complete: 5 agents running
-[2026-04-18T18:56:06.329128] === CYCLE 260 ===
-[2026-04-18T18:56:06.329268] HEALTHY: quantum_runner (pid=17818)
-[2026-04-18T18:56:06.329299] HEALTHY: wealth_hunter (pid=17819)
-[2026-04-18T18:56:06.329323] HEALTHY: ci_watcher (pid=17822)
-[2026-04-18T18:56:06.329345] HEALTHY: model_trainer (pid=17824)
-[2026-04-18T18:56:06.329365] HEALTHY: reasoning_pipeline (pid=17825)
-[2026-04-18T18:56:06.329576] Cycle complete: 5 agents running
-[2026-04-18T18:56:16.329804] === CYCLE 261 ===
-[2026-04-18T18:56:16.329963] HEALTHY: quantum_runner (pid=17818)
-[2026-04-18T18:56:16.329996] HEALTHY: wealth_hunter (pid=17819)
-[2026-04-18T18:56:16.330023] HEALTHY: ci_watcher (pid=17822)
-[2026-04-18T18:56:16.330048] HEALTHY: model_trainer (pid=17824)
-[2026-04-18T18:56:16.330072] HEALTHY: reasoning_pipeline (pid=17825)
-[2026-04-18T18:56:16.330264] Cycle complete: 5 agents running
-[2026-04-18T18:56:24.247586] CYCLE 85: 3 agents running
-[2026-04-18T18:56:26.330501] === CYCLE 262 ===
-[2026-04-18T18:56:26.330666] HEALTHY: quantum_runner (pid=17818)
-[2026-04-18T18:56:26.330707] HEALTHY: wealth_hunter (pid=17819)
-[2026-04-18T18:56:26.330735] HEALTHY: ci_watcher (pid=17822)
-[2026-04-18T18:56:26.330762] HEALTHY: model_trainer (pid=17824)
-[2026-04-18T18:56:26.330787] HEALTHY: reasoning_pipeline (pid=17825)
-[2026-04-18T18:56:26.331111] Cycle complete: 5 agents running
-[2026-04-18T18:56:36.331719] === CYCLE 263 ===
-[2026-04-18T18:56:36.331869] HEALTHY: quantum_runner (pid=17818)
-[2026-04-18T18:56:36.331904] HEALTHY: wealth_hunter (pid=17819)
-[2026-04-18T18:56:36.331931] HEALTHY: ci_watcher (pid=17822)
-[2026-04-18T18:56:36.331956] HEALTHY: model_trainer (pid=17824)
-[2026-04-18T18:56:36.331980] HEALTHY: reasoning_pipeline (pid=17825)
-[2026-04-18T18:56:36.332157] Cycle complete: 5 agents running
-[2026-04-18T18:56:46.332526] === CYCLE 264 ===
-[2026-04-18T18:56:46.332708] HEALTHY: quantum_runner (pid=17818)
-[2026-04-18T18:56:46.332748] HEALTHY: wealth_hunter (pid=17819)
-[2026-04-18T18:56:46.332778] HEALTHY: ci_watcher (pid=17822)
-[2026-04-18T18:56:46.332813] HEALTHY: model_trainer (pid=17824)
-[2026-04-18T18:56:46.332840] HEALTHY: reasoning_pipeline (pid=17825)
-[2026-04-18T18:56:46.333035] Cycle complete: 5 agents running
-[2026-04-18T18:56:54.265657] CYCLE 86: 3 agents running
-[2026-04-18T18:56:56.333264] === CYCLE 265 ===
-[2026-04-18T18:56:56.333424] HEALTHY: quantum_runner (pid=17818)
-[2026-04-18T18:56:56.333466] HEALTHY: wealth_hunter (pid=17819)
-[2026-04-18T18:56:56.333499] HEALTHY: ci_watcher (pid=17822)
-[2026-04-18T18:56:56.333528] HEALTHY: model_trainer (pid=17824)
-[2026-04-18T18:56:56.333559] HEALTHY: reasoning_pipeline (pid=17825)
-[2026-04-18T18:56:56.333780] Cycle complete: 5 agents running
-[2026-04-18T18:57:06.333999] === CYCLE 266 ===
-[2026-04-18T18:57:06.334154] HEALTHY: quantum_runner (pid=17818)
-[2026-04-18T18:57:06.334187] HEALTHY: wealth_hunter (pid=17819)
-[2026-04-18T18:57:06.334213] HEALTHY: ci_watcher (pid=17822)
-[2026-04-18T18:57:06.334237] HEALTHY: model_trainer (pid=17824)
-[2026-04-18T18:57:06.334261] HEALTHY: reasoning_pipeline (pid=17825)
-[2026-04-18T18:57:06.334456] Cycle complete: 5 agents running
-[2026-04-18T18:57:16.335881] === CYCLE 267 ===
-[2026-04-18T18:57:16.336034] HEALTHY: quantum_runner (pid=17818)
-[2026-04-18T18:57:16.336069] HEALTHY: wealth_hunter (pid=17819)
-[2026-04-18T18:57:16.336096] HEALTHY: ci_watcher (pid=17822)
-[2026-04-18T18:57:16.336120] HEALTHY: model_trainer (pid=17824)
-[2026-04-18T18:57:16.336144] HEALTHY: reasoning_pipeline (pid=17825)
 [2026-04-18T18:57:16.336353] Cycle complete: 5 agents running
-[2026-04-18T18:57:24.281205] CYCLE 87: 3 agents running
 [2026-04-18T18:57:26.336636] === CYCLE 268 ===
 [2026-04-18T18:57:26.336837] HEALTHY: quantum_runner (pid=17818)
 [2026-04-18T18:57:26.336881] HEALTHY: wealth_hunter (pid=17819)
@@ -1948,7 +1873,6 @@
 [2026-04-18T18:57:46.338805] HEALTHY: model_trainer (pid=17824)
 [2026-04-18T18:57:46.338880] HEALTHY: reasoning_pipeline (pid=17825)
 [2026-04-18T18:57:46.339259] Cycle complete: 5 agents running
-[2026-04-18T18:57:54.296003] CYCLE 88: 3 agents running
 [2026-04-18T18:57:56.339519] === CYCLE 271 ===
 [2026-04-18T18:57:56.339688] HEALTHY: quantum_runner (pid=17818)
 [2026-04-18T18:57:56.339729] HEALTHY: wealth_hunter (pid=17819)
@@ -1970,7 +1894,6 @@
 [2026-04-18T18:58:16.341382] HEALTHY: model_trainer (pid=17824)
 [2026-04-18T18:58:16.341405] HEALTHY: reasoning_pipeline (pid=17825)
 [2026-04-18T18:58:16.341592] Cycle complete: 5 agents running
-[2026-04-18T18:58:24.319632] CYCLE 89: 3 agents running
 [2026-04-18T18:58:26.342622] === CYCLE 274 ===
 [2026-04-18T18:58:26.342775] HEALTHY: quantum_runner (pid=17818)
 [2026-04-18T18:58:26.342822] HEALTHY: wealth_hunter (pid=17819)
@@ -1984,6 +1907,83 @@
 [2026-04-18T18:58:36.346913] HEALTHY: ci_watcher (pid=17822)
 [2026-04-18T18:58:36.346938] HEALTHY: model_trainer (pid=17824)
 [2026-04-18T18:58:36.346989] HEALTHY: reasoning_pipeline (pid=17825)
+[2026-04-18T18:58:36.347189] Cycle complete: 5 agents running
+[2026-04-18T18:58:46.347400] === CYCLE 276 ===
+[2026-04-18T18:58:46.347536] HEALTHY: quantum_runner (pid=17818)
+[2026-04-18T18:58:46.347571] HEALTHY: wealth_hunter (pid=17819)
+[2026-04-18T18:58:46.347599] HEALTHY: ci_watcher (pid=17822)
+[2026-04-18T18:58:46.347624] HEALTHY: model_trainer (pid=17824)
+[2026-04-18T18:58:46.347647] HEALTHY: reasoning_pipeline (pid=17825)
+[2026-04-18T18:58:46.347840] Cycle complete: 5 agents running
+[2026-04-18T18:58:56.358874] === CYCLE 277 ===
+[2026-04-18T18:58:56.359024] HEALTHY: quantum_runner (pid=17818)
+[2026-04-18T18:58:56.359059] HEALTHY: wealth_hunter (pid=17819)
+[2026-04-18T18:58:56.359086] HEALTHY: ci_watcher (pid=17822)
+[2026-04-18T18:58:56.359111] HEALTHY: model_trainer (pid=17824)
+[2026-04-18T18:58:56.359135] HEALTHY: reasoning_pipeline (pid=17825)
+[2026-04-18T18:58:56.359318] Cycle complete: 5 agents running
+[2026-04-18T18:59:06.359548] === CYCLE 278 ===
+[2026-04-18T18:59:06.359739] HEALTHY: quantum_runner (pid=17818)
+[2026-04-18T18:59:06.359794] HEALTHY: wealth_hunter (pid=17819)
+[2026-04-18T18:59:06.359842] HEALTHY: ci_watcher (pid=17822)
+[2026-04-18T18:59:06.359880] HEALTHY: model_trainer (pid=17824)
+[2026-04-18T18:59:06.359921] HEALTHY: reasoning_pipeline (pid=17825)
+[2026-04-18T18:59:06.360192] Cycle complete: 5 agents running
+[2026-04-18T18:59:16.360518] === CYCLE 279 ===
+[2026-04-18T18:59:16.360714] HEALTHY: quantum_runner (pid=17818)
+[2026-04-18T18:59:16.360759] HEALTHY: wealth_hunter (pid=17819)
+[2026-04-18T18:59:16.360792] HEALTHY: ci_watcher (pid=17822)
+[2026-04-18T18:59:16.360821] HEALTHY: model_trainer (pid=17824)
+[2026-04-18T18:59:16.360849] HEALTHY: reasoning_pipeline (pid=17825)
+[2026-04-18T18:59:16.361244] Cycle complete: 5 agents running
+[2026-04-18T18:59:26.361498] === CYCLE 280 ===
+[2026-04-18T18:59:26.361677] HEALTHY: quantum_runner (pid=17818)
+[2026-04-18T18:59:26.361719] HEALTHY: wealth_hunter (pid=17819)
+[2026-04-18T18:59:26.361753] HEALTHY: ci_watcher (pid=17822)
+[2026-04-18T18:59:26.361784] HEALTHY: model_trainer (pid=17824)
+[2026-04-18T18:59:26.361814] HEALTHY: reasoning_pipeline (pid=17825)
+[2026-04-18T18:59:26.362035] Cycle complete: 5 agents running
+[2026-04-18T18:59:36.362289] === CYCLE 281 ===
+[2026-04-18T18:59:36.362467] HEALTHY: quantum_runner (pid=17818)
+[2026-04-18T18:59:36.362513] HEALTHY: wealth_hunter (pid=17819)
+[2026-04-18T18:59:36.362562] HEALTHY: ci_watcher (pid=17822)
+[2026-04-18T18:59:36.362596] HEALTHY: model_trainer (pid=17824)
+[2026-04-18T18:59:36.362627] HEALTHY: reasoning_pipeline (pid=17825)
+[2026-04-18T18:59:36.362849] Cycle complete: 5 agents running
+[2026-04-18T18:59:46.363090] === CYCLE 282 ===
+[2026-04-18T18:59:46.363281] HEALTHY: quantum_runner (pid=17818)
+[2026-04-18T18:59:46.363326] HEALTHY: wealth_hunter (pid=17819)
+[2026-04-18T18:59:46.363358] HEALTHY: ci_watcher (pid=17822)
+[2026-04-18T18:59:46.363389] HEALTHY: model_trainer (pid=17824)
+[2026-04-18T18:59:46.363418] HEALTHY: reasoning_pipeline (pid=17825)
+[2026-04-18T18:59:46.363631] Cycle complete: 5 agents running
+[2026-04-18T18:59:56.363905] === CYCLE 283 ===
+[2026-04-18T18:59:56.364079] HEALTHY: quantum_runner (pid=17818)
+[2026-04-18T18:59:56.364123] HEALTHY: wealth_hunter (pid=17819)
+[2026-04-18T18:59:56.364155] HEALTHY: ci_watcher (pid=17822)
+[2026-04-18T18:59:56.364186] HEALTHY: model_trainer (pid=17824)
+[2026-04-18T18:59:56.364215] HEALTHY: reasoning_pipeline (pid=17825)
+[2026-04-18T18:59:56.364448] Cycle complete: 5 agents running
+[2026-04-18T19:00:06.364673] === CYCLE 284 ===
+[2026-04-18T19:00:06.364810] HEALTHY: quantum_runner (pid=17818)
+[2026-04-18T19:00:06.364846] HEALTHY: wealth_hunter (pid=17819)
+[2026-04-18T19:00:06.364873] HEALTHY: ci_watcher (pid=17822)
+[2026-04-18T19:00:06.364898] HEALTHY: model_trainer (pid=17824)
+[2026-04-18T19:00:06.364922] HEALTHY: reasoning_pipeline (pid=17825)
+[2026-04-18T19:00:06.365113] Cycle complete: 5 agents running
+[2026-04-18T19:00:16.365314] === CYCLE 285 ===
+[2026-04-18T19:00:16.365490] HEALTHY: quantum_runner (pid=17818)
+[2026-04-18T19:00:16.365535] HEALTHY: wealth_hunter (pid=17819)
+[2026-04-18T19:00:16.365569] HEALTHY: ci_watcher (pid=17822)
+[2026-04-18T19:00:16.365600] HEALTHY: model_trainer (pid=17824)
+[2026-04-18T19:00:16.365630] HEALTHY: reasoning_pipeline (pid=17825)
+[2026-04-18T19:00:16.365857] Cycle complete: 5 agents running
+[2026-04-18T19:00:26.366081] === CYCLE 286 ===
+[2026-04-18T19:00:26.366213] HEALTHY: quantum_runner (pid=17818)
+[2026-04-18T19:00:26.366244] HEALTHY: wealth_hunter (pid=17819)
+[2026-04-18T19:00:26.366268] HEALTHY: ci_watcher (pid=17822)
+[2026-04-18T19:00:26.366290] HEALTHY: model_trainer (pid=17824)
+line (pid=17825)
 [2026-04-18T18:58:36.347189] Cycle complete: 5 agents running
 [2026-04-18T18:58:46.347400] === CYCLE 276 ===
 [2026-04-18T18:58:46.347536] HEALTHY: quantum_runner (pid=17818)
@@ -2044,3 +2044,54 @@
 [2026-04-18T18:59:56.364186] HEALTHY: model_trainer (pid=17824)
 [2026-04-18T18:59:56.364215] HEALTHY: reasoning_pipeline (pid=17825)
 [2026-04-18T18:59:56.364448] Cycle complete: 5 agents running
+[2026-04-18T19:00:06.364673] === CYCLE 284 ===
+[2026-04-18T19:00:06.364810] HEALTHY: quantum_runner (pid=17818)
+[2026-04-18T19:00:06.364846] HEALTHY: wealth_hunter (pid=17819)
+[2026-04-18T19:00:06.364873] HEALTHY: ci_watcher (pid=17822)
+[2026-04-18T19:00:06.364898] HEALTHY: model_trainer (pid=17824)
+[2026-04-18T19:00:06.364922] HEALTHY: reasoning_pipeline (pid=17825)
+[2026-04-18T19:00:06.365113] Cycle complete: 5 agents running
+[2026-04-18T19:00:16.365314] === CYCLE 285 ===
+[2026-04-18T19:00:16.365490] HEALTHY: quantum_runner (pid=17818)
+[2026-04-18T19:00:16.365535] HEALTHY: wealth_hunter (pid=17819)
+[2026-04-18T19:00:16.365569] HEALTHY: ci_watcher (pid=17822)
+[2026-04-18T19:00:16.365600] HEALTHY: model_trainer (pid=17824)
+[2026-04-18T19:00:16.365630] HEALTHY: reasoning_pipeline (pid=17825)
+[2026-04-18T19:00:16.365857] Cycle complete: 5 agents running
+[2026-04-18T19:00:24.412240] CYCLE 93: 3 agents running
+[2026-04-18T19:00:26.366081] === CYCLE 286 ===
+[2026-04-18T19:00:26.366213] HEALTHY: quantum_runner (pid=17818)
+[2026-04-18T19:00:26.366244] HEALTHY: wealth_hunter (pid=17819)
+[2026-04-18T19:00:26.366268] HEALTHY: ci_watcher (pid=17822)
+[2026-04-18T19:00:26.366290] HEALTHY: model_trainer (pid=17824)
+[2026-04-18T19:00:26.366311] HEALTHY: reasoning_pipeline (pid=17825)
+[2026-04-18T19:00:26.366521] Cycle complete: 5 agents running
+[2026-04-18T19:00:36.366839] === CYCLE 287 ===
+[2026-04-18T19:00:36.367192] HEALTHY: quantum_runner (pid=17818)
+[2026-04-18T19:00:36.367308] HEALTHY: wealth_hunter (pid=17819)
+[2026-04-18T19:00:36.367399] HEALTHY: ci_watcher (pid=17822)
+[2026-04-18T19:00:36.367486] HEALTHY: model_trainer (pid=17824)
+[2026-04-18T19:00:36.367566] HEALTHY: reasoning_pipeline (pid=17825)
+[2026-04-18T19:00:36.368709] Cycle complete: 5 agents running
+[2026-04-18T19:00:46.369095] === CYCLE 288 ===
+[2026-04-18T19:00:46.369276] HEALTHY: quantum_runner (pid=17818)
+[2026-04-18T19:00:46.369315] HEALTHY: wealth_hunter (pid=17819)
+[2026-04-18T19:00:46.369344] HEALTHY: ci_watcher (pid=17822)
+[2026-04-18T19:00:46.369373] HEALTHY: model_trainer (pid=17824)
+[2026-04-18T19:00:46.369399] HEALTHY: reasoning_pipeline (pid=17825)
+[2026-04-18T19:00:46.369622] Cycle complete: 5 agents running
+[2026-04-18T19:00:54.423466] CYCLE 94: 3 agents running
+[2026-04-18T19:00:56.370002] === CYCLE 289 ===
+[2026-04-18T19:00:56.370151] HEALTHY: quantum_runner (pid=17818)
+[2026-04-18T19:00:56.370189] HEALTHY: wealth_hunter (pid=17819)
+[2026-04-18T19:00:56.370218] HEALTHY: ci_watcher (pid=17822)
+[2026-04-18T19:00:56.370244] HEALTHY: model_trainer (pid=17824)
+[2026-04-18T19:00:56.370270] HEALTHY: reasoning_pipeline (pid=17825)
+[2026-04-18T19:00:56.370491] Cycle complete: 5 agents running
+[2026-04-18T19:01:06.370724] === CYCLE 290 ===
+[2026-04-18T19:01:06.370865] HEALTHY: quantum_runner (pid=17818)
+[2026-04-18T19:01:06.370907] HEALTHY: wealth_hunter (pid=17819)
+[2026-04-18T19:01:06.370935] HEALTHY: ci_watcher (pid=17822)
+[2026-04-18T19:01:06.370993] HEALTHY: model_trainer (pid=17824)
+[2026-04-18T19:01:06.371022] HEALTHY: reasoning_pipeline (pid=17825)
+[2026-04-18T19:01:06.371204] Cycle complete: 5 agents running

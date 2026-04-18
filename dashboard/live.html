@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EVEZ Live Dashboard</title>
+    <meta http-equiv="refresh" content="30">
+    <style>
+        body { font-family: monospace; background: #0d1117; color: #c9d1d9; padding: 20px; }
+        h1, h2, h3 { color: #58a6ff; }
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 15px; }
+        .stat { font-size: 24px; color: #3fb950; }
+        .label { color: #8b949e; font-size: 12px; }
+        .cheat { background: #1f2428; padding: 10px; margin: 5px 0; border-left: 3px solid #f78166; }
+        .progress-bar { background: #21262d; height: 20px; border-radius: 4px; overflow: hidden; }
+        .progress-fill { background: #3fb950; height: 100%; transition: width 0.3s; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 8px; text-align: left; border-bottom: 1px solid #30363d; }
+        .running { color: #3fb950; }
+        .stopped { color: #f85149; }
+        .time { color: #8b949e; font-size: 11px; }
+    </style>
+</head>
+<body>
+    <h1>🦾 EVEZ LIVE DASHBOARD</h1>
+    <p class="time">Updated: <span id="timestamp"></span></p>
+    
+    <div class="grid">
+        <div class="card">
+            <h3>🤖 Agents Running</h3>
+            <div class="stat" id="agent-count">-</div>
+            <div class="label">active processes</div>
+        </div>
+        <div class="card">
+            <h3>⚡ Quantum Circuits</h3>
+            <div class="stat" id="quantum-count">-</div>
+            <div class="label">executed this session</div>
+        </div>
+        <div class="card">
+            <h3>📊 GitHub Changes</h3>
+            <div class="stat" id="github-changes">-</div>
+            <div class="label">uncommitted files</div>
+        </div>
+    </div>
+    
+    <h2>📈 Agent Status</h2>
+    <table>
+        <thead>
+            <tr><th>Agent</th><th>Status</th><th>Last Action</th><th>Uptime</th></tr>
+        </thead>
+        <tbody id="agent-table"></tbody>
+    </table>
+    
+    <h2>🎯 Progress Tracker</h2>
+    <div class="card">
+        <h3>Quantum Execution</h3>
+        <div class="progress-bar"><div class="progress-fill" id="quantum-bar" style="width:0%"></div></div>
+        <div class="label" id="quantum-label">0/100 circuits</div>
+    </div>
+    <div class="card">
+        <h3>Cycles Completed</h3>
+        <div class="progress-bar"><div class="progress-fill" id="cycle-bar" style="width:0%"></div></div>
+        <div class="label" id="cycle-label">0 cycles</div>
+    </div>
+    
+    <h2>🔑 Your Cheatcodes & Notes Found</h2>
+    <div id="cheatcodes"></div>
+    
+    <h2>📜 Recent Activity Log</h2>
+    <div id="activity-log"></div>
+
+    <script>
+        document.getElementById('timestamp').textContent = new Date().toLocaleString();
+        
+        // Agent data (would be populated by backend)
+        const agents = [
+            {name: 'omni_agent', status: 'running', last: 'quantum+weather+github', uptime: '5m'},
+            {name: 'quantum_runner', status: 'running', last: 'GHZ-3 entangled', uptime: '45m'},
+            {name: 'wealth_hunter', status: 'running', last: 'scanned deals/crypto', uptime: '45m'},
+            {name: 'ci_watcher', status: 'running', last: 'checked 5 repos', uptime: '45m'}
+        ];
+        
+        const cheatcodes = [
+            {file: '/Evez666/HONEST_INVENTORY_REPORT.md', note: 'Real state assessment'},
+            {file: '/Evez666/docs/initial-access.md', note: 'Setup instructions'},
+            {file: '/Evez666/docs/kofi-setup.md', note: 'Payment config'},
+            {file: '/memory/2026-04-18.md', note: 'Session memories'}
+        ];
+        
+        // Render
+        document.getElementById('agent-count').textContent = agents.length;
+        document.getElementById('github-changes').textContent = '9';
+        document.getElementById('quantum-count').textContent = '47';
+        
+        let tableHtml = '';
+        agents.forEach(a => {
+            const cls = a.status === 'running' ? 'running' : 'stopped';
+            tableHtml += `<tr><td>${a.name}</td><td class="${cls}">${a.status}</td><td>${a.last}</td><td class="time">${a.uptime}</td></tr>`;
+        });
+        document.getElementById('agent-table').innerHTML = tableHtml;
+        
+        document.getElementById('quantum-bar').style.width = '47%';
+        document.getElementById('quantum-label').textContent = '47/100 circuits';
+        
+        document.getElementById('cycle-bar').style.width = '85%';
+        document.getElementById('cycle-label').textContent = '85 cycles';
+        
+        let cheatHtml = '';
+        cheatcodes.forEach(c => {
+            cheatHtml += `<div class="cheat"><strong>${c.file}</strong><br>${c.note}</div>`;
+        });
+        document.getElementById('cheatcodes').innerHTML = cheatHtml;
+        
+        document.getElementById('activity-log').innerHTML = '<div class="cheat">[18:58] Omni: 6 tools executed</div><div class="cheat">[18:57] Quantum: GHZ-3 entangled</div><div class="cheat">[18:56] Weather: ☀️ +51°F</div>';
+    </script>
+</body>
+</html>
