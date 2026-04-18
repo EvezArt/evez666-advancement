@@ -1,0 +1,59 @@
+[2026-04-18T08:43:55.199443] === Starting Quantum Parameter Sweep ===
+[2026-04-18T08:43:55.695429] Available algorithms: ['grover', 'qaoa', 'vqe', 'qft', 'shors', 'bell', 'ghz', 'supremacy']
+[2026-04-18T08:43:55.695592] Testing grover...
+[2026-04-18T08:43:56.170158]   grover {'qubits': 2} -> circuit_created (0.47s)
+[2026-04-18T08:43:56.638007]   Metrics: algo_runs=27
+[2026-04-18T08:43:57.104632]   grover {'qubits': 3} -> circuit_created (0.47s)
+[2026-04-18T08:43:57.576074]   Metrics: algo_runs=28
+[2026-04-18T08:43:58.046466]   grover {'qubits': 4} -> circuit_created (0.47s)
+[2026-04-18T08:43:58.507593]   Metrics: algo_runs=29
+[2026-04-18T08:43:58.507757] Testing qaoa...
+[2026-04-18T08:43:58.963902]   qaoa {'qubits': 2} -> circuit_created (0.46s)
+[2026-04-18T08:43:59.413613]   Metrics: algo_runs=30
+[2026-04-18T08:43:59.871252]   qaoa {'qubits': 3} -> circuit_created (0.46s)
+[2026-04-18T08:44:00.341851]   Metrics: algo_runs=31
+[2026-04-18T08:44:00.842276]   qaoa {'qubits': 4} -> circuit_created (0.50s)
+[2026-04-18T08:44:01.327654]   Metrics: algo_runs=32
+[2026-04-18T08:44:01.327807] Testing vqe...
+[2026-04-18T08:44:01.799904]   vqe {'qubits': 2} -> circuit_created (0.47s)
+[2026-04-18T08:44:02.294522]   Metrics: algo_runs=33
+[2026-04-18T08:44:02.752435]   vqe {'qubits': 3} -> circuit_created (0.46s)
+[2026-04-18T08:44:03.207027]   Metrics: algo_runs=34
+[2026-04-18T08:44:03.207181] Testing qft...
+[2026-04-18T08:44:03.680691]   qft {'qubits': 2} -> circuit_created (0.47s)
+[2026-04-18T08:44:04.147708]   Metrics: algo_runs=35
+[2026-04-18T08:44:04.618634]   qft {'qubits': 4} -> circuit_created (0.47s)
+[2026-04-18T08:44:05.080479]   Metrics: algo_runs=36
+[2026-04-18T08:44:05.595784]   qft {'qubits': 6} -> circuit_created (0.52s)
+[2026-04-18T08:44:06.072610]   Metrics: algo_runs=37
+[2026-04-18T08:44:06.573183]   qft {'qubits': 8} -> circuit_created (0.50s)
+[2026-04-18T08:44:07.048574]   Metrics: algo_runs=38
+[2026-04-18T08:44:07.048725] Testing shors...
+[2026-04-18T08:44:07.520608]   shors {'qubits': 2} -> circuit_created (0.47s)
+[2026-04-18T08:44:07.990700]   Metrics: algo_runs=39
+[2026-04-18T08:44:08.516529]   shors {'qubits': 3} -> circuit_created (0.53s)
+[2026-04-18T08:44:08.980571]   Metrics: algo_runs=40
+[2026-04-18T08:44:08.980782] Testing bell...
+[2026-04-18T08:44:09.457060]   bell {'qubits': 2} -> executed (0.48s)
+[2026-04-18T08:44:09.927204]   Metrics: algo_runs=41
+[2026-04-18T08:44:10.390559]   bell {'qubits': 3} -> executed (0.46s)
+[2026-04-18T08:44:10.860611]   Metrics: algo_runs=42
+[2026-04-18T08:44:11.332847]   bell {'qubits': 4} -> executed (0.47s)
+[2026-04-18T08:44:11.796533]   Metrics: algo_runs=43
+[2026-04-18T08:44:11.796682] Testing ghz...
+[2026-04-18T08:44:12.260337]   ghz {'qubits': 3} -> executed (0.46s)
+[2026-04-18T08:44:12.737198]   Metrics: algo_runs=44
+[2026-04-18T08:44:13.198115]   ghz {'qubits': 4} -> executed (0.46s)
+[2026-04-18T08:44:13.662460]   Metrics: algo_runs=45
+[2026-04-18T08:44:14.122401]   ghz {'qubits': 5} -> executed (0.46s)
+[2026-04-18T08:44:14.590789]   Metrics: algo_runs=46
+[2026-04-18T08:44:15.049191]   ghz {'qubits': 6} -> executed (0.46s)
+[2026-04-18T08:44:15.516339]   Metrics: algo_runs=47
+[2026-04-18T08:44:15.516491] Testing supremacy...
+[2026-04-18T08:44:16.002936]   supremacy {'qubits': 2} -> circuit_created (0.49s)
+[2026-04-18T08:44:16.473704]   Metrics: algo_runs=48
+[2026-04-18T08:44:16.931858]   supremacy {'qubits': 3} -> circuit_created (0.46s)
+[2026-04-18T08:44:17.388753]   Metrics: algo_runs=49
+[2026-04-18T08:44:17.856188]   supremacy {'qubits': 4} -> circuit_created (0.47s)
+[2026-04-18T08:44:18.315277]   Metrics: algo_runs=50
+[2026-04-18T08:44:18.315431] === Parameter Sweep Complete ===

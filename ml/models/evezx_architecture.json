@@ -1,0 +1,55 @@
+{
+  "name": "EVEZ-X\u030c",
+  "version": "1.0.0-alpha",
+  "generation": "quantum-temporal",
+  "based_on": [
+    "EVEZ-OS",
+    "EVEZ-AgentNet",
+    "EVEZ-Platform"
+  ],
+  "architecture": {
+    "core": {
+      "name": "QuantumCognitionCore",
+      "components": [
+        "FIRE_Engine_V2",
+        "QuantumAttention",
+        "TemporalStateGate",
+        "AttractorPool",
+        "ConstitutionEnforcer"
+      ]
+    },
+    "quantum_enhancements": {
+      "grover_attention": true,
+      "qft_memory": true,
+      "entanglement_context": true,
+      "superposition_actions": true
+    },
+    "temporal_features": {
+      "time_aware_attention": true,
+      "history_embedding": true,
+      "future_prediction": true,
+      "cyclical_patterns": true
+    },
+    "evez_integration": {
+      "fire_event_detection": true,
+      "visual_cognition": true,
+      "constitution_alignment": true,
+      "spine_compatibility": true
+    }
+  },
+  "parameters": {
+    "estimated_params": "7B-13B",
+    "quantum_circuit_depth": 128,
+    "context_window": "1M+ tokens",
+    "training_data": "EVEZ corpus + quantum algorithms"
+  },
+  "capabilities": [
+    "quantum_accelerated_inference",
+    "temporal_reasoning",
+    "fire_event_prediction",
+    "constitutional_alignment",
+    "autonomous_agent_orchestration",
+    "visual_cognition_generation",
+    "multi-modal_reasoning"
+  ]
+}

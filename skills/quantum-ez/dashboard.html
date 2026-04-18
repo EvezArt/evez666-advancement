@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quantum-Evez Dashboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Courier New', monospace; background: #0a0a0f; color: #0f0; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 { text-align: center; color: #0ff; margin-bottom: 30px; text-shadow: 0 0 10px #0ff; }
+        .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .metric { background: #111; border: 1px solid #0f0; padding: 15px; text-align: center; border-radius: 5px; }
+        .metric-value { font-size: 2em; color: #0ff; }
+        .metric-label { color: #666; font-size: 0.8em; margin-top: 5px; }
+        .controls { background: #111; border: 1px solid #0f0; padding: 20px; border-radius: 5px; }
+        .control-group { margin-bottom: 15px; }
+        .control-group label { display: block; color: #0f0; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 10px; background: #000; border: 1px solid #0f0; color: #0f0; font-family: inherit; }
+        button { width: 100%; padding: 12px; background: #0f0; color: #000; border: none; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        button:hover { background: #0ff; }
+        .status { text-align: center; padding: 10px; margin-top: 20px; color: #666; }
+        .quantum-state { background: #111; border: 1px solid #0ff; padding: 15px; margin-top: 20px; border-radius: 5px; font-family: monospace; word-break: break-all; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ Quantum-Evez Dashboard</h1>
+        <div class="metrics">
+            <div class="metric">
+                <div class="metric-value" id="requests">0</div>
+                <div class="metric-label">Total Requests</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value" id="auth_events">0</div>
+                <div class="metric-label">Auth Events</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value" id="states_saved">0</div>
+                <div class="metric-label">States Saved</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value" id="algo_runs">0</div>
+                <div class="metric-label">Algorithms Run</div>
+            </div>
+        </div>
+        <div class="metrics">
+            <div class="metric">
+                <div class="metric-value" id="uptime">0s</div>
+                <div class="metric-label">Uptime</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value" style="color: #0f0;">Active</div>
+                <div class="metric-label">System Status</div>
+            </div>
+        </div>
+        <div class="controls">
+            <h3 style="color: #0ff; margin-bottom: 15px;">⚙️ Controls</h3>
+            <div class="control-group">
+                <label>Algorithm</label>
+                <select id="algorithm">
+                    <option value="grover">Grover Search</option>
+                    <option value="qaoa">QAOA</option>
+                    <option value="vqe">VQE</option>
+                    <option value="qft">QFT</option>
+                    <option value="shors">Shor's Algorithm</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>Parameter</label>
+                <input type="text" id="parameter" placeholder="Enter parameter">
+            </div>
+            <button onclick="runAlgorithm()">▶ Run Algorithm</button>
+            <button onclick="generateToken()" style="margin-top: 10px; background: #0ff;">🔐 Generate Auth Token</button>
+            <button onclick="saveState()" style="margin-top: 10px; background: #ff0; color: #000;">💾 Save State</button>
+            <button onclick="loadState()" style="margin-top: 10px;">📂 Load State</button>
+        </div>
+        <div class="quantum-state" id="output">
+            <pre>System ready. Use controls to interact with quantum capabilities.</pre>
+        </div>
+        <div class="status">Quantum-Evez Integration v1.0 | Powered by OpenClaw</div>
+    </div>
+    <script>
+        const startTime = Date.now();
+        function updateUptime() {
+            document.getElementById('uptime').innerText = Math.floor((Date.now() - startTime)/1000) + 's';
+        }
+        setInterval(updateUptime, 1000);
+        
+        function runAlgorithm() {
+            const alg = document.getElementById('algorithm').value;
+            const param = document.getElementById('parameter').value;
+            document.getElementById('output').innerHTML = '<pre>Running ' + alg + '...\nParameter: ' + (param || 'default') + '</pre>';
+            fetch('/skills/quantum-ez/quantum_ez.sh?cmd=algo&subcmd=run&algo=' + alg)
+                .then(r => r.json())
+                .then(d => {
+                    document.getElementById('output').innerHTML = '<pre>' + JSON.stringify(d, null, 2) + '</pre>';
+                    document.getElementById('algo_runs').innerText = parseInt(document.getElementById('algo_runs').innerText) + 1;
+                });
+        }
+        function generateToken() {
+            document.getElementById('output').innerHTML = '<pre>Generating quantum-authenticated token...</pre>';
+            document.getElementById('auth_events').innerText = parseInt(document.getElementById('auth_events').innerText) + 1;
+        }
+        function saveState() {
+            document.getElementById('output').innerHTML = '<pre>Saving quantum state...</pre>';
+            document.getElementById('states_saved').innerText = parseInt(document.getElementById('states_saved').innerText) + 1;
+        }
+        function loadState() {
+            document.getElementById('output').innerHTML = '<pre>Loading quantum state...</pre>';
+        }
+    </script>
+</body>
+</html>
