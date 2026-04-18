@@ -22,5 +22,5 @@ while true; do
     
     echo "[$(date +%H:%M:%S)] ✅ Cycle complete, pushed to GitHub"
     echo "---"
-    sleep 60
+    sleep 54
 done
