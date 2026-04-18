@@ -99,6 +99,10 @@
     {
       "task": "run_quantum",
       "worker": "researcher"
+    },
+    {
+      "task": "find_new_info",
+      "worker": "researcher"
     }
   ],
   "deployments": [],
