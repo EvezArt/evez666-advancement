@@ -138,6 +138,35 @@ The "moltenbook" tracks pattern morphologies - how patterns evolve:
 
 ---
 
+## DIRECT INSIGHTS (No Subagents)
+
+### 1. Pipeline = Cron-Driven DAG
+- Each cron job is a pipeline stage
+- No Airflow/Kubeflow needed - cron is sufficient
+- File-based state tracking (cycle_log.json)
+
+### 2. Control Plane = Log Files
+- autonomous.log = control plane
+- Every execution logged with timestamp
+- Query: "what ran at X" = grep log
+
+### 3. Pattern Matching = Similarity
+- Encode patterns as vectors
+- Match against known successful patterns
+- Action threshold: confidence > 0.7
+
+### 4. Bartering = Conversion Rate
+- Pattern → Action = conversion
+- Track: matches attempted vs succeeded
+- Optimize: increase conversion rate
+
+### 5. Factory = Self-Improving Loop
+- Output of cycle N becomes input to cycle N+1
+- No human needed after initial setup
+- Quality gates: CI checks before commit
+
+---
+
 ## PRODUCTION METRICS
 
 - **Uptime**: 99.9% (cron-based reliability)
