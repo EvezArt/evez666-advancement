@@ -1,0 +1,19 @@
+{
+  "jobs": [
+    {
+      "name": "check_stripe_payments",
+      "schedule": "*/5 * * * *",
+      "command": "curl -s https://api.stripe.com/v1/balance 2>/dev/null"
+    },
+    {
+      "name": "scrape_deals",
+      "schedule": "*/15 * * * *",
+      "command": "python3 /root/.openclaw/workspace/money_machine/wealth.py"
+    },
+    {
+      "name": "crypto_arb",
+      "schedule": "*/30 * * * *",
+      "command": "echo 'crypto check'"
+    }
+  ]
+}
