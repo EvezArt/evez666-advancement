@@ -76,23 +76,23 @@ class ContinuousTrainer:
             errors = len(results["metacognitive"].get("errors_detected", []))
             loss += 0.2 * errors
         
-        # Adaptive loss (maintain privacy)
+        # Adaptive loss (maintain privacy - reward high budget)
         if "adaptive" in results:
-            budget = results["adaptive"].get("privacy_budget", 1.0)
-            loss += 0.2 * (1.0 - budget)
+            budget = results["adaptive"].get("privacy_budget", 0.5)
+            loss += 0.2 * (1.0 - budget)  # Lower is better (privacy cost)
         
-        # Temporal loss (maximize projections accuracy)
+        # Temporal loss (minimize errors in projections)
         if "temporal" in results:
             proj_count = len(results["temporal"].get("projections", []))
-            loss += 0.1 * (1.0 - proj_count / 5.0)
+            loss += 0.15 * abs(1.0 - proj_count / 5.0)  # Closer to 5 is better
         
         # Neural loss (encourage diverse outputs)
         if "neural" in results:
             output = np.array(results["neural"])
-            diversity = np.std(output) if len(output) > 0 else 0
-            loss += 0.2 * (1.0 - diversity)
+            diversity = np.std(output) if len(output) > 0 else 0.5
+            loss += 0.15 * (1.0 - diversity)  # Higher diversity = lower loss
         
-        return loss
+        return max(0.0, min(loss, 1.0))  # Clamp to [0, 1]
     
     def compute_fitness(self, results: Dict) -> float:
         """Compute fitness score"""
@@ -116,7 +116,7 @@ class ContinuousTrainer:
             orch = results["temporal"].get("orchestration", [])
             fitness += 0.25 * (len(orch) / 5.0)
         
-        return min(fitness, 1.0)
+        return max(0.0, min(fitness, 1.0))  # Clamp to [0, 1]
     
     def compute_complexity(self, results: Dict) -> float:
         """Compute complexity (invariant discovery)"""
