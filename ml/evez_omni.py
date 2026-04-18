@@ -20,6 +20,13 @@ from enum import Enum
 import json
 import hashlib
 import time
+import math
+
+
+def softmax(x, axis=1):
+    """Softmax activation function"""
+    exp_x = np.exp(x - np.max(x, axis=axis, keepdims=True))
+    return exp_x / np.sum(exp_x, axis=axis, keepdims=True)
 
 # ============================================================
 # CORE ARCHITECTURE
@@ -164,18 +171,23 @@ class NeuralLayer:
         
     def forward(self, x: np.ndarray) -> np.ndarray:
         """Forward pass with ReLU activation"""
+        # Ensure 2D input
+        if x.ndim == 1:
+            x = x.reshape(1, -1)
+        
         # Hidden layer
         hidden = np.dot(x, self.weights_1) + self.bias_1
         hidden = np.maximum(0, hidden)  # ReLU
         
-        # Self-attention
-        attention_scores = np.dot(hidden, self.attention_weights)
-        attention_weights = softmax(attention_scores, axis=1)
-        hidden = hidden * attention_weights
+        # Self-attention (handle 2D only)
+        if hidden.ndim == 2:
+            attention_scores = np.dot(hidden, self.attention_weights)
+            attention_weights = softmax(attention_scores, axis=1)
+            hidden = hidden * attention_weights
         
         # Output layer
         output = np.dot(hidden, self.weights_2) + self.bias_2
-        return output
+        return output[0] if output.shape[0] == 1 else output
     
     def train(self, X: np.ndarray, y: np.ndarray, epochs: int = 100, lr: float = 0.01):
         """Simple gradient descent training"""
