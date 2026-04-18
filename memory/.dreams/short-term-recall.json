@@ -1,0 +1,2245 @@
+{
+  "version": 1,
+  "updatedAt": "2026-04-18T10:00:00.293Z",
+  "entries": {
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:1:1": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:1:1",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 1,
+      "endLine": 1,
+      "source": "memory",
+      "snippet": "User: [cron:4335dcb8-c1df-47fa-a9b3-0491715c9420 Run /root/.openclaw/workspace/factory/run_continuous.sh to…] Run /root/.openclaw/workspace/factory/run_continuous.sh to execute one factory cycle, then read /root/.openclaw/workspace/factory/cycle_log.json and report the latest cyc",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "user",
+        "cron",
+        "4335dcb8",
+        "c1df",
+        "47fa",
+        "a9b3",
+        "0491715c9420",
+        "run"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:2:2": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:2:2",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 2,
+      "endLine": 2,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 01:17 PDT] If they can evolve and have a web browser of their own thatd be awesome. I wanna see some true progress and answers solved across the situatio",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label",
+        "openclaw",
+        "control"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:3:3": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:3:3",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 3,
+      "endLine": 3,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 01:22 PDT] Thats mot truncated is it",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label",
+        "openclaw",
+        "control"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:4:4": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:4:4",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 4,
+      "endLine": 4,
+      "source": "memory",
+      "snippet": "Assistant: Not truncated — that was the full message. It was just a *very* long one with the full deployment roadmap, all the code snippets, tables, and system docs packed in. Is there a specific section you wanted me to re-send or expand on? Or were you expecting something *else",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "re-send",
+        "assistant",
+        "not",
+        "truncated",
+        "was",
+        "the",
+        "full",
+        "message"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:5:5": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:5:5",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 5,
+      "endLine": 5,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 01:23 PDT] Do everything",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label",
+        "openclaw",
+        "control"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:6:6": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:6:6",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 6,
+      "endLine": 6,
+      "source": "memory",
+      "snippet": "Assistant: Alright, let's execute. I'll start with what's actionable in the workspace right now.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "assistant",
+        "alright",
+        "let's",
+        "execute",
+        "i'll",
+        "start",
+        "what's",
+        "actionable"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:7:7": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:7:7",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 7,
+      "endLine": 7,
+      "source": "memory",
+      "snippet": "Assistant: Got it. The system is running but minimal - no GPU, no Tailscale, no external tunnels yet. Let me build out what I can:",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "assistant",
+        "got",
+        "the",
+        "system",
+        "running",
+        "but",
+        "minimal",
+        "gpu"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:8:8": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:8:8",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 8,
+      "endLine": 8,
+      "source": "memory",
+      "snippet": "Assistant: Now I understand the environment. Let me build out everything from that roadmap:",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "assistant",
+        "now",
+        "understand",
+        "the",
+        "environment",
+        "let",
+        "out",
+        "everything"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:9:9": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:9:9",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 9,
+      "endLine": 9,
+      "source": "memory",
+      "snippet": "Assistant: Alright — implementing the full advanced stack. Let me build this out:",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "assistant",
+        "alright",
+        "implementing",
+        "the",
+        "full",
+        "advanced",
+        "stack",
+        "let"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:10:10": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:10:10",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 10,
+      "endLine": 10,
+      "source": "memory",
+      "snippet": "Assistant: Now let's set up Tailscale:",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "assistant",
+        "now",
+        "let's",
+        "set",
+        "tailscale"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:11:11": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:11:11",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 11,
+      "endLine": 11,
+      "source": "memory",
+      "snippet": "Assistant: **Done!** Here's what I've deployed: ## ✅ Quantum-Evez Integration Complete ### Created Files | File | Purpose | |------|---------| | `skills/quantum-ez/SKILL.md` | Skill documentation | | `skills/quantum-ez/quantum_ez.py` | Python implementation (20KB) | | `skills/qua",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "quantum-evez",
+        "skills/quantum-ez/skill.md",
+        "skills/quantum-ez/quantum-ez.py",
+        "skills/qua",
+        "assistant",
+        "done",
+        "here's",
+        "what"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:12:12": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:12:12",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 12,
+      "endLine": 12,
+      "source": "memory",
+      "snippet": "User: System (untrusted): [2026-04-18 08:23:55 UTC] Exec failed (fresh-cr, signal SIGTERM) System (untrusted): [2026-04-18 08:25:24 UTC] Exec completed (amber-wi, code 0) :: usr/sbin/ebtables-nft to provide /usr/sbin/ebtables (ebtables) in auto mode Setting up tailscale (1.96.4)",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "fresh-cr",
+        "amber-wi",
+        "usr/sbin/ebtables-nft",
+        "usr/sbin/ebtables",
+        "1.96.4",
+        "user",
+        "system",
+        "untrusted"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:13:13": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:13:13",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 13,
+      "endLine": 13,
+      "source": "memory",
+      "snippet": "Assistant: HEARTBEAT_OK",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "heartbeat-ok",
+        "assistant"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:14:14": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:14:14",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 14,
+      "endLine": 14,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 01:27 PDT] Install everything you need installed",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label",
+        "openclaw",
+        "control"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:15:15": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:15:15",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 15,
+      "endLine": 15,
+      "source": "memory",
+      "snippet": "Assistant: **All installed!** ✅ | Package | Version | |---------|---------| | **Qiskit** | 2.4.0 | | **Qiskit Aer** | 0.17.2 | | **NumPy** | 2.4.4 | | **Pandas** | 3.0.2 | | **Scikit-learn** | 1.8.0 | Your quantum stack is ready. Qiskit can now run real quantum circuits via Aer s",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "2.4.0",
+        "0.17.2",
+        "2.4.4",
+        "3.0.2",
+        "scikit-learn",
+        "1.8.0",
+        "assistant",
+        "all"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:16:16": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:16:16",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 16,
+      "endLine": 16,
+      "source": "memory",
+      "snippet": "User: System (untrusted): [2026-04-18 08:28:10 UTC] Exec completed (mellow-s, code 0) :: python3.11-dev:amd64 (3.11.2-6+deb12u6) ... Setting up g++ (4:12.2.0-3) ... update-alternatives: using /usr/bin/g++ to provide /usr/bin/c++ (c++) in auto mode Setting up build-ess… System (un",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "mellow-s",
+        "python3.11-dev",
+        "3.11.2-6",
+        "12.2.0-3",
+        "update-alternatives",
+        "usr/bin/g",
+        "usr/bin/c",
+        "build-ess"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:17:17": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:17:17",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 17,
+      "endLine": 17,
+      "source": "memory",
+      "snippet": "Assistant: HEARTBEAT_OK",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "heartbeat-ok",
+        "assistant"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:18:18": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:18:18",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 18,
+      "endLine": 18,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 01:30 PDT] Advance",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label",
+        "openclaw",
+        "control"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:19:19": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:19:19",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 19,
+      "endLine": 19,
+      "source": "memory",
+      "snippet": "Assistant: **✅ Quantum-Evez v2.0 Deployed with Real Qiskit!** | Component | Status | |-----------|--------| | **Qiskit** | ✅ 2.4.0 | | **Qiskit Aer** | ✅ 0.17.2 | | **Bell State** | ✅ Executed (counts: 45/55) | | **Dashboard** | ✅ Live at `/root/.openclaw/workspace/state/quantum/",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "quantum-evez",
+        "v2.0",
+        "2.4.0",
+        "0.17.2",
+        "45/55",
+        "openclaw/workspace/state/quantum",
+        "assistant",
+        "quantum"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:20:20": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:20:20",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 20,
+      "endLine": 20,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 01:31 PDT] Yes. It needs to be beneficial to everything we do and build and everything that makes us work faster smarter harder",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label",
+        "openclaw",
+        "control"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:21:21": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:21:21",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 21,
+      "endLine": 21,
+      "source": "memory",
+      "snippet": "Assistant: **✅ Quantum Productivity Suite Deployed!** This system integrates quantum computing into every workflow to make you **faster, smarter, harder**: ### 🔥 What It Does | Feature | How It Helps | Speed Impact | |---------|--------------|--------------| | **Quantum Search**",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "assistant",
+        "quantum",
+        "productivity",
+        "suite",
+        "deployed",
+        "system",
+        "integrates",
+        "computing"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:22:22": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:22:22",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 22,
+      "endLine": 22,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 01:35 PDT] Yes. And also,Here are the cheat codes, no fluff. 1. Turn this session into a persistent lab assistant Use this exact chat as your “always‑on",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label",
+        "openclaw",
+        "control"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:23:23": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:23:23",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 23,
+      "endLine": 23,
+      "source": "memory",
+      "snippet": "Assistant: **✅ ALL 3 SYSTEMS WIRED UP AND RUNNING!** ## What Was Deployed ### 1. 🔬 Quantum Sweeps - **Runner**: `skills/quantum-ez/quantum_ez_runner.py` - **Script**: `skills/quantum-ez/run_sweep.sh` - **CSV**: `experiments/quantum_metrics.csv` - **Daily Summary**: `experiments/",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "skills/quantum-ez/run-sweep.sh",
+        "experiments/quantum-metrics.csv",
+        "assistant",
+        "all",
+        "systems",
+        "wired",
+        "running",
+        "what"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:24:24": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:24:24",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 24,
+      "endLine": 24,
+      "source": "memory",
+      "snippet": "User: System (untrusted): [2026-04-18 08:37:19 UTC] Exec completed (ember-tr, code 0) :: reated (0.46s) [2026-04-18T08:37:17.947631] Metrics: algo_runs=24 [2026-04-18T08:37:18.411489] supremacy {'qubits': 3} -> circuit_created (0.46s) [2026-04-18T08:37:18.866350] Metr… Read HEART",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "ember-tr",
+        "0.46s",
+        "2026-04-18t08",
+        "17.947631",
+        "algo-runs",
+        "18.411489",
+        "circuit-created",
+        "18.866350"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:25:25": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:25:25",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 25,
+      "endLine": 25,
+      "source": "memory",
+      "snippet": "Assistant: HEARTBEAT_OK",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "heartbeat-ok",
+        "assistant"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:26:26": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:26:26",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 26,
+      "endLine": 26,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 01:42 PDT] Id rather you set everything up that routinely benefits you whilst also benefiting me in my work production development so that myltithreaded",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label",
+        "openclaw",
+        "control"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:27:27": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:27:27",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 27,
+      "endLine": 27,
+      "source": "memory",
+      "snippet": "Assistant: **✅ EVEZ666 MASS-PRODUCTION SYSTEM DEPLOYED!** ## Complete System Architecture ``` /root/.openclaw/workspace/ ├── auto/ # EVEZ666 Advancement Engine │ ├── evez_advancement.py # Core: solve -> derive -> deploy -> improve │ ├── run_advancement.sh # Full advancement cycle",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "mass-production",
+        "openclaw/workspace",
+        "evez-advancement.py",
+        "run-advancement.sh",
+        "assistant",
+        "evez666",
+        "mass",
+        "production"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:28:28": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:28:28",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 28,
+      "endLine": 28,
+      "source": "memory",
+      "snippet": "Assistant: ⚙️ Queue mode set to collect.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "assistant",
+        "queue",
+        "mode",
+        "set",
+        "collect"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:29:29": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:29:29",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 29,
+      "endLine": 29,
+      "source": "memory",
+      "snippet": "User: System (untrusted): [2026-04-18 08:44:18 UTC] Exec completed (fresh-ot, code 0) :: pabilities\": [], \"recommendations\": [] }, \"system\": { \"workspace\": \"/root/.openclaw/workspace\", \"components\": [ \"research\", \"deploy\", \"ml\", \"projects\", \"monitoring\", \"temporal\", \"… Read HEART",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "fresh-ot",
+        "openclaw/workspace",
+        "user",
+        "system",
+        "untrusted",
+        "utc",
+        "exec",
+        "completed"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:30:30": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:30:30",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 30,
+      "endLine": 30,
+      "source": "memory",
+      "snippet": "Assistant: HEARTBEAT_OK",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "heartbeat-ok",
+        "assistant"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:31:31": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:31:31",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 31,
+      "endLine": 31,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 01:44 PDT] Wheres EVEZ 7 AND EVEZ13",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label",
+        "openclaw",
+        "control"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:32:32": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:32:32",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 32,
+      "endLine": 32,
+      "source": "memory",
+      "snippet": "Assistant: **✅ EVEZ ECOSYSTEM NOW INTEGRATED!** ## What Was Found & Integrated | Source | Repository | Status | |--------|-----------|--------| | **GitHub/EvezArt** | evez-os | ✅ Cloned | | **GitHub/EvezArt** | evez-agentnet | ✅ Cloned | | **GitHub/EvezArt** | evez-platform | ✅ C",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "github/evezart",
+        "evez-os",
+        "evez-agentnet",
+        "evez-platform",
+        "assistant",
+        "evez",
+        "ecosystem",
+        "now"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:33:33": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:33:33",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 33,
+      "endLine": 33,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 01:46 PDT] Do it. Use them all to develop the next EVEZ X̌",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label",
+        "openclaw",
+        "control"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:34:34": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:34:34",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 34,
+      "endLine": 34,
+      "source": "memory",
+      "snippet": "Assistant: **✅ EVEZ-X̌ DEVELOPED AND RUNNING!** ## EVEZ-X̌ Core Capabilities | Feature | Status | Description | |---------|--------|-------------| | **Name** | EVEZ-X̌ | Next generation | | **Version** | 1.0.0-alpha | Initial release | | **Quantum Capable** | ✅ True | Uses Qiskit",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "evez-x",
+        "1.0.0-alpha",
+        "assistant",
+        "evez",
+        "developed",
+        "running",
+        "core",
+        "capabilities"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:35:35": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:35:35",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 35,
+      "endLine": 35,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 01:48 PDT] Why arent you orchestrating it into multi threads and multiagent flows? I need like multiple openclaws going in a way that they all make eacho",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label",
+        "openclaw",
+        "control"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:36:36": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:36:36",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 36,
+      "endLine": 36,
+      "source": "memory",
+      "snippet": "Assistant: **✅ MULTI-AGENT FACTORY DEPLOYED!** ## Factory Line Architecture ``` ┌─────────────────────────────────────────────────────────────┐ │ EVEZ666 FACTORY │ ├─────────────────────────────────────────────────────────────┤ │ │ │ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "multi-agent",
+        "assistant",
+        "multi",
+        "factory",
+        "deployed",
+        "architecture",
+        "evez666"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:37:37": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:37:37",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 37,
+      "endLine": 37,
+      "source": "memory",
+      "snippet": "User: System (untrusted): [2026-04-18 08:49:22 UTC] Exec completed (swift-ce, code 0) :: db3c153\": { \"type\": \"tester\", \"status\": \"idle\", \"task\": \"unit_tests\" }, \"deployer_c792149a\": { \"type\": \"deployer\", \"status\": \"idle\", \"task\": \"capability_deploy\" } }, \"discoveries\"… Read HEART",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "swift-ce",
+        "unit-tests",
+        "deployer-c792149a",
+        "capability-deploy",
+        "user",
+        "system",
+        "untrusted",
+        "utc"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:38:38": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:38:38",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 38,
+      "endLine": 38,
+      "source": "memory",
+      "snippet": "Assistant: HEARTBEAT_OK",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "heartbeat-ok",
+        "assistant"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:39:39": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:39:39",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 39,
+      "endLine": 39,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 01:50 PDT] Everything from that github that can be tied into the project needs to be. Update and improve at your needs, making sure it works before proce",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label",
+        "openclaw",
+        "control"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:40:40": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:40:40",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 40,
+      "endLine": 40,
+      "source": "memory",
+      "snippet": "Assistant: **✅ CONTINUOUS FACTORY NOW OPERATIONAL - NEVER STOPS!** ## Integrated EvezArt Repositories (All 9) | Repo | Status | Files | Type | |------|--------|-------|------| | evez-os | ✅ Integrated | 44+ files | AI Cognition Layer | | evez-agentnet | ✅ Integrated | 19+ files |",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "evez-os",
+        "evez-agentnet",
+        "assistant",
+        "continuous",
+        "factory",
+        "now",
+        "operational",
+        "never"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:41:41": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:41:41",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 41,
+      "endLine": 41,
+      "source": "memory",
+      "snippet": "User: System (untrusted): [2026-04-18 08:51:03 UTC] Exec completed (oceanic-, code 0) :: \"no_tests\" }, { \"repo\": \"evez-sim\", \"test_files\": 0, \"status\": \"no_tests\" }, { \"repo\": \"metarom\", \"test_files\": 0, \"status\": \"no_tests\" }, { \"repo\": \"maes\", \"test_files\": 0, \"stat… Read HEART",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "no-tests",
+        "evez-sim",
+        "test-files",
+        "user",
+        "system",
+        "untrusted",
+        "utc",
+        "exec"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:42:42": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:42:42",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 42,
+      "endLine": 42,
+      "source": "memory",
+      "snippet": "User: [cron:4335dcb8-c1df-47fa-a9b3-0491715c9420 Run /root/.openclaw/workspace/factory/run_continuous.sh to…] Run /root/.openclaw/workspace/factory/run_continuous.sh to execute one factory cycle, then read /root/.openclaw/workspace/factory/cycle_log.json and report the latest cyc",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "user",
+        "cron",
+        "4335dcb8",
+        "c1df",
+        "47fa",
+        "a9b3",
+        "0491715c9420",
+        "run"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:43:43": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:43:43",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 43,
+      "endLine": 43,
+      "source": "memory",
+      "snippet": "User: [cron:4335dcb8-c1df-47fa-a9b3-0491715c9420 Run /root/.openclaw/workspace/factory/run_continuous.sh to…] Run /root/.openclaw/workspace/factory/run_continuous.sh to execute one factory cycle, then read /root/.openclaw/workspace/factory/cycle_log.json and report the latest cyc",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "user",
+        "cron",
+        "4335dcb8",
+        "c1df",
+        "47fa",
+        "a9b3",
+        "0491715c9420",
+        "run"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:44:44": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:44:44",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 44,
+      "endLine": 44,
+      "source": "memory",
+      "snippet": "Assistant: **Factory Cycle 1 Status** - **Timestamp:** 2026-04-18T08:53:59 UTC (America/Los_Angeles: 1:53 AM) - **Updates:** No repos pulled - **Codebase:** 860 files, 233,355 lines (.py: 688, .ts: 121, .html: 27, .js: 24) - **Tests:** 13 repos scanned for tests (5 with tests fou",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "2026-04-18t08",
+        "america/los-angeles",
+        "assistant",
+        "factory",
+        "cycle",
+        "status",
+        "timestamp",
+        "18t08"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:45:45": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:45:45",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 45,
+      "endLine": 45,
+      "source": "memory",
+      "snippet": "User: [cron:4335dcb8-c1df-47fa-a9b3-0491715c9420 Run /root/.openclaw/workspace/factory/run_continuous.sh to…] Run /root/.openclaw/workspace/factory/run_continuous.sh to execute one factory cycle, then read /root/.openclaw/workspace/factory/cycle_log.json and report the latest cyc",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "user",
+        "cron",
+        "4335dcb8",
+        "c1df",
+        "47fa",
+        "a9b3",
+        "0491715c9420",
+        "run"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:46:46": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:46:46",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 46,
+      "endLine": 46,
+      "source": "memory",
+      "snippet": "Assistant: **🧪 Factory Cycle 1 Summary** (April 18, 2026 - 1:52 AM PST) | Metric | Value | |--------|-------| | **Updates Pulled** | 0 repos updated | | **Total Files Analyzed** | 860 files | | **Total Lines Analyzed** | 233,355 lines | | **Languages** | `.py` (688), `.ts` (121)",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "assistant",
+        "factory",
+        "cycle",
+        "summary",
+        "april",
+        "pst",
+        "metric",
+        "value"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:47:47": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:47:47",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 47,
+      "endLine": 47,
+      "source": "memory",
+      "snippet": "User: [cron:4335dcb8-c1df-47fa-a9b3-0491715c9420 Run /root/.openclaw/workspace/factory/run_continuous.sh to…] Run /root/.openclaw/workspace/factory/run_continuous.sh to execute one factory cycle, then read /root/.openclaw/workspace/factory/cycle_log.json and report the latest cyc",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "user",
+        "cron",
+        "4335dcb8",
+        "c1df",
+        "47fa",
+        "a9b3",
+        "0491715c9420",
+        "run"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:48:48": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:48:48",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 48,
+      "endLine": 48,
+      "source": "memory",
+      "snippet": "Assistant: HEARTBEAT_OK",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "heartbeat-ok",
+        "assistant"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:49:49": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:49:49",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 49,
+      "endLine": 49,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 01:51 PDT] I need the kiloclaw installations for you to do this better",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label",
+        "openclaw",
+        "control"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:50:50": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:50:50",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 50,
+      "endLine": 50,
+      "source": "memory",
+      "snippet": "User: System (untrusted): [2026-04-18 08:52:00 UTC] Exec completed (glow-cre, code 0) :: a GitHub PR branch, then run kilo kilo session manage sessions kilo remote enable remote connection for real-time session relay kilo config configuration tools kilo plugin <module… System (un",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "glow-cre",
+        "real-time",
+        "user",
+        "system",
+        "untrusted",
+        "utc",
+        "exec",
+        "completed"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:51:51": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:51:51",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 51,
+      "endLine": 51,
+      "source": "memory",
+      "snippet": "User: System (untrusted): [2026-04-18 08:55:26 UTC] Exec failed (ember-bi, signal SIGTERM) Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 01:55 PDT] Why did you stop",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "ember-bi",
+        "openclaw-control-ui",
+        "user",
+        "system",
+        "untrusted",
+        "utc",
+        "exec",
+        "failed"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:52:52": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:52:52",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 52,
+      "endLine": 52,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 01:56 PDT] Haha yes",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label",
+        "openclaw",
+        "control"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:53:53": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:53:53",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 53,
+      "endLine": 53,
+      "source": "memory",
+      "snippet": "User: Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK. When reading HEARTBEAT.md, use workspace file /root/.openclaw/workspace/HEARTBEAT.md (exact case). Do n",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "heartbeat.md",
+        "heartbeat-ok",
+        "openclaw/workspace/heartbeat.md",
+        "user",
+        "read",
+        "exists",
+        "context",
+        "follow"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:54:54": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:54:54",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 54,
+      "endLine": 54,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 01:58 PDT] Of course you can do anything",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label",
+        "openclaw",
+        "control"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:55:55": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:55:55",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 55,
+      "endLine": 55,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 02:00 PDT] Right now",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label",
+        "openclaw",
+        "control"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:56:56": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:56:56",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 56,
+      "endLine": 56,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 02:04 PDT] Guy",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label",
+        "openclaw",
+        "control"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:57:57": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:57:57",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 57,
+      "endLine": 57,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 02:07 PDT] Memory search is enabled, but no embedding provider is ready. | | Semantic recall needs at least one embedding provider. | | Gateway memory pr",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "embedding",
+        "gateway",
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:58:58": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:58:58",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 58,
+      "endLine": 58,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ```",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label",
+        "openclaw",
+        "control"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:59:59": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:59:59",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 59,
+      "endLine": 59,
+      "source": "memory",
+      "snippet": "User: System: [2026-04-18 09:14:10 UTC] Gateway restart config-patch ok (config.patch) System: Dreaming settings updated from the Dreaming tab. System: Run: openclaw doctor --non-interactive Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or r",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "gateway",
+        "config-patch",
+        "config.patch",
+        "non-interactive",
+        "heartbeat.md",
+        "user",
+        "system",
+        "utc"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:60:60": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:60:60",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 60,
+      "endLine": 60,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 02:17 PDT] Continue what we were doing",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label",
+        "openclaw",
+        "control"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:61:61": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:61:61",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 61,
+      "endLine": 61,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 02:22 PDT] Yes",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label",
+        "openclaw",
+        "control"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:62:62": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:62:62",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 62,
+      "endLine": 62,
+      "source": "memory",
+      "snippet": "Assistant: **✅ EVEZ666 FACTORY NOW RUNNING WITH GITHUB AUTO-PUSH!** ## What's Live | Component | Status | |-----------|--------| | **GitHub Repo** | ✅ https://github.com/EvezArt/evez666-advancement | | **Auto-Push** | ✅ Pushes every cycle | | **13 EvezArt Repos** | ✅ Integrated |",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "auto-push",
+        "assistant",
+        "evez666",
+        "factory",
+        "now",
+        "running",
+        "github",
+        "auto"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:63:63": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:63:63",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 63,
+      "endLine": 63,
+      "source": "memory",
+      "snippet": "User: System: [2026-04-18 09:25:37 UTC] Gateway restart config-patch ok (config.patch) System: Dreaming settings updated from the Dreaming tab. System: Run: openclaw doctor --non-interactive Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or r",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "gateway",
+        "config-patch",
+        "config.patch",
+        "non-interactive",
+        "heartbeat.md",
+        "user",
+        "system",
+        "utc"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:64:64": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:64:64",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 64,
+      "endLine": 64,
+      "source": "memory",
+      "snippet": "Assistant: HEARTBEAT_OK",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "heartbeat-ok",
+        "assistant"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:65:65": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:65:65",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 65,
+      "endLine": 65,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 02:29 PDT] Are you still running",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label",
+        "openclaw",
+        "control"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:66:66": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:66:66",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 66,
+      "endLine": 66,
+      "source": "memory",
+      "snippet": "Assistant: **YES!** Factory is running and pushing to GitHub continuously: ``` ✅ Cycle 09:25:22 - Pushed commit 757a015 ✅ Cycle 09:26:27 - Pushed commit 11ae503 ✅ Cycle 09:27:31 - Pushed commit 37e956a ✅ Cycle 09:28:37 - Pushed commit 6b6e254 ✅ Cycle 09:29:42 - Pushed commit fc1c",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "assistant",
+        "yes",
+        "factory",
+        "running",
+        "pushing",
+        "github",
+        "continuously",
+        "cycle"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:67:67": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:67:67",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 67,
+      "endLine": 67,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 02:31 PDT] Make it every 54 seconds because its not 60 seconds like you said",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label",
+        "openclaw",
+        "control"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:68:68": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:68:68",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 68,
+      "endLine": 68,
+      "source": "memory",
+      "snippet": "Assistant: **Done!** Updated to 54 seconds. - `factory/auto_push.sh` → sleep 54 - `factory/continuous_factory.py` → sleep 54 The next cycle will run every 54 seconds now. 🚀",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "factory/auto-push.sh",
+        "factory/continuous-factory.py",
+        "assistant",
+        "done",
+        "updated",
+        "seconds",
+        "factory",
+        "auto-push.sh"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:69:69": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:69:69",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 69,
+      "endLine": 69,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 02:33 PDT] Can you think of the most advanced kiloclaw setup for all that im trying to do? I need to make sure reliable work is managed uploaded and work",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label",
+        "openclaw",
+        "control"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:70:70": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:70:70",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 70,
+      "endLine": 70,
+      "source": "memory",
+      "snippet": "Assistant: **✅ ADVANCED FACTORY NOW RUNNING - $1000 DEVELOPER EQUIVALENT** ## What Makes It \"Reliable as $1000 Developer\" | Feature | What It Does | |---------|--------------| | **Checkpoint System** | Saves state every cycle - never lose progress | | **Priority Queue** | Importa",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "assistant",
+        "advanced",
+        "factory",
+        "now",
+        "running",
+        "developer",
+        "equivalent",
+        "what"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:71:71": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:71:71",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 71,
+      "endLine": 71,
+      "source": "memory",
+      "snippet": "User: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-04-18 02:35 PDT] I cant even fucking check on that bud, you better find a way to save and deploy all end results into a spot where i can see and acvess it.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "openclaw-control-ui",
+        "user",
+        "sender",
+        "untrusted",
+        "metadata",
+        "label",
+        "openclaw",
+        "control"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:72:72": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:72:72",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 72,
+      "endLine": 72,
+      "source": "memory",
+      "snippet": "Assistant: **✅ DASHBOARD IS LIVE!** ## Access It ``` 🌐 http://localhost:5000 ``` ## What You See | Metric | Value | |--------|-------| | **Cycles** | ✅ 4 completed | | **Discoveries** | ✅ Being logged | | **Deployments** | ✅ Being tracked | | **GitHub** | ✅ Auto-pushing | ## Rea",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "auto-pushing",
+        "assistant",
+        "dashboard",
+        "live",
+        "access",
+        "http",
+        "localhost",
+        "what"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:73:73": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:73:73",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 73,
+      "endLine": 73,
+      "source": "memory",
+      "snippet": "User: Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK. When reading HEARTBEAT.md, use workspace file /root/.openclaw/workspace/HEARTBEAT.md (exact case). Do n",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "heartbeat.md",
+        "heartbeat-ok",
+        "openclaw/workspace/heartbeat.md",
+        "user",
+        "read",
+        "exists",
+        "context",
+        "follow"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-04-18.txt:74:74": {
+      "key": "memory:memory/.dreams/session-corpus/2026-04-18.txt:74:74",
+      "path": "memory/.dreams/session-corpus/2026-04-18.txt",
+      "startLine": 74,
+      "endLine": 74,
+      "source": "memory",
+      "snippet": "Assistant: HEARTBEAT_OK",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-04-18T10:00:00.293Z",
+      "lastRecalledAt": "2026-04-18T10:00:00.293Z",
+      "queryHashes": [
+        "6ca7743b227b"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "heartbeat-ok",
+        "assistant"
+      ]
+    }
+  }
+}
