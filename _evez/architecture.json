@@ -1,0 +1,39 @@
+{
+  "generated": "2026-04-18T10:08:00Z",
+  "ecosystem": "EVEZ",
+  "architectural_layers": [
+    {
+      "layer": "Core Cognition",
+      "repos": ["evez-os", "Evez666"],
+      "description": "Neural topology, FIRE events, recursion kernel"
+    },
+    {
+      "layer": "Visual/Perceptual",
+      "repos": ["evez-vcl", "evez-sim"],
+      "description": "Visual cognition layer, simulation engine"
+    },
+    {
+      "layer": "Agent System",
+      "repos": ["evez-agentnet", "maes", "agentvault"],
+      "description": "Multi-agent orchestration, ecology system, vault"
+    },
+    {
+      "layer": "Platform/Services",
+      "repos": ["evez-platform", "nexus", "evez-autonomous-ledger"],
+      "description": "Cognitive OS, core services, master ledger"
+    },
+    {
+      "layer": "Supporting",
+      "repos": ["evez666-arg-canon", "metarom", "lord-evez"],
+      "description": "Arguments, Rust metarom, Lord protocol"
+    }
+  ],
+  "dependencies": {
+    "evez-os": ["evez-vcl", "evez-sim"],
+    "evez-agentnet": ["evez-os", "evez-platform"],
+    "evez-platform": ["evez-agentnet", "evez-autonomous-ledger"],
+    "evez-vcl": ["evez-os"],
+    "evez-sim": ["evez-os"]
+  },
+  "notes": "Full dependency graph needs deeper analysis"
+}

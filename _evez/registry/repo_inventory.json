@@ -1,0 +1,167 @@
+{
+  "generated": "2026-04-18T10:08:00Z",
+  "canonical_workspace": "/root/.openclaw/workspace",
+  "repos": [
+    {
+      "name": "evez-os",
+      "path": "/root/.openclaw/workspace/evez-os",
+      "github": "EvezArt/evez-os",
+      "branch": "main",
+      "commit": "ad0838f",
+      "dirty": false,
+      "purpose": "AI cognition layer - circuit-level topology engine, FIRE events",
+      "languages": ["Python", "HTML", "TypeScript", "JavaScript"],
+      "tests": true,
+      "ci_config": null
+    },
+    {
+      "name": "evez-vcl",
+      "path": "/root/.openclaw/workspace/evez-vcl",
+      "github": "EvezArt/evez-vcl",
+      "branch": "main",
+      "commit": "dce4c91",
+      "dirty": false,
+      "purpose": "Visual Cognition Layer - perceptual reasoning artifacts",
+      "languages": ["HTML", "JavaScript"],
+      "tests": false,
+      "ci_config": null
+    },
+    {
+      "name": "evez-sim",
+      "path": "/root/.openclaw/workspace/evez-sim",
+      "github": "EvezArt/evez-sim",
+      "branch": "main",
+      "commit": "ffb977e",
+      "dirty": false,
+      "purpose": "Barnes-Hut simulation engine for EVEZ-OS visual cognition",
+      "languages": ["TypeScript"],
+      "tests": false,
+      "ci_config": null
+    },
+    {
+      "name": "evez666-arg-canon",
+      "path": "/root/.openclaw/workspace/evez666-arg-canon",
+      "github": "EvezArt/evez666-arg-canon",
+      "branch": "main",
+      "commit": "b4df826",
+      "dirty": false,
+      "purpose": "Argument canonicalization",
+      "languages": [],
+      "tests": true,
+      "ci_config": null
+    },
+    {
+      "name": "evez-agentnet",
+      "path": "/root/.openclaw/workspace/evez-agentnet",
+      "github": "EvezArt/evez-agentnet",
+      "branch": "main",
+      "commit": "77d19f7",
+      "dirty": false,
+      "purpose": "Multi-agent income loop - OODA orchestrator, AgentMemory, MetaLearner",
+      "languages": ["Python"],
+      "tests": true,
+      "ci_config": null
+    },
+    {
+      "name": "metarom",
+      "path": "/root/.openclaw/workspace/metarom",
+      "github": "EvezArt/metarom",
+      "branch": "main",
+      "commit": "80b4e55",
+      "dirty": false,
+      "purpose": "Unknown (needs inspection)",
+      "languages": ["Rust"],
+      "tests": false,
+      "ci_config": null
+    },
+    {
+      "name": "evez-autonomous-ledger",
+      "path": "/root/.openclaw/workspace/evez-autonomous-ledger",
+      "github": "EvezArt/evez-autonomous-ledger",
+      "branch": "main",
+      "commit": "b49398d",
+      "dirty": false,
+      "purpose": "Master ledger for autonomous build decisions",
+      "languages": ["Python"],
+      "tests": true,
+      "ci_config": null
+    },
+    {
+      "name": "maes",
+      "path": "/root/.openclaw/workspace/maes",
+      "github": "EvezArt/maes",
+      "branch": "main",
+      "commit": "276ade9",
+      "dirty": false,
+      "purpose": "Modular Agent Ecology System - event-sourced agent runtime",
+      "languages": ["TypeScript"],
+      "tests": false,
+      "ci_config": null
+    },
+    {
+      "name": "evez-platform",
+      "path": "/root/.openclaw/workspace/evez-platform",
+      "github": "EvezArt/evez-platform",
+      "branch": "master",
+      "commit": "8597470",
+      "dirty": false,
+      "purpose": "Cognitive OS - Chat, Search, Stream, Swarm, Finance",
+      "languages": ["Python"],
+      "tests": false,
+      "ci_config": null
+    },
+    {
+      "name": "nexus",
+      "path": "/root/.openclaw/workspace/nexus",
+      "github": "EvezArt/nexus",
+      "branch": "main",
+      "commit": "33d6545",
+      "dirty": false,
+      "purpose": "Unknown (needs inspection)",
+      "languages": [],
+      "tests": false,
+      "ci_config": null
+    },
+    {
+      "name": "lord-evez",
+      "path": "/root/.openclaw/workspace/lord-evez",
+      "github": "EvezArt/lord-evez",
+      "branch": "main",
+      "commit": "6a4719d",
+      "dirty": false,
+      "purpose": "Unknown (needs inspection)",
+      "languages": [],
+      "tests": false,
+      "ci_config": null
+    },
+    {
+      "name": "agentvault",
+      "path": "/root/.openclaw/workspace/agentvault",
+      "github": "EvezArt/agentvault",
+      "branch": "main",
+      "commit": "c0fbd16",
+      "dirty": false,
+      "purpose": "Evez AgentOS - private vault + indexer for ChatGPT/Perplexity exports",
+      "languages": ["Python"],
+      "tests": false,
+      "ci_config": null
+    },
+    {
+      "name": "Evez666",
+      "path": "/root/.openclaw/workspace/Evez666",
+      "github": "EvezArt/Evez666",
+      "branch": "main",
+      "commit": "57cf907",
+      "dirty": false,
+      "purpose": "Atlas v3 Synaptic Recursion Kernel - append-only event spine",
+      "languages": ["Python"],
+      "tests": true,
+      "ci_config": null
+    }
+  ],
+  "missing_repos": [
+    "system-prompts-and-models-of-ai-tools",
+    "evez-busnet-operator",
+    "evez-autonomous-system"
+  ]
+}
