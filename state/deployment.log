@@ -1,1 +1,12 @@
 [2026-04-18T17:57:03+00:00] STAGE: Shadow - running model in parallel, no traffic
+VALIDATION: OK
+[2026-04-18T17:57:04+00:00] Shadow complete - metrics logged, no traffic served
+[2026-04-18T17:57:04+00:00] === Deployment stage shadow complete ===
+[2026-04-18T17:57:04+00:00] STAGE: Canary - routing 5% traffic
+[2026-04-18T17:57:04+00:00] Canary: 5% traffic routed to new model
+[2026-04-18T17:57:04+00:00] Canary: monitoring error rate...
+[2026-04-18T17:57:04+00:00] === Deployment stage canary complete ===
+[2026-04-18T17:57:04+00:00] STAGE: Production - full rollout
+[2026-04-18T17:57:04+00:00] Production: 100% traffic to new model
+PROMOTED: evez-quantum-1.0.0-20260418175638
+[2026-04-18T17:57:04+00:00] === Deployment stage production complete ===

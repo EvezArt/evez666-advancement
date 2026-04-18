@@ -11,7 +11,8 @@
         "last_execution_ms": 1200
       },
       "registered_at": "2026-04-18T17:56:38.725767",
-      "status": "staging"
+      "status": "production",
+      "promoted_at": "2026-04-18T17:57:04.768733"
     }
   },
   "deployments": [],
@@ -24,6 +25,12 @@
         "code": "85950bb602d0a91c"
       },
       "timestamp": "2026-04-18T17:56:38.725937"
+    },
+    {
+      "model_id": "evez-quantum-1.0.0-20260418175638",
+      "event": "promoted_to_production",
+      "details": {},
+      "timestamp": "2026-04-18T17:57:04.768759"
     }
   ]
 }

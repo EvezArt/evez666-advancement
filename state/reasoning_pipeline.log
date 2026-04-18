@@ -1,0 +1,15 @@
+[2026-04-18T17:58:01.141314] ==================================================
+[2026-04-18T17:58:01.141383] CYCLE START: #0
+[2026-04-18T17:58:01.562943] INGEST: collected from 4 sources, hash=dd4e3dd1274ad98f
+[2026-04-18T17:58:01.563003] ERROR in analyze: object of type 'int' has no len()
+[2026-04-18T17:58:01.563213] CYCLE COMPLETE: #0
+[2026-04-18T17:58:01.563249] ==================================================
+[2026-04-18T17:58:01.563271] CYCLE START: #0
+[2026-04-18T17:58:01.565690] INGEST: collected from 4 sources, hash=dd4e3dd1274ad98f
+[2026-04-18T17:58:01.565727] ERROR in analyze: object of type 'int' has no len()
+[2026-04-18T17:58:01.566163] CYCLE COMPLETE: #0
+[2026-04-18T17:58:01.566223] ==================================================
+[2026-04-18T17:58:01.566250] CYCLE START: #0
+[2026-04-18T17:58:01.568713] INGEST: collected from 4 sources, hash=dd4e3dd1274ad98f
+[2026-04-18T17:58:01.568748] ERROR in analyze: object of type 'int' has no len()
+[2026-04-18T17:58:01.568973] CYCLE COMPLETE: #0

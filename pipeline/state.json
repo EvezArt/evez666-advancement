@@ -1,0 +1,45 @@
+{
+  "stage": "ingest",
+  "cycle": 0,
+  "decisions": [],
+  "last_ingest": {
+    "data": {
+      "quantum": {
+        "ghz": "entangled",
+        "qubits": 5,
+        "status": "ok"
+      },
+      "market": {
+        "opportunities": 4,
+        "status": "ok"
+      },
+      "system": {
+        "cron_active": true,
+        "memory_mb": 100,
+        "cpu_load": 0.5,
+        "status": "ok"
+      },
+      "code": {
+        "repos": 41,
+        "status": "ok"
+      }
+    },
+    "hash": "dd4e3dd1274ad98f",
+    "timestamp": "2026-04-18T17:58:01.568684"
+  },
+  "current_stage": "learn",
+  "errors": [
+    {
+      "stage": "analyze",
+      "error": "object of type 'int' has no len()"
+    },
+    {
+      "stage": "analyze",
+      "error": "object of type 'int' has no len()"
+    },
+    {
+      "stage": "analyze",
+      "error": "object of type 'int' has no len()"
+    }
+  ]
+}
