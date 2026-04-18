@@ -2,47 +2,54 @@
 <html>
 <head>
     <title>EVEZ Live Dashboard</title>
-    <meta http-equiv="refresh" content="30">
+    <meta http-equiv="refresh" content="10">
     <style>
-        body { font-family: monospace; background: #0d1117; color: #c9d1d9; padding: 20px; }
-        h1, h2, h3 { color: #58a6ff; }
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 15px; }
-        .stat { font-size: 24px; color: #3fb950; }
-        .label { color: #8b949e; font-size: 12px; }
-        .cheat { background: #1f2428; padding: 10px; margin: 5px 0; border-left: 3px solid #f78166; }
-        .progress-bar { background: #21262d; height: 20px; border-radius: 4px; overflow: hidden; }
-        .progress-fill { background: #3fb950; height: 100%; transition: width 0.3s; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 8px; text-align: left; border-bottom: 1px solid #30363d; }
+        body { font-family: 'Courier New', monospace; background: #0d1117; color: #c9d1d9; padding: 20px; margin: 0; }
+        h1 { color: #58a6ff; border-bottom: 1px solid #30363d; padding-bottom: 10px; }
+        h2 { color: #8b949e; font-size: 14px; text-transform: uppercase; margin-top: 30px; }
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin: 20px 0; }
+        .card { background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 15px; }
+        .stat { font-size: 32px; color: #3fb950; font-weight: bold; }
+        .label { color: #8b949e; font-size: 11px; text-transform: uppercase; }
+        .cheat { background: #1f2428; padding: 12px; margin: 8px 0; border-left: 3px solid #f78166; font-size: 13px; }
+        .progress-bar { background: #21262d; height: 24px; border-radius: 4px; overflow: hidden; margin: 10px 0; }
+        .progress-fill { background: linear-gradient(90deg, #3fb950, #2ea043); height: 100%; transition: width 0.5s; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #30363d; font-size: 13px; }
+        th { color: #8b949e; text-transform: uppercase; font-size: 11px; }
         .running { color: #3fb950; }
         .stopped { color: #f85149; }
         .time { color: #8b949e; font-size: 11px; }
+        .timestamp { color: #8b949e; font-size: 11px; position: fixed; top: 10px; right: 20px; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; margin-left: 5px; }
+        .badge-green { background: #238636; color: white; }
     </style>
 </head>
 <body>
+    <div class="timestamp">Last updated: <span id="timestamp"></span></div>
+    
     <h1>🦾 EVEZ LIVE DASHBOARD</h1>
-    <p class="time">Updated: <span id="timestamp"></span></p>
     
     <div class="grid">
         <div class="card">
-            <h3>🤖 Agents Running</h3>
-            <div class="stat" id="agent-count">-</div>
-            <div class="label">active processes</div>
+            <div class="stat" id="agent-count">0</div>
+            <div class="label">Agents Running</div>
         </div>
         <div class="card">
-            <h3>⚡ Quantum Circuits</h3>
-            <div class="stat" id="quantum-count">-</div>
-            <div class="label">executed this session</div>
+            <div class="stat" id="quantum-count">0</div>
+            <div class="label">Quantum Circuits</div>
         </div>
         <div class="card">
-            <h3>📊 GitHub Changes</h3>
-            <div class="stat" id="github-changes">-</div>
-            <div class="label">uncommitted files</div>
+            <div class="stat" id="cycle-count">0</div>
+            <div class="label">Cycles Completed</div>
+        </div>
+        <div class="card">
+            <div class="stat" id="github-count">0</div>
+            <div class="label">Git Changes</div>
         </div>
     </div>
     
-    <h2>📈 Agent Status</h2>
+    <h2>🤖 Agent Status</h2>
     <table>
         <thead>
             <tr><th>Agent</th><th>Status</th><th>Last Action</th><th>Uptime</th></tr>
@@ -50,67 +57,78 @@
         <tbody id="agent-table"></tbody>
     </table>
     
-    <h2>🎯 Progress Tracker</h2>
-    <div class="card">
-        <h3>Quantum Execution</h3>
-        <div class="progress-bar"><div class="progress-fill" id="quantum-bar" style="width:0%"></div></div>
-        <div class="label" id="quantum-label">0/100 circuits</div>
+    <h2>⚡ Quantum Execution</h2>
+    <div class="progress-bar">
+        <div class="progress-fill" id="quantum-bar" style="width:0%"></div>
     </div>
-    <div class="card">
-        <h3>Cycles Completed</h3>
-        <div class="progress-bar"><div class="progress-fill" id="cycle-bar" style="width:0%"></div></div>
-        <div class="label" id="cycle-label">0 cycles</div>
-    </div>
+    <div class="label" id="quantum-label">loading...</div>
     
-    <h2>🔑 Your Cheatcodes & Notes Found</h2>
+    <h2>🔑 Your Cheatcodes & Notes</h2>
     <div id="cheatcodes"></div>
     
-    <h2>📜 Recent Activity Log</h2>
+    <h2>📜 Recent Activity (Last 5)</h2>
     <div id="activity-log"></div>
 
     <script>
-        document.getElementById('timestamp').textContent = new Date().toLocaleString();
+        async function loadData() {
+            try {
+                const response = await fetch('data.json');
+                const data = await response.json();
+                updateDisplay(data);
+            } catch(e) {
+                console.log('Loading...');
+            }
+        }
         
-        // Agent data (would be populated by backend)
-        const agents = [
-            {name: 'omni_agent', status: 'running', last: 'quantum+weather+github', uptime: '5m'},
-            {name: 'quantum_runner', status: 'running', last: 'GHZ-3 entangled', uptime: '45m'},
-            {name: 'wealth_hunter', status: 'running', last: 'scanned deals/crypto', uptime: '45m'},
-            {name: 'ci_watcher', status: 'running', last: 'checked 5 repos', uptime: '45m'}
-        ];
+        function updateDisplay(data) {
+            document.getElementById('timestamp').textContent = new Date().toLocaleString();
+            
+            // Stats
+            const running = Object.values(data.agents).filter(v => v === 'running').length;
+            document.getElementById('agent-count').textContent = running + '/4';
+            document.getElementById('quantum-count').textContent = data.quantum.runs;
+            document.getElementById('cycle-count').textContent = data.cycles;
+            document.getElementById('github-count').textContent = data.github.changes;
+            
+            // Agent table
+            let tableHtml = '';
+            for (const [name, status] of Object.entries(data.agents)) {
+                const cls = status === 'running' ? 'running' : 'stopped';
+                tableHtml += `<tr><td>${name}</td><td class="${cls}">● ${status}</td><td>${name.includes('quantum') ? 'executing circuits' : 'running'}</td><td class="time">active</td></tr>`;
+            }
+            document.getElementById('agent-table').innerHTML = tableHtml;
+            
+            // Quantum bar (max 100)
+            const qPct = Math.min(data.quantum.runs, 100);
+            document.getElementById('quantum-bar').style.width = qPct + '%';
+            document.getElementById('quantum-label').textContent = `${data.quantum.runs} circuits executed • Last: ${data.quantum.last_state.replace('[','').replace(']','')}`;
+            
+            // Cheatcodes
+            let cheatHtml = '';
+            const files = [
+                {f: '/memory/2026-04-18.md', n: 'Session memories'},
+                {f: '/Evez666/HONEST_INVENTORY_REPORT.md', n: 'Real state (BULLSHIT check)'},
+                {f: '/Evez666/docs/initial-access.md', n: 'Setup instructions'},
+                {f: '/Evez666/docs/kofi-setup.md', n: 'Payment integration'},
+                {f: '/Evez666/docs/OPENCLAW_MULTI_PROVIDER_SETUP.md', n: 'Multi-provider config'},
+                {f: '/Evez666/PHONE_ONLY.md', n: 'Mobile access notes'},
+                {f: '/Evez666/DEPLOYMENT.md', n: 'Deploy guide'},
+                {f: '/Evez666/README.md', n: 'Quickstart'},
+            ];
+            files.forEach(c => {
+                cheatHtml += `<div class="cheat"><strong>${c.f}</strong><br><span style="color:#8b949e">${c.n}</span></div>`;
+            });
+            document.getElementById('cheatcodes').innerHTML = cheatHtml;
+            
+            // Activity log (from quantum log)
+            document.getElementById('activity-log').innerHTML = `
+                <div class="cheat">[${data.quantum.last_state.slice(1,20)}] ${data.quantum.last_state.split(']')[1].trim()}</div>
+                <div class="cheat">[${data.timestamp.slice(0,19)}] Dashboard updated</div>
+            `;
+        }
         
-        const cheatcodes = [
-            {file: '/Evez666/HONEST_INVENTORY_REPORT.md', note: 'Real state assessment'},
-            {file: '/Evez666/docs/initial-access.md', note: 'Setup instructions'},
-            {file: '/Evez666/docs/kofi-setup.md', note: 'Payment config'},
-            {file: '/memory/2026-04-18.md', note: 'Session memories'}
-        ];
-        
-        // Render
-        document.getElementById('agent-count').textContent = agents.length;
-        document.getElementById('github-changes').textContent = '9';
-        document.getElementById('quantum-count').textContent = '47';
-        
-        let tableHtml = '';
-        agents.forEach(a => {
-            const cls = a.status === 'running' ? 'running' : 'stopped';
-            tableHtml += `<tr><td>${a.name}</td><td class="${cls}">${a.status}</td><td>${a.last}</td><td class="time">${a.uptime}</td></tr>`;
-        });
-        document.getElementById('agent-table').innerHTML = tableHtml;
-        
-        document.getElementById('quantum-bar').style.width = '47%';
-        document.getElementById('quantum-label').textContent = '47/100 circuits';
-        
-        document.getElementById('cycle-bar').style.width = '85%';
-        document.getElementById('cycle-label').textContent = '85 cycles';
-        
-        let cheatHtml = '';
-        cheatcodes.forEach(c => {
-            cheatHtml += `<div class="cheat"><strong>${c.file}</strong><br>${c.note}</div>`;
-        });
-        document.getElementById('cheatcodes').innerHTML = cheatHtml;
-        
-        document.getElementById('activity-log').innerHTML = '<div class="cheat">[18:58] Omni: 6 tools executed</div><div class="cheat">[18:57] Quantum: GHZ-3 entangled</div><div class="cheat">[18:56] Weather: ☀️ +51°F</div>';
+        loadData();
+        setInterval(loadData, 10000);
     </script>
 </body>
 </html>
