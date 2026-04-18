@@ -1,38 +1,34 @@
 # Accelerator Status
 
-## Active Composio Connections
+## Active Composio Connections (6/15)
 
-| Service | Status | Tools Available |
-|---------|--------|-----------------|
-| Gmail | ✅ ACTIVE | GMAIL_FETCH_EMAILS, GMAIL_SEND_EMAIL, GMAIL_CREATE_DRAFT |
-| Slack | ✅ ACTIVE | SLACK_SEND_MESSAGE, SLACK_LIST_ALL_CHANNELS, SLACK_FIND_CHANNELS |
-| GitHub | ✅ ACTIVE | GITHUB_CREATE_AN_ISSUE, GITHUB_LIST_REPOSITORIES_FOR_THE_AUTHENTICATED_USER |
-| Airtable | ✅ ACTIVE | AIRTABLE_CREATE_RECORDS, AIRTABLE_LIST_RECORDS |
+| Service | Status | Verified |
+|---------|--------|----------|
+| Gmail | ✅ ACTIVE | ✅ Read 1 email |
+| Slack | ✅ ACTIVE | ✅ Listed channels |
+| GitHub | ✅ ACTIVE | ✅ Listed repos |
+| Airtable | ✅ ACTIVE | |
+| Linear | ✅ ACTIVE | ✅ Listed issues |
+| Supabase | ✅ ACTIVE | ✅ Listed tables |
+| Google Calendar | ✅ ACTIVE | ✅ Listed events |
 
 ## Pending OAuth Connections
 
-- Discord
-- Notion
-- Linear
-- Telegram
-- Google Calendar
-- Google Drive
-- Google Sheets
-- Asana
-- Todoist
-- Jira
-- Salesforce
-- HubSpot
-- Zendesk
+- Discord (needs auth)
+- Notion (needs auth)
+- Telegram (needs auth)
+- Google Drive (needs auth)
+- Google Sheets (needs auth)
+- Asana, Todoist, Jira, Salesforce, HubSpot, Zendesk
 
 ## Cross-Service Workflows Ready
 
-1. **Email → Slack**: Sync email to Slack channel
-2. **Email → GitHub Issue**: Create GitHub issue from email content
-3. **GitHub → Airtable**: Add to Airtable from GitHub events
-4. **Slack → Email**: Reply to email from Slack
-5. **GitHub → Slack**: Notify Slack on GitHub events
+1. **Email ↔ Slack** ✅
+2. **GitHub ↔ Airtable** ✅
+3. **Linear Issues** ✅
+4. **Supabase Query** ✅
+5. **Calendar Events** ✅
 
-## EVEZ Repositories (13/13 Green)
+## EVEZ Repos (13/13 Green)
 
-All 13 EvezArt repos passing CI checks.
+All EvezArt repos passing CI.
