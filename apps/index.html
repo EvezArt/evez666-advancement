@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EVEZ Mobile Hub</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #0a0a0a; color: #fff; padding: 0; }
+        .header { background: linear-gradient(135deg, #0f0, #00aa00); padding: 20px; text-align: center; }
+        .header h1 { font-size: 28px; }
+        .location { font-size: 14px; opacity: 0.8; }
+        .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #222; }
+        .stat-cell { background: #111; padding: 15px 5px; text-align: center; }
+        .stat-val { font-size: 20px; font-weight: bold; color: #0f0; }
+        .stat-lbl { font-size: 10px; color: #666; text-transform: uppercase; }
+        .section { padding: 15px; }
+        .section-title { color: #666; font-size: 12px; text-transform: uppercase; margin-bottom: 10px; }
+        .app-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .app-btn { background: #1a1a1a; border: 1px solid #333; border-radius: 12px; padding: 15px; text-align: center; color: #fff; text-decoration: none; font-size: 12px; }
+        .app-btn:active { background: #0f0; color: #000; }
+        .log-area { background: #000; border: 1px solid #333; border-radius: 8px; padding: 10px; font-family: monospace; font-size: 10px; height: 150px; overflow: auto; color: #0f0; }
+        .sys-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #222; }
+        .sys-ok { color: #0f0; }
+        .sys-warn { color: #ff0; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🦾 EVEZ</h1>
+        <div class="location">📍 Bullhead City, AZ | ☀️ +74°F</div>
+    </div>
+    
+    <div class="stat-grid">
+        <div class="stat-cell"><div class="stat-val" id="agents">7</div><div class="stat-lbl">Agents</div></div>
+        <div class="stat-cell"><div class="stat-val" id="quantum">111</div><div class="stat-lbl">Quantum</div></div>
+        <div class="stat-cell"><div class="stat-val" id="cycles">5</div><div class="stat-lbl">Cycles</div></div>
+        <div class="stat-cell"><div class="stat-val" id="systems">8</div><div class="stat-lbl">Systems</div></div>
+    </div>
+    
+    <div class="section">
+        <div class="section-title">🚀 Integrated Apps</div>
+        <div class="app-grid">
+            <a href="command.html" class="app-btn">📊 Command</a>
+            <a href="actions.html" class="app-btn">⚡ Actions</a>
+            <a href="/dashboard/index.html" class="app-btn">📈 Dashboard</a>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-title">🔌 Systems Status</div>
+        <div id="systems-list"></div>
+    </div>
+    
+    <div class="section">
+        <div class="section-title">📜 Live Log</div>
+        <div class="log-area" id="log"></div>
+    </div>
+    
+    <script>
+        // Load real-time data
+        fetch('/state/grand_state.json')
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('agents').textContent = data.working;
+                document.getElementById('systems').textContent = data.working;
+                
+                // Systems list
+                let html = '';
+                for (const [k, v] of Object.entries(data.systems)) {
+                    const ok = !v.includes('not') && !v.includes('error');
+                    html += `<div class="sys-item"><span>${k}</span><span class="${ok?'sys-ok':'sys-warn'}">${ok?'●':'○'}</span></div>`;
+                }
+                document.getElementById('systems-list').innerHTML = html;
+            });
+        
+        // Live log from grand integrator
+        fetch('/agents/grand_integrator.log').then(r=>r.text()).then(t => {
+            const lines = t.trim().split('\\n').slice(-10);
+            document.getElementById('log').innerHTML = lines.join('<br>');
+        });
+        
+        // Auto-refresh
+        setInterval(() => location.reload(), 30000);
+    </script>
+</body>
+</html>
