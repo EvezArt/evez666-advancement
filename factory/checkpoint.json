@@ -1,6 +1,6 @@
 {
-  "cycle": 15,
-  "last_completed": "2026-04-18T09:45:51.749075",
+  "cycle": 16,
+  "last_completed": "2026-04-18T09:46:47.712709",
   "progress": {},
   "errors": [],
   "discoveries": [
@@ -186,6 +186,14 @@
     },
     {
       "task": "find_new_info",
+      "worker": "researcher"
+    },
+    {
+      "task": "push_github",
+      "worker": "researcher"
+    },
+    {
+      "task": "run_quantum",
       "worker": "researcher"
     }
   ],
