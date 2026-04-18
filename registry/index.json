@@ -1,0 +1,29 @@
+{
+  "models": {
+    "evez-quantum-1.0.0-20260418175638": {
+      "id": "evez-quantum-1.0.0-20260418175638",
+      "name": "evez-quantum",
+      "version": "1.0.0",
+      "data_hash": "8a4cd78ebc385b80",
+      "code_hash": "85950bb602d0a91c",
+      "metrics": {
+        "last_accuracy": 0.95,
+        "last_execution_ms": 1200
+      },
+      "registered_at": "2026-04-18T17:56:38.725767",
+      "status": "staging"
+    }
+  },
+  "deployments": [],
+  "lineage": [
+    {
+      "model_id": "evez-quantum-1.0.0-20260418175638",
+      "event": "created",
+      "details": {
+        "data": "8a4cd78ebc385b80",
+        "code": "85950bb602d0a91c"
+      },
+      "timestamp": "2026-04-18T17:56:38.725937"
+    }
+  ]
+}
