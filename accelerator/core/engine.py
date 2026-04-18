@@ -53,6 +53,7 @@ class AcceleratorCore:
     
     def improve(self, input_data):
         """Process and improve based on input"""
+        self.tick()  # Increment cycle
         # Entangle with quantum layer
         # Process with neural layer
         # Reason symbolically
