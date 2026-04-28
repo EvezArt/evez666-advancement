@@ -1,0 +1,9 @@
+{
+  "projected_revenue_daily": 1800000.0,
+  "actual_revenue_total": 10.040000000000001,
+  "revenue_drop_percentage": 99.99944222222223,
+  "drop_exceeds_threshold": true,
+  "circuit_files_present": 7,
+  "circuit_status": "unknown",
+  "timestamp": "2026-04-28T00:10:00Z"
+}

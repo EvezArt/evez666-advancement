@@ -1,0 +1,74 @@
+{
+  "heartbeat": "2026-03-24T15:08:25.385081",
+  "state": "RECURSIVE_LOOP_ACTIVE",
+  "metamap": {
+    "nodes": {
+      "base_morpho_v2": {
+        "type": "LENDING_REACTOR",
+        "config": {
+          "collateral": "cbETH",
+          "borrow_asset": "USDC",
+          "target_ltv": 0.65
+        },
+        "status": "ACTIVE",
+        "last_run": "2026-03-24T15:08:25.383831"
+      },
+      "solana_kamino_s5": {
+        "type": "YIELD_AMPLIFIER",
+        "config": {
+          "supply_asset": "USDC",
+          "reward_token": "KMNO",
+          "vault": "Kamino Multiply"
+        },
+        "status": "ACTIVE",
+        "last_run": "2026-03-24T15:08:25.384300"
+      }
+    },
+    "artifacts": [
+      {
+        "id": "art_1774364905",
+        "source_node": "base_morpho_v2",
+        "type": "COLLATERAL_STATE",
+        "value": "3.5% APY Staking Yield Active",
+        "timestamp": "2026-03-24T15:08:25.384104"
+      },
+      {
+        "id": "art_1774364905",
+        "source_node": "solana_kamino_s5",
+        "type": "YIELD_REPORT",
+        "value": "22.1% APY Compounded Daily",
+        "timestamp": "2026-03-24T15:08:25.384689"
+      }
+    ],
+    "boundaries": {
+      "max_depth": 3,
+      "current_depth": 0
+    },
+    "history": []
+  },
+  "defi_circuits": {
+    "egg_cluster_7_flash_loan": {
+      "status": "INACTIVE",
+      "last_run": null,
+      "profit_loss": []
+    },
+    "egg_cluster_8_lst_lrt": {
+      "status": "ACTIVE",
+      "last_run": "2026-03-24T15:08:25.385081",
+      "loop_iterations": [
+        {
+          "iteration": 1,
+          "collateral_in": "cbETH",
+          "borrow_out": "USDC",
+          "yield_platform": "Kamino",
+          "reward_token": "KMNO",
+          "timestamp": "2026-03-24T15:08:25.385081"
+        }
+      ]
+    }
+  },
+  "fact_retrieval": {
+    "permaweb_links": [],
+    "recursive_queries": []
+  }
+}

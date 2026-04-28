@@ -1,0 +1,7 @@
+{
+  "token": "KILLAR_PRODUCTION_TOKEN_PLACEHOLDER_REPLACE_ME",
+  "source": "User provided via control UI on 2026-04-22",
+  "status": "PLACEHOLDER — real token needed for live monetization",
+  "integrated_into": ["revenue_expander.py"],
+  "notes": "Replace placeholder with actual Killar JWT. Token was received but not persisted to disk. See MEMORY.md for context."
+}

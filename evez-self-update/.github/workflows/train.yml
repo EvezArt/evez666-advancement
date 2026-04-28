@@ -1,0 +1,40 @@
+name: EVEZ Self-Train
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+
+jobs:
+  train-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install torch transformers datasets peft accelerate
+    
+    - name: Train model
+      env:
+        HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        BASE_MODEL: mistralai/Mistral-7B-v0.1
+        HF_MODEL_ID: your-username/evez-model  # Change this to your HF username/model
+      run: |
+        python control/trainer.py
+    
+    - name: Deploy model
+      env:
+        HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        BASE_MODEL: mistralai/Mistral-7B-v0.1
+        ADAPTER_MODEL_DIR: ./model
+        HF_MODEL_ID: your-username/evez-model  # Change this to your HF username/model
+      run: |
+        python control/deployer.py

@@ -1,0 +1,1 @@
+{"script": "inference_fabric.py", "status": "success", "exitCode": 0, "outputSummary": "=== FABRIC READY ===\nINFERENCE FABRIC initialized with 3 active circuits:\n- CLASSIFICATION: phi-mini (t4-1, $0.0002/1k, 80ms)\n- SALES_EMAIL: gpt-class-mid (a10g-1, $0.0020/1k, 350ms)\n- AUTO_CLOSE: llama-70b (a100-1, $0.0100/1k, 900ms)", "error": null}

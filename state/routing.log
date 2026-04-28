@@ -1,0 +1,30 @@
+=== MODEL ROUTING DEMO ===
+Task: summarize this email
+  → nano (gemini-2.0-flash)
+  Latency: 200ms, Savings: $0.0750
+
+Task: analyze this code for bugs
+  → medium (gpt-4o-mini)
+  Latency: 1000ms, Savings: $0.0600
+
+Task: write a complex python algorit
+  → nano (gemini-2.0-flash)
+  Latency: 200ms, Savings: $0.0750
+
+Task: simple search query
+  → nano (gemini-2.0-flash)
+  Latency: 200ms, Savings: $0.0750
+
+Task: debug this python code
+  → medium (gpt-4o-mini)
+  Latency: 1000ms, Savings: $0.0600
+
+Task: reason about this philosophica
+  → nano (gemini-2.0-flash)
+  Latency: 200ms, Savings: $0.0750
+
+Task: translate this text
+  → nano (gemini-2.0-flash)
+  Latency: 200ms, Savings: $0.0750
+
+Total cost savings: $1.4850

@@ -1,0 +1,52 @@
+import json
+
+def merge_json():
+    # Load the existing data
+    with open('/home/ubuntu/content.bus.json', 'r') as f:
+        existing_data = json.load(f)
+
+    # Create the new, more structured dictionary
+    new_data = {
+        "heartbeat": existing_data.get("heartbeat", ""),
+        "state": existing_data.get("state", "INITIALIZING"),
+        "metamap": {
+            "nodes": existing_data.get("nodes", {}),
+            "artifacts": existing_data.get("artifacts", []),
+            "boundaries": existing_data.get("boundaries", {"max_depth": 5, "current_depth": 0}),
+            "history": []
+        },
+        "defi_circuits": {
+            "egg_cluster_7_flash_loan": {
+                "status": "INACTIVE",
+                "last_run": None,
+                "profit_loss": []
+            },
+            "egg_cluster_8_lst_lrt": {
+                "status": "ACTIVE",
+                "last_run": existing_data.get("heartbeat", None),
+                "loop_iterations": [
+                    {
+                        "iteration": 1,
+                        "collateral_in": "cbETH",
+                        "borrow_out": "USDC",
+                        "yield_platform": "Kamino",
+                        "reward_token": "KMNO",
+                        "timestamp": existing_data.get("heartbeat", None)
+                    }
+                ]
+            }
+        },
+        "fact_retrieval": {
+            "permaweb_links": [],
+            "recursive_queries": []
+        }
+    }
+
+    # Write the new structure back to the file
+    with open('/home/ubuntu/content.bus.json', 'w') as f:
+        json.dump(new_data, f, indent=2)
+
+    print("Successfully merged and updated content.bus.json")
+
+if __name__ == "__main__":
+    merge_json()

@@ -1,0 +1,22 @@
+{
+  "quantum_calc": {
+    "price": 0.1,
+    "description": "Quantum computation"
+  },
+  "analysis": {
+    "price": 0.05,
+    "description": "Data analysis"
+  },
+  "search": {
+    "price": 0.01,
+    "description": "Web search via Exa"
+  },
+  "evez_template": {
+    "price": 29,
+    "description": "EVEZ OS Config Pack"
+  },
+  "prompt_pack": {
+    "price": 19,
+    "description": "KiloClaw prompt templates"
+  }
+}

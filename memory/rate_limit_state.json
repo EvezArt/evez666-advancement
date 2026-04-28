@@ -1,0 +1,66 @@
+{
+  "github_models": {
+    "provider": "github_models",
+    "remaining_minute": 120,
+    "remaining_hour": 5000,
+    "last_reset_minute": 1776929286.2846675,
+    "last_reset_hour": 1776929286.2846675,
+    "consecutive_429s": 0
+  },
+  "exa": {
+    "provider": "exa",
+    "remaining_minute": 100,
+    "remaining_hour": 5000,
+    "last_reset_minute": 1776929286.2846675,
+    "last_reset_hour": 1776929286.2846675,
+    "consecutive_429s": 0
+  },
+  "composio": {
+    "provider": "composio",
+    "remaining_minute": 200,
+    "remaining_hour": 10000,
+    "last_reset_minute": 1776929286.2846675,
+    "last_reset_hour": 1776929286.2846675,
+    "consecutive_429s": 0
+  },
+  "openai": {
+    "provider": "openai",
+    "remaining_minute": 200,
+    "remaining_hour": 12000,
+    "last_reset_minute": 1776929286.2846675,
+    "last_reset_hour": 1776929286.2846675,
+    "consecutive_429s": 0
+  },
+  "anthropic": {
+    "provider": "anthropic",
+    "remaining_minute": 150,
+    "remaining_hour": 9000,
+    "last_reset_minute": 1776929286.2846675,
+    "last_reset_hour": 1776929286.2846675,
+    "consecutive_429s": 0
+  },
+  "groq": {
+    "provider": "groq",
+    "remaining_minute": 300,
+    "remaining_hour": 18000,
+    "last_reset_minute": 1776929286.2846675,
+    "last_reset_hour": 1776929286.2846675,
+    "consecutive_429s": 0
+  },
+  "samba_nova": {
+    "provider": "samba_nova",
+    "remaining_minute": 200,
+    "remaining_hour": 12000,
+    "last_reset_minute": 1776929286.2846675,
+    "last_reset_hour": 1776929286.2846675,
+    "consecutive_429s": 0
+  },
+  "cerebras": {
+    "provider": "cerebras",
+    "remaining_minute": 150,
+    "remaining_hour": 9000,
+    "last_reset_minute": 1776929286.2846675,
+    "last_reset_hour": 1776929286.2846675,
+    "consecutive_429s": 0
+  }
+}

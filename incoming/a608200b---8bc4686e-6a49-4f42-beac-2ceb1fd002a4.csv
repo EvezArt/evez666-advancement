@@ -1,0 +1,9 @@
+Challenge Category,Specific Issues,Mitigation Strategies,Feasibility
+Hardware Limitations,"Limited RF access, No direct baseband control, Closed modem architecture","USB OTG SDR dongles (RTL-SDR, HackRF), Reverse-engineering modem APIs",Medium (with external SDR)
+Power Constraints,"Battery drain from continuous sensing, High computational load","Adaptive sensing intervals, Duty cycling, GPU power management",Medium-High
+Real-time Processing,"Sub-10ms latency requirements, Android scheduling overhead","Android NDK/RT extensions, FPGA co-processors, Prioritized scheduling",Medium
+Model Complexity,"Large DNN models vs memory constraints, Inference time vs accuracy trade-off","Model quantization (INT8), Pruning, Knowledge distillation, Edge TPU",High (with optimization)
+Spectrum Access,"Restricted access to licensed bands, Coordination with primary users","Geolocation database queries, Cooperative sensing protocols",Low-Medium
+Interference Management,"Co-channel interference, Adjacent channel leakage","Beamforming, Cognitive MAC protocols, Power control algorithms",Medium
+Security & Privacy,"Sensing data privacy, Secure spectrum database access","On-device processing, Encrypted communications, Access control",High
+Regulatory Compliance,"FCC/ETSI compliance, Certification requirements","Database-assisted sensing, Geo-fencing, Emission masks",Medium

@@ -1,0 +1,27 @@
+{
+  "run_id": 7,
+  "research": {
+    "research_done": true,
+    "query": "trending AI memes"
+  },
+  "generated": {
+    "hook": "Nobody:",
+    "topic": "neural networks",
+    "prompt": "Nobody: neural networks"
+  },
+  "test": {
+    "tests": {
+      "has_hook": true,
+      "has_topic": false,
+      "short_enough": true
+    },
+    "passed": 2,
+    "total": 3,
+    "effective": true
+  },
+  "upload": {
+    "status": "ready",
+    "title": "AI Meme - neural networks"
+  },
+  "timestamp": "2026-04-21T01:59:52.000099"
+}

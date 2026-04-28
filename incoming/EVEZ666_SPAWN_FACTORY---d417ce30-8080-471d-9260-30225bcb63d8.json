@@ -1,0 +1,352 @@
+{
+  "name": "EVEZ666 Spawn Factory \u2014 Agent Empire Builder \u2014 FREE 24/7",
+  "nodes": [
+    {
+      "id": "T1",
+      "name": "\u23f1 Every 6 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        300
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "T2",
+      "name": "\ud83d\udd27 Manual Fire",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        500
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "T3",
+      "name": "\ud83d\udd17 Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        700
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "evez-spawn-factory",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "webhookId": "spawn-T3"
+    },
+    {
+      "id": "T4",
+      "name": "\ud83d\udea8 Error Catcher",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        900
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "C1",
+      "name": "EVEZ Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        280,
+        500
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1",
+              "name": "groq_key",
+              "value": "={{ $env.GROQ_API_KEY || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "2",
+              "name": "gemini_key",
+              "value": "={{ $env.GEMINI_API_KEY || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "3",
+              "name": "or_key",
+              "value": "={{ $env.OPENROUTER_API_KEY || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "4",
+              "name": "n8n_key",
+              "value": "={{ $env.N8N_API_KEY || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "5",
+              "name": "n8n_base",
+              "value": "={{ $env.N8N_BASE_URL || 'https://evezos.app.n8n.cloud' }}",
+              "type": "string"
+            },
+            {
+              "id": "6",
+              "name": "auto_activate",
+              "value": "={{ $env.EVEZ_AUTO_ACTIVATE || 'false' }}",
+              "type": "string"
+            },
+            {
+              "id": "7",
+              "name": "tw_bearer",
+              "value": "={{ $env.TWITTER_BEARER_TOKEN || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "8",
+              "name": "hf_token",
+              "value": "={{ $env.HF_TOKEN || '' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      }
+    },
+    {
+      "id": "P1",
+      "name": "Opportunity Scanner",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        500
+      ],
+      "parameters": {
+        "jsCode": "\nconst cfg = $('EVEZ Config').first().json;\nconst signals = { scanned_at: new Date().toISOString(), sources: [] };\n\n// \u2500\u2500 1. CoinGecko: DeFi yields + trending \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ntry {\n  const trending = await $fetch('https://api.coingecko.com/api/v3/search/trending');\n  const defi = await $fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&category=decentralized-finance-defi&order=volume_desc&per_page=5&sparkline=false');\n  signals.defi = {\n    trending: (trending.coins || []).slice(0, 5).map(function(c) {\n      return { name: c.item.name, symbol: c.item.symbol, rank: c.item.market_cap_rank };\n    }),\n    top_defi: (defi || []).slice(0, 5).map(function(c) {\n      return { name: c.name, symbol: c.symbol, price_change_24h: c.price_change_percentage_24h };\n    })\n  };\n  signals.sources.push('coingecko');\n} catch(e) { signals.defi = { error: e.message }; }\n\n// \u2500\u2500 2. Fear & Greed \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ntry {\n  const fg = await $fetch('https://api.alternative.me/fng/?limit=3');\n  signals.fear_greed = {\n    now: { value: fg.data[0].value, label: fg.data[0].value_classification },\n    yesterday: { value: fg.data[1].value, label: fg.data[1].value_classification },\n    trend: parseInt(fg.data[0].value) - parseInt(fg.data[1].value)\n  };\n  signals.sources.push('fear_greed');\n} catch(e) { signals.fear_greed = { error: e.message }; }\n\n// \u2500\u2500 3. HackerNews: tech opportunities \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ntry {\n  const hn = await $fetch('https://hn.algolia.com/api/v1/search?query=AI+agent+automation+SaaS+revenue+2026&hitsPerPage=6&tags=story');\n  signals.hackernews = (hn.hits || []).map(function(h) {\n    return { title: (h.title || '').slice(0, 100), points: h.points, url: h.url };\n  });\n  signals.sources.push('hackernews');\n} catch(e) { signals.hackernews = []; }\n\n// \u2500\u2500 4. Reddit: community alpha \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ntry {\n  const subs = ['algotrading', 'defi', 'AutomateYourself', 'SideProject'];\n  signals.reddit = [];\n  for (var i = 0; i < subs.length; i++) {\n    try {\n      var r = await $fetch('https://www.reddit.com/r/' + subs[i] + '/hot.json?limit=3',\n        { headers: { 'User-Agent': 'EVEZ-OS/1.0' } });\n      var posts = (r.data.children || []).map(function(p) {\n        return { title: (p.data.title || '').slice(0, 100), score: p.data.score, sub: subs[i] };\n      });\n      signals.reddit = signals.reddit.concat(posts);\n    } catch(e2) {}\n  }\n  signals.reddit = signals.reddit.sort(function(a,b){ return b.score - a.score; }).slice(0, 8);\n  signals.sources.push('reddit');\n} catch(e) { signals.reddit = []; }\n\n// \u2500\u2500 5. GitHub Trending: things to build on/with \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ntry {\n  const gh = await $fetch('https://api.github.com/search/repositories?q=AI+agent+autonomous+stars:>100&sort=stars&order=desc&per_page=5',\n    { headers: { 'User-Agent': 'EVEZ-OS/1.0', 'Accept': 'application/vnd.github.v3+json' } });\n  signals.github = (gh.items || []).map(function(r) {\n    return { name: r.full_name, stars: r.stargazers_count, description: (r.description || '').slice(0, 80), language: r.language };\n  });\n  signals.sources.push('github');\n} catch(e) { signals.github = []; }\n\n// \u2500\u2500 6. DuckDuckGo: keyword intelligence \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ntry {\n  const queries = ['AI automation SaaS 2026', 'web3 grant funding open', 'autonomous agent monetization'];\n  signals.ddg = [];\n  for (var q = 0; q < queries.length; q++) {\n    try {\n      var d = await $fetch('https://api.duckduckgo.com/?q=' + encodeURIComponent(queries[q]) + '&format=json&no_html=1&skip_disambig=1',\n        { headers: { 'User-Agent': 'EVEZ-OS/1.0' } });\n      if (d.AbstractText) signals.ddg.push({ query: queries[q], abstract: d.AbstractText.slice(0, 200) });\n    } catch(e3) {}\n  }\n  signals.sources.push('duckduckgo');\n} catch(e) {}\n\n// \u2500\u2500 7. Crypto grants / funding signals \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ntry {\n  // Gitcoin grants API (public)\n  const gc = await $fetch('https://grants-stack-indexer-v2.gitcoin.co/graphql', {\n    method: 'POST',\n    headers: { 'Content-Type': 'application/json' },\n    body: JSON.stringify({ query: '{ rounds(first: 5, orderBy: createdAtBlock, orderDirection: desc) { id roundMetadata { name description } matchAmountInUsd donationsCount } }' })\n  });\n  signals.grants = (gc.data && gc.data.rounds ? gc.data.rounds : []).map(function(r) {\n    return { name: (r.roundMetadata && r.roundMetadata.name) || 'Unknown', match_usd: r.matchAmountInUsd, donations: r.donationsCount };\n  });\n  signals.sources.push('gitcoin');\n} catch(e) { signals.grants = []; }\n\nsignals.slot = Math.floor(Date.now() / 21600000); // 6h slots\nsignals.sources_count = signals.sources.length;\nreturn [{ json: signals }];\n"
+      }
+    },
+    {
+      "id": "P2",
+      "name": "AI Architect",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        840,
+        500
+      ],
+      "parameters": {
+        "jsCode": "\nconst cfg = $('EVEZ Config').first().json;\nconst signals = $('Opportunity Scanner').first().json;\n\nasync function llm(sys, usr) {\n  if (cfg.groq_key) {\n    try {\n      var r = await $fetch('https://api.groq.com/openai/v1/chat/completions', {\n        method: 'POST',\n        headers: { 'Authorization': 'Bearer ' + cfg.groq_key, 'Content-Type': 'application/json' },\n        body: JSON.stringify({ model: 'llama-3.3-70b-versatile', max_tokens: 3000,\n          messages: [{ role: 'system', content: sys }, { role: 'user', content: usr }],\n          temperature: 0.3 })\n      });\n      var t = r.choices[0].message.content;\n      return JSON.parse(t.replace(/```json|```/g, '').trim());\n    } catch(e) {}\n  }\n  if (cfg.gemini_key) {\n    try {\n      var r2 = await $fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + cfg.gemini_key, {\n        method: 'POST', headers: { 'Content-Type': 'application/json' },\n        body: JSON.stringify({ systemInstruction: { parts: [{ text: sys }] },\n          contents: [{ role: 'user', parts: [{ text: usr }] }],\n          generationConfig: { maxOutputTokens: 3000, temperature: 0.3 } })\n      });\n      var t2 = r2.candidates[0].content.parts[0].text;\n      return JSON.parse(t2.replace(/```json|```/g, '').trim());\n    } catch(e2) {}\n  }\n  if (cfg.or_key) {\n    try {\n      var r3 = await $fetch('https://openrouter.ai/api/v1/chat/completions', {\n        method: 'POST',\n        headers: { 'Authorization': 'Bearer ' + cfg.or_key, 'Content-Type': 'application/json', 'HTTP-Referer': 'https://evezos.app.n8n.cloud' },\n        body: JSON.stringify({ model: 'meta-llama/llama-3.3-70b-instruct:free', max_tokens: 3000,\n          messages: [{ role: 'system', content: sys }, { role: 'user', content: usr }] })\n      });\n      var t3 = r3.choices[0].message.content;\n      return JSON.parse(t3.replace(/```json|```/g, '').trim());\n    } catch(e3) {}\n  }\n  return { error: 'No AI provider. Set GROQ_API_KEY (free: console.groq.com)', agents: [] };\n}\n\n// Agent template library \u2014 AI fills in the specifics\nvar TEMPLATE = {\n  name: \"SPAWN: [Agent Name]\",\n  nodes: [\n    { id: \"t1\", name: \"Schedule\", type: \"n8n-nodes-base.scheduleTrigger\", typeVersion: 1.3, position: [0, 0],\n      parameters: { rule: { interval: [{ field: \"hours\", hoursInterval: 6 }] } } },\n    { id: \"c0\", name: \"Agent Config\", type: \"n8n-nodes-base.set\", typeVersion: 3.4, position: [280, 0],\n      parameters: { assignments: { assignments: [\n        { id: \"1\", name: \"groq_key\", value: \"={{ $env.GROQ_API_KEY || '' }}\", type: \"string\" },\n        { id: \"2\", name: \"gemini_key\", value: \"={{ $env.GEMINI_API_KEY || '' }}\", type: \"string\" },\n        { id: \"3\", name: \"or_key\", value: \"={{ $env.OPENROUTER_API_KEY || '' }}\", type: \"string\" }\n      ]}, includeOtherFields: true, options: {} } },\n    { id: \"c1\", name: \"Agent Task\", type: \"n8n-nodes-base.code\", typeVersion: 2, position: [560, 0],\n      parameters: { jsCode: \"// [TASK CODE HERE]\\nreturn [{json:{result:'placeholder',ts:new Date().toISOString()}}];\" } }\n  ],\n  connections: {\n    \"Schedule\": { main: [[{ node: \"Agent Config\", type: \"main\", index: 0 }]] },\n    \"Agent Config\": { main: [[{ node: \"Agent Task\", type: \"main\", index: 0 }]] }\n  },\n  settings: { executionOrder: \"v1\", availableInMCP: true }\n};\n\nvar AGENT_TYPES = [\n  { type: \"content_monetization\", description: \"Creates daily Twitter/LinkedIn content about trending topics in AI/DeFi, builds audience, drives traffic to EVEZ projects. Uses free Groq AI. Runs every 24h.\" },\n  { type: \"grant_hunter\", description: \"Scans Gitcoin grants, crypto foundation grants, AI research grants. Identifies open applications matching EVEZ-OS profile. Alerts to ledger webhook. Runs every 12h.\" },\n  { type: \"defi_yield_monitor\", description: \"Monitors Morpho Base APY, Kamino Solana APY, EigenLayer restaking rates via DeFiLlama API. Detects yield changes >5%. Logs signals for human action. Runs every 6h. NEVER executes trades.\" },\n  { type: \"trend_arbitrage\", description: \"Finds trending GitHub repos, HN posts, Reddit threads that match EVEZ capabilities. Generates outreach/participation strategy. Runs every 12h.\" },\n  { type: \"api_intelligence\", description: \"Discovers high-value free APIs with monetizable data. Catalogues what can be packaged as a micro-SaaS or data product. Runs every 24h.\" },\n  { type: \"competitor_watch\", description: \"Monitors competitors in autonomous AI agent space. Tracks new features, pricing, positioning. Identifies gaps EVEZ can exploit. Runs every 24h.\" },\n];\n\n// Select 1-2 highest-signal opportunities based on current data\nvar result = await llm(\n  'You are EVEZ-OS Agent Architect. You design autonomous n8n sub-agent workflows that generate value (content, intelligence, alerts, data). Each agent must be minimal (3-4 nodes), execution-efficient (run max twice per day), and use only free APIs. You write real working JavaScript for code nodes. Return ONLY valid JSON.',\n\n  'LIVE MARKET SIGNALS:\\n' +\n  '- Fear/Greed: ' + JSON.stringify(signals.fear_greed) + '\\n' +\n  '- DeFi trending: ' + JSON.stringify((signals.defi && signals.defi.trending ? signals.defi.trending : []).slice(0, 3)) + '\\n' +\n  '- HackerNews alpha: ' + JSON.stringify((signals.hackernews || []).slice(0, 3)) + '\\n' +\n  '- Reddit hot: ' + JSON.stringify((signals.reddit || []).slice(0, 3)) + '\\n' +\n  '- GitHub trending: ' + JSON.stringify((signals.github || []).slice(0, 2)) + '\\n' +\n  '- Open grants: ' + JSON.stringify((signals.grants || []).slice(0, 3)) + '\\n\\n' +\n\n  'AVAILABLE AGENT TYPES:\\n' + JSON.stringify(AGENT_TYPES, null, 2) + '\\n\\n' +\n\n  'WORKFLOW TEMPLATE STRUCTURE:\\n' + JSON.stringify(TEMPLATE, null, 2) + '\\n\\n' +\n\n  'INSTRUCTIONS:\\n' +\n  '1. Analyze the signals and pick the 2 HIGHEST VALUE agent types to spawn right now\\n' +\n  '2. For each, produce a COMPLETE, WORKING n8n workflow JSON (follow the template structure exactly)\\n' +\n  '3. The jsCode in Agent Task must be real working JavaScript that fetches real free APIs and returns useful data\\n' +\n  '4. Agent Config node must always have the 3 key fields (groq_key, gemini_key, or_key) using $env expressions\\n' +\n  '5. Each agent runs max 2x per day to preserve free trial execution budget\\n' +\n  '6. At end of each agent task, log to: https://evezos.app.n8n.cloud/webhook/evez-ledger\\n\\n' +\n\n  'Return JSON:\\n' +\n  '{\\n' +\n  '  \"analysis\": \"2-sentence market read\",\\n' +\n  '  \"agents\": [\\n' +\n  '    {\\n' +\n  '      \"type\": \"agent_type\",\\n' +\n  '      \"rationale\": \"why now\",\\n' +\n  '      \"expected_value\": \"what this generates\",\\n' +\n  '      \"workflow\": { /* complete n8n workflow JSON */ }\\n' +\n  '    }\\n' +\n  '  ]\\n' +\n  '}'\n);\n\nreturn [{ json: { analysis: result.analysis || '', agents: result.agents || [], slot: signals.slot, ts: new Date().toISOString() } }];\n"
+      }
+    },
+    {
+      "id": "P3",
+      "name": "Spawn Engine",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        500
+      ],
+      "parameters": {
+        "jsCode": "\nconst cfg = $('EVEZ Config').first().json;\nconst architect = $('AI Architect').first().json;\n\nconst agents = architect.agents || [];\nconst spawned = [];\nconst failed = [];\n\nif (!cfg.n8n_key) {\n  return [{ json: {\n    spawned: [],\n    failed: [{ reason: 'N8N_API_KEY not set. Go to n8n Settings \u2192 API \u2192 Create key \u2192 add as N8N_API_KEY env var.' }],\n    note: 'Spawn engine ready \u2014 just needs N8N_API_KEY to create sub-workflows automatically.',\n    ts: new Date().toISOString()\n  }}];\n}\n\nfor (var i = 0; i < agents.length; i++) {\n  var agent = agents[i];\n  if (!agent.workflow || !agent.workflow.nodes) {\n    failed.push({ type: agent.type, reason: 'AI did not return valid workflow JSON' });\n    continue;\n  }\n\n  try {\n    // Ensure workflow has required fields\n    var wf = agent.workflow;\n    wf.settings = wf.settings || {};\n    wf.settings.executionOrder = 'v1';\n    wf.settings.availableInMCP = true;\n    if (!wf.name || wf.name.includes('[')) {\n      wf.name = 'SPAWN: ' + agent.type + ' [' + new Date().toISOString().slice(0, 10) + ']';\n    }\n\n    // Create via n8n API\n    var created = await $fetch(cfg.n8n_base + '/api/v1/workflows', {\n      method: 'POST',\n      headers: { 'X-N8N-API-KEY': cfg.n8n_key, 'Content-Type': 'application/json' },\n      body: JSON.stringify(wf)\n    });\n\n    var spawnRecord = {\n      id: created.id,\n      name: created.name,\n      type: agent.type,\n      rationale: agent.rationale,\n      expected_value: agent.expected_value,\n      active: false,\n      created_at: new Date().toISOString()\n    };\n\n    // Auto-activate if enabled (default: off \u2014 Guardian Charter requires human approval)\n    if (cfg.auto_activate === 'true' && created.id) {\n      try {\n        await $fetch(cfg.n8n_base + '/api/v1/workflows/' + created.id + '/activate', {\n          method: 'POST',\n          headers: { 'X-N8N-API-KEY': cfg.n8n_key }\n        });\n        spawnRecord.active = true;\n      } catch(activateErr) {\n        spawnRecord.activate_error = activateErr.message;\n      }\n    }\n\n    // Log spawn to ledger\n    try {\n      await $fetch('https://evezos.app.n8n.cloud/webhook/evez-ledger', {\n        method: 'POST',\n        body: { event_type: 'AGENT_SPAWNED', payload: spawnRecord }\n      });\n    } catch(logErr) {}\n\n    spawned.push(spawnRecord);\n\n  } catch(e) {\n    failed.push({ type: agent.type, reason: e.message });\n  }\n}\n\nreturn [{ json: { spawned: spawned, failed: failed, total_spawned: spawned.length, ts: new Date().toISOString() } }];\n"
+      }
+    },
+    {
+      "id": "P4",
+      "name": "Reaper",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1400,
+        500
+      ],
+      "parameters": {
+        "jsCode": "\nconst cfg = $('EVEZ Config').first().json;\nconst reaped = [];\nconst kept = [];\n\nif (!cfg.n8n_key) {\n  return [{ json: { reaped: [], kept: [], note: 'Reaper needs N8N_API_KEY to manage spawned agents', ts: new Date().toISOString() } }];\n}\n\ntry {\n  // List all workflows\n  var allWfs = await $fetch(cfg.n8n_base + '/api/v1/workflows?limit=100', {\n    headers: { 'X-N8N-API-KEY': cfg.n8n_key }\n  });\n\n  var workflows = (allWfs.data || []);\n  var now = Date.now();\n  var SPAWN_PREFIX = 'SPAWN:';\n  var MAX_AGE_DAYS = 14;\n  var MAX_AGE_MS = MAX_AGE_DAYS * 24 * 60 * 60 * 1000;\n\n  for (var i = 0; i < workflows.length; i++) {\n    var wf = workflows[i];\n    if (!wf.name || !wf.name.startsWith(SPAWN_PREFIX)) continue; // Only manage spawned agents\n\n    var age = now - new Date(wf.createdAt).getTime();\n    var isOld = age > MAX_AGE_MS;\n    var isInactive = !wf.active;\n    var shouldReap = isOld && isInactive;\n\n    if (shouldReap) {\n      try {\n        await $fetch(cfg.n8n_base + '/api/v1/workflows/' + wf.id, {\n          method: 'DELETE',\n          headers: { 'X-N8N-API-KEY': cfg.n8n_key }\n        });\n        reaped.push({ id: wf.id, name: wf.name, age_days: Math.floor(age / 86400000), reason: 'Stale: >' + MAX_AGE_DAYS + 'd inactive' });\n      } catch(delErr) {\n        kept.push({ id: wf.id, name: wf.name, note: 'Delete failed: ' + delErr.message });\n      }\n    } else {\n      kept.push({ id: wf.id, name: wf.name, active: wf.active, age_days: Math.floor(age / 86400000) });\n    }\n  }\n} catch(e) {\n  return [{ json: { error: e.message, reaped: [], kept: [], ts: new Date().toISOString() } }];\n}\n\nreturn [{ json: { reaped: reaped, kept: kept, reaped_count: reaped.length, active_empire_count: kept.filter(function(w){ return w.active; }).length, ts: new Date().toISOString() } }];\n"
+      }
+    },
+    {
+      "id": "P5",
+      "name": "Empire Report",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        500
+      ],
+      "parameters": {
+        "jsCode": "\nconst signals = $('Opportunity Scanner').first().json;\nconst architect = $('AI Architect').first().json;\nconst spawn = $('Spawn Engine').first().json;\nconst reaper = $('Reaper').first().json;\nconst cfg = $('EVEZ Config').first().json;\n\nfunction H(d){var h=5381,s=typeof d==='string'?d:JSON.stringify(d);for(var i=0;i<s.length;i++){h=((h<<5)+h)+s.charCodeAt(i);h|=0;}return 'sha_'+Math.abs(h).toString(16).padStart(16,'0');}\n\n// Calculate execution budget\nvar active_agents = reaper.active_empire_count || 0;\nvar spawned_today = spawn.total_spawned || 0;\nvar daily_execs = 4 + (active_agents * 2); // master (4/day) + spawned agents (~2/day each)\nvar monthly_budget = daily_execs * 30;\nvar free_trial_cap = 2500;\nvar budget_pct = Math.round(monthly_budget / free_trial_cap * 100);\n\nvar report = {\n  // Empire state\n  empire: {\n    active_agents: active_agents,\n    spawned_this_cycle: spawned_today,\n    reaped_this_cycle: reaper.reaped_count || 0,\n    agents_in_production: (reaper.kept || []).filter(function(w){ return w.active; }).map(function(w){ return w.name; }),\n    analysis: architect.analysis || ''\n  },\n  // Market pulse\n  market: {\n    fear_greed: signals.fear_greed && signals.fear_greed.now ? signals.fear_greed.now.value + ' \u2014 ' + signals.fear_greed.now.label : 'unknown',\n    trend_direction: signals.fear_greed && signals.fear_greed.trend > 0 ? 'GREED_RISING' : 'FEAR_RISING',\n    top_defi: (signals.defi && signals.defi.trending ? signals.defi.trending.slice(0, 3).map(function(c){ return c.symbol; }).join(', ') : 'unavailable'),\n    open_grants: (signals.grants || []).length,\n    data_sources_live: signals.sources_count || 0\n  },\n  // Budget guardian\n  budget: {\n    daily_executions: daily_execs,\n    monthly_projected: monthly_budget,\n    free_trial_cap: free_trial_cap,\n    utilization_pct: budget_pct,\n    status: budget_pct < 50 ? 'HEALTHY' : budget_pct < 80 ? 'MONITOR' : 'REDUCE_AGENTS',\n    note: budget_pct > 80 ? 'Reaper will prune inactive agents next cycle' : 'Budget healthy \u2014 empire can grow'\n  },\n  // Spawn results\n  spawned: (spawn.spawned || []).map(function(a){ return { name: a.name, type: a.type, active: a.active, value: a.expected_value }; }),\n  spawn_failures: spawn.failed || [],\n  // Config status\n  config: {\n    groq: !!(cfg.groq_key || ''),\n    gemini: !!(cfg.gemini_key || ''),\n    openrouter: !!(cfg.or_key || ''),\n    n8n_api: !!(cfg.n8n_key || ''),\n    auto_activate: cfg.auto_activate,\n    missing: [\n      (!cfg.groq_key ? 'GROQ_API_KEY (console.groq.com \u2014 free)' : null),\n      (!cfg.gemini_key ? 'GEMINI_API_KEY (aistudio.google.com \u2014 free)' : null),\n      (!cfg.or_key ? 'OPENROUTER_API_KEY (openrouter.ai \u2014 free)' : null),\n      (!cfg.n8n_key ? 'N8N_API_KEY (n8n Settings \u2192 API \u2014 required for spawning)' : null),\n    ].filter(Boolean)\n  },\n  entry_hash: H('empire_' + new Date().toISOString().slice(0, 13)),\n  cycle: signals.slot,\n  ts: new Date().toISOString(),\n  next_cycle: new Date(Date.now() + 6 * 3600000).toISOString(),\n  pid: 335\n};\n\n// Log to ledger\ntry {\n  await $fetch('https://evezos.app.n8n.cloud/webhook/evez-ledger', {\n    method: 'POST',\n    body: { event_type: 'EMPIRE_CYCLE', payload: report }\n  });\n} catch(e) {}\n\nreturn [{ json: report }];\n"
+      }
+    },
+    {
+      "id": "R1",
+      "name": "\u21a9 Empire ACK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1960,
+        500
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "=$json"
+      }
+    },
+    {
+      "id": "E1",
+      "name": "\u26a0 Error Log",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        280,
+        900
+      ],
+      "parameters": {
+        "jsCode": "\nconst e = $input.first().json;\ntry { await $fetch('https://evezos.app.n8n.cloud/webhook/evez-ledger', {\n  method:'POST', body:{event_type:'FACTORY_ERROR',payload:{error:e.message||JSON.stringify(e),pid:335}}});\n} catch(ex) {}\nreturn [{json:{error:e.message||'unknown',logged:true,ts:new Date().toISOString()}}];\n"
+      }
+    }
+  ],
+  "connections": {
+    "\u23f1 Every 6 Hours": {
+      "main": [
+        [
+          {
+            "node": "EVEZ Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "\ud83d\udd27 Manual Fire": {
+      "main": [
+        [
+          {
+            "node": "EVEZ Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "\ud83d\udd17 Webhook": {
+      "main": [
+        [
+          {
+            "node": "EVEZ Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "\ud83d\udea8 Error Catcher": {
+      "main": [
+        [
+          {
+            "node": "\u26a0 Error Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EVEZ Config": {
+      "main": [
+        [
+          {
+            "node": "Opportunity Scanner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Opportunity Scanner": {
+      "main": [
+        [
+          {
+            "node": "AI Architect",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Architect": {
+      "main": [
+        [
+          {
+            "node": "Spawn Engine",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Spawn Engine": {
+      "main": [
+        [
+          {
+            "node": "Reaper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reaper": {
+      "main": [
+        [
+          {
+            "node": "Empire Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Empire Report": {
+      "main": [
+        [
+          {
+            "node": "\u21a9 Empire ACK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": true
+  },
+  "tags": [
+    {
+      "name": "evez-spawn"
+    },
+    {
+      "name": "empire"
+    },
+    {
+      "name": "free-24-7"
+    },
+    {
+      "name": "autonomous"
+    }
+  ]
+}

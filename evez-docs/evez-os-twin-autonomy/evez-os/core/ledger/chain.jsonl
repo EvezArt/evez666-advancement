@@ -1,0 +1,2 @@
+{}
+{"timestamp": "2026-04-08T17:57:17.059618", "type": "harvest_blocked", "hypothesis": "Alternative: Execute first harvest - close first revenue transaction", "reason": "Twitter account creation (bot detection)", "action_taken": "logged_blocker_and_created_todo"}

@@ -1,0 +1,41 @@
+
+/*
+Simple mock OpenAI chat completions server for local testing.
+Listens on port 8081 by default.
+
+Usage:
+  node mock_openai_server.js
+
+It accepts POST /v1/chat/completions and returns a deterministic JSON
+with a single choice containing a JSON string payload to mimic model output.
+*/
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const port = process.env.MOCK_OPENAI_PORT || 8081;
+
+app.use(bodyParser.json());
+
+app.post('/v1/chat/completions', (req, res) => {
+  const userMsg = req.body.messages && req.body.messages.length ? req.body.messages.slice(-1)[0].content : 'test';
+  // Basic deterministic mock: if user mentions spawn -> return next_action spawn
+  let mock = {
+    result: `Mocked response for: ${userMsg}`,
+    confidence: 0.95,
+    artifacts: null,
+    next_action: null
+  };
+  if (/spawn/i.test(userMsg)) {
+    mock.next_action = 'spawn';
+  }
+  if (/fire/i.test(userMsg)) {
+    mock.next_action = 'execute_fire';
+  }
+  const content = JSON.stringify(mock);
+  const choice = [{ message: { role: 'assistant', content } }];
+  res.json({ id: 'mock-1', object: 'chat.completion', created: Math.floor(Date.now() / 1000), model: 'mock-4o-mini', choices: choice, usage: { total_tokens: 10 } });
+});
+
+app.listen(port, () => {
+  console.log(`Mock OpenAI server listening on http://localhost:${port}`);
+});

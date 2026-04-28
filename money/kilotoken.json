@@ -1,0 +1,6 @@
+{
+  "status": "placeholder",
+  "note": "Replace this file with a real Killar production JWT to activate live revenue APIs.",
+  "how_to": "Get JWT from Killar production dashboard (or ask Steven for the token), then replace the 'token' value below.",
+  "token": "KILLAR_PRODUCTION_TOKEN_PLACEHOLDER_REPLACE_ME"
+}

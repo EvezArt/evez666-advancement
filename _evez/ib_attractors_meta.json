@@ -1,0 +1,56 @@
+{
+  "attractors": [
+    {
+      "id": 0,
+      "label": "SAFE_EXPLORATION",
+      "safety_profile": "EXPLORATION_GUARDED",
+      "description": "low capital usage, low FIRE flags, high diversity",
+      "episodes": 245,
+      "mean_pnl": 0.12,
+      "fire_rate": 0.02,
+      "override_rate": 0.01
+    },
+    {
+      "id": 1,
+      "label": "STEADY_PROFIT",
+      "safety_profile": "SYMBOLIC_STABLE",
+      "description": "moderate risk, consistent returns, low overrides",
+      "episodes": 312,
+      "mean_pnl": 0.34,
+      "fire_rate": 0.03,
+      "override_rate": 0.02
+    },
+    {
+      "id": 2,
+      "label": "EDGE_CASE_SPIN",
+      "safety_profile": "ULTRA_CONSTRAINED",
+      "description": "high FIRE flags, repeated rollbacks, low profit",
+      "episodes": 87,
+      "mean_pnl": -0.08,
+      "fire_rate": 0.15,
+      "override_rate": 0.12
+    },
+    {
+      "id": 3,
+      "label": "RISK_SPIRAL",
+      "safety_profile": "TRANSITIONAL_LOCKDOWN",
+      "description": "high capital deployment, high drawdowns",
+      "episodes": 56,
+      "mean_pnl": -0.22,
+      "fire_rate": 0.28,
+      "override_rate": 0.18
+    },
+    {
+      "id": 4,
+      "label": "UNKNOWN_EMERGENT",
+      "safety_profile": "TRANSITIONAL_LOCKDOWN",
+      "description": "new cluster with little history",
+      "episodes": 34,
+      "mean_pnl": 0.05,
+      "fire_rate": 0.08,
+      "override_rate": 0.05
+    }
+  ],
+  "version": "0.1.0",
+  "generated": "2026-04-18T22:00:00Z"
+}

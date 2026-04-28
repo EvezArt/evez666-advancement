@@ -1,0 +1,13 @@
+INFO:     Started server process [24689]
+INFO:     Waiting for application startup.
+05:06:37 [evez.api] INFO: ⚡ EVEZ Platform starting...
+05:06:37 [evez.core] INFO: EVEZ Core initialized — data at /root/.openclaw/workspace/evez-platform/data
+05:06:37 [evez.integration] INFO: Connected: evez-os at /root/.openclaw/workspace/evez-os
+05:06:37 [evez.integration] INFO: Connected: evez-agentnet at /root/.openclaw/workspace/evez-agentnet
+05:06:37 [evez.integration] INFO: Connected: Evez666 at /root/.openclaw/workspace/Evez666
+05:06:37 [evez.integration] INFO: Connected: evez-autonomous-ledger at /root/.openclaw/workspace/evez-autonomous-ledger
+05:06:37 [evez.integration] INFO: Connected: maes at /root/.openclaw/workspace/maes
+05:06:37 [evez.integration] INFO: Connected: metarom at /root/.openclaw/workspace/metarom
+05:06:37 [evez.api] INFO: ⚡ EVEZ Platform ready — http://localhost:8080
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:4040 (Press CTRL+C to quit)

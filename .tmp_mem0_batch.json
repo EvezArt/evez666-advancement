@@ -1,0 +1,58 @@
+[
+  {
+    "tool_slug": "MEM0_ADD_NEW_MEMORY_RECORDS",
+    "arguments": {
+      "infer": false,
+      "user_id": "6061428",
+      "org_id": "org_zSiQU2d7ARSDfOYtoIWrYFZSXol19mWuEfJycDyL",
+      "messages": [
+        {
+          "role": "user",
+          "content": "=== CRON JOB STATUSES (2026-04-23 19:18 UTC) ===\nTotal jobs: 17\nHealth: 53% OK (9/17), 8 errors\nActive errors: 6 rate-limit (Money Machine, Quantum Sweep, Market Scan, AI Research, Dropbox, NL Test each 1-2 consec), 2 config decay (self-improvement-cycle main+dup, 15+ consecutive channel misconfig)\nRevenue Triad: Full Stack OK, Money Machine OK (may re-degrade), Revenue Tracker ERROR (rate_limit 1+)\nMonitoring tier consumed: Cognition Engine 5 consecutive rate_limits + file edit failures\nEVEZ Studio: split-brain - PID 2932 running but ports 4040/4041 not listening\nRevenue: $10.04 total earnings (last sale: 2026-04-22)\nSystem phase: Phase 3 systemic cascade at critical mass, monitoring tier consumed, system blind"
+        }
+      ]
+    }
+  },
+  {
+    "tool_slug": "MEM0_ADD_NEW_MEMORY_RECORDS",
+    "arguments": {
+      "infer": false,
+      "user_id": "6061428",
+      "org_id": "org_zSiQU2d7ARSDfOYtoIWrYFZSXol19mWuEfJycDyL",
+      "messages": [
+        {
+          "role": "user",
+          "content": "=== REVENUE CIRCUIT STATES ===\nActual: $10.04 (api_sale $0.05, content_sale $9.99)\nProjected: $1.8M/day (potential)\nPayment blockade: ACTIVE - Ko-fi bank unlinked, PayPal not activated, Gumroad product not live\nCircuit status: Money Machine degraded (3+ consec rate_limits, severely limited), Full Stack OK (last run succeeded), Revenue Tracker ERROR (rate_limit 1+)\nOrchestrators: ACTIVE since 05:06 UTC (quantum_runner, wealth_hunter, ci_watcher)\nEVEZ Studio: OFFLINE >10h (split-brain)\nRevenue activation rule: TRIGGERED but blocked by payment processors and Full Stack degradation\nCircuit state: active_but_payment_disconnected"
+        }
+      ]
+    }
+  },
+  {
+    "tool_slug": "MEM0_ADD_NEW_MEMORY_RECORDS",
+    "arguments": {
+      "infer": false,
+      "user_id": "6061428",
+      "org_id": "org_zSiQU2d7ARSDfOYtoIWrYFZSXol19mWuEfJycDyL",
+      "messages": [
+        {
+          "role": "user",
+          "content": "=== ERRORS LAST HOUR (2026-04-23 18:18-19:18 UTC) ===\nMonitoring tier: CONSUMED - Cognition Engine 5 consecutive failures (rate_limit + file edit failures on milestones.md, heartbeat-state.json)\nJob errors (6 rate-limit): Money Machine (3+ consec), Quantum Sweep (2 consec), Market Scan (1), AI Research (1), Dropbox (1), NL Test (1)\nConfig decay (2): self-improvement-cycle main + dup - 15+ consecutive channel misconfig (402 billing error - needs credits or free model)\nPhase 3 systemic cascade: 14/17 jobs competing for GitHub Models quota causing sequential error waves\nChurn rate: ~23% (4/17 state changes in 20min)\nNo syslog entries found; error detection via cron monitoring & heartbeat-state.json\nMeta-failure pattern confirmed: monitoring tier consumption = system blind"
+        }
+      ]
+    }
+  },
+  {
+    "tool_slug": "MEM0_ADD_NEW_MEMORY_RECORDS",
+    "arguments": {
+      "infer": false,
+      "user_id": "6061428",
+      "org_id": "org_zSiQU2d7ARSDfOYtoIWrYFZSXol19mWuEfJycDyL",
+      "messages": [
+        {
+          "role": "user",
+          "content": "=== KEY DECISIONS MADE (recent, validated) ===\n1) Monitoring tier restoration is P0-prerequisite - cannot self-heal while blind\n2) Split-brain identified as autonomous gap: agent layer detects but cannot restart web services (requires Steven manual intervention)\n3) Revenue triad supersedes overall health - ANY triad component degraded = revenue blocked (need revenue-specific monitoring)\n4) Config decay immune to backoff - requires surgical fix BEFORE monitoring restores (else compound failures)\n5) Auto-Route debt (detection-only) becomes P0 during cascade - need cron update automation implementation\n6) File-first memory validated effective but has limits - need flock for production concurrency\n7) Payment blockade is independent compounding layer - technical cascade resolution alone insufficient\n8) Recovery is non-monotonic - churn continues despite apparent health gains\nAction priority sequence: Restore monitoring (P0) -> Contain churn (manual interval spreading) -> Restart EVEZ (Steven) -> Connect payments (Steven) -> Fix config decay (P1 surgical) -> Implement automation debt (P2)\nMeta-learning: Monitoring consumption threshold is final systemic failure point"
+        }
+      ]
+    }
+  }
+]

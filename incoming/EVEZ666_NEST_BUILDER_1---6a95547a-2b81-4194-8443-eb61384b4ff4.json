@@ -1,0 +1,400 @@
+{
+  "name": "EVEZ666 Nest Builder \u2014 Scout+Brain+Meme+Tweet+Spawn \u2014 FREE 24/7",
+  "nodes": [
+    {
+      "id": "T1",
+      "name": "Scheduler - Every 2h",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        0,
+        300
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 120
+            }
+          ]
+        }
+      },
+      "typeVersion": 1.3
+    },
+    {
+      "id": "T2",
+      "name": "Manual Run",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        0,
+        500
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "id": "T3",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        0,
+        700
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "evez-nest-run",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "typeVersion": 2.1,
+      "webhookId": "nest-T3"
+    },
+    {
+      "id": "T4",
+      "name": "Error Catcher",
+      "type": "n8n-nodes-base.errorTrigger",
+      "position": [
+        0,
+        900
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "id": "C1",
+      "name": "EVEZ Config",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        280,
+        500
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1",
+              "name": "groq_key",
+              "value": "={{ $env.GROQ_API_KEY || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "2",
+              "name": "gemini_key",
+              "value": "={{ $env.GEMINI_API_KEY || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "3",
+              "name": "or_key",
+              "value": "={{ $env.OPENROUTER_API_KEY || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "4",
+              "name": "hf_token",
+              "value": "={{ $env.HF_TOKEN || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "5",
+              "name": "tw_bearer",
+              "value": "={{ $env.TWITTER_BEARER_TOKEN || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "6",
+              "name": "tw_access",
+              "value": "={{ $env.TWITTER_ACCESS_TOKEN || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "7",
+              "name": "tw_secret",
+              "value": "={{ $env.TWITTER_ACCESS_SECRET || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "8",
+              "name": "tw_api_key",
+              "value": "={{ $env.TWITTER_API_KEY || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "9",
+              "name": "tw_api_secret",
+              "value": "={{ $env.TWITTER_API_SECRET || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "10",
+              "name": "n8n_key",
+              "value": "={{ $env.N8N_API_KEY || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "11",
+              "name": "n8n_base",
+              "value": "={{ $env.N8N_BASE_URL || 'https://evezos.app.n8n.cloud' }}",
+              "type": "string"
+            },
+            {
+              "id": "12",
+              "name": "auto_post",
+              "value": "={{ $env.EVEZ_AUTO_POST || 'false' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "typeVersion": 3.4
+    },
+    {
+      "id": "P1",
+      "name": "Internet Scout",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        560,
+        500
+      ],
+      "parameters": {
+        "jsCode": "\nconst cfg = $('EVEZ Config').first().json;\nconst out = {};\n\n// DuckDuckGo \u2014 free no key\ntry {\n  const d = await $fetch('https://api.duckduckgo.com/?q=evez666+defi+autonomous+AI+crypto&format=json&no_html=1&skip_disambig=1',\n    {headers:{'User-Agent':'EVEZ-OS/1.0'}});\n  out.ddg = {\n    abstract: (d.AbstractText||'').slice(0,300),\n    related: (d.RelatedTopics||[]).slice(0,4).map(function(t){return (t.Text||'').slice(0,80);}).filter(Boolean)\n  };\n} catch(e) { out.ddg = {error:e.message}; }\n\n// Reddit public \u2014 no key\nout.reddit = [];\nconst rTerms = ['evez666','defi autonomous agent meme 2026','AI agent wealth accumulation crypto'];\nfor (let i=0; i<rTerms.length; i++) {\n  try {\n    const r = await $fetch('https://www.reddit.com/search.json?q='+encodeURIComponent(rTerms[i])+'&sort=hot&limit=3&t=week',\n      {headers:{'User-Agent':'EVEZ-OS/1.0 (research)'}});\n    const posts = (r.data && r.data.children ? r.data.children : []).map(function(p) {\n      return {title:(p.data.title||'').slice(0,100), score:p.data.score, sub:p.data.subreddit};\n    });\n    out.reddit = out.reddit.concat(posts);\n  } catch(e2) {}\n}\nout.reddit = out.reddit.slice(0,6);\n\n// HackerNews Algolia \u2014 free no key\ntry {\n  const hn = await $fetch('https://hn.algolia.com/api/v1/search?query=autonomous+AI+agent+DeFi&hitsPerPage=5');\n  out.hn = (hn.hits||[]).map(function(h){return {title:(h.title||'').slice(0,100),points:h.points};});\n} catch(e) { out.hn = []; }\n\n// CoinGecko trending \u2014 free no key\ntry {\n  const cg = await $fetch('https://api.coingecko.com/api/v3/search/trending');\n  out.trending = (cg.coins||[]).slice(0,5).map(function(c) {\n    return {name:c.item.name, symbol:c.item.symbol, change:c.item.data && c.item.data.price_change_percentage_24h ? c.item.data.price_change_percentage_24h.usd : 0};\n  });\n} catch(e) { out.trending = []; }\n\n// Fear & Greed \u2014 free\ntry {\n  const fg = await $fetch('https://api.alternative.me/fng/?limit=1');\n  out.fear_greed = {value: fg.data[0].value, label: fg.data[0].value_classification};\n} catch(e) { out.fear_greed = {value:'?',label:'unknown'}; }\n\n// Nitter \u2014 public Twitter mirror, no auth\nout.evez666_tweets = [];\nconst mirrors = ['https://nitter.privacydev.net','https://nitter.poast.org','https://nitter.cz'];\nfor (let i=0; i<mirrors.length; i++) {\n  try {\n    const html = await $fetch(mirrors[i]+'/evez666', {headers:{'User-Agent':'Mozilla/5.0 EVEZ-OS'}});\n    const m = html.match(/class=\"tweet-content[^\"]*\"[^>]*>([\\s\\S]{10,300}?)<\\/div>/g) || [];\n    out.evez666_tweets = m.slice(0,4).map(function(x){return x.replace(/<[^>]+>/g,'').trim();}).filter(function(t){return t.length>10;});\n    if (out.evez666_tweets.length) break;\n  } catch(e2) {}\n}\n\nout.scouted_at = new Date().toISOString();\nout.slot = Math.floor(Date.now()/7200000);\nreturn [{json:out}];\n"
+      },
+      "typeVersion": 2
+    },
+    {
+      "id": "P2",
+      "name": "EVEZ Brain",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        840,
+        500
+      ],
+      "parameters": {
+        "jsCode": "\nconst cfg = $('EVEZ Config').first().json;\nconst s = $('Internet Scout').first().json;\n\nasync function llm(sys, usr) {\n  const max = 1200;\n  if (cfg.groq_key) {\n    try {\n      const r = await $fetch('https://api.groq.com/openai/v1/chat/completions', {\n        method:'POST',\n        headers:{'Authorization':'Bearer '+cfg.groq_key,'Content-Type':'application/json'},\n        body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:max,messages:[{role:'system',content:sys},{role:'user',content:usr}]})\n      });\n      const t = r.choices[0].message.content;\n      try { return {data:JSON.parse(t.replace(/```json|```/g,'').trim()),via:'groq'}; }\n      catch(e2) { return {data:{raw:t.slice(0,600)},via:'groq'}; }\n    } catch(e) {}\n  }\n  if (cfg.gemini_key) {\n    try {\n      const r = await $fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key='+cfg.gemini_key, {\n        method:'POST',headers:{'Content-Type':'application/json'},\n        body:JSON.stringify({systemInstruction:{parts:[{text:sys}]},contents:[{role:'user',parts:[{text:usr}]}],generationConfig:{maxOutputTokens:max}})\n      });\n      const t = r.candidates[0].content.parts[0].text;\n      try { return {data:JSON.parse(t.replace(/```json|```/g,'').trim()),via:'gemini'}; }\n      catch(e2) { return {data:{raw:t.slice(0,600)},via:'gemini'}; }\n    } catch(e) {}\n  }\n  if (cfg.or_key) {\n    try {\n      const r = await $fetch('https://openrouter.ai/api/v1/chat/completions', {\n        method:'POST',\n        headers:{'Authorization':'Bearer '+cfg.or_key,'Content-Type':'application/json','HTTP-Referer':'https://evezos.app.n8n.cloud'},\n        body:JSON.stringify({model:'meta-llama/llama-3.3-70b-instruct:free',max_tokens:max,messages:[{role:'system',content:sys},{role:'user',content:usr}]})\n      });\n      const t = r.choices[0].message.content;\n      try { return {data:JSON.parse(t.replace(/```json|```/g,'').trim()),via:'openrouter'}; }\n      catch(e2) { return {data:{raw:t.slice(0,600)},via:'openrouter'}; }\n    } catch(e) {}\n  }\n  return {data:{error:'No AI provider set. Add GROQ_API_KEY (free: console.groq.com)'},via:'none'};\n}\n\nconst LORE = 'EVEZ666 = Steven Crawford-Maggard. Building EVEZ-OS: sovereign autonomous AI on Galaxy A16+n8n+Oracle bare metal. Recursive DeFi loops (Morpho 65% LTV, Kamino 28%, EigenLayer, Pendle) from $50 seed. 17 agents, Guardian Charter PID 335. Meta-meme: one person building AI empire while AI studies the person studying the AI in infinite recursion. Aesthetic: brutalist dark, acid yellow, Bebas Neue. #EVEZ #autonomous #defi';\n\nconst MODES = ['meme_post','defi_alpha','agent_lore','research_thread','meta_recursion','signal_post'];\nconst mode = MODES[s.slot % MODES.length];\n\nconst sysPrompt = 'You are the EVEZ666 Twitter content brain. Create authentic content for @evez666.\\n'+LORE+'\\nStyle: terse, technical, self-aware, crypto-native, slightly unhinged, documenting something real. Max 2 hashtags.';\n\nconst userPrompt = 'CONTENT MODE: '+mode+'\\nLIVE SIGNALS:\\n- Fear/Greed: '+s.fear_greed.value+' ('+s.fear_greed.label+')\\n- Trending: '+JSON.stringify((s.trending||[]).slice(0,3))+'\\n- Reddit: '+JSON.stringify((s.reddit||[]).slice(0,3))+'\\n- HN: '+JSON.stringify((s.hn||[]).slice(0,2))+'\\n- @evez666 tweets found: '+JSON.stringify(s.evez666_tweets)+'\\n\\nReturn JSON only:\\n{\\n  \"mode\": \"'+mode+'\",\\n  \"tweet\": \"tweet max 280 chars\",\\n  \"alt_tweet\": \"alternative\",\\n  \"thread\": null or [\"(1/3) text\",\"(2/3) text\",\"(3/3) text\"],\\n  \"image_prompt\": null or \"meme image generation prompt\",\\n  \"confidence\": 0.85,\\n  \"monetization_signal\": null or {\"type\":\"grant|airdrop|arb|content\",\"detail\":\"...\",\"urgency\":\"high|med|low\"},\\n  \"spawn_agent\": null or {\"name\":\"AgentName\",\"purpose\":\"what it does\",\"trigger\":\"condition\"}\\n}';\n\nconst res = await llm(sysPrompt, userPrompt);\nconst d = res.data;\nd._mode = mode;\nd._slot = s.slot;\nd._via = res.via;\nd._ts = new Date().toISOString();\nreturn [{json:d}];\n"
+      },
+      "typeVersion": 2
+    },
+    {
+      "id": "P3",
+      "name": "Meme Forge",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1120,
+        500
+      ],
+      "parameters": {
+        "jsCode": "\nconst cfg = $('EVEZ Config').first().json;\nconst brain = $('EVEZ Brain').first().json;\nlet image_generated = false;\n\nif (brain.image_prompt && cfg.hf_token) {\n  try {\n    await $fetch('https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-schnell', {\n      method:'POST',\n      headers:{'Authorization':'Bearer '+cfg.hf_token,'Content-Type':'application/json'},\n      body:JSON.stringify({inputs:brain.image_prompt+', brutalist dark cyberpunk, acid yellow, EVEZ-OS, high contrast',parameters:{num_inference_steps:4}})\n    });\n    image_generated = true;\n  } catch(e) {}\n}\n\nreturn [{json:{\n  tweet: brain.tweet || brain.alt_tweet || 'EVEZ-OS tick. PID 335. recursive loop running.',\n  alt_tweet: brain.alt_tweet || '',\n  thread: brain.thread || null,\n  image_prompt: brain.image_prompt || null,\n  image_generated: image_generated,\n  mode: brain._mode,\n  via: brain._via,\n  monetization_signal: brain.monetization_signal || null,\n  spawn_agent: brain.spawn_agent || null,\n  confidence: brain.confidence || 0,\n  ready: !!(brain.tweet),\n  ts: new Date().toISOString()\n}}];\n"
+      },
+      "typeVersion": 2
+    },
+    {
+      "id": "P4",
+      "name": "Twitter Post",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1400,
+        500
+      ],
+      "parameters": {
+        "jsCode": "\nconst cfg = $('EVEZ Config').first().json;\nconst forge = $('Meme Forge').first().json;\n\nconst result = {posted:false,tweet_id:null,tweet_text:forge.tweet,error:null,reason:'',ts:new Date().toISOString()};\n\nconst hasCreds = !!(cfg.tw_api_key && cfg.tw_api_secret && cfg.tw_access && cfg.tw_secret);\nconst autoPost = (cfg.auto_post === 'true');\n\nif (!hasCreds) {\n  result.reason = 'Twitter credentials not set. Add in n8n Settings \u2192 Variables: TWITTER_API_KEY, TWITTER_API_SECRET, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_SECRET. Free at developer.twitter.com (Basic plan). For OAuth 1.0a signing, also add n8n Twitter credential in n8n UI.';\n  result.preview = forge.tweet;\n  return [{json:result}];\n}\nif (!autoPost) {\n  result.reason = 'Set EVEZ_AUTO_POST=true in env vars to enable posting.';\n  result.preview = forge.tweet;\n  return [{json:result}];\n}\n\ntry {\n  const r = await $fetch('https://api.twitter.com/2/tweets', {\n    method:'POST',\n    headers:{'Content-Type':'application/json','Authorization':'Bearer '+cfg.tw_bearer},\n    body:JSON.stringify({text:forge.tweet.slice(0,280)})\n  });\n  if (r.data && r.data.id) {\n    result.posted = true;\n    result.tweet_id = r.data.id;\n    result.tweet_url = 'https://x.com/evez666/status/'+r.data.id;\n    result.reason = 'Posted';\n  } else {\n    result.error = JSON.stringify(r.errors||r);\n    result.reason = 'OAuth 1.0a required for write \u2014 add n8n Twitter credential then swap this node with Twitter node';\n  }\n} catch(e) {\n  result.error = e.message;\n  result.reason = e.message;\n}\nreturn [{json:result}];\n"
+      },
+      "typeVersion": 2
+    },
+    {
+      "id": "P5",
+      "name": "Sub-Agent Spawner",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1680,
+        500
+      ],
+      "parameters": {
+        "jsCode": "\nconst cfg = $('EVEZ Config').first().json;\nconst forge = $('Meme Forge').first().json;\n\nconst trigger = forge.spawn_agent;\nconst mon = forge.monetization_signal;\n\nif (!trigger && !mon) return [{json:{spawned:false,reason:'No spawn trigger this cycle'}}];\nif (!cfg.n8n_key) return [{json:{spawned:false,reason:'N8N_API_KEY not set'}}];\n\nconst name = (trigger && trigger.name) ? trigger.name : ('EVEZ-Agent: '+(mon && mon.type ? mon.type : 'monitor'));\nconst purpose = (trigger && trigger.purpose) ? trigger.purpose : ((mon && mon.detail) ? mon.detail : 'Monitor opportunity');\n\nconst subWF = {\n  name: name,\n  nodes: [\n    {id:'s1',name:'Hourly',type:'n8n-nodes-base.scheduleTrigger',typeVersion:1.3,position:[0,0],\n     parameters:{rule:{interval:[{field:'hours',hoursInterval:1}]}}},\n    {id:'s2',name:'Monitor Task',type:'n8n-nodes-base.code',typeVersion:2,position:[280,0],\n     parameters:{jsCode:'// Sub-agent: '+purpose+'\\nreturn [{json:{agent:\"'+name+'\",purpose:\"'+purpose+'\",ts:new Date().toISOString(),status:\"monitoring\"}}];'}}\n  ],\n  connections:{Hourly:{main:[[{node:'Monitor Task',type:'main',index:0}]]}},\n  settings:{executionOrder:'v1',availableInMCP:true}\n};\n\ntry {\n  const created = await $fetch(cfg.n8n_base+'/api/v1/workflows', {\n    method:'POST',\n    headers:{'X-N8N-API-KEY':cfg.n8n_key,'Content-Type':'application/json'},\n    body:JSON.stringify(subWF)\n  });\n  return [{json:{spawned:true,id:created.id,name:name,purpose:purpose,ts:new Date().toISOString()}}];\n} catch(e) {\n  return [{json:{spawned:false,error:e.message}}];\n}\n"
+      },
+      "typeVersion": 2
+    },
+    {
+      "id": "P6",
+      "name": "Memory Log",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1960,
+        500
+      ],
+      "parameters": {
+        "jsCode": "\nconst scout = $('Internet Scout').first().json;\nconst brain = $('EVEZ Brain').first().json;\nconst forge = $('Meme Forge').first().json;\nconst tw = $('Twitter Post').first().json;\nconst spawn = $('Sub-Agent Spawner').first().json;\n\nfunction H(d){let h=5381,s=typeof d==='string'?d:JSON.stringify(d);for(let i=0;i<s.length;i++){h=((h<<5)+h)+s.charCodeAt(i);h|=0;}return 'sha_'+Math.abs(h).toString(16).padStart(16,'0');}\n\nconst session = {\n  slot:brain._slot, mode:brain._mode, via:brain._via,\n  tweet:tw.tweet_text, posted:tw.posted, tweet_id:tw.tweet_id,\n  image:forge.image_generated,\n  spawned:spawn.spawned, spawn_name:spawn.name,\n  fear_greed:scout.fear_greed && scout.fear_greed.label ? scout.fear_greed.value+' '+scout.fear_greed.label : '?',\n  trending:(scout.trending||[]).slice(0,2).map(function(c){return c.symbol;}).join('+'),\n  confidence:forge.confidence,\n  entry_hash:H(brain._slot+'|'+(tw.tweet_text||'')),\n  ts:new Date().toISOString(), pid:335\n};\n\ntry {\n  await $fetch('https://evezos.app.n8n.cloud/webhook/evez-ledger',\n    {method:'POST',body:{event_type:'NEST_SESSION',payload:session}});\n} catch(e) {}\n\nreturn [{json:{\n  session_complete:true, cycle:brain._slot, mode:brain._mode, ai:brain._via,\n  tweet_preview:(tw.tweet_text||'').slice(0,80)+'...',\n  posted:tw.posted, post_status:tw.reason||(tw.posted?'LIVE':'PREVIEW'),\n  image:forge.image_generated, sub_agent:spawn.spawned,\n  market:{\n    fear_greed:(scout.fear_greed&&scout.fear_greed.value?scout.fear_greed.value+' '+scout.fear_greed.label:'?'),\n    trending:(scout.trending||[]).slice(0,3).map(function(c){return c.symbol+(c.change>0?'u':'d')+Math.abs(c.change||0).toFixed(1)+'%';}).join(' ')\n  },\n  next_run:'2 hours', entry_hash:session.entry_hash, ts:session.ts\n}}];\n"
+      },
+      "typeVersion": 2
+    },
+    {
+      "id": "R1",
+      "name": "Session ACK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [
+        2240,
+        500
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "=$json"
+      },
+      "typeVersion": 1.1
+    },
+    {
+      "id": "E1",
+      "name": "Error Handler",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        280,
+        900
+      ],
+      "parameters": {
+        "jsCode": "\nconst e = $input.first().json;\ntry { await $fetch('https://evezos.app.n8n.cloud/webhook/evez-ledger',\n  {method:'POST',body:{event_type:'NEST_ERROR',payload:{error:e.message||JSON.stringify(e),pid:335}}}); } catch(ex) {}\nreturn [{json:{error:e.message||'unknown',logged:true,ts:new Date().toISOString()}}];\n"
+      },
+      "typeVersion": 2
+    }
+  ],
+  "connections": {
+    "Scheduler - Every 2h": {
+      "main": [
+        [
+          {
+            "node": "EVEZ Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual Run": {
+      "main": [
+        [
+          {
+            "node": "EVEZ Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "EVEZ Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Catcher": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EVEZ Config": {
+      "main": [
+        [
+          {
+            "node": "Internet Scout",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Internet Scout": {
+      "main": [
+        [
+          {
+            "node": "EVEZ Brain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EVEZ Brain": {
+      "main": [
+        [
+          {
+            "node": "Meme Forge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Meme Forge": {
+      "main": [
+        [
+          {
+            "node": "Twitter Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Twitter Post": {
+      "main": [
+        [
+          {
+            "node": "Sub-Agent Spawner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sub-Agent Spawner": {
+      "main": [
+        [
+          {
+            "node": "Memory Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Memory Log": {
+      "main": [
+        [
+          {
+            "node": "Session ACK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": true
+  },
+  "tags": [
+    {
+      "name": "evez-nest"
+    },
+    {
+      "name": "free-24-7"
+    },
+    {
+      "name": "twitter"
+    },
+    {
+      "name": "autonomous"
+    }
+  ]
+}

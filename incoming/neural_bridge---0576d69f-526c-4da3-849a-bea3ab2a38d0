@@ -1,0 +1,53 @@
+import os
+import json
+import requests
+from typing import Dict, Any
+
+class NeuralBridge:
+    """The Command Surface: Bridging Perplexity, ChatGPT, and Slack."""
+    
+    def __init__(self):
+        self.slack_webhook = os.getenv("SLACK_WEBHOOK")
+        self.perplexity_api_key = os.getenv("PERPLEXITY_API_KEY")
+        self.openai_api_key = os.getenv("OPENAI_API_KEY")
+        self.phi = 0.995
+
+    def process_command(self, command: str):
+        """Process a command from Slack using the Neural Bridge."""
+        print(f"--- EVEZ Neural Bridge: Processing Command '{command}' ---")
+        
+        # 1. Recon: Query Perplexity for live signals
+        recon_data = self._query_perplexity(command)
+        
+        # 2. Verify: Use ChatGPT to stress-test and plan
+        plan = self._query_chatgpt(command, recon_data)
+        
+        # 3. Execute: Trigger EVEZ-OS Transmutation
+        self._trigger_evez_os(plan)
+        
+        # 4. Notify: Send update to Slack
+        self._notify_slack(f"✅ Command Processed: {command}\nφ={self.phi}\nPlan: {plan['summary']}")
+
+    def _query_perplexity(self, query: str) -> Dict[str, Any]:
+        print(f"Querying Perplexity for: {query}")
+        # Placeholder for Perplexity API call
+        return {"signals": ["Solana MEV gap detected", "Legacy hardware optimization possible"]}
+
+    def _query_chatgpt(self, command: str, recon_data: Dict[str, Any]) -> Dict[str, Any]:
+        print(f"Querying ChatGPT to plan for: {command}")
+        # Placeholder for ChatGPT API call
+        return {"summary": "Deploying TransmutationEngine to Node_001 and spawning EMERGE_AGENT_X."}
+
+    def _trigger_evez_os(self, plan: Dict[str, Any]):
+        print(f"Triggering EVEZ-OS with plan: {plan['summary']}")
+        # Logic to call the TransmutationEngine or AgentFactory
+
+    def _notify_slack(self, message: str):
+        if self.slack_webhook:
+            requests.post(self.slack_webhook, json={"text": message})
+        print(f"NOTIFY SLACK: {message}")
+
+if __name__ == "__main__":
+    bridge = NeuralBridge()
+    # Example: Process a command from the Commander
+    bridge.process_command("Optimize all legacy systems and spawn a new researcher agent.")

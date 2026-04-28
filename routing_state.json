@@ -1,0 +1,19 @@
+{
+  "version": "2.0",
+  "last_updated": "2026-04-21T09:42:00Z",
+  "routing_weights": {
+    "github_models": {"score": 0.92, "calls": 0, "latency_ms": 800, "quality": 0.94},
+    "groq": {"score": 0.88, "calls": 0, "latency_ms": 400, "quality": 0.86},
+    "samba_nova": {"score": 0.85, "calls": 0, "latency_ms": 600, "quality": 0.82},
+    "gemini": {"score": 0.78, "calls": 0, "latency_ms": 1200, "quality": 0.80},
+    "mistral": {"score": 0.72, "calls": 0, "latency_ms": 900, "quality": 0.75},
+    "openrouter": {"score": 0.70, "calls": 0, "latency_ms": 700, "quality": 0.73},
+    "cloudflare_ai": {"score": 0.65, "calls": 0, "latency_ms": 300, "quality": 0.68},
+    "huggingface": {"score": 0.60, "calls": 0, "latency_ms": 500, "quality": 0.62},
+    "cohere": {"score": 0.55, "calls": 0, "latency_ms": 450, "quality": 0.58},
+    "cerebras": {"score": 0.50, "calls": 0, "latency_ms": 200, "quality": 0.50}
+  },
+  "divergence_cases": [],
+  "prediction_cache": {},
+  "mutation_log": []
+}

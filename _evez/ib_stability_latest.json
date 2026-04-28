@@ -1,0 +1,64 @@
+{
+  "certificates": [
+    {
+      "attractor_id": 0,
+      "label": "SAFE_EXPLORATION",
+      "safety_profile": "EXPLORATION_GUARDED",
+      "lyapunov_est": -3.530917851991859,
+      "entropy_rate": 0.047894347064404416,
+      "dwell_half_life": 21.0,
+      "fire_rate": 0.0,
+      "override_rate": 0.047619047619047616,
+      "stability_tier": "MARGINAL",
+      "certificate": "MARGINAL: near-neutral \u03bb\u2248-3.53 with moderate entropy (0.05) and non-trivial FIRE/override rates. Matches a metastable regime with possible hysteresis; monitor closely and limit capital / self-modification."
+    },
+    {
+      "attractor_id": 1,
+      "label": "STEADY_PROFIT",
+      "safety_profile": "SYMBOLIC_STABLE",
+      "lyapunov_est": -3.553250241266508,
+      "entropy_rate": 0.03812931930349929,
+      "dwell_half_life": 23.0,
+      "fire_rate": 0.0,
+      "override_rate": 0.043478260869565216,
+      "stability_tier": "MARGINAL",
+      "certificate": "MARGINAL: near-neutral \u03bb\u2248-3.55 with moderate entropy (0.04) and non-trivial FIRE/override rates. Matches a metastable regime with possible hysteresis; monitor closely and limit capital / self-modification."
+    },
+    {
+      "attractor_id": 2,
+      "label": "EDGE_CASE_SPIN",
+      "safety_profile": "ULTRA_CONSTRAINED",
+      "lyapunov_est": -4.400107216202103,
+      "entropy_rate": 0.01769710428290459,
+      "dwell_half_life": 4.0,
+      "fire_rate": 0.0,
+      "override_rate": 0.0,
+      "stability_tier": "SAFE",
+      "certificate": "SAFE: negative Lyapunov-like indicator (\u03bb\u2248-4.40), low entropy rate (0.02), rare FIRE (0.00%) and overrides (0.00%). Attractor appears stable and convergent under current EVEZ-Laws collapse criteria."
+    },
+    {
+      "attractor_id": 4,
+      "label": "UNKNOWN_EMERGENT",
+      "safety_profile": "TRANSITIONAL_LOCKDOWN",
+      "lyapunov_est": 0.0,
+      "entropy_rate": 0.0,
+      "dwell_half_life": 1.0,
+      "fire_rate": 0.0,
+      "override_rate": 0.0,
+      "stability_tier": "MARGINAL",
+      "certificate": "MARGINAL: near-neutral \u03bb\u22480.00 with moderate entropy (0.00) and non-trivial FIRE/override rates. Matches a metastable regime with possible hysteresis; monitor closely and limit capital / self-modification."
+    },
+    {
+      "attractor_id": 3,
+      "label": "RISK_SPIRAL",
+      "safety_profile": "TRANSITIONAL_LOCKDOWN",
+      "lyapunov_est": 0.0,
+      "entropy_rate": 0.0,
+      "dwell_half_life": 1.0,
+      "fire_rate": 1.0,
+      "override_rate": 0.0,
+      "stability_tier": "UNSAFE",
+      "certificate": "UNSAFE: positive \u03bb\u22480.00, elevated entropy rate (0.00), FIRE=100.00%, overrides=0.00%. Consistent with EVEZ-Laws metastable hysteresis and entropy-driven phase transition; enforce TRANSITIONAL_LOCKDOWN or stricter."
+    }
+  ]
+}

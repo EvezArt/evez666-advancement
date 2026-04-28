@@ -1,0 +1,4 @@
+Auto-Route Failover report at $(date):
+- No jobs with consecutiveErrors > 3
+- Critical jobs (Money Machine, KiloClaw Revenue Loop) are OK
+- No adjustments made

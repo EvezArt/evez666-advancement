@@ -1,0 +1,55 @@
+
+{
+  "name": "EVEZ Webhook Wrapper — Developer Sandbox",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "evez-wrapper/ingest",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook_ingest",
+      "name": "Webhook Ingest",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [200, 200],
+      "webhookId": "evez-wrapper-ingest"
+    },
+    {
+      "parameters": {
+        "jsCode": "// HMAC verification + DEVELOPER_MODE check\nconst crypto = require('crypto');\nconst raw = $input.first().binary ? Buffer.from($input.first().binary['data'].data, 'base64') : Buffer.from(JSON.stringify($input.first().json));\nconst sigHeader = $json[\"headers\"]?.[\"x-evez-sig\"] || $json[\"headers\"]?.[\"X-EVEZ-SIG\"] || $json[\"headers\"]?.[\"X-Evez-Sig\"] || '';\nconst secret = process.env.HMAC_SECRET || '';\nconst dev = (process.env.DEVELOPER_MODE || '').toLowerCase() === 'true';\n\nfunction safeCompare(a, b) {\n  if (!a || !b || a.length !== b.length) return false;\n  const bufA = Buffer.from(a);\n  const bufB = Buffer.from(b);\n  return crypto.timingSafeEqual(bufA, bufB);\n}\n\nlet verified = false;\nif (dev) {\n  verified = true; // developer mode bypass\n} else if (secret && sigHeader) {\n  const h = crypto.createHmac('sha256', secret).update(raw).digest('hex');\n  verified = safeCompare(h, sigHeader);\n}\n\nif (!verified) {\n  return [{ json: { status: 'rejected', reason: 'invalid_signature_or_missing', dev_bypass: dev } }];\n}\n\n// Normalized payload\nconst payload = $input.first().json || JSON.parse(raw.toString());\n// Attach metadata\npayload._ingest_ts = new Date().toISOString();\nreturn [{ json: { status: 'verified', payload } }];"
+      },
+      "id": "verify_hmac",
+      "name": "Verify HMAC / DEVELOPER_MODE",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [520, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Decision: if action requires approval, enqueue; else forward immediately\nconst p = $input.first().json.payload || {};\n// Simple conservative rule for sandbox: any payload with action:'spawn' or eventType:'FIRE' goes to approval\nconst isSpawn = (p.action || p.eventType || '').toString().toLowerCase().includes('spawn');\nconst isFire = (p.eventType || p.action || '').toString().toUpperCase().includes('FIRE');\nconst dev = (process.env.DEVELOPER_MODE || '').toLowerCase() === 'true';\n\nif ((isSpawn || isFire) && !dev) {\n  const id = 'pending_' + Date.now() + '_' + Math.floor(Math.random()*10000);\n  // store minimal queue entry in memory by returning to the workflow output; operator calls /approve with id\n  return [{ json: { queued: true, id, payload: p, ts: new Date().toISOString() } }];\n}\n\n// Fast-forward (dev or non-critical)\n// Forward to target: by default forward to provided target_forward_url in payload, or to an environment variable FORWARD_TARGET\nconst forwardUrl = p.target_forward_url || process.env.FORWARD_TARGET || '';\nif (!forwardUrl) {\n  return [{ json: { forwarded: false, reason: 'no_forward_target', payload: p } }];\n}\n\nreturn [{ json: { forward: true, forwardUrl, payload: p } }];"
+      },
+      "id": "decision_enqueue_or_forward",
+      "name": "Enqueue if needed / Forwarder decision",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [860, 200]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "evez-wrapper/approve",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook_approve",
+      "name": "Approve Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [200, 520],
+      "webhookId": "evez-wrapper-approve"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Approve payload: expects {id, payload, signature header}\nconst crypto = require('crypto');\nconst input = $input.first().json || {};\nconst secret = process.env.HMAC_SECRET || '';\nconst dev = (process.env.DEVELOPER_MODE || '').toLower

@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: router-agent
+  namespace: kiloclaw-services
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: router-agent
+  template:
+    metadata:
+      labels:
+        app: router-agent
+    spec:
+      containers:
+      - name: router
+        image: kiloclaw/router-agent:latest
+        env:
+        - name: ROLE
+          value: "router"
+        - name: MIN_ROI
+          value: "1.0"
+        - name: KAFKA_BROKERS
+          value: "kafka.kiloclaw:9092"
+        - name: EDGE_WEIGHTS
+          value: '{"sales":0.7,"marketing":0.3}'
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "512Mi"
+          limits:
+            cpu: "1000m"
+            memory: "1Gi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: router-service
+  namespace: kiloclaw-services
+spec:
+  selector:
+    app: router-agent
+  ports:
+  - port: 8080
+    targetPort: 8080
+  type: ClusterIP

@@ -1,0 +1,22 @@
+
+============================================================
+Attempt 0 at 2026-04-24T08:32:31.291822
+Return code: 0
+Rate limit detected: False
+============================================================
+=== KILOCLAW AUTONOMOUS LOOP ===
+Ingested: 3
+Scored: 3
+Executed: 3
+Escalated: 0
+Payments: 0
+{
+  "ingested": 3,
+  "scored": 3,
+  "executed": 3,
+  "escalated": 0,
+  "payments": 0,
+  "timestamp": "2026-04-24T08:32:31.156291"
+}
+  ✓ Cognition-Action bridge: OK
+  ✓ Pattern-Revenue bridge: OK

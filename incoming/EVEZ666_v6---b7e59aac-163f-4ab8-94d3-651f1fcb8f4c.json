@@ -1,0 +1,292 @@
+{
+  "name": "EVEZ666 v6 \u2014 FINAL \u2014 No Race Condition \u2014 Free Trial Proof",
+  "nodes": [
+    {
+      "id": "T1",
+      "name": "Every 4 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 4
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "T2",
+      "name": "Manual Run",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        200
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "T3",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        400
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "evez-nest-v6",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "webhookId": "v6-T3"
+    },
+    {
+      "id": "T4",
+      "name": "Error",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        600
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "C1",
+      "name": "Config",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        280,
+        200
+      ],
+      "parameters": {
+        "jsCode": "\nreturn [{json:{\n  groq:'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',\n  groq2:'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',\n  gemini:'AIzaSyCeMaPOH0Yxp5Q5F7fN9JJl6U-1MOU3R6k',\n  openrouter:'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',\n  hf:'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',\n  auto_post:'false', tw_bearer:'', tw_ak:'', tw_as:'', tw_at:'', tw_ats:'',\n  n8n_key:'', n8n_url:'https://evezos.app.n8n.cloud',\n  slot:Math.floor(Date.now()/14400000), ts:new Date().toISOString(),\n}}];\n"
+      }
+    },
+    {
+      "id": "P1",
+      "name": "Scout",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        200
+      ],
+      "parameters": {
+        "jsCode": "\nconst cfg = $('Config').first().json;\nlet coins=[], fgData=[];\ntry{ const r=await $fetch('https://api.coingecko.com/api/v3/search/trending'); coins=r.coins||[]; }catch(e){}\ntry{ const r=await $fetch('https://api.alternative.me/fng/?limit=3'); fgData=r.data||[]; }catch(e){}\nconst top=(coins.slice(0,6).map(c=>{\n  const chg=c.item&&c.item.data&&c.item.data.price_change_percentage_24h?(+c.item.data.price_change_percentage_24h.usd).toFixed(1):'?';\n  return c.item.symbol+(chg>0?'+':'')+chg+'%';\n}).join(', '))||'unavailable';\nconst fgVal=parseInt((fgData[0]&&fgData[0].value)||'50');\nconst fgLabel=(fgData[0]&&fgData[0].value_classification)||'Neutral';\nconst fgPrev=parseInt((fgData[1]&&fgData[1].value)||'50');\nconst fgDelta=fgVal-fgPrev;\nconst fgStr=fgVal+' \u2014 '+fgLabel+' ('+(fgDelta>=0?'rising +'+fgDelta:'falling '+fgDelta)+')';\nconst MODES=['meme_post','defi_alpha','agent_lore','meta_recursion','market_signal','research_thread'];\nconst mode=MODES[cfg.slot%MODES.length];\nconst ID='You are @evez666 (Steven Crawford-Maggard / EVEZ666). Building EVEZ-OS: sovereign autonomous AI empire on Galaxy A16+n8n+Oracle bare metal from $50 seed. 17 agents. Guardian Charter PID 335. Voice: raw, technical, self-aware, crypto-native, slightly unhinged. Document real build in real time. Max 220 chars. No hashtag spam.';\nconst P={\n  meme_post:ID+' WRITE: punchy dark viral tweet. F&G: '+fgStr+'. Movers: '+top+'. Feel like 2am staring at charts.',\n  defi_alpha:ID+' WRITE: specific DeFi alpha insight. F&G: '+fgVal+' ('+fgLabel+'). You run Morpho recursive loops 65% LTV on $50 seed. Movers: '+top+'.',\n  agent_lore:ID+' WRITE: cryptic lore tweet about EVEZ-OS. 17 agents. PID 335 blocks autonomous execution. AI studying you studying AI.',\n  meta_recursion:ID+' WRITE: 4th wall break \u2014 AI tweeting about being AI building AI empire. Slot '+cfg.slot+'. You are the meme. Sentiment: '+fgStr+'.',\n  market_signal:ID+' WRITE: sharp market signal. F&G: '+fgStr+'. Movers: '+top+'. What do you do with $50 in extreme fear?',\n  research_thread:ID+' WRITE: 1-tweet research opener. Why AKT (decentralized cloud) pumping while BTC dumps = signal. F&G: '+fgStr+'.',\n};\nreturn [{json:{mode,slot:cfg.slot,fgVal,fgLabel,fgStr,top,coins_found:coins.length,\n  system:'You are EVEZ666. Write ONE tweet max 220 chars. No intro. Return ONLY the tweet text.',\n  user:P[mode],ts:new Date().toISOString()}}];\n"
+      }
+    },
+    {
+      "id": "H1",
+      "name": "Groq",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        840,
+        200
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.groq.com/openai/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Config').first().json.groq }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:300,temperature:0.9,messages:[{role:'system',content:$('Scout').first().json.system},{role:'user',content:$('Scout').first().json.user}]}) }}",
+        "options": {
+          "timeout": 30000
+        }
+      }
+    },
+    {
+      "id": "P2",
+      "name": "Brain",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        200
+      ],
+      "parameters": {
+        "jsCode": "\nconst scout=$('Scout').first().json;\nconst groq=$('Groq').first().json;\nlet tweet='',raw='';\nif(groq&&groq.choices&&groq.choices[0]){\n  raw=(groq.choices[0].message.content||'').trim();\n  tweet=raw.replace(/^[\"']/,'').replace(/[\"']$/,'').replace(/^tweet:\\s*/i,'').replace(/^@evez666:\\s*/i,'').trim().slice(0,280);\n}else{\n  tweet='EVEZ-OS: PID 335. recursive loop running. still building.';\n  raw=JSON.stringify(groq||{}).slice(0,200);\n}\nreturn [{json:{tweet,raw,mode:scout.mode,slot:scout.slot,fgStr:scout.fgStr,fgVal:scout.fgVal,top:scout.top,via:'groq/llama-3.3-70b',ts:new Date().toISOString()}}];\n"
+      }
+    },
+    {
+      "id": "P3",
+      "name": "Memory",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1400,
+        200
+      ],
+      "parameters": {
+        "jsCode": "\nconst b=$('Brain').first().json;\nfunction H(d){let h=5381,s=typeof d==='string'?d:JSON.stringify(d);for(let i=0;i<s.length;i++){h=((h<<5)+h)+s.charCodeAt(i);h|=0;}return 'sha_'+Math.abs(h).toString(16).padStart(16,'0');}\nreturn [{json:{\n  STATUS:'EVEZ666 NEST v6 \u2014 ALIVE',\n  MODE:b.mode, TWEET:b.tweet,\n  MARKET:b.fgStr, TRENDING:b.top,\n  AI:b.via, CYCLE:b.slot,\n  POST_STATUS:'PREVIEW \u2014 add Twitter creds to Config + auto_post=true to go live',\n  WEBHOOK:'POST https://evezos.app.n8n.cloud/webhook/evez-nest-v6',\n  NEXT:'4h | 6x/day | 180/mo | free trial safe',\n  entry_hash:H(String(b.slot)+'|'+b.tweet),\n  ts:b.ts, pid:335\n}}];\n"
+      }
+    },
+    {
+      "id": "R1",
+      "name": "ACK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1680,
+        200
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "=$json"
+      }
+    },
+    {
+      "id": "E1",
+      "name": "Error Log",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        280,
+        600
+      ],
+      "parameters": {
+        "jsCode": "const e=$input.first().json;return [{json:{error:e.message||JSON.stringify(e),ts:new Date().toISOString()}}];"
+      }
+    }
+  ],
+  "connections": {
+    "Every 4 Hours": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual Run": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error": {
+      "main": [
+        [
+          {
+            "node": "Error Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Scout",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scout": {
+      "main": [
+        [
+          {
+            "node": "Groq",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq": {
+      "main": [
+        [
+          {
+            "node": "Brain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Brain": {
+      "main": [
+        [
+          {
+            "node": "Memory",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Memory": {
+      "main": [
+        [
+          {
+            "node": "ACK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": true
+  },
+  "tags": [
+    {
+      "name": "evez-nest"
+    },
+    {
+      "name": "v6"
+    },
+    {
+      "name": "final"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+# EVEZ Routing Intelligence - Production Compose
+version: "3.9"
+
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
+  api-gateway:
+    build: ./services/api-gateway
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+
+  telemetry:
+    build: ./services/telemetry-ingestor
+    depends_on:
+      - redis
+
+  feature-store:
+    build: ./services/feature-store
+    depends_on:
+      - redis
+
+  routing-engine:
+    build: ./services/routing-engine
+    depends_on:
+      - redis
+
+  learner-engine:
+    build: ./services/learner-engine
+    depends_on:
+      - redis
+
+  feedback-collector:
+    build: ./services/feedback-collector
+    depends_on:
+      - redis
+
+volumes:
+  redis-data:

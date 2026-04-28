@@ -1,0 +1,8 @@
+Control Plane initialized
+ * Serving Flask app 'orchestrator_4041'
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:4041
+ * Running on http://172.19.46.58:4041
+Press CTRL+C to quit

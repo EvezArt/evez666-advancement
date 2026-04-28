@@ -1,0 +1,42 @@
+[
+  {
+    "trace_id": "27901a90d541",
+    "tenant_id": "acme_001",
+    "timestamp": "2026-04-21T03:21:46.023027",
+    "service": "qualifier",
+    "action": "score_lead",
+    "latency_ms": 12,
+    "cost_usd": 0,
+    "outcome": "success"
+  },
+  {
+    "trace_id": "f88477304d88",
+    "tenant_id": "acme_001",
+    "timestamp": "2026-04-21T03:21:46.023038",
+    "service": "gpu_router",
+    "action": "select_model",
+    "latency_ms": 840,
+    "cost_usd": 0.004,
+    "outcome": "success"
+  },
+  {
+    "trace_id": "f256c8c38d39",
+    "tenant_id": "acme_001",
+    "timestamp": "2026-04-21T03:21:46.023043",
+    "service": "composio.gmail",
+    "action": "send_email",
+    "latency_ms": 1200,
+    "cost_usd": 0.001,
+    "outcome": "success"
+  },
+  {
+    "trace_id": "91d734c96456",
+    "tenant_id": "acme_001",
+    "timestamp": "2026-04-21T03:21:46.023047",
+    "service": "stripe",
+    "action": "create_link",
+    "latency_ms": 300,
+    "cost_usd": 0.002,
+    "outcome": "success"
+  }
+]

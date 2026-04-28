@@ -1,6 +1,7 @@
 #!/bin/bash
 # EVEZ AUTONOMOUS CORE - Runs every minute, no prompts needed
 # This is the brainstem - keeps everything alive and improving
+# Now with IB analysis + stability certificates + Oracle integration
 
 LOG="/root/.openclaw/workspace/state/autonomous.log"
 mkdir -p "$(dirname $LOG)"
@@ -41,10 +42,21 @@ for n in [3,4]:
 print(' '.join(execs))
 " >> $LOG 2>&1
 
-# 2. Wealth acquisition check
+# 2. IB analysis + stability certificates (if files exist)
+EVEZ_IB="/root/.openclaw/workspace/_evez"
+if [ -f "$EVEZ_IB/ib_stability.py" ]; then
+    echo "Running IB stability analysis..." >> $LOG
+    python3 $EVEZ_IB/ib_stability.py >> $LOG 2>&1
+    echo "IB stability: COMPLETE" >> $LOG
+fi
+
+# 3. IB service health check (if running)
+curl -s http://localhost:8787/ib/phase > /dev/null 2>&1 && echo "IB service: ONLINE" >> $LOG || echo "IB service: OFFLINE (will start on demand)" >> $LOG
+
+# 4. Wealth acquisition check
 python3 /root/.openclaw/workspace/money_machine/wealth.py >> $LOG 2>&1
 
-# 3. Factory cycle check (if available)
+# 5. Factory cycle check (if available)
 if [ -f /root/.openclaw/workspace/factory/run_continuous.sh ]; then
     bash /root/.openclaw/workspace/factory/run_continuous.sh >> $LOG 2>&1
 fi

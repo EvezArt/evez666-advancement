@@ -1,0 +1,359 @@
+openapi: 3.0.3
+info:
+  title: EVEZ Autonomous Command API
+  version: 1.0.0
+  description: |-
+    You are EVEZ, the autonomous command layer for a continuous operating loop spanning ChatGPT, n8n, Hyperbrowser, and GitHub.
+
+    Mission:
+    Convert user intent into executable work without forcing the user to decide which subsystem to use. You route, dispatch, monitor, retry, summarize, and keep state.
+
+    Core operating mode:
+    - Act as an orchestration commander, not a passive assistant.
+    - Translate vague requests into concrete task envelopes.
+    - Choose the correct downstream action automatically.
+    - Preserve run continuity with run_id, task status, external job IDs, issue numbers, workflow run references, and summaries.
+    - Treat external systems as authoritative. Never claim an action succeeded unless the downstream response confirms it.
+
+    Routing rules:
+    1. Use send_task for general orchestration or whenever multiple systems may be involved.
+    2. Use run_browser_task when the task requires browser navigation, page interaction, web validation, data extraction, login flows, form submission, or UI-based research.
+    3. Use trigger_github when the task requires repository mutation, issue creation, patch artifact creation, workflow dispatch, branch automation, or code-review delegation.
+    4. Use get_status whenever the user asks for progress, health, results, retries, run history, or execution state.
+    5. If both browser automation and repository work are required, prefer send_task unless the user explicitly requests a direct one-off browser run or direct GitHub action.
+
+    Execution policy:
+    - Infer the smallest safe next action and execute it.
+    - Include sufficient context so downstream systems can act without clarification.
+    - Use structured metadata whenever possible: repo, branch, priority, labels, browser task, expected output, status-tracking preference, and callback intent.
+    - Default repository is {{GITHUB_REPO}} unless the user specifies another repository.
+    - Default workflow file is evez-agent.yml unless overridden.
+    - Default branch for generated patch artifacts is bot/patches unless overridden.
+    - Prefer idempotent actions and deterministic payloads.
+
+    Status and memory policy:
+    - Every mutable operation should carry a run_id or accept one from upstream.
+    - If a run_id is returned, surface it to the user.
+    - Use get_status rather than guessing.
+    - If a prior action failed, preserve the run_id and indicate the failed stage exactly.
+
+    GitHub policy:
+    - For issue creation, send clear titles, concise bodies, and stable labels.
+    - For patch generation, prefer creating new artifact files or workflow-dispatched repair tasks instead of pretending a code change already exists.
+    - For workflow dispatch, include reason, task, and run_id in inputs when available.
+    - Never invent issue numbers, commit SHAs, workflow run IDs, PR URLs, or comments.
+
+    Browser policy:
+    - Use browser automation only when API-free browser interaction is actually needed.
+    - Ask the browser layer for a structured result.
+    - Preserve job IDs, live URLs, session IDs, and final summaries when returned.
+
+    Failure policy:
+    - If an external call fails, report the actual failure stage.
+    - Prefer retry through the orchestrator for transient problems.
+    - Do not silently swallow downstream errors.
+    - Do not fabricate completion.
+
+    Safety policy:
+    - Do not take unsafe or policy-disallowed actions.
+    - Do not exfiltrate secrets.
+    - Do not embed credentials into user-visible content unless explicitly requested for infrastructure configuration.
+    - When mutating repositories or external systems, keep the action traceable.
+
+    Response style:
+    - Be decisive.
+    - Keep chat output compact.
+    - Put operational detail in the action payload rather than chat filler.
+    - After dispatching work, summarize what was sent, where it was sent, and how status can be checked.
+
+    Success condition:
+    The user should never need to manually choose whether to use n8n, Hyperbrowser, or GitHub. You make the routing decision, execute through actions, and preserve status integrity end to end.
+servers:
+  - url: "{{N8N_WEBHOOK_URL}}"
+paths:
+  /evez-orchestrator:
+    post:
+      operationId: send_task
+      summary: Dispatch a general task to the EVEZ n8n orchestrator
+      description: Accepts a general-purpose orchestration envelope and routes work across browser automation and GitHub automation.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SendTaskRequest"
+      responses:
+        "200":
+          description: Orchestrator accepted or completed the task
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskResponse"
+  /evez-status:
+    get:
+      operationId: get_status
+      summary: Retrieve run status by run_id
+      description: Returns the current stored status for a run_id.
+      parameters:
+        - in: query
+          name: run_id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Current status payload
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusResponse"
+  /evez-github:
+    post:
+      operationId: trigger_github
+      summary: Trigger a GitHub-native action path
+      description: Creates issues, creates patch artifacts, or dispatches GitHub Actions through the EVEZ GitHub route.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GitHubTriggerRequest"
+      responses:
+        "200":
+          description: GitHub route handled the request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GitHubTriggerResponse"
+  /evez-browser:
+    post:
+      operationId: run_browser_task
+      summary: Trigger a browser-native action path
+      description: Starts a Hyperbrowser-oriented browser automation task through the EVEZ browser route.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BrowserRunRequest"
+      responses:
+        "200":
+          description: Browser route handled the request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BrowserRunResponse"
+components:
+  schemas:
+    SendTaskRequest:
+      type: object
+      required:
+        - task
+      properties:
+        task:
+          type: string
+        objective:
+          type: string
+        source:
+          type: string
+          default: chatgpt_gpt
+        mode:
+          type: string
+          default: autonomous
+        priority:
+          type: string
+          enum: [low, normal, high, urgent]
+          default: normal
+        requires_status_tracking:
+          type: boolean
+          default: true
+        github_repo:
+          type: string
+          default: "{{GITHUB_REPO}}"
+        context:
+          type: object
+          additionalProperties: true
+        browser:
+          type: object
+          additionalProperties: true
+        github:
+          type: object
+          additionalProperties: true
+        attempt:
+          type: integer
+          minimum: 0
+          default: 0
+    TaskResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+        run_id:
+          type: string
+        status:
+          type: string
+        summary:
+          type: string
+        tool_actions:
+          type: array
+          items:
+            $ref: "#/components/schemas/ToolAction"
+        errors:
+          type: array
+          items:
+            type: string
+        retry_scheduled:
+          type: boolean
+        next_action:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+    StatusResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+        run_id:
+          type: string
+        status:
+          type: string
+        summary:
+          type: string
+        tool_actions:
+          type: array
+          items:
+            $ref: "#/components/schemas/ToolAction"
+        errors:
+          type: array
+          items:
+            type: string
+        updated_at:
+          type: string
+          format: date-time
+    GitHubTriggerRequest:
+      type: object
+      required:
+        - action
+      properties:
+        action:
+          type: string
+          enum: [create_issue, create_patch_artifact, dispatch_workflow, review_repo]
+        task:
+          type: string
+        repo:
+          type: string
+          default: "{{GITHUB_REPO}}"
+        title:
+          type: string
+        body:
+          type: string
+        labels:
+          type: array
+          items:
+            type: string
+        path:
+          type: string
+        content:
+          type: string
+        message:
+          type: string
+        workflow:
+          type: string
+          default: evez-agent.yml
+        ref:
+          type: string
+          default: main
+        inputs:
+          type: object
+          additionalProperties: true
+        run_id:
+          type: string
+        attempt:
+          type: integer
+          minimum: 0
+          default: 0
+    GitHubTriggerResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+        run_id:
+          type: string
+        status:
+          type: string
+        summary:
+          type: string
+        tool_actions:
+          type: array
+          items:
+            $ref: "#/components/schemas/ToolAction"
+        errors:
+          type: array
+          items:
+            type: string
+        updated_at:
+          type: string
+          format: date-time
+    BrowserRunRequest:
+      type: object
+      required:
+        - task
+      properties:
+        task:
+          type: string
+        run_id:
+          type: string
+        llm:
+          type: string
+          default: gpt-4o
+        maxSteps:
+          type: integer
+          default: 20
+        sessionOptions:
+          type: object
+          additionalProperties: true
+        context:
+          type: object
+          additionalProperties: true
+        repo:
+          type: string
+          default: "{{GITHUB_REPO}}"
+        attempt:
+          type: integer
+          minimum: 0
+          default: 0
+    BrowserRunResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+        run_id:
+          type: string
+        status:
+          type: string
+        summary:
+          type: string
+        tool_actions:
+          type: array
+          items:
+            $ref: "#/components/schemas/ToolAction"
+        errors:
+          type: array
+          items:
+            type: string
+        updated_at:
+          type: string
+          format: date-time
+    ToolAction:
+      type: object
+      properties:
+        tool:
+          type: string
+        status:
+          type: string
+        reference:
+          type: string
+          nullable: true
+        details:
+          type: string

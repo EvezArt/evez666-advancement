@@ -1,0 +1,66 @@
+--- a/tools/ops_router.py
++++ b/tools/ops_router.py
+@@ -11,8 +11,8 @@
+ 
+ Usage
+ -----
+-  python3 tools/ops_router.py "start monitor"
+-  python3 tools/ops_router.py "start monitor" --exec
++  python3 tools/ops_router.py "ops: start monitor"
++  python3 tools/ops_router.py "ops: start monitor" --exec
+   python3 tools/ops_router.py --list
+ 
+ Exit codes
+@@ -37,6 +37,29 @@
+ MAP_PATH = ROOT / "ops" / "command_map.json"
+ 
+ 
++def _strip_ops_prefix(s: str) -> str | None:
++    """Require explicit ops prefix to avoid accidental triggers.
++
++    Accepted forms:
++      ops: <text>
++      /ops <text>
++      /ops: <text>
++    """
++    raw = s.lstrip()
++    low = raw.lower()
++
++    if low.startswith("ops:"):
++        return raw[4:].lstrip()
++
++    if low.startswith("/ops"):
++        rest = raw[4:]
++        if rest.startswith(":"):
++            rest = rest[1:]
++        return rest.lstrip()
++
++    return None
++
++
+ @dataclass
+ class Match:
+     name: str
+@@ -121,7 +144,7 @@
+     ap = argparse.ArgumentParser()
+     ap.add_argument("text", nargs="?", help="input text to route")
+     ap.add_argument("--list", action="store_true", help="list commands and triggers")
+-    ap.add_argument("--exec", dest="do_exec", action="store_true", help="execute the matched command")
++    ap.add_argument("-x", "--exec", dest="do_exec", action="store_true", help="execute the matched command")
+     args = ap.parse_args()
+ 
+     m = _load_map()
+@@ -138,7 +161,12 @@
+         ap.print_help()
+         return 2
+ 
+-    matches = _match(args.text, commands)
++    routed = _strip_ops_prefix(args.text)
++    if routed is None:
++        print("[router] ignored: missing ops prefix (use 'ops: <cmd>' or '/ops <cmd>')")
++        return 2
++
++    matches = _match(routed, commands)
+     if not matches:
+         print("[router] no match")
+         return 2

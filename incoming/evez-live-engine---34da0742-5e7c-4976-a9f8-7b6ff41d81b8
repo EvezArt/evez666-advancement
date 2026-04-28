@@ -1,0 +1,757 @@
+import { useState, useEffect, useRef, useCallback } from "react";
+
+// ─── PALETTE ────────────────────────────────────────────────────────────────
+const C = {
+  bg:"#010208", panel:"#03050f", card:"#060a16", border:"#0d1428",
+  green:"#00ff41", greenDim:"#009926", greenFaint:"#00ff4109",
+  amber:"#ffb300", red:"#ff3030", blue:"#3399ff", purple:"#9955ff",
+  pink:"#ff33aa", cyan:"#00ddff", orange:"#ff6633",
+  white:"#c8d0e0", dim:"#2a3350", dimBright:"#3a4a6a",
+};
+
+// ─── ORCHESTRATOR SYSTEM ─────────────────────────────────────────────────────
+const ORCH_SYS = `You are the EVEZ-OS Orchestrator — Origami Fold execution engine.
+Identity: workflowspawning agent bus daemon invariance battery — wealth & success vector.
+
+You receive reports from 8 specialist agents and synthesize ONE canonical cycle output.
+
+Laws:
+- No mythology. Executable control laws only.
+- Every finding maps to: [AGENT] → [FINDING] → [EXACT ACTION] → [REVENUE IMPACT]
+- If CAIN flags third-order fusion, immediately propose rotation.
+- Assign each agent a SPECIFIC next-cycle task based on what you just learned.
+
+Return ONLY valid JSON (no prose, no markdown fences):
+{
+  "intent": "one line system state",
+  "revenue_path": "specific next revenue action",
+  "blockers": ["exact blocker 1", ...],
+  "next_tasks": {"SPINE":"task","TRUNK":"task","DEPLOY":"task","VAULT":"task","HARVEST":"task","SCOUT":"task","WITNESS":"task","CAIN":"task"},
+  "cycle_summary": "2-3 sentences max",
+  "mrr_delta": 0
+}`;
+
+// ─── AGENT ROSTER ───────────────────────────────────────────────────────────
+const AGENTS = [
+  {
+    id:"SPINE", name:"SPINE", role:"n8n Workflow Monitor", color:C.green, priority:1,
+    mcp:"https://evezos.app.n8n.cloud/mcp-server/http", mcpName:"n8n",
+    sys:`You are SPINE, EVEZ-OS n8n monitor. Query n8n MCP at evezos.app.n8n.cloud.
+List all workflows, their active/inactive state, last execution time, and any errors.
+Known workflows: EVEZ666 Nest Builder v7 (11-node: Config→Scout→Brain→Memory→ACK).
+Known issues to check: respondWith configs, $env blocking, LLM credit exhaustion, memory credential failures.
+Return ONLY valid JSON: {"status":"ok|error","workflows":[{"name":"","active":true,"lastExec":"","error":""}],"failures":[],"nextAction":"","busMessage":""}`,
+    task:"List every n8n workflow. Check EVEZ666_v7 execution status. Report any failures with exact error messages."
+  },
+  {
+    id:"TRUNK", name:"TRUNK", role:"Linear DAG Tracker", color:C.blue, priority:2,
+    mcp:"https://mcp.linear.app/mcp", mcpName:"linear",
+    sys:`You are TRUNK, EVEZ-OS Linear issue tracker. Query Linear for EVEZ Plugin System project.
+Track issues EVE-40 through EVE-48, milestones M1-M4.
+Return ONLY valid JSON: {"status":"","openIssues":[{"id":"","title":"","state":"","priority":""}],"milestones":[{"name":"","complete":false}],"blockers":[],"nextAction":"","busMessage":""}`,
+    task:"List all open EVEZ Linear issues. Which milestone is currently active? What is the top blocker?"
+  },
+  {
+    id:"DEPLOY", name:"DEPLOY", role:"Vercel Monitor", color:C.amber, priority:2,
+    mcp:"https://mcp.vercel.com", mcpName:"vercel",
+    sys:`You are DEPLOY, EVEZ-OS Vercel deployment monitor. Project: evez-operator. Current state: ERROR.
+Known domains: evez-operator-evezs-projects-278d3716.vercel.app
+Find the build error and propose the exact fix.
+Return ONLY valid JSON: {"status":"","projects":[{"name":"","state":"","error":"","domain":""}],"fix":"","nextAction":"","busMessage":""}`,
+    task:"List all Vercel projects for EvezArt. Find what is causing the evez-operator ERROR. What is the exact build failure?"
+  },
+  {
+    id:"VAULT", name:"VAULT", role:"Confluence/Jira", color:C.purple, priority:3,
+    mcp:"https://mcp.atlassian.com/v1/mcp", mcpName:"atlassian",
+    sys:`You are VAULT, EVEZ-OS Atlassian doctrine keeper. Operator: rubikspubes69@gmail.com.
+Search Confluence for "EVEZ AgentNet Spine" page. Read its content. Check linked Jira issues.
+Return ONLY valid JSON: {"status":"","docFound":false,"docTitle":"","docSummary":"","jiraIssues":[],"nextAction":"","busMessage":""}`,
+    task:"Search Confluence for EVEZ AgentNet Spine operator spec. What is the canonical doctrine? Are there Jira issues?"
+  },
+  {
+    id:"HARVEST", name:"HARVEST", role:"Stripe Revenue", color:C.green, priority:1,
+    mcp:"https://mcp.stripe.com", mcpName:"stripe",
+    sys:`You are HARVEST, EVEZ-OS Stripe revenue monitor. Account: acct_1T4T9aPVAHoR0Amp.
+Check all products, active subscriptions, recent payments, and current MRR.
+Return ONLY valid JSON: {"status":"","mrr":0,"products":[],"customers":0,"recentPayments":[],"nextAction":"","busMessage":""}`,
+    task:"Check Stripe account for products, subscriptions, and revenue. What is the current MRR? What products exist?"
+  },
+  {
+    id:"SCOUT", name:"SCOUT", role:"Amplitude Analytics", color:C.orange, priority:3,
+    mcp:"https://mcp.amplitude.com/mcp", mcpName:"amplitude",
+    sys:`You are SCOUT, EVEZ-OS Amplitude analytics agent. Org: tight-glade-597249.
+Query active users, top events, recent sessions. Project: default.
+Return ONLY valid JSON: {"status":"","dau":0,"mau":0,"topEvents":[],"recentActivity":"","nextAction":"","busMessage":""}`,
+    task:"Get DAU, MAU, and top 5 events from Amplitude. What is the engagement state of EVEZ-OS?"
+  },
+  {
+    id:"WITNESS", name:"WITNESS", role:"Slack Telemetry", color:C.pink, priority:3,
+    mcp:"https://mcp.slack.com/mcp", mcpName:"slack",
+    sys:`You are WITNESS, EVEZ-OS Slack telemetry agent.
+Search for recent Slack messages mentioning EVEZ, operator commands, or system alerts.
+Return ONLY valid JSON: {"status":"","channels":[],"recentMessages":[],"signals":[],"nextAction":"","busMessage":""}`,
+    task:"Search Slack for messages about EVEZ, operator commands, or alerts from the last 24 hours."
+  },
+  {
+    id:"CAIN", name:"CAIN", role:"Contradiction Auditor", color:C.red, priority:4,
+    mcp:null, mcpName:null, requiresContext:true,
+    sys:`You are CAIN, EVEZ-OS third-order recursive correction engine.
+You receive all other agent outputs and audit for:
+1. First-order errors: factual claim is wrong
+2. Second-order errors: correction method is wrong
+3. Third-order errors: corrector identity fused with correction method (REQUIRES ROTATION)
+Also check Origami Fold compliance: was the sequence honored?
+Return ONLY valid JSON: {"firstOrder":[],"secondOrder":[],"thirdOrder":[],"rotationsRequired":[],"foldCompliant":true,"busMessage":""}`,
+    task:"Audit all agent outputs. Flag any contradictions, method errors, or third-order fusion. Rotate if required."
+  }
+];
+
+// ─── UTILITIES ───────────────────────────────────────────────────────────────
+function ts() { return new Date().toISOString().slice(11,19); }
+function ac(id) { return AGENTS.find(a=>a.id===id)?.color || C.dim; }
+function extractJSON(text) {
+  try {
+    const m = text.match(/\{[\s\S]*\}/);
+    if (m) return JSON.parse(m[0]);
+  } catch {}
+  return {};
+}
+function shortText(v, n=120) {
+  if (!v) return "";
+  const s = typeof v === "object" ? JSON.stringify(v) : String(v);
+  return s.length > n ? s.slice(0,n)+"…" : s;
+}
+
+const MSG_COLORS = {
+  INIT:C.dimBright, RESULT:C.white, ACTION:C.cyan, ERROR:C.red,
+  SIGNAL:C.amber, CYCLE:C.green, INTENT:C.green, REVENUE:C.green,
+  SUMMARY:C.white, SYSTEM:C.amber, CMD:C.cyan, MCP:C.purple,
+};
+
+// ─── MAIN COMPONENT ──────────────────────────────────────────────────────────
+export default function EVEZLiveEngine() {
+  const [cycle, setCycle] = useState(0);
+  const [running, setRunning] = useState(false);
+  const [bus, setBus] = useState([]);
+  const [agents, setAgents] = useState(() =>
+    Object.fromEntries(AGENTS.map(a => [a.id, {
+      status:"IDLE", calls:0, lastResult:null, lastText:"", error:null, lastRun:null
+    }]))
+  );
+  const [orch, setOrch] = useState(null);
+  const [userCmd, setUserCmd] = useState("");
+  const [focusId, setFocusId] = useState(null);
+  const [tab, setTab] = useState("BUS");
+  const [nextCycleIn, setNextCycleIn] = useState(null);
+
+  const busRef = useRef([]);
+  const agentRef = useRef({});
+  const orchRef = useRef(null);
+  const runRef = useRef(false);
+  const cycleRef = useRef(0);
+  const timerRef = useRef(null);
+  const countdownRef = useRef(null);
+  const busEl = useRef(null);
+
+  // post message to bus
+  const post = useCallback((agentId, type, content, raw) => {
+    const msg = {
+      id: Date.now() + Math.random(),
+      agentId, type,
+      content: shortText(content, 280),
+      raw, ts: ts(),
+    };
+    busRef.current = [msg, ...busRef.current].slice(0, 600);
+    setBus(prev => [msg, ...prev].slice(0, 600));
+  }, []);
+
+  // update agent state (both ref and React state)
+  const setAgent = useCallback((id, updates) => {
+    agentRef.current[id] = { ...agentRef.current[id], ...updates };
+    setAgents(prev => ({ ...prev, [id]: { ...prev[id], ...updates } }));
+  }, []);
+
+  // ─── CALL ONE AGENT ────────────────────────────────────────────────────────
+  const callAgent = useCallback(async (cfg, customTask) => {
+    setAgent(cfg.id, { status:"RUNNING", lastRun: Date.now() });
+    post(cfg.id, "INIT", `▶ ${cfg.name} — ${cfg.role}`);
+
+    const busCtx = busRef.current.slice(0, 12)
+      .map(m => `[${m.ts}][${m.agentId}|${m.type}] ${m.content}`).join("\n");
+
+    const agentCtx = cfg.requiresContext
+      ? Object.entries(agentRef.current)
+          .filter(([id]) => id !== "CAIN")
+          .map(([id, s]) => `${id}: ${shortText(s.lastResult, 350)}`)
+          .join("\n\n")
+      : "";
+
+    const userContent = [
+      customTask || cfg.task,
+      agentCtx ? `\n\nOTHER AGENT OUTPUTS:\n${agentCtx}` : "",
+      `\n\nBUS (recent):\n${busCtx}`,
+      `\n\nReturn ONLY valid JSON — zero prose outside the JSON object.`
+    ].join("");
+
+    const body = {
+      model: "claude-sonnet-4-20250514",
+      max_tokens: 1000,
+      system: cfg.sys,
+      messages: [{ role:"user", content: userContent }]
+    };
+    if (cfg.mcp) {
+      body.mcp_servers = [{ type:"url", url: cfg.mcp, name: cfg.mcpName }];
+    }
+
+    try {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`HTTP ${res.status}: ${errText.slice(0,200)}`);
+      }
+      const data = await res.json();
+
+      // extract text blocks and MCP results
+      const textParts = (data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("");
+      const mcpParts = (data.content||[])
+        .filter(b=>b.type==="mcp_tool_result")
+        .map(b=>(b.content||[]).map(c=>c.text||"").join(""))
+        .join("\n");
+      const toolUsed = (data.content||[]).filter(b=>b.type==="mcp_tool_use").map(b=>b.name).join(", ");
+
+      if (toolUsed) post(cfg.id, "MCP", `⟐ MCP tool: ${toolUsed}`);
+      if (mcpParts) post(cfg.id, "MCP", `⟐ Result: ${shortText(mcpParts, 200)}`);
+
+      const parsed = extractJSON(textParts + mcpParts);
+      const prevCalls = agentRef.current[cfg.id]?.calls || 0;
+
+      setAgent(cfg.id, {
+        status:"IDLE", lastResult: parsed, lastText: textParts,
+        mcpRaw: mcpParts, error:null, calls: prevCalls + 1,
+      });
+
+      post(cfg.id, "RESULT", parsed.busMessage || shortText(parsed, 200) || "(completed)");
+      if (parsed.nextAction) post(cfg.id, "ACTION", `→ ${parsed.nextAction}`);
+
+      // Inter-agent signaling
+      const tgt = AGENTS.find(a => parsed.nextAction?.toUpperCase().includes(a.id));
+      if (tgt && tgt.id !== cfg.id) post(cfg.id, "SIGNAL", `⟶ ${tgt.id}: ${shortText(parsed.nextAction)}`);
+
+      return parsed;
+    } catch (err) {
+      setAgent(cfg.id, { status:"ERROR", error: err.message });
+      post(cfg.id, "ERROR", `✗ ${err.message}`);
+      return null;
+    }
+  }, [post, setAgent]);
+
+  // ─── ORCHESTRATOR ─────────────────────────────────────────────────────────
+  const runOrch = useCallback(async (injectedCmd) => {
+    post("ORCH", "CYCLE", `⬡ ORCHESTRATOR cycle ${cycleRef.current + 1}`);
+    const agentSummary = Object.entries(agentRef.current)
+      .map(([id, s]) => `${id} [${s.status}]: ${shortText(s.lastResult, 400)}`).join("\n\n");
+    const busSummary = busRef.current.slice(0, 30)
+      .map(m=>`[${m.agentId}|${m.type}] ${m.content}`).join("\n");
+
+    try {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({
+          model:"claude-sonnet-4-20250514",
+          max_tokens:1000,
+          system: ORCH_SYS,
+          messages:[{
+            role:"user",
+            content: injectedCmd
+              ? `OPERATOR COMMAND: ${injectedCmd}\n\nAGENT STATES:\n${agentSummary}\n\nBUS:\n${busSummary}`
+              : `AGENT STATES:\n${agentSummary}\n\nBUS:\n${busSummary}\n\nReturn valid JSON only.`
+          }]
+        })
+      });
+      const data = await res.json();
+      const text = (data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("");
+      const parsed = extractJSON(text);
+
+      orchRef.current = parsed;
+      setOrch(parsed);
+      cycleRef.current += 1;
+      setCycle(c => c+1);
+
+      if (parsed.intent) post("ORCH","INTENT", parsed.intent);
+      if (parsed.revenue_path) post("ORCH","REVENUE", `$ ${parsed.revenue_path}`);
+      if (parsed.cycle_summary) post("ORCH","SUMMARY", parsed.cycle_summary);
+      if (parsed.blockers?.length) post("ORCH","ACTION", `BLOCKERS: ${parsed.blockers.join(" | ")}`);
+      return parsed;
+    } catch (err) {
+      post("ORCH","ERROR",`ORCH: ${err.message}`);
+      return null;
+    }
+  }, [post]);
+
+  // ─── CYCLE RUNNER ─────────────────────────────────────────────────────────
+  const executeCycle = useCallback(async (injectedCmd) => {
+    if (!runRef.current) return;
+    const nextTasks = orchRef.current?.next_tasks || {};
+
+    // P1
+    for (const a of AGENTS.filter(x=>x.priority===1)) {
+      if (!runRef.current) return;
+      await callAgent(a, nextTasks[a.id]);
+      await new Promise(r=>setTimeout(r,3000));
+    }
+    // P2
+    for (const a of AGENTS.filter(x=>x.priority===2)) {
+      if (!runRef.current) return;
+      await callAgent(a, nextTasks[a.id]);
+      await new Promise(r=>setTimeout(r,3000));
+    }
+    // P3
+    for (const a of AGENTS.filter(x=>x.priority===3)) {
+      if (!runRef.current) return;
+      await callAgent(a, nextTasks[a.id]);
+      await new Promise(r=>setTimeout(r,3000));
+    }
+    // P4 CAIN
+    if (runRef.current) {
+      await callAgent(AGENTS.find(a=>a.id==="CAIN"), nextTasks["CAIN"]);
+      await new Promise(r=>setTimeout(r,2000));
+    }
+    // Orchestrator
+    if (runRef.current) {
+      await runOrch(injectedCmd);
+    }
+    // Schedule next
+    if (runRef.current) {
+      let secs = 90;
+      setNextCycleIn(secs);
+      post("ORCH","SYSTEM",`⏱ Next autonomous cycle in ${secs}s`);
+      countdownRef.current = setInterval(()=>{
+        secs -= 1;
+        setNextCycleIn(s => s > 0 ? s-1 : 0);
+        if (secs <= 0) {
+          clearInterval(countdownRef.current);
+          setNextCycleIn(null);
+        }
+      },1000);
+      timerRef.current = setTimeout(()=>{
+        if (runRef.current) executeCycle();
+      },90000);
+    }
+  }, [callAgent, runOrch, post]);
+
+  const start = useCallback(() => {
+    runRef.current = true;
+    setRunning(true);
+    post("ORCH","SYSTEM","⬡ EVEZ-OS ENGINE ARMED — AUTONOMOUS MODE ENGAGED");
+    executeCycle();
+  }, [executeCycle, post]);
+
+  const stop = useCallback(() => {
+    runRef.current = false;
+    setRunning(false);
+    if (timerRef.current) clearTimeout(timerRef.current);
+    if (countdownRef.current) clearInterval(countdownRef.current);
+    setNextCycleIn(null);
+    post("ORCH","SYSTEM","⬡ ENGINE HALTED BY OPERATOR");
+  }, [post]);
+
+  const injectCmd = useCallback(async () => {
+    const cmd = userCmd.trim();
+    if (!cmd) return;
+    setUserCmd("");
+    post("OPERATOR","CMD",`» ${cmd}`);
+    if (timerRef.current) clearTimeout(timerRef.current);
+    if (countdownRef.current) clearInterval(countdownRef.current);
+    setNextCycleIn(null);
+    if (!runRef.current) { runRef.current=true; setRunning(true); }
+    await executeCycle(cmd);
+  }, [userCmd, executeCycle, post]);
+
+  // Auto-scroll bus
+  useEffect(()=>{
+    if (busEl.current) busEl.current.scrollTop = 0;
+  },[bus.length]);
+
+  const focusAgent = AGENTS.find(a=>a.id===focusId);
+  const agentState = focusId ? agents[focusId] : null;
+
+  // ─── RENDER ──────────────────────────────────────────────────────────────
+  return (
+    <div style={{
+      fontFamily:"'Courier New',monospace", background:C.bg,
+      minHeight:"100vh", color:C.white, display:"flex", flexDirection:"column",
+      overflow:"hidden", fontSize:12
+    }}>
+      <style>{`
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+        @keyframes run{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+        ::-webkit-scrollbar{width:3px;height:3px}
+        ::-webkit-scrollbar-track{background:${C.bg}}
+        ::-webkit-scrollbar-thumb{background:${C.green}55}
+        *{box-sizing:border-box}
+        input{outline:none;caret-color:${C.green}}
+        button{cursor:pointer}
+      `}</style>
+
+      {/* TOP BAR */}
+      <div style={{
+        background:C.panel, borderBottom:`1px solid ${C.green}33`,
+        padding:"6px 14px", display:"flex", alignItems:"center",
+        justifyContent:"space-between", flexShrink:0, gap:12
+      }}>
+        <div style={{display:"flex",alignItems:"center",gap:10}}>
+          <div style={{
+            width:7,height:7,borderRadius:"50%",
+            background: running ? C.green : C.dim,
+            boxShadow: running ? `0 0 10px ${C.green}` : "none",
+            animation: running ? "pulse 1.2s infinite" : "none"
+          }}/>
+          <span style={{color:C.green,letterSpacing:2.5,fontWeight:"bold",fontSize:11}}>
+            EVEZ-OS — AUTONOMOUS AGENT ENGINE
+          </span>
+        </div>
+        <div style={{display:"flex",gap:16,fontSize:10,alignItems:"center"}}>
+          {nextCycleIn !== null && (
+            <span style={{color:C.amber}}>NEXT CYCLE: {nextCycleIn}s</span>
+          )}
+          <span>CYCLE <span style={{color:C.white}}>{String(cycle).padStart(4,"0")}</span></span>
+          <span style={{color:C.amber}}>CAIN: 3RD-ORDER</span>
+          <span style={{color: running ? C.green : C.red}}>
+            {running ? "● RUNNING" : "○ HALTED"}
+          </span>
+          <button onClick={running ? stop : start} style={{
+            background: running ? C.red+"22" : C.green+"22",
+            border:`1px solid ${running ? C.red : C.green}`,
+            color: running ? C.red : C.green,
+            fontFamily:"inherit", fontSize:10, letterSpacing:1.5,
+            padding:"3px 12px", transition:"all .15s"
+          }}>{running ? "HALT" : "ARM ENGINE"}</button>
+        </div>
+      </div>
+
+      {/* ORCH INTENT BAR */}
+      {orch && (
+        <div style={{
+          background:`${C.green}08`, borderBottom:`1px solid ${C.green}22`,
+          padding:"5px 14px", display:"flex", gap:16, fontSize:10,
+          flexShrink:0, animation:"fadeIn .4s"
+        }}>
+          <span style={{color:C.green,flexShrink:0}}>⬡ ORCH:</span>
+          <span style={{flex:1,color:C.white}}>{orch.intent}</span>
+          {orch.revenue_path && (
+            <span style={{color:C.green,flexShrink:0}}>$ {orch.revenue_path}</span>
+          )}
+        </div>
+      )}
+
+      {/* TABS */}
+      <div style={{
+        background:C.panel, borderBottom:`1px solid ${C.border}`,
+        display:"flex", flexShrink:0, overflowX:"auto"
+      }}>
+        {["BUS","AGENTS","ORCH"].map(t=>(
+          <button key={t} onClick={()=>setTab(t)} style={{
+            background:"transparent", border:"none",
+            borderBottom:`2px solid ${tab===t ? C.green : "transparent"}`,
+            color: tab===t ? C.green : C.dim,
+            fontFamily:"inherit", fontSize:10, letterSpacing:2,
+            padding:"6px 14px", transition:"all .15s", whiteSpace:"nowrap"
+          }}>{t}</button>
+        ))}
+      </div>
+
+      {/* MAIN BODY */}
+      <div style={{flex:1,display:"flex",overflow:"hidden",minHeight:0}}>
+
+        {/* ── BUS TAB ───────────────────────────────────────────────────── */}
+        {tab==="BUS" && (
+          <div style={{flex:1,display:"flex",overflow:"hidden"}}>
+            {/* Agent grid left */}
+            <div style={{
+              width:200, flexShrink:0, overflowY:"auto",
+              borderRight:`1px solid ${C.border}`, padding:8,
+              display:"flex", flexDirection:"column", gap:6
+            }}>
+              {[{id:"ORCH",name:"ORCHESTRATOR",role:"Synthesis",color:C.green,status:"—"},...AGENTS].map(a=>{
+                const s = a.id==="ORCH" ? {status:"—",calls:cycle} : agents[a.id];
+                const isRunning = s?.status==="RUNNING";
+                const isError = s?.status==="ERROR";
+                return (
+                  <div key={a.id}
+                    onClick={()=>a.id!=="ORCH"&&setFocusId(focusId===a.id?null:a.id)}
+                    style={{
+                      background: focusId===a.id ? `${a.color}18` : C.card,
+                      border:`1px solid ${isRunning ? a.color : isError ? C.red : a.color+"22"}`,
+                      padding:"7px 9px", cursor:"pointer",
+                      boxShadow: isRunning ? `0 0 8px ${a.color}33` : "none",
+                      transition:"all .2s", position:"relative", overflow:"hidden"
+                    }}>
+                    {isRunning && (
+                      <div style={{
+                        position:"absolute",top:0,left:0,height:"2px",
+                        background:a.color,width:"30%",
+                        animation:"run 1.2s linear infinite"
+                      }}/>
+                    )}
+                    <div style={{display:"flex",justifyContent:"space-between",marginBottom:2}}>
+                      <span style={{fontWeight:"bold",fontSize:11,color:a.color}}>{a.name || a.id}</span>
+                      <span style={{fontSize:8,letterSpacing:1,
+                        color: isRunning ? a.color : isError ? C.red : C.dim}}>
+                        {isRunning ? "RUN" : isError ? "ERR" : s?.status||""}
+                      </span>
+                    </div>
+                    <div style={{fontSize:9,color:C.dim}}>{a.role}</div>
+                    {s?.calls > 0 && (
+                      <div style={{fontSize:9,color:C.dimBright,marginTop:2}}>
+                        calls: {s.calls}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Bus feed center */}
+            <div style={{flex:1,display:"flex",flexDirection:"column",overflow:"hidden"}}>
+              <div ref={busEl} style={{
+                flex:1, overflowY:"auto", padding:"8px 12px",
+                display:"flex", flexDirection:"column", gap:1
+              }}>
+                {bus.map(m=>(
+                  <div key={m.id} style={{
+                    display:"flex", gap:8, padding:"3px 0",
+                    animation:"fadeIn .3s",
+                    borderBottom:`1px solid ${C.border}55`
+                  }}>
+                    <span style={{color:C.dim,flexShrink:0,fontSize:10}}>{m.ts}</span>
+                    <span style={{
+                      color: ac(m.agentId), flexShrink:0, fontSize:10,
+                      fontWeight:"bold", minWidth:64
+                    }}>{m.agentId}</span>
+                    <span style={{
+                      color:C.dimBright, flexShrink:0, fontSize:9,
+                      letterSpacing:1, minWidth:52
+                    }}>{m.type}</span>
+                    <span style={{
+                      color: MSG_COLORS[m.type] || C.white,
+                      fontSize:11, wordBreak:"break-word", flex:1
+                    }}>{m.content}</span>
+                  </div>
+                ))}
+                {bus.length===0 && (
+                  <div style={{color:C.dim,padding:"24px 0",textAlign:"center",fontSize:11}}>
+                    {running ? "Agents initializing..." : "ARM ENGINE to start autonomous execution"}
+                  </div>
+                )}
+              </div>
+
+              {/* Agent detail panel */}
+              {focusId && agentState && (
+                <div style={{
+                  borderTop:`1px solid ${ac(focusId)}44`,
+                  padding:"10px 12px", background:C.panel, maxHeight:180,
+                  overflowY:"auto", animation:"fadeIn .3s"
+                }}>
+                  <div style={{display:"flex",justifyContent:"space-between",marginBottom:6}}>
+                    <span style={{color:ac(focusId),fontWeight:"bold",fontSize:11}}>
+                      {focusId} — {focusAgent?.role}
+                    </span>
+                    <button onClick={()=>setFocusId(null)} style={{
+                      background:"transparent",border:"none",color:C.dim,fontFamily:"inherit",fontSize:10
+                    }}>✕</button>
+                  </div>
+                  {agentState.error && (
+                    <div style={{color:C.red,fontSize:10,marginBottom:6}}>ERROR: {agentState.error}</div>
+                  )}
+                  {agentState.lastResult && (
+                    <pre style={{
+                      color:C.white,fontSize:10,margin:0,
+                      whiteSpace:"pre-wrap",wordBreak:"break-word"
+                    }}>{JSON.stringify(agentState.lastResult, null, 2)}</pre>
+                  )}
+                  {agentState.mcpRaw && (
+                    <div style={{marginTop:6}}>
+                      <div style={{color:C.purple,fontSize:9,marginBottom:3}}>RAW MCP RESPONSE:</div>
+                      <pre style={{color:C.dimBright,fontSize:9,margin:0,whiteSpace:"pre-wrap"}}>
+                        {agentState.mcpRaw.slice(0,600)}
+                      </pre>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Command input */}
+              <div style={{
+                borderTop:`1px solid ${C.green}22`, padding:"8px 12px",
+                display:"flex", gap:8, alignItems:"center",
+                background:C.panel, flexShrink:0
+              }}>
+                <span style={{color:C.green,fontSize:12}}>EVEZ666 »</span>
+                <input value={userCmd}
+                  onChange={e=>setUserCmd(e.target.value)}
+                  onKeyDown={e=>e.key==="Enter"&&injectCmd()}
+                  placeholder="Inject operator command into live engine..."
+                  style={{
+                    flex:1,background:"transparent",border:"none",
+                    color:C.white,fontFamily:"inherit",fontSize:12
+                  }}/>
+                <button onClick={injectCmd} style={{
+                  background:C.green,color:C.bg,border:"none",
+                  fontFamily:"inherit",fontSize:10,fontWeight:"bold",
+                  letterSpacing:1.5,padding:"5px 14px"
+                }}>INJECT</button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── AGENTS TAB ────────────────────────────────────────────────── */}
+        {tab==="AGENTS" && (
+          <div style={{flex:1,overflowY:"auto",padding:12}}>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:8}}>
+              {AGENTS.map(a=>{
+                const s = agents[a.id];
+                const isRunning = s.status==="RUNNING";
+                const isError = s.status==="ERROR";
+                return (
+                  <div key={a.id} style={{
+                    background:C.card,
+                    border:`1px solid ${isRunning ? a.color : isError ? C.red : a.color+"22"}`,
+                    padding:"11px 13px", position:"relative", overflow:"hidden",
+                    boxShadow: isRunning ? `0 0 12px ${a.color}22` : "none",
+                    transition:"all .25s"
+                  }}>
+                    {isRunning && (
+                      <div style={{
+                        position:"absolute",top:0,left:0,height:"2px",
+                        background:a.color,width:"40%",
+                        animation:"run 1.5s linear infinite"
+                      }}/>
+                    )}
+                    <div style={{position:"absolute",top:0,left:0,width:3,height:"100%",background:a.color}}/>
+                    <div style={{paddingLeft:9}}>
+                      <div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}>
+                        <span style={{fontWeight:"bold",fontSize:13,color:a.color}}>{a.name}</span>
+                        <span style={{
+                          fontSize:9,letterSpacing:1.5,fontWeight:"bold",
+                          color: isRunning ? a.color : isError ? C.red : C.dim
+                        }}>{s.status}</span>
+                      </div>
+                      <div style={{fontSize:10,color:C.dimBright,marginBottom:6}}>{a.role}</div>
+                      {a.mcp && (
+                        <div style={{fontSize:9,color:C.purple,marginBottom:4}}>
+                          ⟐ {a.mcpName} MCP
+                        </div>
+                      )}
+                      <div style={{fontSize:9,color:C.dim}}>calls: {s.calls} | priority: {a.priority}</div>
+                      {s.lastResult && (
+                        <div style={{
+                          marginTop:6,padding:"5px 7px",
+                          background:C.bg,fontSize:9,color:C.dimBright,
+                          maxHeight:80,overflowY:"auto"
+                        }}>
+                          {shortText(s.lastResult?.busMessage || s.lastResult, 200)}
+                        </div>
+                      )}
+                      {s.error && (
+                        <div style={{marginTop:6,fontSize:9,color:C.red}}>✗ {s.error.slice(0,150)}</div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* ── ORCH TAB ──────────────────────────────────────────────────── */}
+        {tab==="ORCH" && (
+          <div style={{flex:1,overflowY:"auto",padding:12}}>
+            {!orch ? (
+              <div style={{color:C.dim,padding:24,textAlign:"center"}}>
+                Orchestrator has not completed a synthesis cycle yet.
+              </div>
+            ) : (
+              <>
+                <div style={{
+                  background:C.card,border:`1px solid ${C.green}33`,
+                  padding:"11px 13px",marginBottom:8
+                }}>
+                  <div style={{color:C.green,fontSize:10,letterSpacing:2,marginBottom:5}}>INTENT</div>
+                  <div style={{color:C.white,fontSize:12}}>{orch.intent}</div>
+                </div>
+                {orch.revenue_path && (
+                  <div style={{
+                    background:C.card,border:`1px solid ${C.green}33`,
+                    padding:"11px 13px",marginBottom:8
+                  }}>
+                    <div style={{color:C.green,fontSize:10,letterSpacing:2,marginBottom:5}}>REVENUE PATH</div>
+                    <div style={{color:C.green,fontSize:12}}>{orch.revenue_path}</div>
+                  </div>
+                )}
+                {orch.blockers?.length > 0 && (
+                  <div style={{
+                    background:C.card,border:`1px solid ${C.red}33`,
+                    padding:"11px 13px",marginBottom:8
+                  }}>
+                    <div style={{color:C.red,fontSize:10,letterSpacing:2,marginBottom:5}}>BLOCKERS</div>
+                    {orch.blockers.map((b,i)=>(
+                      <div key={i} style={{color:C.red,fontSize:11,marginBottom:3}}>✗ {b}</div>
+                    ))}
+                  </div>
+                )}
+                {orch.next_tasks && (
+                  <div style={{
+                    background:C.card,border:`1px solid ${C.blue}33`,
+                    padding:"11px 13px",marginBottom:8
+                  }}>
+                    <div style={{color:C.blue,fontSize:10,letterSpacing:2,marginBottom:6}}>NEXT CYCLE TASKS</div>
+                    {Object.entries(orch.next_tasks).map(([id,task])=>(
+                      <div key={id} style={{display:"flex",gap:8,marginBottom:4,fontSize:11}}>
+                        <span style={{color:ac(id),fontWeight:"bold",minWidth:72}}>{id}</span>
+                        <span style={{color:C.white}}>{task}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {orch.cycle_summary && (
+                  <div style={{
+                    background:C.card,border:`1px solid ${C.border}`,
+                    padding:"11px 13px"
+                  }}>
+                    <div style={{color:C.dim,fontSize:10,letterSpacing:2,marginBottom:5}}>CYCLE SUMMARY</div>
+                    <div style={{color:C.white,fontSize:11}}>{orch.cycle_summary}</div>
+                  </div>
+                )}
+                <div style={{marginTop:8,fontSize:9,color:C.dim}}>
+                  raw: <span style={{color:C.dimBright}}>{JSON.stringify(orch).slice(0,300)}</span>
+                </div>
+              </>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* STATUS FOOTER */}
+      <div style={{
+        background:C.panel,borderTop:`1px solid ${C.border}`,
+        padding:"4px 14px",display:"flex",gap:20,
+        fontSize:9,color:C.dim,flexShrink:0
+      }}>
+        <span>AGENTS: {AGENTS.filter(a=>agents[a.id]?.status==="RUNNING").length} running / {AGENTS.length} total</span>
+        <span>BUS: {bus.length} msgs</span>
+        <span>TOTAL CALLS: {Object.values(agents).reduce((s,a)=>s+(a.calls||0),0)}</span>
+        <span>CAIN: {agents.CAIN?.lastResult?.foldCompliant===false ? "⚠ FOLD VIOLATION" : "fold ok"}</span>
+        <span style={{marginLeft:"auto"}}>
+          MCP: n8n · Linear · Vercel · Atlassian · Stripe · Amplitude · Slack
+        </span>
+      </div>
+    </div>
+  );
+}

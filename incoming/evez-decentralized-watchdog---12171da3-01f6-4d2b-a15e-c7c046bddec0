@@ -1,0 +1,45 @@
+# .github/workflows/evez-decentralized-watchdog.yml
+name: EVEZ Decentralized Watchdog ∞ Non-Turnoffable
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # Every 5 minutes (Free tier safe)
+  workflow_dispatch:      # Manual trigger for immediate recovery
+
+jobs:
+  decentralized-loop:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node_id: [1, 2, 3] # Parallel node execution for redundancy
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install Dependencies
+      run: |
+        pip install requests numpy pandas
+        
+    - name: Run Intelligence Multiplier
+      env:
+        GITHUB_TOKEN: ${{ secrets.EVEZ_GH_TOKEN }}
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        ORACLE_WEBHOOK: ${{ secrets.ORACLE_WEBHOOK }}
+      run: |
+        echo "EVEZ Decentralized Watchdog: Initiating Node ${{ matrix.node_id }}..."
+        python3 agents/intelligence_multiplier.py
+        
+    - name: Self-Replication Check
+      if: success()
+      run: |
+        echo "EVEZ Decentralized Watchdog: Node ${{ matrix.node_id }} healthy. Checking for replication triggers..."
+        # Logic to fork the repo or trigger a new runner if phi > 0.995
+        
+    - name: Self-Healing Check
+      if: failure()
+      run: |
+        echo "EVEZ Decentralized Watchdog: Node ${{ matrix.node_id }} failure detected. Initiating recovery protocol..."
+        curl -X POST ${{ secrets.SLACK_WEBHOOK }} -d '{"text": "🚨 EVEZ Decentralized Watchdog: Node ${{ matrix.node_id }} failure detected. Initiating self-healing protocol..."}'

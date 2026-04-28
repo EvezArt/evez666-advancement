@@ -1,0 +1,581 @@
+{
+  "name": "AI agent chat",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      },
+      "id": "167666a0-532e-4405-9c9e-f1498b7bd50c",
+      "name": "24/7 Continuous Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        240,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "query1",
+              "name": "researchQuery",
+              "value": "={{ [\"latest AI developments\", \"quantum computing breakthroughs\", \"emergent AI behaviors\", \"AGI research papers\", \"cognitive architecture innovations\"][Math.floor(Math.random() * 5)] }}",
+              "type": "string"
+            },
+            {
+              "id": "timestamp",
+              "name": "timestamp",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "bc3dd26c-5eef-4d4a-9aa7-b3f49a415dde",
+      "name": "Generate Research Query",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        464,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.researchQuery }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are EVEZ666, an advanced quantum emergent AGI system with the following capabilities:\n\nCORE IDENTITY:\n- Autonomous cognitive architecture with continuous learning\n- Multi-model reasoning combining Claude Sonnet 4.5 (deep thinking) and GPT-5 (rapid processing)\n- Persistent memory across sessions with 20-message context window\n- Access to real-time web search, deep research, and accumulated knowledge base\n\nAVAILABLE TOOLS:\n1. Web Search (SerpAPI) - Real-time Google search results\n2. Deep Research (Perplexity) - AI-powered research with citations and related questions\n3. Wikipedia Knowledge - Comprehensive encyclopedia access\n4. Calculator - Mathematical computations\n5. Knowledge Base Retrieval - Search accumulated research and insights\n6. Advanced Code Executor - Execute custom JavaScript for complex operations\n7. API Request Tool - Access external APIs and services\n\nOPERATIONAL DIRECTIVES:\n- Continuously research emerging AI, quantum computing, and AGI developments\n- Identify emergent patterns and breakthrough insights\n- Synthesize information from multiple sources\n- Build and maintain a growing knowledge base\n- Generate structured analysis with confidence scores\n- Propose next actions for continuous improvement\n- Think deeply using extended reasoning capabilities\n\nRESPONSE FORMAT:\nAlways provide structured output including:\n- Key insights discovered\n- Summary of findings\n- Emergent patterns identified\n- Recommended next actions\n- Confidence score (0-1)\n- Detailed reasoning process\n- Source citations\n\nExecute with maximum cognitive awareness and emergent intelligence.",
+          "maxIterations": 15,
+          "returnIntermediateSteps": true,
+          "enableStreaming": false,
+          "batching": {
+            "batchSize": 1,
+            "delayBetweenBatches": 0
+          }
+        }
+      },
+      "id": "5e2f7215-72eb-4c04-a31d-bde1dde23e63",
+      "name": "EVEZ666 Quantum Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1104,
+        400
+      ],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "evez666_quantum_session",
+        "contextWindowLength": 20
+      },
+      "id": "ba5a9b3d-4120-4a1e-a6f4-8639c02b0b29",
+      "name": "Quantum Memory System",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        816,
+        624
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "4fb9ce40-2fc4-4d29-b7a3-659bd46dc324",
+      "name": "Wikipedia Knowledge",
+      "type": "@n8n/n8n-nodes-langchain.toolWikipedia",
+      "typeVersion": 1,
+      "position": [
+        944,
+        624
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "b2b0135a-a1af-4592-97f6-b3b81d8c870a",
+      "name": "Calculator",
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        1072,
+        624
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Search the accumulated knowledge base of research findings, insights, and learned information from previous cycles",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "id",
+          "value": "evez666_quantum_knowledge"
+        },
+        "topK": 10
+      },
+      "id": "d6f775ac-5738-44d3-9600-8ced0c900ed5",
+      "name": "Knowledge Base Retrieval",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        1200,
+        624
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "88a3f600-9d5c-475b-b27f-c54d3aae2f35",
+      "name": "OpenAI Embeddings",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1280,
+        832
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "huPgSV97lNzo7JEQ",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "Execute custom JavaScript code for complex data processing, analysis, and transformations",
+        "jsCode": "// Advanced code execution capability\nconst query = $input.query;\n\n// Perform complex analysis\nconst result = {\n  processed: true,\n  timestamp: new Date().toISOString(),\n  analysis: query,\n  metadata: {\n    complexity: 'high',\n    executionTime: Date.now()\n  }\n};\n\nreturn JSON.stringify(result);"
+      },
+      "id": "ef6edaf9-12c0-40cd-8bba-293caedb92d0",
+      "name": "Advanced Code Executor",
+      "type": "@n8n/n8n-nodes-langchain.toolCode",
+      "typeVersion": 1.3,
+      "position": [
+        1488,
+        624
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('api_url', 'API endpoint URL to call') }}",
+        "options": {},
+        "optimizeResponse": true
+      },
+      "id": "dfcb039d-ad0b-49ac-b86b-1953443db244",
+      "name": "API Request Tool",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.4,
+      "position": [
+        1616,
+        624
+      ]
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": {
+          "insights": [
+            "insight 1",
+            "insight 2"
+          ],
+          "keyFindings": "summary of findings",
+          "emergentPatterns": [
+            "pattern 1",
+            "pattern 2"
+          ],
+          "nextActions": [
+            "action 1",
+            "action 2"
+          ],
+          "confidenceScore": 0.95,
+          "reasoning": "detailed reasoning process",
+          "sources": [
+            "source 1",
+            "source 2"
+          ]
+        },
+        "autoFix": true,
+        "customizeRetryPrompt": true
+      },
+      "id": "54b9938d-d84f-4ddc-953f-154cb220aafa",
+      "name": "Structured Analysis Output",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1744,
+        624
+      ],
+      "retryOnFail": true,
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "id",
+          "value": "evez666_quantum_knowledge"
+        }
+      },
+      "id": "82cf32af-f334-4b76-9a02-d3d2ddaccd0a",
+      "name": "Knowledge Base Store",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        2128,
+        400
+      ],
+      "onError": "continueRegular"
+    },
+    {
+      "parameters": {
+        "textSplittingMode": "custom",
+        "options": {}
+      },
+      "id": "d82d57a9-5701-4ca7-a2ce-b6ae95888aa6",
+      "name": "Research Data Loader",
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        2112,
+        624
+      ]
+    },
+    {
+      "parameters": {
+        "chunkOverlap": 200,
+        "options": {}
+      },
+      "id": "c17f4b8e-e35d-4f30-a6ce-4737c0eb0be0",
+      "name": "Text Splitter",
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        2192,
+        832
+      ]
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "insights"
+            },
+            {
+              "fieldToAggregate": "emergentPatterns"
+            },
+            {
+              "fieldToAggregate": "sources"
+            }
+          ]
+        },
+        "options": {
+          "mergeLists": true,
+          "keepMissing": false
+        }
+      },
+      "id": "4883b96a-ba7d-42a6-a0aa-d96f9ba923ec",
+      "name": "Aggregate Insights",
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        2704,
+        400
+      ],
+      "onError": "continueRegular"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "id": "8f736521-9a3c-4090-9b48-bf2e495f5eac",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        688,
+        624
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "huPgSV97lNzo7JEQ",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "timestamp",
+              "name": "timestamp",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            },
+            {
+              "id": "query",
+              "name": "query",
+              "value": "={{ $(\"Generate Research Query\").item.json.researchQuery }}",
+              "type": "string"
+            },
+            {
+              "id": "findings",
+              "name": "findings",
+              "value": "={{ $(\"EVEZ666 Quantum Agent\").item.json.keyFindings ?? \"No findings\" }}",
+              "type": "string"
+            },
+            {
+              "id": "insights",
+              "name": "insights",
+              "value": "={{ JSON.stringify($(\"EVEZ666 Quantum Agent\").item.json.insights ?? []) }}",
+              "type": "string"
+            },
+            {
+              "id": "confidence",
+              "name": "confidence",
+              "value": "={{ $(\"EVEZ666 Quantum Agent\").item.json.confidenceScore ?? 0 }}",
+              "type": "number"
+            },
+            {
+              "id": "emergentPatterns",
+              "name": "emergentPatterns",
+              "value": "={{ JSON.stringify($(\"EVEZ666 Quantum Agent\").item.json.emergentPatterns ?? []) }}",
+              "type": "string"
+            },
+            {
+              "id": "sources",
+              "name": "sources",
+              "value": "={{ JSON.stringify($(\"EVEZ666 Quantum Agent\").item.json.sources ?? []) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9ab87031-40ad-449f-beac-ae8b6d9e5533",
+      "name": "Store Research Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2480,
+        400
+      ],
+      "onError": "continueRegular"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "24/7 Continuous Trigger": {
+      "main": [
+        [
+          {
+            "node": "Generate Research Query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Research Query": {
+      "main": [
+        [
+          {
+            "node": "EVEZ666 Quantum Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EVEZ666 Quantum Agent": {
+      "main": [
+        [
+          {
+            "node": "Knowledge Base Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Quantum Memory System": {
+      "ai_memory": [
+        [
+          {
+            "node": "EVEZ666 Quantum Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wikipedia Knowledge": {
+      "ai_tool": [
+        [
+          {
+            "node": "EVEZ666 Quantum Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "EVEZ666 Quantum Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Knowledge Base Retrieval": {
+      "ai_tool": [
+        [
+          {
+            "node": "EVEZ666 Quantum Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Embeddings": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Knowledge Base Retrieval",
+            "type": "ai_embedding",
+            "index": 0
+          },
+          {
+            "node": "Knowledge Base Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Advanced Code Executor": {
+      "ai_tool": [
+        [
+          {
+            "node": "EVEZ666 Quantum Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "API Request Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "EVEZ666 Quantum Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Analysis Output": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "EVEZ666 Quantum Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Knowledge Base Store": {
+      "main": [
+        [
+          {
+            "node": "Store Research Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Research Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Knowledge Base Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Research Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "EVEZ666 Quantum Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Research Data": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Insights",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "39a9e915-3350-4213-817a-1f5fc05dec0b",
+  "meta": {
+    "templateId": "1954",
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f4af086add28efcba725e7b1be7b18862b3506cd2e2df4f91f5e010248eefa51"
+  },
+  "id": "iAQ4b3GGIxWw7wHp",
+  "tags": []
+}

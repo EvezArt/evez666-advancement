@@ -1,0 +1,100 @@
+--- entity-farm-ops-kit-v2/tools/monitor_server.py
++++ entity-farm-ops-kit-v2/tools/monitor_server.py
+@@ -111,7 +111,7 @@
+     ap = argparse.ArgumentParser()
+     ap.add_argument("--port", type=int, default=8001)
+     ap.add_argument("--root", default="tools", help="Directory to serve")
+-    ap.add_argument("--audit-log", default="src/memory/audit.jsonl")
++    ap.add_argument("--audit-log", default="logs/audit.jsonl")
+     ap.add_argument("--api-base", default="http://localhost:8000")
+     args = ap.parse_args()
+ 
+--- entity-farm-ops-kit-v2/tools/audit_analyzer.py
++++ entity-farm-ops-kit-v2/tools/audit_analyzer.py
+@@ -259,7 +259,7 @@
+ 
+ def main() -> int:
+     ap = argparse.ArgumentParser()
+-    ap.add_argument("--audit", default="src/memory/audit.jsonl", help="Path to JSONL audit log")
++    ap.add_argument("--audit", default="logs/audit.jsonl", help="Path to JSONL audit log")
+     ap.add_argument("--outdir", default="tools/out", help="Output directory")
+     ap.add_argument("--api-base", default="http://localhost:8000", help="Local API base URL")
+     ap.add_argument("--api-key", default=os.environ.get("X_API_KEY", "tier3_director"), help="Tier-3 API key for read-only queries")
+--- entity-farm-ops-kit-v2/docs/ops/architecture.md
++++ entity-farm-ops-kit-v2/docs/ops/architecture.md
+@@ -14,7 +14,7 @@
+ ### 1. API Server (your repo)
+ 
+ - Entrypoint expected: `src/api/causal_chain_server.py` exporting `app`.
+-- Stores audit log at: `src/memory/audit.jsonl` (JSONL).
++- Stores audit log at: `logs/audit.jsonl` (JSONL).
+ - Uses `SECRET_KEY` for signing/verification if your tiered access + integrity layer is enabled.
+ 
+ ### 2. Ops Scripts (this kit)
+@@ -24,7 +24,7 @@
+ - `scripts/deploy-all.sh`
+   - Runs preflight
+   - Installs deps (`pip install -r requirements.txt`, `npm ci`)
+-  - Ensures `src/memory/audit.jsonl` exists
++  - Ensures `logs/audit.jsonl` exists
+   - Runs tests (`pytest`, then `npm test` if present)
+   - Starts Uvicorn in background and writes PID to `/tmp/uvicorn.pid`
+ - `scripts/run-ops.sh`
+@@ -55,7 +55,7 @@
+ 
+ `tools/audit_analyzer.py`:
+ 
+-- Reads `src/memory/audit.jsonl`.
++- Reads `logs/audit.jsonl`.
+ - Outputs:
+   - `tools/out/audit_summary.json`
+   - `tools/out/anomalies.json`
+@@ -78,7 +78,7 @@
+            └──────────────┬────────────┘
+                           │ writes
+                           ▼
+-                 src/memory/audit.jsonl
++                 logs/audit.jsonl
+                           │
+           ┌───────────────┴────────────────┐
+           │                                 │
+--- entity-farm-ops-kit-v2/docs/ops/hermetic_console.md
++++ entity-farm-ops-kit-v2/docs/ops/hermetic_console.md
+@@ -16,7 +16,7 @@
+ - install Node deps (`npm ci` / `npm install`)
+ - run `pytest`
+ - run `npm test` (if configured)
+-- start uvicorn in the background and write PID to `/tmp/uvicorn.pid`
++- start uvicorn in the background and write PID to `pids/entity-farm.pid`
+ 
+ Stop it:
+ 
+@@ -29,7 +29,7 @@
+ Start the local monitor server:
+ 
+ ```bash
+-python3 tools/monitor_server.py --port 8001 --audit-log src/memory/audit.jsonl
++python3 tools/monitor_server.py --port 8001 --audit-log logs/audit.jsonl
+ ```
+ 
+ Open the forwarded port (Codespaces) or visit locally:
+@@ -38,7 +38,7 @@
+ 
+ ## 3) Run the audit analyzer
+ 
+-This reads `src/memory/audit.jsonl`, creates summaries and anomaly candidates, and will **not** fabricate results if timestamps aren't available.
++This reads `logs/audit.jsonl`, creates summaries and anomaly candidates, and will **not** fabricate results if timestamps aren't available.
+ 
+ ```bash
+ python3 tools/audit_analyzer.py --api-key tier3_director --api-base http://localhost:8000
+--- /mnt/data/deploy-ops-kit.md
++++ /mnt/data/deploy-ops-kit.md
+@@ -109,7 +109,7 @@
+ ### Audit Analyzer Behavior
+ 
+ **What it does:**
+-- Reads `src/memory/audit.jsonl`
++- Reads `logs/audit.jsonl`
+ - Counts calls by key/endpoint/output_id
+ - Attempts timestamp resolution via API (if provided)
+ - Records anomalies when builder instantiation > first audit timestamp

@@ -1,0 +1,132 @@
+{
+  "total_requests": 21,
+  "routing_decisions": [
+    {
+      "task_type": "summarize this email",
+      "model": "nano",
+      "confidence": 0.85,
+      "timestamp": "2026-04-18T19:54:43.639306"
+    },
+    {
+      "task_type": "analyze this code fo",
+      "model": "medium",
+      "confidence": 0.85,
+      "timestamp": "2026-04-18T19:54:43.639555"
+    },
+    {
+      "task_type": "write a complex pyth",
+      "model": "nano",
+      "confidence": 0.85,
+      "timestamp": "2026-04-18T19:54:43.639757"
+    },
+    {
+      "task_type": "simple search query",
+      "model": "nano",
+      "confidence": 0.85,
+      "timestamp": "2026-04-18T19:54:43.645776"
+    },
+    {
+      "task_type": "debug this python co",
+      "model": "medium",
+      "confidence": 0.85,
+      "timestamp": "2026-04-18T19:54:43.646063"
+    },
+    {
+      "task_type": "reason about this ph",
+      "model": "nano",
+      "confidence": 0.85,
+      "timestamp": "2026-04-18T19:54:43.646337"
+    },
+    {
+      "task_type": "translate this text",
+      "model": "nano",
+      "confidence": 0.85,
+      "timestamp": "2026-04-18T19:54:43.646608"
+    },
+    {
+      "task_type": "summarize this email",
+      "model": "nano",
+      "confidence": 0.85,
+      "timestamp": "2026-04-18T19:55:01.312499"
+    },
+    {
+      "task_type": "analyze this code fo",
+      "model": "medium",
+      "confidence": 0.85,
+      "timestamp": "2026-04-18T19:55:01.312895"
+    },
+    {
+      "task_type": "write a complex pyth",
+      "model": "nano",
+      "confidence": 0.85,
+      "timestamp": "2026-04-18T19:55:01.313194"
+    },
+    {
+      "task_type": "simple search query",
+      "model": "nano",
+      "confidence": 0.85,
+      "timestamp": "2026-04-18T19:55:01.313520"
+    },
+    {
+      "task_type": "debug this python co",
+      "model": "medium",
+      "confidence": 0.85,
+      "timestamp": "2026-04-18T19:55:01.313846"
+    },
+    {
+      "task_type": "reason about this ph",
+      "model": "nano",
+      "confidence": 0.85,
+      "timestamp": "2026-04-18T19:55:01.314188"
+    },
+    {
+      "task_type": "translate this text",
+      "model": "nano",
+      "confidence": 0.85,
+      "timestamp": "2026-04-18T19:55:01.314505"
+    },
+    {
+      "task_type": "summarize this email",
+      "model": "nano",
+      "confidence": 0.85,
+      "timestamp": "2026-04-18T19:55:41.883678"
+    },
+    {
+      "task_type": "analyze this code fo",
+      "model": "medium",
+      "confidence": 0.85,
+      "timestamp": "2026-04-18T19:55:41.890182"
+    },
+    {
+      "task_type": "write a complex pyth",
+      "model": "nano",
+      "confidence": 0.85,
+      "timestamp": "2026-04-18T19:55:41.890579"
+    },
+    {
+      "task_type": "simple search query",
+      "model": "nano",
+      "confidence": 0.85,
+      "timestamp": "2026-04-18T19:55:41.890956"
+    },
+    {
+      "task_type": "debug this python co",
+      "model": "medium",
+      "confidence": 0.85,
+      "timestamp": "2026-04-18T19:55:41.891322"
+    },
+    {
+      "task_type": "reason about this ph",
+      "model": "nano",
+      "confidence": 0.85,
+      "timestamp": "2026-04-18T19:55:41.894182"
+    },
+    {
+      "task_type": "translate this text",
+      "model": "nano",
+      "confidence": 0.85,
+      "timestamp": "2026-04-18T19:55:41.894577"
+    }
+  ],
+  "cost_savings": 1.4849999999999999
+}

@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: intake-agent
+  namespace: kiloclaw-services
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: intake-agent
+  template:
+    metadata:
+      labels:
+        app: intake-agent
+    spec:
+      containers:
+      - name: intake
+        image: kiloclaw/intake-agent:latest
+        env:
+        - name: ROLE
+          value: "intake"
+        - name: MIN_ROI
+          value: "0.5"
+        - name: KAFKA_BROKERS
+          value: "kafka.kiloclaw:9092"
+        - name: LEDGER_URL
+          value: "http://ledger-service.kiloclaw:8080"
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: intake-agent-hpa
+  namespace: kiloclaw-services
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: intake-agent
+  minReplicas: 2
+  maxReplicas: 20
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: intake-service
+  namespace: kiloclaw-services
+spec:
+  selector:
+    app: intake-agent
+  ports:
+  - port: 8080
+    targetPort: 8080
+  type: ClusterIP

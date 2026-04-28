@@ -1,0 +1,22 @@
+{
+  "timestamp": "2026-04-24T08:32:31.327746",
+  "combined_success": true,
+  "systems": [
+    {
+      "script": "kiloclaw_loop.py",
+      "returncode": 0,
+      "rate_limit": false,
+      "output": "=== KILOCLAW AUTONOMOUS LOOP ===\nIngested: 3\nScored: 3\nExecuted: 3\nEscalated: 0\nPayments: 0\n{\n  \"ingested\": 3,\n  \"scored\": 3,\n  \"executed\": 3,\n  \"escalated\": 0,\n  \"payments\": 0,\n  \"timestamp\": \"2026-04-24T08:32:31.156291\"\n}\n  \u2713 Cognition-Action bridge: OK\n  \u2713 Pattern-Revenue bridge: OK\n",
+      "log_file": "/root/.openclaw/workspace/.cron_results/kiloclaw_loop_20260424_083231.log",
+      "attempts": 1
+    },
+    {
+      "script": "inference_fabric.py",
+      "returncode": 0,
+      "rate_limit": false,
+      "output": "=== INFERENCE FABRIC ===\n\nCLASSIFICATION:\n  Model: phi-mini\n  GPU: node-t4-1\n  Cost: $0.0002/1k\n  Latency: 80ms\n\nSALES_EMAIL:\n  Model: gpt-class-mid\n  GPU: node-a10g-1\n  Cost: $0.0020/1k\n  Latency: 350ms\n\nAUTO_CLOSE:\n  Model: llama-70b\n  GPU: node-a100-1\n  Cost: $0.0100/1k\n  Latency: 900ms\n\n=== FABRIC READY ===\n",
+      "log_file": "/root/.openclaw/workspace/.cron_results/inference_fabric_20260424_083231.log",
+      "attempts": 1
+    }
+  ]
+}

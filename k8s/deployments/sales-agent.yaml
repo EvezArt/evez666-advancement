@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sales-agent
+  namespace: kiloclaw-services
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: sales-agent
+  template:
+    metadata:
+      labels:
+        app: sales-agent
+    spec:
+      containers:
+      - name: sales
+        image: kiloclaw/sales-agent:latest
+        env:
+        - name: ROLE
+          value: "sales"
+        - name: MIN_ROI
+          value: "1.5"
+        - name: KAFKA_BROKERS
+          value: "kafka.kiloclaw:9092"
+        - name: STRIPE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: kiloclaw-secrets
+              key: stripe-api-key
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+          limits:
+            cpu: "2000m"
+            memory: "2Gi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sales-service
+  namespace: kiloclaw-services
+spec:
+  selector:
+    app: sales-agent
+  ports:
+  - port: 8080
+    targetPort: 8080
+  type: ClusterIP

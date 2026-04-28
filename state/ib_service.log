@@ -1,0 +1,33 @@
+INFO:     Started server process [25007]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8787 (Press CTRL+C to quit)
+INFO:     127.0.0.1:36248 - "GET /ib/phase HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57560 - "GET /ib/phase HTTP/1.1" 404 Not Found
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [25007]
+INFO:     Started server process [25074]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8787 (Press CTRL+C to quit)
+INFO:     127.0.0.1:42966 - "GET /ib/phase HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42980 - "GET /ib/stability HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59200 - "GET /ib/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60556 - "GET /ib/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60562 - "GET /ib/stability HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60576 - "GET /ib/attractors HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52672 - "GET /ib/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52678 - "GET /ib/attractors HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52692 - "GET /ib/stability HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59330 - "GET /ib/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59342 - "GET /ib/phase HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55558 - "GET /ib/attractors HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55572 - "GET /ib/stability HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37180 - "GET /ib/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37182 - "GET /ib/stability HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [25074]

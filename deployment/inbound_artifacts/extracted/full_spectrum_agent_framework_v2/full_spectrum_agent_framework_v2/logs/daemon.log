@@ -1,0 +1,12 @@
+2026-03-24T18:27:20Z [once] coordinator::scan_tasks -> reviewed
+2026-03-24T18:27:20Z [once] coordinator::emit_cycle_summary -> logged
+2026-03-24T18:27:20Z [once] skeptic::challenge_recent_outputs -> challenged
+2026-03-24T18:27:20Z [once] skeptic::flag_unproven_claims -> logged
+2026-03-24T18:27:20Z [once] chronicler::append_chronicle -> reviewed
+2026-03-24T18:27:20Z [once] chronicler::summarize_changes -> advanced
+2026-03-24T18:27:20Z [once] benchmarker::run_benchmark -> advanced
+2026-03-24T18:27:20Z [once] benchmarker::record_scores -> advanced
+2026-03-24T18:27:20Z [once] archivist::archive_old_logs -> advanced
+2026-03-24T18:27:20Z [once] archivist::prune_temp_files -> reviewed
+2026-03-24T18:27:20Z [once] promoter::review_candidates -> reviewed
+2026-03-24T18:27:20Z [once] promoter::promote_if_safe -> logged

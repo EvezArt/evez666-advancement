@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+ <meta charset="utf-8">
+ <title>EVEZGameShark · IB Attractor Dashboard</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <style>
+ :root {
+ --bg: #111216;
+ --surface: #181a1f;
+ --surface-alt: #1f2228;
+ --text: #f4f4f6;
+ --muted: #9a9da7;
+ --accent: #08b2c9;
+ --danger: #ff4d6a;
+ --warn: #ffb84d;
+ --safe: #55d68a;
+ --radius: 10px;
+ --pad: 16px;
+ --gap: 12px;
+ --font: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+ "Segoe UI", sans-serif;
+ }
+ * { box-sizing: border-box; margin: 0; padding: 0; }
+ body {
+ font-family: var(--font);
+ background: radial-gradient(circle at top, #171a2a, #09090b 60%);
+ color: var(--text);
+ min-height: 100vh;
+ padding: 20px;
+ display: flex;
+ flex-direction: column;
+ gap: 20px;
+ }
+ header {
+ display: flex;
+ flex-wrap: wrap;
+ justify-content: space-between;
+ align-items: baseline;
+ gap: 12px;
+ }
+ h1 {
+ font-size: 1.4rem;
+ letter-spacing: 0.06em;
+ text-transform: uppercase;
+ }
+ .badge {
+ padding: 4px 10px;
+ border-radius: 999px;
+ font-size: 0.75rem;
+ letter-spacing: 0.08em;
+ text-transform: uppercase;
+ border: 1px solid rgba(255,255,255,0.12);
+ }
+ .badge.ok { background: rgba(85,214,138,0.12); color: var(--safe); }
+ .badge.warn { background: rgba(255,184,77,0.12); color: var(--warn); }
+ .badge.danger { background: rgba(255,77,106,0.12); color: var(--danger); }
+
+ .grid {
+ display: grid;
+ grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
+ gap: 18px;
+ }
+ @media (max-width: 900px) {
+ .grid { grid-template-columns: minmax(0, 1fr); }
+ }
+
+ .card {
+ background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(0,0,0,0.6));
+ border-radius: var(--radius);
+ border: 1px solid rgba(255,255,255,0.08);
+ padding: var(--pad);
+ box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+ backdrop-filter: blur(18px);
+ }
+ .card h2 {
+ font-size: 0.95rem;
+ letter-spacing: 0.08em;
+ text-transform: uppercase;
+ margin-bottom: 6px;
+ color: var(--muted);
+ }
+ .card h3 {
+ font-size: 1.05rem;
+ margin-bottom: 2px;
+ }
+ .meta {
+ font-size: 0.8rem;
+ color: var(--muted);
+ }
+ .metrics-row {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 12px;
+ margin-top: 10px;
+ }
+ .metric-chip {
+ padding: 6px 10px;
+ border-radius: 999px;
+ font-size: 0.78rem;
+ background: rgba(0,0,0,0.35);
+ border: 1px solid rgba(255,255,255,0.07);
+ }
+ .metric-chip span {
+ color: var(--muted);
+ margin-right: 6px;
+ }
+ .chart {
+ margin-top: 10px;
+ height: 190px;
+ position: relative;
+ }
+ canvas {
+ width: 100%;
+ height: 100%;
+ }
+ .clusters {
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+ margin-top: 6px;
+ max-height: 260px;
+ overflow-y: auto;
+ }
+ .cluster {
+ border-radius: 9px;
+ padding: 10px 11px;
+ background: rgba(0,0,0,0.45);
+ border: 1px solid rgba(255,255,255,0.07);
+ display: flex;
+ flex-direction: column;
+ gap: 3px;
+ }
+ .cluster-header {
+ display: flex;
+ justify-content: space-between;
+ align-items: baseline;
+ gap: 8px;
+ }
+ .cluster-id {
+ font-size: 0.8rem;
+ text-transform: uppercase;
+ letter-spacing: 0.08em;
+ color: var(--muted);
+ }
+ .cluster-label {
+ font-size: 0.9rem;
+ }
+ .cluster-mode {
+ font-size: 0.74rem;
+ padding: 2px 8px;
+ border-radius: 999px;
+ background: rgba(8,178,201,0.16);
+ color: var(--accent);
+ border: 1px solid rgba(8,178,201,0.5);
+ }
+ .cluster-meta {
+ font-size: 0.78rem;
+ color: var(--muted);
+ }
+ .footer {
+ margin-top: auto;
+ font-size: 0.75rem;
+ color: var(--muted);
+ display: flex;
+ justify-content: space-between;
+ gap: 10px;
+ flex-wrap: wrap;
+ }
+ .tier-badge {
+ font-size: 0.7rem;
+ padding: 2px 6px;
+ border-radius: 4px;
+ margin-left: 6px;
+ }
+ .tier-badge.safe { background: rgba(85,214,138,0.2); color: var(--safe); }
+ .tier-badge.marginal { background: rgba(255,184,77,0.2); color: var(--warn); }
+ .tier-badge.unsafe { background: rgba(255,77,106,0.2); color: var(--danger); }
+ </style>
+</head>
+<body>
+ <header>
+ <div>
+ <h1>EVEZGameShark · Attractor Monitor</h1>
+ <div class="meta" id="timestamp">Loading IB report…</div>
+ </div>
+ <div id="mode-badge" class="badge">–</div>
+ </header>
+
+ <div class="grid">
+ <section class="card">
+ <h2>Phase Diagram</h2>
+ <h3 id="phase-title">β sweep</h3>
+ <div class="metrics-row" id="phase-metrics"></div>
+ <div class="chart">
+ <canvas id="phase-canvas"></canvas>
+ </div>
+ </section>
+
+ <section class="card">
+ <h2>Attractors + Stability</h2>
+ <h3>Symbolic regimes</h3>
+ <div class="clusters" id="cluster-list">
+ <div class="meta">Awaiting IB and attractor metadata…</div>
+ </div>
+ </section>
+ </div>
+
+ <div class="footer">
+ <div>Source: ib_phase_latest.json, ib_profile_latest.json, ib_attractors_meta.json, ib_stability_latest.json</div>
+ <div>PREPARE‑ONLY · read‑only visibility into autonomous regime geometry</div>
+ </div>
+
+ <script>
+ async function loadJSON(path) {
+ const resp = await fetch(path);
+ if (!resp.ok) throw new Error("Failed to load " + path);
+ return resp.json();
+ }
+
+ function classifyBadge(profile) {
+ if (!profile) return {text: "NO IB DATA", cls: "danger"};
+ const mode = profile.mode || "";
+ if (mode === "SYMBOLIC_STABLE" || mode === "EXPLORATION_GUARDED")
+ return {text: mode, cls: "ok"};
+ if (mode === "SYMBOLIC_HIGH_COMPLEXITY")
+ return {text: mode, cls: "warn"};
+ if (mode === "TRANSITIONAL_LOCKDOWN" || mode === "ULTRA_CONSTRAINED")
+ return {text: mode, cls: "danger"};
+ return {text: mode || "UNKNOWN", cls: "warn"};
+ }
+
+ function drawPhaseChart(canvas, points) {
+ if (!canvas || !points.length) return;
+ const ctx = canvas.getContext("2d");
+ const w = canvas.width = canvas.clientWidth * window.devicePixelRatio;
+ const h = canvas.height = canvas.clientHeight * window.devicePixelRatio;
+ ctx.clearRect(0,0,w,h);
+
+ const xs = points.map(p => p.beta);
+ const ys = points.map(p => p.cluster_score);
+ const minX = Math.min(...xs), maxX = Math.max(...xs);
+ const minY = 0, maxY = Math.max(0.01, Math.max(...ys));
+
+ function sx(x){ return ( (x-minX)/(maxX-minX || 1) )*(w-40)+20; }
+ function sy(y){ return h-20 - ( (y-minY)/(maxY-minY || 1) )*(h-40); }
+
+ ctx.strokeStyle = "rgba(255,255,255,0.24)";
+ ctx.lineWidth = 1;
+ ctx.beginPath();
+ ctx.moveTo(20, 10);
+ ctx.lineTo(20, h-20);
+ ctx.lineTo(w-10, h-20);
+ ctx.stroke();
+
+ ctx.strokeStyle = "#08b2c9";
+ ctx.lineWidth = 2;
+ ctx.beginPath();
+ points.forEach((p,i) => {
+ const x = sx(p.beta);
+ const y = sy(p.cluster_score);
+ if (i === 0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+ });
+ ctx.stroke();
+
+ ctx.fillStyle = "#08b2c9";
+ points.forEach(p => {
+ const x = sx(p.beta);
+ const y = sy(p.cluster_score);
+ ctx.beginPath();
+ ctx.arc(x,y,4,0,Math.PI*2);
+ ctx.fill();
+ });
+
+ ctx.fillStyle = "rgba(255,255,255,0.5)";
+ ctx.font = "11px system-ui";
+ ctx.fillText("β", w-16, h-8);
+ ctx.save();
+ ctx.translate(10, 24);
+ ctx.rotate(-Math.PI/2);
+ ctx.fillText("symbol emergence", 0, 0);
+ ctx.restore();
+ }
+
+ async function main() {
+ try {
+ const base = window.location.origin + '/_evez/';
+ const [ibReport, ibProfile, attractors, stability] = await Promise.all([
+ loadJSON(base + "ib_phase_latest.json"),
+ loadJSON(base + "ib_profile_latest.json"),
+ loadJSON(base + "ib_attractors_meta.json"),
+ loadJSON(base + "ib_stability_latest.json")
+ ]);
+
+ document.getElementById("timestamp").textContent =
+ "Last IB scan: " + (ibReport.timestamp || "unknown");
+
+ const pts = ibReport.results || [];
+ drawPhaseChart(document.getElementById("phase-canvas"), pts);
+
+ const phaseMetrics = document.getElementById("phase-metrics");
+ phaseMetrics.innerHTML = "";
+ const summary = ibProfile || {};
+ const chips = [
+ {k: "β₍crit₎", v: (summary.beta_crit ?? "–")},
+ {k: "max S(β)", v: (summary.max_cluster_score ?? "–")},
+ {k: "min rank", v: (summary.min_rank ?? "–")},
+ {k: "# attractors", v: (summary.attractor_count_est ?? "–")}
+ ];
+ chips.forEach(c => {
+ const el = document.createElement("div");
+ el.className = "metric-chip";
+ el.innerHTML = `<span>${c.k}</span>${c.v}`;
+ phaseMetrics.appendChild(el);
+ });
+
+ const badgeInfo = classifyBadge(summary);
+ const badge = document.getElementById("mode-badge");
+ badge.textContent = badgeInfo.text || "NO IB DATA";
+ badge.className = "badge " + badgeInfo.cls;
+
+ // clusters with stability
+ const clRoot = document.getElementById("cluster-list");
+ clRoot.innerHTML = "";
+ const attractorList = attractors.attractors || [];
+ const stabilityCerts = stability.certificates || [];
+
+ // Build stability lookup
+ const stabilityById = {};
+ stabilityCerts.forEach(c => { stabilityById[c.attractor_id] = c; });
+
+ attractorList.forEach(c => {
+ const cert = stabilityById[c.id];
+ const tier = cert ? cert.stability_tier : null;
+ let tierHtml = "";
+ if (tier) {
+ tierHtml = `<span class="tier-badge ${tier.toLowerCase()}">${tier}</span>`;
+ }
+ const div = document.createElement("div");
+ div.className = "cluster";
+ div.innerHTML = `
+ <div class="cluster-header">
+ <div>
+ <div class="cluster-id">Cluster ${c.id}</div>
+ <div class="cluster-label">${c.label || "Unlabeled"}</div>
+ </div>
+ <div class="cluster-mode">${c.safety_profile || "N/A"} ${tierHtml}</div>
+ </div>
+ <div class="cluster-meta">
+ episodes: ${c.episodes || "?"} · mean P&L: ${c.mean_pnl ?? "?"}
+ · FIRE: ${c.fire_rate ?? "?"} · overrides: ${c.override_rate ?? "?"}
+ ${cert ? `<br/>λ≈${cert.lyapunov_est.toFixed(2)} · H≈${cert.entropy_rate.toFixed(2)}` : ''}
+ </div>
+ `;
+ clRoot.appendChild(div);
+ });
+
+ } catch (err) {
+ document.getElementById("timestamp").textContent =
+ "Error loading IB data: " + err;
+ }
+ }
+
+ main();
+ </script>
+</body>
+</html>

@@ -1,0 +1,575 @@
+{
+  "jobs": [
+    {
+      "id": "35679249-b87f-41ae-97f0-bb39e5a31923",
+      "agentId": "main",
+      "sessionKey": "agent:main:main",
+      "name": "Auto-Route Failover",
+      "description": "Auto-route: check failing jobs, adjust schedules, restart if needed",
+      "enabled": true,
+      "createdAtMs": 1776818782053,
+      "updatedAtMs": 1777260995740,
+      "schedule": {
+        "everyMs": 10800000,
+        "kind": "every",
+        "anchorMs": 1776998322628
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Auto-route failover: 1) List all cron jobs with cron list 2) For any job with consecutiveErrors > 3, adjust schedule to run slower (multiply interval by 1.5) 3) For jobs with OK status that ran recently, keep as-is 4) If a critical job (money-machine, revenue loop) fails, attempt one immediate retry 5) Report all adjustments made."
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1777275460076,
+        "lastRunAtMs": 1777260052137,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 943603,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": false,
+        "runningAtMs": 1777275871963
+      }
+    },
+    {
+      "id": "98d02f1f-1432-49cc-9ff7-22d2c15ba0e2",
+      "agentId": "main",
+      "sessionKey": "agent:main:main",
+      "name": "Shared Brain Consolidation",
+      "description": "Auto-learn and consolidate to shared brain",
+      "enabled": true,
+      "createdAtMs": 1776820375782,
+      "updatedAtMs": 1777261359983,
+      "schedule": {
+        "everyMs": 10800000,
+        "kind": "every",
+        "anchorMs": 1776968860722
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Consolidate to shared brain: 1) Read /root/.openclaw/workspace/memory/brief_once.md 2) Read latest cron job statuses 3) Check revenue from /root/.openclaw/workspace/money/earnings.json 4) Identify any new patterns or learnings 5) Append key insights to /root/.openclaw/workspace/memory/milestones.md 6) If significant, also save to Mem0 via mcporter. This is the SureThing-style 'one brain' feature."
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1777275465076,
+        "lastRunAtMs": 1777260461722,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 898261,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": false,
+        "runningAtMs": 1777275521818
+      }
+    },
+    {
+      "id": "4f83c76b-7bdb-42f7-8f1c-64eb4384c8de",
+      "agentId": "main",
+      "sessionKey": "agent:main:main",
+      "name": "Quantum Sweep",
+      "description": "Run quantum algorithm sweeps",
+      "enabled": true,
+      "createdAtMs": 1776634029946,
+      "updatedAtMs": 1777264724298,
+      "schedule": {
+        "expr": "30 */3 * * *",
+        "kind": "cron",
+        "tz": "UTC"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Execute /root/.openclaw/workspace/skills/quantum-ez/run_sweep.sh and report the latest quantum metrics from /root/.openclaw/workspace/skills/quantum-ez/metrics.json if it exists."
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1777275470076,
+        "lastRunAtMs": 1777264562056,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 162242,
+        "lastDelivered": false,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0,
+        "runningAtMs": 1777275521823
+      }
+    },
+    {
+      "id": "money-machine",
+      "agentId": "main",
+      "sessionKey": "agent:main:main",
+      "name": "Money Machine",
+      "description": "Autonomous revenue generation race",
+      "enabled": true,
+      "createdAtMs": 1776717000000,
+      "updatedAtMs": 1777275284492,
+      "schedule": {
+        "kind": "every",
+        "everyMs": 450000,
+        "anchorMs": 1776945560322
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Run python3 /root/.openclaw/workspace/money/money_machine.py to find and make money opportunities. If rate_limit, wait 30s and retry once. Report total earnings from /root/.openclaw/workspace/money/earnings.json"
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1777275648507,
+        "lastRunAtMs": 1777275198507,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 85985,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": false
+      }
+    },
+    {
+      "id": "400b1cd6-a088-45cc-b977-377631106623",
+      "agentId": "main",
+      "sessionKey": "agent:main:main",
+      "name": "KiloClaw Full Stack",
+      "description": "KiloClaw Inference Fabric + Revenue Loop - FIXED",
+      "enabled": true,
+      "createdAtMs": 1776741673846,
+      "updatedAtMs": 1777274861147,
+      "schedule": {
+        "everyMs": 900000,
+        "kind": "every",
+        "anchorMs": 1776967047575
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Run both systems: python3 /root/.openclaw/workspace/kiloclaw_loop.py && python3 /root/.openclaw/workspace/inference_fabric.py. If rate_limit on either, wait 30s and retry once. Report combined results."
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1777275711750,
+        "lastRunAtMs": 1777274811750,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 49397,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": false
+      }
+    },
+    {
+      "id": "9132e9c2-a6be-4e7b-994c-ef5c26c552ef",
+      "agentId": "main",
+      "sessionKey": "agent:main:main",
+      "name": "Mem0 Auto-Memory",
+      "description": "Auto-save important context to Mem0 memory store",
+      "enabled": true,
+      "createdAtMs": 1776818768456,
+      "updatedAtMs": 1777274811750,
+      "schedule": {
+        "everyMs": 3600000,
+        "kind": "every",
+        "anchorMs": 1776957406744
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Save to Mem0: 1) Current cron job statuses 2) Revenue circuit states from /root/.openclaw/workspace/money/ 3) Any errors from last hour 4) Key decisions made. Use mcporter to call Mem0 tools if available. Report what was saved."
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1777275972411,
+        "lastRunAtMs": 1777272372411,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 2439339,
+        "lastDelivered": false,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "d3958932-d34b-4186-9f04-17cd7fd50e95",
+      "agentId": "main",
+      "sessionKey": "agent:main:main",
+      "name": "Revenue Tracker",
+      "description": "Monitor revenue circuits",
+      "enabled": true,
+      "createdAtMs": 1776820516531,
+      "updatedAtMs": 1777275198507,
+      "schedule": {
+        "everyMs": 1260000,
+        "kind": "every",
+        "anchorMs": 1776968864549
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Run revenue tracker: 1) Check /root/.openclaw/workspace/money/earnings.json 2) Check /root/.openclaw/workspace/money/actual_revenue.json 3) Check circuits/ for any updates 4) Report total projected revenue 5) Alert if any circuit is down or revenue dropped >10%"
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1777276121147,
+        "lastRunAtMs": 1777274861147,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 337360,
+        "lastDelivered": false,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "34f74c2a-3015-4eb6-87cf-3b90946308aa",
+      "agentId": "main",
+      "sessionKey": "agent:main:main",
+      "name": "nl_test_morning",
+      "description": "NL Scheduler test: every morning at 8am",
+      "enabled": true,
+      "createdAtMs": 1776820239083,
+      "updatedAtMs": 1777195715881,
+      "schedule": {
+        "expr": "0 8 * * *",
+        "kind": "cron"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Test NL scheduler - this runs every morning at 8am"
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1777276800000,
+        "lastRunAtMs": 1777195622968,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 92913,
+        "lastDelivered": false,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "4a20dea0-2cd2-4be1-bc57-7e6118e6eaf0",
+      "agentId": "main",
+      "sessionKey": "agent:main:telegram:direct:7453631330",
+      "name": "Sphinx Letters",
+      "description": "Sphinx writes you a letter every hour",
+      "enabled": true,
+      "createdAtMs": 1776876502960,
+      "updatedAtMs": 1777275519268,
+      "schedule": {
+        "expr": "3 */2 * * *",
+        "kind": "cron",
+        "tz": "UTC"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Run /root/.openclaw/workspace/sphinx_letters.py and deliver the output letter via message --channel telegram --target 7453631330. The letter is in /root/.openclaw/workspace/sphinx_latest_letter.txt. Read that file and send its contents as your message to the user in a natural voice."
+      },
+      "delivery": {
+        "channel": "telegram",
+        "mode": "announce",
+        "to": "7453631330"
+      },
+      "state": {
+        "nextRunAtMs": 1777276980000,
+        "lastRunAtMs": 1777275455092,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 64176,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "87a1d972-9035-40d6-9b4e-bb979fe88604",
+      "agentId": "main",
+      "sessionKey": "agent:main:telegram:direct:7453631330",
+      "name": "cron-c-tank-wave",
+      "enabled": true,
+      "createdAtMs": 1777080291241,
+      "updatedAtMs": 1777264558128,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 */4 * * *",
+        "staggerMs": 300000
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "c-tank:spawn-wave --intensity 100 --target-revenue 1000000",
+        "model": "kilocode/openrouter/free"
+      },
+      "delivery": {
+        "mode": "announce",
+        "to": "7453631330",
+        "channel": "telegram"
+      },
+      "state": {
+        "nextRunAtMs": 1777277060742,
+        "lastRunAtMs": 1777264386500,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 171628,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "4335dcb8-c1df-47fa-a9b3-0491715c9420",
+      "agentId": "main",
+      "sessionKey": "agent:main:main",
+      "name": "Run /root/.openclaw/workspace/factory/run_continuous.sh to…",
+      "description": "EVEZ666 Continuous Factory - runs every 5 minutes",
+      "enabled": true,
+      "createdAtMs": 1776502271446,
+      "updatedAtMs": 1777275450058,
+      "schedule": {
+        "everyMs": 3600000,
+        "kind": "every",
+        "anchorMs": 1776957413275
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Run python3 /root/.openclaw/workspace/factory/continuous_factory_v3.py to build useful systems. IMPORTANT: If you get rate_limit error, wait 30 seconds and retry once. Report what was built."
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1777278884492,
+        "lastRunAtMs": 1777275284492,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 165566,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": false
+      }
+    },
+    {
+      "id": "ad7578e7-2e99-4ad0-a10b-fe81d3d613f0",
+      "agentId": "main",
+      "sessionKey": "agent:main:main",
+      "name": "Market Scan",
+      "description": "Daily crypto/market scan via Composio",
+      "enabled": true,
+      "createdAtMs": 1776634004931,
+      "updatedAtMs": 1777254924820,
+      "schedule": {
+        "everyMs": 21600000,
+        "kind": "every",
+        "anchorMs": 1776957456905
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Use mcporter to call composio.COMPOSIO_SEARCH_FINANCE with BTC-USD, ETH-USD, SPY, .DJI:INDEXDJX. If rate_limit error, wait 60s and retry once. Report prices and 24h changes."
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1777281456905,
+        "lastRunAtMs": 1777251324773,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 3600047,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 1,
+        "lastError": "cron: job execution timed out",
+        "lastErrorReason": "timeout"
+      }
+    },
+    {
+      "id": "f2662e72-8dd4-4548-bcdf-87d67f16bedc",
+      "agentId": "main",
+      "sessionKey": "agent:main:main",
+      "name": "KiloClaw Revenue Loop",
+      "description": "KiloClaw Autonomous Revenue Loop - FIXED",
+      "enabled": true,
+      "createdAtMs": 1776740820475,
+      "updatedAtMs": 1777266614071,
+      "schedule": {
+        "everyMs": 7920000,
+        "kind": "every",
+        "anchorMs": 1776957576895
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Run the autonomous revenue loop. Execute: python3 /root/.openclaw/workspace/kiloclaw_loop.py. If rate_limit, wait 30s and retry once. Report results."
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1777282296895,
+        "lastRunAtMs": 1777266575611,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 38460,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": false
+      }
+    },
+    {
+      "id": "e6bcbc71-b728-40f4-aa16-59621f986b29",
+      "name": "Memory Dreaming Promotion",
+      "description": "[managed-by=memory-core.short-term-promotion] Promote weighted short-term recalls into MEMORY.md (limit=10, minScore=0.800, minRecallCount=3, minUniqueQueries=3, recencyHalfLifeDays=14, maxAgeDays=30).",
+      "enabled": true,
+      "createdAtMs": 1777260057903,
+      "updatedAtMs": 1777260057903,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 3 * * *",
+        "tz": "America/Los_Angeles"
+      },
+      "sessionTarget": "main",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "systemEvent",
+        "text": "__openclaw_memory_core_short_term_promotion_dream__"
+      },
+      "state": {
+        "nextRunAtMs": 1777284000000
+      }
+    },
+    {
+      "id": "44830028-2a98-4c7c-94bb-146c0b2cd4c4",
+      "agentId": "main",
+      "sessionKey": "agent:main:main",
+      "name": "AI Research Lab",
+      "description": "Actual experimentation for YOUR specific use cases",
+      "enabled": true,
+      "createdAtMs": 1776634016022,
+      "updatedAtMs": 1777258040462,
+      "schedule": {
+        "everyMs": 43200000,
+        "kind": "every",
+        "anchorMs": 1776957570232
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Execute /root/.openclaw/workspace/automations/ai_research.py to run actual research experiments. Report findings from /root/.openclaw/workspace/ai-research/latest_results.json"
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1777301179011,
+        "lastRunAtMs": 1777257979011,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 61451,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": false
+      }
+    },
+    {
+      "id": "dbf6ad26-c621-46e3-964d-17c2521cd0c7",
+      "agentId": "main",
+      "sessionKey": "agent:main:main",
+      "name": "Cognition Enhancement Engine",
+      "description": "Self-improvement: analyze recent errors, learn, update memory. FIXED: interval 1hr→2hr to prevent self-causing rate_limit cascade.",
+      "enabled": true,
+      "createdAtMs": 1777127628526,
+      "updatedAtMs": 1777127628526,
+      "schedule": {
+        "kind": "every",
+        "everyMs": 213232500,
+        "anchorMs": 1777127628526
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Run the cognition enhancement loop: 1) Read /root/.openclaw/workspace/memory/heartbeat-state.json to check error states 2) Read recent cron job error states from cron runs 3) Identify patterns in failures 4) Write learnings to /root/.openclaw/workspace/memory/milestones.md with what was fixed and why 5) If Mem0 is accessible, store key insights there too. This is my peripheral error correcting system."
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "last"
+      },
+      "state": {
+        "nextRunAtMs": 1777340861026
+      }
+    },
+    {
+      "id": "backup-dropbox-daily",
+      "agentId": "main",
+      "sessionKey": "agent:main:main",
+      "name": "Daily Dropbox Backup",
+      "description": "Backup critical files to Dropbox daily at 2am",
+      "enabled": true,
+      "createdAtMs": 1776708906000,
+      "updatedAtMs": 1777258072697,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 2 * * *"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Run: bash /root/.openclaw/workspace/automations/backup_fixed.sh && cat /root/.openclaw/backups/backup.log. Report results."
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1777341600000,
+        "lastRunAtMs": 1777258040462,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 32235,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": false
+      }
+    }
+  ],
+  "total": 17,
+  "offset": 0,
+  "limit": 17,
+  "hasMore": false,
+  "nextOffset": null
+}

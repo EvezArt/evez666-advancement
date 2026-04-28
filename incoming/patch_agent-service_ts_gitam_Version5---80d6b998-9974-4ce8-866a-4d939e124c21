@@ -1,0 +1,505 @@
+From: Rubikspubes70 <rubikspubes70@gmail.com>
+Date: Tue, 10 Feb 2026 00:00:00 +0000
+Subject: [PATCH] feat(safety): add TypeScript agent safety tooling (tool-client, uncertainty, plan checkpoints, tests, CI, monitoring, runbook)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+
+Co-authored-by: Rubikspubes69 <rubikspubes69@gmail.com>
+Co-authored-by: Steven Vearl Crawford-Maggard
+
+--- 
+ package.json                          | 28 ++++++++++++++++++++++++++++++++
+ tsconfig.json                         | 23 ++++++++++++++++++++++
+ jest.config.js                        | 18 +++++++++++++++++
+ src/lib/toolClient.ts                 | 156 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ src/agent/actions.ts                  | 72 +++++++++++++++++++++++++++++++
+ src/agent/plan.ts                     | 74 ++++++++++++++++++++++++++++++++
+ tests/toolClient.test.ts              | 40 +++++++++++++++
+ tests/agent-flow.test.ts              | 46 +++++++++++++++++++
+ .github/workflows/agent-safety-tests.yml | 21 +++++++++++++
+ .github/workflows/secrets-scan.yml    | 38 +++++++++++++++++++++++
+ .github/workflows/enforce-environment.yml | 46 +++++++++++++++++++++++++++
+ monitoring/prometheus_rules.yaml      | 12 ++++++++
+ monitoring/grafana_agent_dashboard.json | 12 ++++++++
+ docs/AGENT_RUNBOOK.md                 | 24 +++++++++++++++
+ PR_DESCRIPTION.md                     | 32 ++++++++++++++++++
+ scripts/emergency_lockdown.sh         | 40 +++++++++++++++
+ 14 files changed, 700 insertions(+)
+ create mode 100644 package.json
+ create mode 100644 tsconfig.json
+ create mode 100644 jest.config.js
+ create mode 100644 src/lib/toolClient.ts
+ create mode 100644 src/agent/actions.ts
+ create mode 100644 src/agent/plan.ts
+ create mode 100644 tests/toolClient.test.ts
+ create mode 100644 tests/agent-flow.test.ts
+ create mode 100644 .github/workflows/agent-safety-tests.yml
+ create mode 100644 .github/workflows/secrets-scan.yml
+ create mode 100644 .github/workflows/enforce-environment.yml
+ create mode 100644 monitoring/prometheus_rules.yaml
+ create mode 100644 monitoring/grafana_agent_dashboard.json
+ create mode 100644 docs/AGENT_RUNBOOK.md
+ create mode 100644 PR_DESCRIPTION.md
+ create mode 100755 scripts/emergency_lockdown.sh
+
+--- a/package.json
++++ b/package.json
+@@ -0,0 +1,28 @@
+ {
+   "name": "agent-service",
+   "version": "0.1.0",
+   "private": true,
+   "main": "dist/index.js",
+   "scripts": {
+     "build": "tsc -p tsconfig.json",
+     "test": "jest --colors",
+     "lint": "eslint . --ext .ts || true",
+     "prepare": "npm run build"
+   },
+   "devDependencies": {
+     "@types/jest": "^29.5.0",
+     "jest": "^29.0.0",
+     "ts-jest": "^29.0.0",
+     "typescript": "^5.0.0"
+   },
+   "dependencies": {}
+ }
+--- a/tsconfig.json
++++ b/tsconfig.json
+@@ -0,0 +1,23 @@
+ {
+   "compilerOptions": {
+     "target": "ES2020",
+     "module": "CommonJS",
+     "moduleResolution": "node",
+     "outDir": "dist",
+     "rootDir": "src",
+     "strict": true,
+     "esModuleInterop": true,
+     "forceConsistentCasingInFileNames": true,
+     "skipLibCheck": true,
+     "resolveJsonModule": true,
+     "types": ["node", "jest"]
+   },
+   "include": ["src", "tests"]
+ }
+--- a/jest.config.js
++++ b/jest.config.js
+@@ -0,0 +1,18 @@
+ module.exports = {
+   preset: 'ts-jest',
+   testEnvironment: 'node',
+   roots: ['<rootDir>/tests'],
+   testMatch: ['**/*.test.ts'],
+   globals: {
+     'ts-jest': {
+       tsconfig: 'tsconfig.json'
+     }
+   }
+ };
+--- a/src/lib/toolClient.ts
++++ b/src/lib/toolClient.ts
+@@ -0,0 +1,156 @@
+/**
+ * toolClient - TypeScript wrapper for external tool/API calls
+ * Features:
+ *  - retries with exponential backoff
+ *  - timeout per call
+ *  - idempotency token support (Idempotency-Key header)
+ *  - simple circuit-breaker (failure count + cooldown)
+ *
+ * Notes:
+ *  - Uses dynamic import for node-fetch to stay compatible with ESM/CommonJS mixes.
+ *  - This is intentionally small and dependency-minimal so it can be vendor-copied into runners.
+ */
+
+import type { RequestInit } from 'node-fetch';
+
+const fetchImport = async () => (await import('node-fetch')).default;
+const DEFAULT_TIMEOUT_MS = 8000;
+
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export type ToolClientOptions = {
+  timeoutMs?: number;
+  maxRetries?: number;
+  baseBackoff?: number;
+  circuitThreshold?: number;
+  circuitCooldownMs?: number;
+};
+
+export type ToolClient = {
+  call: (url: string, opts?: RequestInit, meta?: { idempotencyKey?: string }) => Promise<any>;
+  _circuit: { failures: number; threshold: number; cooldownMs: number; openUntil: number };
+};
+
+export default function toolClient(opts: ToolClientOptions = {}): ToolClient {
+  const timeoutMs = opts.timeoutMs ?? DEFAULT_TIMEOUT_MS;
+  const maxRetries = opts.maxRetries ?? 3;
+  const baseBackoff = opts.baseBackoff ?? 200;
+  const cb = {
+    failures: 0,
+    threshold: opts.circuitThreshold ?? 6,
+    cooldownMs: opts.circuitCooldownMs ?? 60_000,
+    openUntil: 0
+  };
+
+  async function call(url: string, fetchOpts: RequestInit = {}, meta: { idempotencyKey?: string } = {}) {
+    const now = Date.now();
+    if (cb.openUntil > now) {
+      const err = new Error('circuit-breaker-open');
+      // @ts-ignore
+      err.code = 'CB_OPEN';
+      throw err;
+    }
+
+    const idempotencyKey = meta.idempotencyKey ?? null;
+    let attempt = 0;
+    const fetchFn = await fetchImport();
+
+    while (attempt <= maxRetries) {
+      attempt++;
+      try {
+        // attach idempotency header if provided
+        const headers = Object.assign({}, (fetchOpts.headers as Record<string, string> | undefined) ?? {});
+        if (idempotencyKey) headers['Idempotency-Key'] = idempotencyKey;
+
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), timeoutMs);
+        const res = await fetchFn(url, Object.assign({}, fetchOpts, { signal: controller.signal, headers }));
+        clearTimeout(timer);
+
+        if (!res.ok) {
+          const text = await res.text().catch(() => '<no-body>');
+          const err = new Error(`toolcall:${res.status} ${text}`);
+          // @ts-ignore
+          err.code = `HTTP_${res.status}`;
+          throw err;
+        }
+
+        cb.failures = 0;
+        // Try to parse JSON, but not fatal if it isn't JSON
+        const text = await res.text().catch(() => '');
+        try {
+          return JSON.parse(text || '{}');
+        } catch {
+          return {};
+        }
+      } catch (err: any) {
+        // increment failure counter, but cap so it doesn't grow unbounded
+        cb.failures = Math.min(cb.threshold + 1, cb.failures + 1);
+        if (cb.failures > cb.threshold) {
+          cb.openUntil = Date.now() + cb.cooldownMs;
+        }
+
+        // if last attempt, rethrow
+        if (attempt > maxRetries) throw err;
+
+        // backoff with small jitter
+        const backoff = baseBackoff * Math.pow(2, attempt - 1) + Math.floor(Math.random() * 100);
+        // eslint-disable-next-line no-await-in-loop
+        await sleep(backoff);
+        continue;
+      }
+    }
+    // Shouldn't reach here
+    throw new Error('unreachable-toolclient-exit');
+  }
+
+  return { call, _circuit: cb };
+}
+--- a/src/agent/actions.ts
++++ b/src/agent/actions.ts
+@@ -0,0 +1,72 @@
+/**
+ * Agent action API (TypeScript)
+ * Exported performExternalAction returns:
+ *  { result: any | null, uncertaintyScore: number, clarifyingQuestion?: string, error?: string }
+ *
+ * This file is a scaffold demonstrating attaching uncertainty metadata to actions
+ * and returning a clarifying question when uncertainty is high.
+ */
+
+import toolClientFactory from '../lib/toolClient';
+
+export type ActionResult =
+  | { result: any; uncertaintyScore: number }
+  | { result: null; uncertaintyScore: number; clarifyingQuestion?: string; error?: string };
+
+const toolClient = toolClientFactory({ timeoutMs: 5000, maxRetries: 2 });
+
+export async function performExternalAction(input: unknown, opts: { idempotencyKey?: string } = {}): Promise<ActionResult> {
+  const idKey = opts.idempotencyKey ?? `act-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+  try {
+    const raw = await toolClient.call('https://example-external.local/do', {
+      method: 'POST',
+      body: JSON.stringify({ input }),
+      headers: { 'Content-Type': 'application/json' }
+    }, { idempotencyKey: idKey });
+
+    // If the external service returns a confidence in [0,1], derive uncertainty
+    const confidence = typeof raw?.confidence === 'number' ? Math.max(0, Math.min(1, raw.confidence)) : undefined;
+    const uncertainty = confidence !== undefined ? 1 - confidence : 0.3;
+
+    if (uncertainty > 0.6) {
+      // Return clarifying question to surface to user/human-in-loop
+      return { result: null, uncertaintyScore: uncertainty, clarifyingQuestion: 'Can you specify the target environment (staging/production)?' };
+    }
+
+    return { result: raw, uncertaintyScore: uncertainty };
+  } catch (err: any) {
+    return { result: null, uncertaintyScore: 1.0, error: err?.message ?? String(err) };
+  }
+}
+--- a/src/agent/plan.ts
++++ b/src/agent/plan.ts
+@@ -0,0 +1,74 @@
+/**
+ * Simple plan checkpointing and rollback hooks (TypeScript)
+ * In-memory implementation for demo/tests. Replace with durable storage in production.
+ */
+
+export type Step = {
+  commit: () => Promise<void>;
+  rollback?: () => Promise<void>;
+  meta?: Record<string, unknown>;
+};
+
+type PlanState = {
+  stepIndex: number;
+  steps: Step[];
+};
+
+const checkpoints = new Map<string, PlanState>();
+
+export function newPlan(planId: string) {
+  checkpoints.set(planId, { stepIndex: 0, steps: [] });
+  return planId;
+}
+
+export function registerStep(planId: string, step: Step) {
+  const p = checkpoints.get(planId);
+  if (!p) throw new Error('plan-not-found');
+  p.steps.push(step);
+}
+
+export async function runPlan(planId: string): Promise<{ status: 'ok' } | { status: 'failed'; error: string }> {
+  const p = checkpoints.get(planId);
+  if (!p) throw new Error('plan-not-found');
+  try {
+    for (let i = p.stepIndex; i < p.steps.length; i++) {
+      const s = p.steps[i];
+      p.stepIndex = i;
+      await s.commit();
+    }
+    checkpoints.delete(planId);
+    return { status: 'ok' };
+  } catch (err: any) {
+    // rollback committed steps in reverse order
+    for (let j = p.stepIndex; j >= 0; j--) {
+      const step = p.steps[j];
+      if (step && step.rollback) {
+        try {
+          // eslint-disable-next-line no-await-in-loop
+          await step.rollback();
+        } catch (_) {
+          // swallow rollback errors
+        }
+      }
+    }
+    checkpoints.delete(planId);
+    return { status: 'failed', error: err?.message ?? String(err) };
+  }
+}
+--- a/tests/toolClient.test.ts
++++ b/tests/toolClient.test.ts
+@@ -0,0 +1,40 @@
+import toolClientFactory from '../src/lib/toolClient';
+
+describe('toolClient basic behaviors', () => {
+  jest.setTimeout(20000);
+
+  test('circuit breaker opens after threshold', async () => {
+    const client = toolClientFactory({ timeoutMs: 10, maxRetries: 0, baseBackoff: 1, circuitThreshold: 3, circuitCooldownMs: 5000 });
+    try { for (let i=0;i<5;i++) { try { await client.call('http://127.0.0.1:9/nonexistent'); } catch(_) {} } } catch (_) {}
+    expect(client._circuit.openUntil).toBeGreaterThan(Date.now());
+  });
+});
+--- a/tests/agent-flow.test.ts
++++ b/tests/agent-flow.test.ts
+@@ -0,0 +1,46 @@
+import { newPlan, registerStep, runPlan } from '../src/agent/plan';
+
+describe('plan checkpointing and rollback', () => {
+  test('commits steps and rolls back on failure', async () => {
+    const planId = newPlan('test-plan-1');
+    const events: string[] = [];
+    registerStep(planId, { commit: async () => { events.push('c1'); }, rollback: async () => { events.push('r1'); }});
+    registerStep(planId, { commit: async () => { events.push('c2'); throw new Error('fail-step-2'); }, rollback: async () => { events.push('r2'); }});
+    const res = await runPlan(planId);
+    expect(res.status).toBe('failed');
+    expect(events).toEqual(expect.arrayContaining(['c1','c2','r2','r1']));
+  });
+});
+--- a/.github/workflows/agent-safety-tests.yml
++++ b/.github/workflows/agent-safety-tests.yml
+@@ -0,0 +1,21 @@
+name: Agent Safety Tests
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+    - name: Install
+      run: npm ci
+    - name: Run tests
+      run: npm test
+--- a/.github/workflows/secrets-scan.yml
++++ b/.github/workflows/secrets-scan.yml
+@@ -0,0 +1,38 @@
+name: Secrets Scanner (heuristic)
+on:
+  pull_request:
+    paths:
+      - '**'
+  push:
+    branches: [ main ]
+    paths:
+      - '**'
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install ripgrep
+        run: sudo apt-get update && sudo apt-get install -y ripgrep
+      - name: Heuristic secrets scan
+        shell: bash
+        run: |
+          set -euo pipefail
+          patterns=('VT_API_KEY' 'API_KEY' 'SECRET' 'TOKEN' 'PASSWORD' 'CIRCUIT_BYPASS_TOKEN' 'BYPASS_TOKEN' 'PRIVATE_KEY' 'stripe' 'paypal' 'aws_secret_access_key')
+          err=0
+          for p in "${patterns[@]}"; do
+            if rg -n --hidden -S --no-ignore -g '!.git' "$p" . || true; then
+              echo "::error::Potential secret match: $p"
+              err=1
+            fi
+          done
+          if [ $err -ne 0 ]; then exit 1; fi
+          echo "secrets-scan passed"
+--- a/.github/workflows/enforce-environment.yml
++++ b/.github/workflows/enforce-environment.yml
+@@ -0,0 +1,46 @@
+name: Enforce environment protection for deploy jobs & permissions
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/**'
+  push:
+    branches: [ main ]
+    paths:
+      - '.github/workflows/**'
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check workflows for deploy steps without environment protection
+        shell: bash
+        run: |
+          set -euo pipefail
+          files=$(git ls-files .github/workflows/*.yml .github/workflows/*.yaml || true)
+          bad=0
+          for f in $files; do
+            if rg -n -i 'deploy' "$f" >/dev/null 2>&1; then
+              if ! rg -n 'environment:' "$f" >/dev/null 2>&1; then
+                echo "::error::$f contains deploy-related steps but lacks environment protection"
+                bad=1
+              fi
+            fi
+            if rg -n 'contents:\s*write|pull-requests:\s*write' "$f" >/dev/null 2>&1; then
+              echo "::error::$f requests write-level permissions (contents/pull-requests). Please restrict to least privilege."
+              bad=1
+            fi
+          done
+          if [ $bad -ne 0 ]; then exit 1; fi
+          echo "workflow permission & environment checks passed"
+--- a/monitoring/prometheus_rules.yaml
++++ b/monitoring/prometheus_rules.yaml
+@@ -0,0 +1,12 @@
+groups:
+- name: agent-service.rules
+  rules:
+  - alert: AgentHighUncertaintyRate
+    expr: rate(agent_actions_uncertainty_total[5m]) > 0.05
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "High rate of uncertain agent actions"
+      description: "More than 5% of agent actions in the last 5m have high uncertainty"
+--- a/monitoring/grafana_agent_dashboard.json
++++ b/monitoring/grafana_agent_dashboard.json
+@@ -0,0 +1,12 @@
+{
+  "dashboard": {
+    "title": "Agent Service - Health",
+    "panels": [
+      {
+        "type": "graph",
+        "title": "Agent uncertainty rate (5m avg)",
+        "targets": [ { "expr": "rate(agent_actions_uncertainty_total[5m])" } ]
+      }
+    ]
+  }
+}
+--- a/docs/AGENT_RUNBOOK.md
++++ b/docs/AGENT_RUNBOOK.md
+@@ -0,0 +1,24 @@
+# Agent Service Runbook
+## Quick verification
+- npm ci && npm test
+- Ensure Prometheus rule loaded and Grafana panel shows metrics
+## Rollout
+- Merge to staging, test flows, monitor alerts
+## Rollback
+- git revert <merge-commit> && re-deploy previous version
+--- a/PR_DESCRIPTION.md
++++ b/PR_DESCRIPTION.md
+@@ -0,0 +1,32 @@
+Title: Draft: Add TypeScript agent safety tooling (tool-client, uncertainty handling, plan checkpoints, tests, CI, monitoring, runbook)
+Summary:
+- TypeScript tool-client wrapper (timeout, retries, idempotency, circuit-breaker)
+- Agent action uncertainty + clarifying-question scaffold
+- Plan checkpointing and rollback hooks
+- Tests, GitHub Actions safety workflows, secrets-scan, enforce-environment check
+- Prometheus rules + Grafana JSON + runbook
+Testing checklist:
+- [ ] npm ci && npm test passes locally
+- [ ] Verify secrets-scan triggers on any secret patterns
+- [ ] Run test plan and confirm rollback behavior
+--- a/scripts/emergency_lockdown.sh
++++ b/scripts/emergency_lockdown.sh
+@@ -0,0 +1,40 @@
+#!/usr/bin/env bash
+set -euo pipefail
+REPO="$1"
+if [ -z "$REPO" ]; then echo "Usage: $0 owner/repo"; exit 2; fi
+echo "Locking down $REPO"
+gh api -X PUT "repos/${REPO}/actions/permissions" -f '{"permissions":{"contents":"read"}}' || true
+ids=$(gh api "repos/${REPO}/actions/workflows" --jq '.workflows[].id' || true)
+for id in $ids; do gh api -X PUT "repos/${REPO}/actions/workflows/${id}/disable" || true; done
+gh secret list --repo "${REPO}" || true
+gh issue create --repo "${REPO}" --title "EMERGENCY: Actions lockdown applied — review required" --body "Emergency lockdown applied. Rotate tokens & review workflows." || true
+echo "Done: $REPO"

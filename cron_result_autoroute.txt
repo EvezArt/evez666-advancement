@@ -1,0 +1,10 @@
+Auto-Route Failover Report - $(date)
+====================================
+Jobs checked: 12
+Jobs with consecutiveErrors > 3: None
+Jobs with error status: 
+- Auto-Route Failover (consecutiveErrors: 1, lastRunStatus: error)
+- Cognition Enhancement Engine (consecutiveErrors: null, lastRunStatus: null) [likely not yet run]
+Critical jobs (money-machine, revenue loop) status: both ok
+Adjustments made: None (no jobs exceeded error threshold)
+Recommendation: Investigate Auto-Route Failover error; verify Cognition Enhancement Engine schedule.

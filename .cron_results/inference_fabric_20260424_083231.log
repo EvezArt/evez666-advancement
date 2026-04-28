@@ -1,0 +1,27 @@
+
+============================================================
+Attempt 0 at 2026-04-24T08:32:31.327651
+Return code: 0
+Rate limit detected: False
+============================================================
+=== INFERENCE FABRIC ===
+
+CLASSIFICATION:
+  Model: phi-mini
+  GPU: node-t4-1
+  Cost: $0.0002/1k
+  Latency: 80ms
+
+SALES_EMAIL:
+  Model: gpt-class-mid
+  GPU: node-a10g-1
+  Cost: $0.0020/1k
+  Latency: 350ms
+
+AUTO_CLOSE:
+  Model: llama-70b
+  GPU: node-a100-1
+  Cost: $0.0100/1k
+  Latency: 900ms
+
+=== FABRIC READY ===

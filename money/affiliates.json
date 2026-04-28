@@ -1,0 +1,14 @@
+[
+  {
+    "product": "AWS",
+    "commission": "1-10%"
+  },
+  {
+    "product": "DigitalOcean",
+    "commission": "$10-50"
+  },
+  {
+    "product": "Vercel",
+    "commission": "30%"
+  }
+]

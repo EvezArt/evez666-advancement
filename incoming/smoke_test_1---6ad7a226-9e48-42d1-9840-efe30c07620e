@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+BASE_URL="${1:-http://localhost:5678/webhook}"
+REPO="${GITHUB_REPO:-{{GITHUB_REPO}}}"
+RUN_ID="smoke_$(date +%s)"
+
+echo "[1/4] Send orchestrator task"
+curl -sS -X POST "${BASE_URL}/evez-orchestrator" \
+  -H 'Content-Type: application/json' \
+  -d "{\"run_id\":\"${RUN_ID}\",\"task\":\"Autonomous smoke test\",\"objective\":\"Verify orchestrator path and state persistence\",\"github_repo\":\"${REPO}\"}" | tee /tmp/evez_smoke_orchestrator.json
+
+echo
+sleep 2
+
+echo "[2/4] Read status"
+curl -sS "${BASE_URL}/evez-status?run_id=${RUN_ID}" | tee /tmp/evez_smoke_status.json
+
+echo
+
+echo "[3/4] Direct GitHub workflow dispatch route"
+curl -sS -X POST "${BASE_URL}/evez-github" \
+  -H 'Content-Type: application/json' \
+  -d "{\"run_id\":\"${RUN_ID}_gh\",\"action\":\"dispatch_workflow\",\"repo\":\"${REPO}\",\"workflow\":\"evez-agent.yml\",\"inputs\":{\"task\":\"Smoke test GitHub dispatch\",\"reason\":\"smoke_test\"}}" | tee /tmp/evez_smoke_github.json
+
+echo
+
+echo "[4/4] Direct browser route"
+curl -sS -X POST "${BASE_URL}/evez-browser" \
+  -H 'Content-Type: application/json' \
+  -d '{"run_id":"'"${RUN_ID}_browser"'","task":"Open example.com and report the page title","llm":"gpt-4o","maxSteps":10}' | tee /tmp/evez_smoke_browser.json
+
+echo
+printf 'Smoke test complete. Files written to:\n'
+printf '  /tmp/evez_smoke_orchestrator.json\n  /tmp/evez_smoke_status.json\n  /tmp/evez_smoke_github.json\n  /tmp/evez_smoke_browser.json\n'

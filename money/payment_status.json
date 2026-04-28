@@ -1,0 +1,25 @@
+{
+  "checked_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+  "paypal": {
+    "url": "https://www.paypal.me/rubikspubes70",
+    "status": "unknown",
+    "note": "Personal PayPal.Me link; need to ensure account can receive payments"
+  },
+  "ko_fi": {
+    "url": "https://ko-fi.com/evez666",
+    "status": "unknown",
+    "note": "Ko-fi page exists; need to connect bank account for payouts"
+  },
+  "gumroad": {
+    "url": "https://gumroad.com/login",
+    "status": "unknown",
+    "note": "Need to sign in and create a product"
+  },
+  "next_steps": [
+    "Log into each service with your personal credentials",
+    "For PayPal: ensure you can accept payments (Business or Personal with payments enabled)",
+    "For Ko-fi: go to 'Bank Accounts' and link your payout bank",
+    "For Gumroad: create a new product, upload the AI Insights file, set price",
+    "After activation, reply 'PAYMENTS READY' or similar so I can switch money_machine.py to log real earnings"
+  ]
+}

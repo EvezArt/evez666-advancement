@@ -1,0 +1,156 @@
+From 0000000000000000000000000000000000000000 Mon Feb 10 00:00:00 2026 +0000
+From: mini-crawler <you@example.com>
+Date: Tue, 10 Feb 2026 00:00:00 +0000
+Subject: [PATCH] mini-crawler: initial compose stack (api, worker, control, redis), tests, CI
+
+---
+ .env.example                                 |  12 +++
+ .github/workflows/ci.yml                     |  36 +++++++
+ README.md                                    | 311 ++++++++++++++++++++++++++++++---------
+ docker-compose.yml                           |  32 +++++-
+ migrations/schema.sql                        |  24 +++++
+ requirements.txt                             |   6 ++
+ src/api/Dockerfile                           |  19 ++++
+ src/api/app.py                               | 192 ++++++++++++++++++++++------
+ src/control/Dockerfile                       |  15 +++
+ src/control/control.py                       | 115 ++++++++++++++
+ src/worker/Dockerfile                        |  24 ++++
+ src/worker/worker.py                          | 691 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ tests/fixtures/page1.html                    |  10 +
+ tests/fixtures/page2.html                    |  10 +
+ tests/fixtures/page3.html                    |  10 +
+ tests/smoke_test.py                          | 104 +++++++++++++
+ 16 files changed, 1478 insertions(+), 18 deletions(-)
+ create mode 100644 .env.example
+ create mode 100644 .github/workflows/ci.yml
+ create mode 100644 README.md
+ create mode 100644 docker-compose.yml
+ create mode 100644 migrations/schema.sql
+ create mode 100644 requirements.txt
+ create mode 100644 src/api/Dockerfile
+ create mode 100644 src/api/app.py
+ create mode 100644 src/control/Dockerfile
+ create mode 100644 src/control/control.py
+ create mode 100644 src/worker/Dockerfile
+ create mode 100644 src/worker/worker.py
+ create mode 100644 tests/fixtures/page1.html
+ create mode 100644 tests/fixtures/page2.html
+ create mode 100644 tests/fixtures/page3.html
+ create mode 100644 tests/smoke_test.py
+-- 
+2.39.2
+diff --git a/.env.example b/.env.example
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/.env.example
+@@ -0,0 +1,12 @@
+ # Optional: set a real MODEL_API_KEY to integrate a real LLM
+ # To enable OpenAI integration (safe-by-default if you don't set these)
+ MODEL_PROVIDER=openai
+ MODEL_API_KEY=
+ MODEL_OPENAI_MODEL=gpt-3.5-turbo
+ 
+ # Operational caps
+ MODEL_DAILY_TOKEN_CAP=10000
+ MODEL_MAX_TOKENS=512
+ PER_JOB_MAX_PAGES=3
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+new file mode 100644
+index 0000000..2222222
+--- /dev/null
++++ b/.github/workflows/ci.yml
+@@ -0,0 +1,36 @@
+ name: CI
+ 
+ on: [push, pull_request]
+ 
+ jobs:
+   smoke:
+     runs-on: ubuntu-latest
+     steps:
+     - uses: actions/checkout@v4
+ 
+     - name: Set up Python
+       uses: actions/setup-python@v4
+       with:
+         python-version: "3.11"
+ 
+     - name: Install test deps
+       run: |
+         python -m pip install --upgrade pip
+         pip install pytest requests
+ 
+     - name: Build and start compose
+       run: |
+         docker compose build --no-cache
+         docker compose up -d
+         # Wait for api to be reachable
+         for i in {1..30}; do
+           curl -sS http://localhost:8000/ || true
+           sleep 1
+         done
+ 
+     - name: Run smoke tests
+       run: |
+         pytest -q tests/smoke_test.py -q
+ 
+     - name: Tear down
+       if: always()
+       run: docker compose down --volumes
+diff --git a/README.md b/README.md
+new file mode 100644
+index 0000000..3333333
+--- /dev/null
++++ b/README.md
+@@ -0,0 +1,311 @@
+ # mini-crawler (compose) — updated: OpenAI + robots.txt + token caps
+ 
+ Minimal end-to-end crawl → ingest → infer → serve loop runnable with Docker Compose.
+ 
+ What this repo contains
+ - api: FastAPI service that accepts job enqueues and serves results (also serves test fixtures)
+ - worker: single worker process combining crawling, ingest, dedupe, model call, DB writes
+ - control: small FastAPI service to toggle 3 kill-switch flags in Redis
+ - redis: queue + flag store
+ - SQLite at ./data/data.db (created by the API on startup)
+ - tests/fixtures: three static pages used by the smoke test
+ - tests/smoke_test.py: single end-to-end smoke that CI runs
+ 
+ Quick start (local)
+ 1. Copy .env.example -> .env and edit if you want OpenAI integration:
+    cp .env.example .env
+    # set MODEL_PROVIDER=openai and MODEL_API_KEY if you want to enable OpenAI
+ 2. Build & start:
+    docker compose build --no-cache
+    docker compose up -d
+ 3. Enqueue a job:
+    curl -X POST "http://localhost:8000/jobs" -H "Content-Type: application/json" \
+      -d '{"start_url":"http://host.docker.internal:8000/tests/fixtures/page1.html","max_pages":3}'
+ 4. Check job:
+    curl http://localhost:8000/jobs/<job_id>
+ 
+ Kill-switches (toggle)
+ - Pause new jobs:
+   curl -X POST http://localhost:9000/toggle -H "Content-Type: application/json" -d '{"pause_jobs":true}'
+ - Disable model calls:
+   curl -X POST http://localhost:9000/toggle -H "Content-Type: application/json" -d '{"disable_model":true}'
+ - Freeze writes:
+   curl -X POST http://localhost:9000/toggle -H "Content-Type: application/json" -d '{"read_only_db":true}'
+ 
+ Safety & caps
+ - Per-job max pages enforced and clamped (default <= 3)
+ - Per-day model token cap enforced via Redis key model:tokens:YYYYMMDD
+ - If MODEL_API_KEY is not set the worker uses a deterministic local summarizer by default
+ - Control service exposes /tokens to view today's token usage
+ 
+ Tests
+ - Run smoke tests locally:
+   pytest -q tests/smoke_test.py
+ - CI runs the same smoke test on every push (see .github/workflows/ci.yml)
+ 
+ Developer notes
+ - Worker implements robots.txt best-effort caching (1 hour) in Redis
+ - Token estimation uses tiktoken if installed, otherwise a heuristic (1 token ~ 4 chars)
+ 
+ File layout

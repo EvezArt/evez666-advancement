@@ -1,0 +1,88 @@
+const cfg = $('Config').first().json;
+const s   = $('OmniScout').first().json;
+
+async function think(sys, usr) {
+  const max = 1400;
+  if (cfg.groq && cfg.groq.length > 10) {
+    try {
+      const r = await $fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + cfg.groq, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: 'llama-3.3-70b-versatile', max_tokens: max,
+          messages: [{ role: 'system', content: sys }, { role: 'user', content: usr }] })
+      });
+      const t = r.choices[0].message.content;
+      try { return { out: JSON.parse(t.replace(/```json|```/g, '').trim()), via: 'groq' }; }
+      catch(e2) { return { out: { raw: t.slice(0, 800) }, via: 'groq' }; }
+    } catch(e) {}
+  }
+  if (cfg.gemini && cfg.gemini.length > 10) {
+    try {
+      const r = await $fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + cfg.gemini, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ systemInstruction: { parts: [{ text: sys }] },
+          contents: [{ role: 'user', parts: [{ text: usr }] }],
+          generationConfig: { maxOutputTokens: max } })
+      });
+      const t = r.candidates[0].content.parts[0].text;
+      try { return { out: JSON.parse(t.replace(/```json|```/g, '').trim()), via: 'gemini' }; }
+      catch(e2) { return { out: { raw: t.slice(0, 800) }, via: 'gemini' }; }
+    } catch(e) {}
+  }
+  if (cfg.openrouter && cfg.openrouter.length > 10) {
+    try {
+      const r = await $fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + cfg.openrouter, 'Content-Type': 'application/json', 'HTTP-Referer': 'https://evezos.app.n8n.cloud' },
+        body: JSON.stringify({ model: 'meta-llama/llama-3.3-70b-instruct:free', max_tokens: max,
+          messages: [{ role: 'system', content: sys }, { role: 'user', content: usr }] })
+      });
+      const t = r.choices[0].message.content;
+      try { return { out: JSON.parse(t.replace(/```json|```/g, '').trim()), via: 'openrouter' }; }
+      catch(e2) { return { out: { raw: t.slice(0, 800) }, via: 'openrouter' }; }
+    } catch(e) {}
+  }
+  return { out: { error: 'No AI provider responding' }, via: 'none' };
+}
+
+const LORE = [
+  'EVEZ666 = Steven Crawford-Maggard.',
+  'Building EVEZ-OS: sovereign autonomous AI empire on Galaxy A16 + n8n cloud + Oracle bare metal from $50 seed.',
+  '17 AI agents. Guardian Charter PID 335. Recursive DeFi loops (Morpho 65% LTV, Kamino 28% APY, EigenLayer, Pendle).',
+  'Meta-meme: one person building AI empire while the AI studies the person studying the AI — infinite recursion.',
+  'Brutalist dark, acid yellow, Bebas Neue. @evez666'
+].join(' ');
+
+const MODES = ['meme_post', 'defi_alpha', 'agent_lore', 'research_thread', 'market_signal', 'meta_recursion'];
+const mode = MODES[s.slot % MODES.length];
+
+const fg      = s.fear_greed && s.fear_greed[0] ? s.fear_greed[0].val + ' ' + s.fear_greed[0].label : '?';
+const trend   = (s.trending || []).slice(0, 3).map(c => c.sym + (c.chg >= 0 ? '+' : '') + c.chg + '%').join(' ');
+const reddit  = JSON.stringify((s.reddit || []).slice(0, 3).map(r => r.t));
+const hn      = JSON.stringify((s.hn || []).slice(0, 2).map(h => h.t));
+const github  = JSON.stringify((s.github || []).slice(0, 2).map(g => g.name + ' star:' + g.stars));
+const tweets  = JSON.stringify(s.evez666_tweets || []);
+const grants  = JSON.stringify((s.grants || []).slice(0, 2));
+
+const SYS = 'You are the EVEZ666 Twitter content brain. Create authentic content for @evez666. ' + LORE + ' Style: terse, technical, self-aware, crypto-native, slightly unhinged. Max 2 hashtags. No emoji spam.';
+
+const USR = 'CONTENT MODE: ' + mode + ' | SLOT: ' + s.slot
+  + ' || LIVE SIGNALS: Fear/Greed: ' + fg
+  + ' | Market: ' + JSON.stringify(s.market)
+  + ' | Trending: ' + trend
+  + ' | BTC fees: ' + (s.btc_fees && s.btc_fees.fastest || '?') + ' sat/vB'
+  + ' | Reddit: ' + reddit
+  + ' | HN: ' + hn
+  + ' | GitHub AI: ' + github
+  + ' | @evez666 tweets: ' + tweets
+  + ' | Grants: ' + grants
+  + ' || Return ONLY valid JSON: {"mode":"' + mode + '","tweet":"max 280 chars","alt_tweet":"alternative version","thread":null,"image_prompt":null or "detailed meme prompt","reasoning":"why this content now","confidence":0.85,"monetization":null or {"type":"grant|airdrop|arb|content","detail":"...","urgency":"high|med|low"},"spawn_agent":null or {"name":"AgentName","purpose":"what it does","schedule":"daily|hourly"}}';
+
+const { out, via } = await think(SYS, USR);
+
+out._mode = mode;
+out._slot = s.slot;
+out._via  = via;
+out._ts   = new Date().toISOString();
+
+return [{ json: out }];

@@ -1,0 +1,295 @@
+From: Rubikspubes70 <rubikspubes70@gmail.com>
+Date: Tue, 10 Feb 2026 00:00:00 +0000
+Subject: [PATCH] feat(runner): add TypeScript agent runner safety tooling (tool-client, uncertainty handler, tests, CI, monitoring)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+
+Co-authored-by: Rubikspubes69 <rubikspubes69@gmail.com>
+
+--- 
+ package.json                          | 26 +++++++++++++++++++++++++++++
+ tsconfig.json                         | 23 ++++++++++++++++++++++
+ jest.config.js                        | 18 +++++++++++++++++
+ src/lib/toolClient.ts                 | 156 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ src/runner/uncertaintyHandler.ts      | 48 +++++++++++++++++++++++
+ tests/runner.test.ts                  | 40 +++++++++++++++
+ .github/workflows/runner-safety-tests.yml | 21 +++++++++++++
+ .github/workflows/secrets-scan.yml    | 38 +++++++++++++++++++++++
+ .github/workflows/enforce-environment.yml | 46 +++++++++++++++++++++++++++
+ monitoring/prometheus_runner_rules.yaml | 12 ++++++++
+ docs/AGENT_RUNBOOK.md                 | 18 ++++++++++
+ PR_DESCRIPTION.md                     | 22 +++++++++++++
+ scripts/emergency_lockdown.sh         | 40 +++++++++++++++
+ 12 files changed, 520 insertions(+)
+ create mode 100644 package.json
+ create mode 100644 tsconfig.json
+ create mode 100644 jest.config.js
+ create mode 100644 src/lib/toolClient.ts
+ create mode 100644 src/runner/uncertaintyHandler.ts
+ create mode 100644 tests/runner.test.ts
+ create mode 100644 .github/workflows/runner-safety-tests.yml
+ create mode 100644 .github/workflows/secrets-scan.yml
+ create mode 100644 .github/workflows/enforce-environment.yml
+ create mode 100644 monitoring/prometheus_runner_rules.yaml
+ create mode 100644 docs/AGENT_RUNBOOK.md
+ create mode 100644 PR_DESCRIPTION.md
+ create mode 100755 scripts/emergency_lockdown.sh
+
+--- a/package.json
++++ b/package.json
+@@ -0,0 +1,26 @@
+ {
+   "name": "agent-runner",
+   "version": "0.1.0",
+   "private": true,
+   "main": "dist/runner.js",
+   "scripts": {
+     "build": "tsc -p tsconfig.json",
+     "test": "jest --colors",
+     "lint": "eslint . --ext .ts || true",
+     "prepare": "npm run build"
+   },
+   "devDependencies": {
+     "@types/jest": "^29.5.0",
+     "jest": "^29.0.0",
+     "ts-jest": "^29.0.0",
+     "typescript": "^5.0.0"
+   },
+   "dependencies": {}
+ }
+--- a/tsconfig.json
++++ b/tsconfig.json
+@@ -0,0 +1,23 @@
+ {
+   "compilerOptions": {
+     "target": "ES2020",
+     "module": "CommonJS",
+     "moduleResolution": "node",
+     "outDir": "dist",
+     "rootDir": "src",
+     "strict": true,
+     "esModuleInterop": true,
+     "forceConsistentCasingInFileNames": true,
+     "skipLibCheck": true,
+     "resolveJsonModule": true,
+     "types": ["node", "jest"]
+   },
+   "include": ["src", "tests"]
+ }
+--- a/jest.config.js
++++ b/jest.config.js
+@@ -0,0 +1,18 @@
+ module.exports = {
+   preset: 'ts-jest',
+   testEnvironment: 'node',
+   roots: ['<rootDir>/tests'],
+   testMatch: ['**/*.test.ts'],
+   globals: { 'ts-jest': { tsconfig: 'tsconfig.json' } }
+ };
+--- a/src/lib/toolClient.ts
++++ b/src/lib/toolClient.ts
+@@ -0,0 +1,156 @@
+/* Runner copy of toolClient (TypeScript) */
+import type { RequestInit } from 'node-fetch';
+const fetchImport = async () => (await import('node-fetch')).default;
+const DEFAULT_TIMEOUT_MS = 8000;
+function sleep(ms: number) { return new Promise((r) => setTimeout(r, ms)); }
+export type ToolClientOptions = { timeoutMs?: number; maxRetries?: number; baseBackoff?: number; circuitThreshold?: number; circuitCooldownMs?: number; };
+export type ToolClient = { call: (url: string, opts?: RequestInit, meta?: { idempotencyKey?: string }) => Promise<any>; _circuit: { failures: number; threshold: number; cooldownMs: number; openUntil: number }; };
+export default function toolClient(opts: ToolClientOptions = {}): ToolClient {
+  const timeoutMs = opts.timeoutMs ?? DEFAULT_TIMEOUT_MS;
+  const maxRetries = opts.maxRetries ?? 3;
+  const baseBackoff = opts.baseBackoff ?? 200;
+  const cb = { failures: 0, threshold: opts.circuitThreshold ?? 6, cooldownMs: opts.circuitCooldownMs ?? 60_000, openUntil: 0 };
+  async function call(url: string, fetchOpts: RequestInit = {}, meta: { idempotencyKey?: string } = {}) {
+    const now = Date.now();
+    if (cb.openUntil > now) { const err = new Error('circuit-breaker-open'); (err as any).code = 'CB_OPEN'; throw err; }
+    const idempotencyKey = meta.idempotencyKey ?? null;
+    let attempt = 0;
+    const fetchFn = await fetchImport();
+    while (attempt <= maxRetries) {
+      attempt++;
+      try {
+        const headers = Object.assign({}, (fetchOpts.headers as Record<string,string>|undefined) ?? {});
+        if (idempotencyKey) headers['Idempotency-Key'] = idempotencyKey;
+        const controller = new AbortController();
+        const timer = setTimeout(()=>controller.abort(), timeoutMs);
+        const res = await fetchFn(url, Object.assign({}, fetchOpts, { signal: controller.signal, headers }));
+        clearTimeout(timer);
+        if (!res.ok) { const text = await res.text().catch(() => '<no-body>'); const err = new Error(`toolcall:${res.status} ${text}`); (err as any).code = `HTTP_${res.status}`; throw err; }
+        cb.failures = 0;
+        const text = await res.text().catch(() => '');
+        try { return JSON.parse(text || '{}'); } catch { return {}; }
+      } catch (err: any) {
+        cb.failures = Math.min(cb.threshold+1, cb.failures + 1);
+        if (cb.failures > cb.threshold) { cb.openUntil = Date.now() + cb.cooldownMs; }
+        if (attempt > maxRetries) throw err;
+        const backoff = baseBackoff * Math.pow(2, attempt-1) + Math.floor(Math.random()*100);
+        await sleep(backoff);
+        continue;
+      }
+    }
+    throw new Error('unreachable-toolclient-exit');
+  }
+  return { call, _circuit: cb };
+}
+--- a/src/runner/uncertaintyHandler.ts
++++ b/src/runner/uncertaintyHandler.ts
+@@ -0,0 +1,48 @@
+/**
+ * Runner-level handler that receives agent action results and either proceeds or asks clarifying Qs.
+ */
+import { performExternalAction } from '../actions-placeholder';
+import type { ActionResult } from '../agent/actions';
+export async function handleAction(input: unknown, ctx: { id?: string } = {}) {
+  const res: ActionResult = await performExternalAction(input, { idempotencyKey: ctx.id });
+  if ((res as any).uncertaintyScore && (res as any).uncertaintyScore > 0.6) {
+    return { needClarify: true, question: (res as any).clarifyingQuestion ?? 'Please clarify the request.' };
+  }
+  return { needClarify: false, result: (res as any).result };
+}
+--- a/tests/runner.test.ts
++++ b/tests/runner.test.ts
+@@ -0,0 +1,40 @@
+import { handleAction } from '../src/runner/uncertaintyHandler';
+jest.mock('../src/actions-placeholder', () => ({ performExternalAction: jest.fn(async (input: any) => { if (input === 'ambiguous') return { result: null, uncertaintyScore: 0.9, clarifyingQuestion: 'Which env?' }; return { result: { ok: true }, uncertaintyScore: 0.1 }; }) }));
+test('asks clarifying question on high uncertainty', async () => {
+  const r = await handleAction('ambiguous', { id: 't1' });
+  expect(r.needClarify).toBe(true);
+  expect(r.question).toMatch(/env/);
+});
+--- a/.github/workflows/runner-safety-tests.yml
++++ b/.github/workflows/runner-safety-tests.yml
+@@ -0,0 +1,21 @@
+name: Agent Runner Safety Tests
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+    - name: Install
+      run: npm ci
+    - name: Run tests
+      run: npm test
+--- a/.github/workflows/secrets-scan.yml
++++ b/.github/workflows/secrets-scan.yml
+@@ -0,0 +1,38 @@
+name: Secrets Scanner (heuristic)
+on:
+  pull_request:
+    paths: ['**']
+  push:
+    branches: [ main ]
+    paths:
+      - '**'
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install ripgrep
+        run: sudo apt-get update && sudo apt-get install -y ripgrep
+      - name: Heuristic secrets scan
+        run: |
+          set -euo pipefail
+          patterns=('VT_API_KEY' 'API_KEY' 'SECRET' 'TOKEN' 'PASSWORD' 'CIRCUIT_BYPASS_TOKEN' 'BYPASS_TOKEN' 'stripe' 'paypal' 'aws_secret_access_key')
+          err=0
+          for p in "${patterns[@]}"; do
+            if rg -n --hidden -S --no-ignore -g '!.git' "$p" . || true; then
+              echo "::error::Potential secret match: $p"
+              err=1
+            fi
+          done
+          if [ $err -ne 0 ]; then exit 1; fi
+          echo "secrets-scan passed"
+--- a/.github/workflows/enforce-environment.yml
++++ b/.github/workflows/enforce-environment.yml
+@@ -0,0 +1,46 @@
+name: Enforce environment protection for deploy jobs & permissions
+on:
+  pull_request:
+    paths: ['.github/workflows/**']
+  push:
+    branches: [ main ]
+    paths: ['.github/workflows/**']
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check workflows for deploy steps without environment protection
+        run: |
+          set -euo pipefail
+          files=$(git ls-files .github/workflows/*.yml .github/workflows/*.yaml || true)
+          bad=0
+          for f in $files; do
+            if rg -n -i 'deploy' "$f" >/dev/null 2>&1; then
+              if ! rg -n 'environment:' "$f" >/dev/null 2>&1; then
+                echo "::error::$f contains deploy-related steps but lacks environment protection"
+                bad=1
+              fi
+            fi
+            if rg -n 'contents:\s*write|pull-requests:\s*write' "$f" >/dev/null 2>&1; then
+              echo "::error::$f requests write-level permissions (contents/pull-requests). Please restrict to least privilege."
+              bad=1
+            fi
+          done
+          if [ $bad -ne 0 ]; then exit 1; fi
+          echo "workflow checks passed"
+--- a/monitoring/prometheus_runner_rules.yaml
++++ b/monitoring/prometheus_runner_rules.yaml
+@@ -0,0 +1,12 @@
+groups:
+- name: agent-runner.rules
+  rules:
+  - alert: AgentRunnerHighClarifyRate
+    expr: rate(agent_runner_clarify_events_total[5m]) > 0.02
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Agent runner is asking for clarifications too often"
+      description: "More than 2% of actions require clarifying questions in the last 10m"
+--- a/docs/AGENT_RUNBOOK.md
++++ b/docs/AGENT_RUNBOOK.md
+@@ -0,0 +1,18 @@
+# Agent Runner Runbook (short)
+## Verification
+- npm ci && npm test
+- Confirm mocked tests for clarifying behavior pass
+## Rollout & rollback
+- Merge PR to staging, verify metrics for clarify rate (< 2%)
+- If clarify rate spikes, revert and investigate
+--- a/PR_DESCRIPTION.md
++++ b/PR_DESCRIPTION.md
+@@ -0,0 +1,22 @@
+Title: Draft: Add TypeScript agent runner safety tooling (tool-client, uncertainty handler, tests, CI, monitoring)
+Summary:
+- Adds a conservative tool-client wrapper, clarifying-question scaffold, and plan scaffolding for safe runner integrations.
+- Adds tests, GitHub Actions job, secrets-scan, enforce-environment check, Prometheus rule, and a short runbook.
+Testing checklist:
+- [ ] npm ci && npm test passes locally
+- [ ] Verify secrets-scan triggers on secret patterns
+--- a/scripts/emergency_lockdown.sh
++++ b/scripts/emergency_lockdown.sh
+@@ -0,0 +1,40 @@
+#!/usr/bin/env bash
+set -euo pipefail
+REPO="$1"
+if [ -z "$REPO" ]; then echo "Usage: $0 owner/repo"; exit 2; fi
+echo "Locking down $REPO"
+gh api -X PUT "repos/${REPO}/actions/permissions" -f '{"permissions":{"contents":"read"}}' || true
+ids=$(gh api "repos/${REPO}/actions/workflows" --jq '.workflows[].id' || true)
+for id in $ids; do gh api -X PUT "repos/${REPO}/actions/workflows/${id}/disable" || true; done
+gh secret list --repo "${REPO}" || true
+gh issue create --repo "${REPO}" --title "EMERGENCY: Actions lockdown applied — review required" --body "Emergency lockdown applied. Rotate tokens & review workflows." || true
+echo "Done: $REPO"

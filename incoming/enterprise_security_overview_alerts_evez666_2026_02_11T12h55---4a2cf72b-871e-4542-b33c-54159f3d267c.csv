@@ -1,0 +1,20 @@
+Repository,Repository ID,Tool,Alert Number,Severity,Created At,Updated At,Resolved At,Reopened At,Resolved Reason,Secret Bypassed,Secret Type,Secret Provider,Secret Validity,GHSA ID,Ecosystem,Package,Dependency Scope,CodeQL Rule,Third Party Tool Rule,Teams (truncated at 20 values),Repository Visibility,Repository Topics,Repository Archived
+EVEZ888/openclaw,1150982509,dependabot,1,moderate,2026-02-05 15:09:18 -0800,2026-02-05 15:09:18 -0800,,,,,,,,GHSA-p8p7-x288-28g6,npm,request,RUNTIME,,,,public,,false
+EVEZ888/openclaw,1150982509,dependabot,2,moderate,2026-02-05 15:09:18 -0800,2026-02-05 15:09:18 -0800,,,,,,,,GHSA-qxp5-gwg8-xv66,go,golang.org/x/net,RUNTIME,,,,public,,false
+EVEZ888/openclaw,1150982509,dependabot,3,moderate,2026-02-05 15:09:18 -0800,2026-02-05 15:09:18 -0800,,,,,,,,GHSA-vvgc-356p-c3xw,go,golang.org/x/net,RUNTIME,,,,public,,false
+EVEZ888/Molt,1151003978,dependabot,2,moderate,2026-02-05 16:01:30 -0800,2026-02-05 16:01:30 -0800,,,,,,,,GHSA-qxp5-gwg8-xv66,go,golang.org/x/net,RUNTIME,,,,public,,false
+EVEZ888/Molt,1151003978,dependabot,3,moderate,2026-02-05 16:01:30 -0800,2026-02-05 16:01:30 -0800,,,,,,,,GHSA-vvgc-356p-c3xw,go,golang.org/x/net,RUNTIME,,,,public,,false
+EVEZ888/Molt,1151003978,dependabot,1,moderate,2026-02-05 16:01:30 -0800,2026-02-05 16:01:30 -0800,,,,,,,,GHSA-p8p7-x288-28g6,npm,request,RUNTIME,,,,public,,false
+EVEZ888/codex,1151366882,dependabot,1,low,2026-02-06 03:28:30 -0800,2026-02-06 03:28:30 -0800,,,,,,,,GHSA-rhfx-m35p-ff5j,rust,lru,RUNTIME,,,,public,,false
+EVEZ888/codex,1151366882,dependabot,4,moderate,2026-02-06 03:28:31 -0800,2026-02-06 03:28:31 -0800,,,,,,,,GHSA-mh29-5h37-fv8m,npm,js-yaml,RUNTIME,,,,public,,false
+EVEZ888/codex,1151366882,dependabot,2,moderate,2026-02-06 03:28:30 -0800,2026-02-06 03:28:30 -0800,,,,,,,,GHSA-r6v5-fh4h-64xc,rust,time,RUNTIME,,,,public,,false
+EVEZ888/codex,1151366882,dependabot,3,moderate,2026-02-06 03:28:31 -0800,2026-02-06 03:28:31 -0800,,,,,,,,GHSA-mh29-5h37-fv8m,npm,js-yaml,RUNTIME,,,,public,,false
+EVEZ888/codex,1151366882,dependabot,9,low,2026-02-06 03:28:33 -0800,2026-02-06 03:28:33 -0800,,,,,,,,GHSA-73rr-hh4g-fpgx,npm,diff,RUNTIME,,,,public,,false
+EVEZ888/codex,1151366882,dependabot,6,moderate,2026-02-06 03:28:32 -0800,2026-02-06 03:28:32 -0800,,,,,,,,GHSA-wqch-xfxh-vrr4,npm,body-parser,RUNTIME,,,,public,,false
+EVEZ888/codex,1151366882,dependabot,5,high,2026-02-06 03:28:31 -0800,2026-02-06 03:28:31 -0800,,,,,,,,GHSA-5j98-mcp5-4vw2,npm,glob,RUNTIME,,,,public,,false
+EVEZ888/codex,1151366882,dependabot,10,high,2026-02-06 03:28:33 -0800,2026-02-06 03:28:33 -0800,,,,,,,,GHSA-345p-7cg4-v4c7,npm,@modelcontextprotocol/sdk,RUNTIME,,,,public,,false
+EVEZ888/codex,1151366882,dependabot,7,high,2026-02-06 03:28:32 -0800,2026-02-06 03:28:32 -0800,,,,,,,,GHSA-6rw7-vpxm-498p,npm,qs,RUNTIME,,,,public,,false
+EVEZ888/codex,1151366882,dependabot,8,high,2026-02-06 03:28:32 -0800,2026-02-06 03:28:32 -0800,,,,,,,,GHSA-8r9q-7v3j-jr4g,npm,@modelcontextprotocol/sdk,RUNTIME,,,,public,,false
+EVEZ888/openclaws,1151372115,dependabot,2,moderate,2026-02-06 03:36:47 -0800,2026-02-06 03:36:47 -0800,,,,,,,,GHSA-qxp5-gwg8-xv66,go,golang.org/x/net,RUNTIME,,,,public,,false
+EVEZ888/openclaws,1151372115,dependabot,3,moderate,2026-02-06 03:36:47 -0800,2026-02-06 03:36:47 -0800,,,,,,,,GHSA-vvgc-356p-c3xw,go,golang.org/x/net,RUNTIME,,,,public,,false
+EVEZ888/openclaws,1151372115,dependabot,1,moderate,2026-02-06 03:36:46 -0800,2026-02-06 03:36:46 -0800,,,,,,,,GHSA-p8p7-x288-28g6,npm,request,RUNTIME,,,,public,,false

@@ -1,0 +1,8 @@
+{
+  "mode": "SYMBOLIC_STABLE",
+  "beta_crit": 0.5,
+  "max_cluster_score": 0.71,
+  "min_rank": 2.8,
+  "attractor_count_est": 4,
+  "timestamp": "2026-04-19T03:14:37.194259Z"
+}

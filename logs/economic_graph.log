@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/root/.openclaw/workspace/deployment/inbound_artifacts/extracted/executable_economic_graph/executable_economic_graph/app.py", line 605, in <module>
+    main()
+  File "/root/.openclaw/workspace/deployment/inbound_artifacts/extracted/executable_economic_graph/executable_economic_graph/app.py", line 596, in main
+    server = ThreadingHTTPServer((args.host, args.port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/socketserver.py", line 456, in __init__
+    self.server_bind()
+  File "/usr/lib/python3.11/http/server.py", line 136, in server_bind
+    socketserver.TCPServer.server_bind(self)
+  File "/usr/lib/python3.11/socketserver.py", line 472, in server_bind
+    self.socket.bind(self.server_address)
+OSError: [Errno 98] Address already in use

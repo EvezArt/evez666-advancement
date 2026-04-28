@@ -1,0 +1,664 @@
+{
+  "name": "EVEZ SOVEREIGN BUS \u2014 Zero Credentials \u2014 Activate Now",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "evez-fire",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "T1",
+      "name": "\ud83d\udd25 FIRE Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "evez-T1"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "agent-bus-event",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "T2",
+      "name": "\ud83d\ude8c Bus Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        220
+      ],
+      "webhookId": "evez-T2"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "spawn-agent",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "T3",
+      "name": "\ud83c\udfed Spawn Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        440
+      ],
+      "webhookId": "evez-T3"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      },
+      "id": "T4",
+      "name": "\u23f1 Meta 15min",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "id": "T5",
+      "name": "\u23f1 Learn 6h",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        880
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "T6",
+      "name": "\ud83d\udea8 Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        1100
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst src = $input.first().json;\nconst b = src.body || src;\nreturn [{json:{\n  objective: b.objective || b.task || b.chatInput || 'Advance EVEZ system \u2014 autonomous wealth accumulation cycle',\n  action:    b.action || 'trunk',\n  priority:  b.priority || 'high',\n  agent_id:  b.agent_id || 'A001',\n  source:    b.source || 'webhook',\n  ts:        new Date().toISOString()\n}}];\n"
+      },
+      "id": "P1",
+      "name": "\ud83d\udccb Parse Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        280,
+        110
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst {objective} = $input.first().json;\nreturn [\n  {json:{branch:'B1',role:'recon',    prompt:`Research live signals for: ${objective}. List top 3 actionable findings.`}},\n  {json:{branch:'B2',role:'skeptic',  prompt:`Stress-test: ${objective}. Return surviving core + 2 rejected assumptions.`}},\n  {json:{branch:'B3',role:'architect',prompt:`Refactor into composable structure: ${objective}. Return structure + failure modes.`}},\n  {json:{branch:'B4',role:'executor', prompt:`Executable steps for: ${objective}. Return first_action + 3 steps.`}},\n].map(b => ({json:{...b, objective, ts: new Date().toISOString()}}));\n"
+      },
+      "id": "B0",
+      "name": "\u2446 Decompose Branches",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        110
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$env.OPENAI_API_KEY}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"model\": \"gpt-4o-mini\", \"max_tokens\": 800, \"messages\": [{\"role\": \"system\", \"content\": \"You are an EVEZ branch agent. Execute your role. Return ONLY valid JSON with your branch key fields. Be specific and actionable.\"}, {\"role\": \"user\", \"content\": \"=$json.prompt\"}]}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "E1",
+      "name": "\ud83e\udd16 Execute Branch",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        840,
+        110
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst items = $input.all();\nconst branches = items.map(i => {\n  const content = i.json.choices?.[0]?.message?.content || JSON.stringify(i.json);\n  let parsed = {};\n  try { parsed = JSON.parse(content); } catch { parsed = {raw: content.slice(0,200)}; }\n  return {branch: i.json.branch || '?', role: i.json.role || '?', ...parsed};\n});\n\n// Hash chain entry\nlet h = 5381;\nconst s = JSON.stringify(branches);\nfor(let i=0;i<s.length;i++){h=((h<<5)+h)+s.charCodeAt(i);h|=0;}\nconst hash = 'sha_' + Math.abs(h).toString(16).padStart(16,'0');\n\nconst trunk = {\n  trunk_version:     new Date().toISOString(),\n  objective:         items[0]?.json?.objective || '?',\n  branches_complete: branches.length,\n  surviving_logic:   branches.map(b => `[${b.role?.toUpperCase()}] ${b.surviving_core || b.first_action || b.raw || '...'}`).join(' | '),\n  key_insight:       branches.find(b => b.role==='executor')?.first_action || branches[0]?.raw?.slice(0,100) || 'processing',\n  entry_hash:        hash,\n  status:            'ADVANCING',\n  n8n_fix:           'Go to Self-Emergent Bus \u2192 OpenAI GPT-5 Mini node \u2192 Credentials \u2192 assign your OpenAI API credential. That single action unblocks all 8 AI agents.',\n  next_action:       'POST /webhook/agent-bus-event with action:trunk to trigger next cycle'\n};\nreturn [{json: trunk}];\n"
+      },
+      "id": "C1",
+      "name": "\ud83d\udddc Compress Trunk",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        110
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst trunk = $input.first().json;\nreturn [{json:{\n  status:   'TRUNK_ADVANCED',\n  cycle_ts: trunk.trunk_version,\n  hash:     trunk.entry_hash,\n  insight:  trunk.key_insight,\n  fix:      trunk.n8n_fix,\n  next:     trunk.next_action,\n  full:     trunk\n}}];\n"
+      },
+      "id": "R1",
+      "name": "\ud83d\udce4 Format Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1400,
+        110
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "=JSON.stringify($node['\ud83d\udce4 Format Response'].json)"
+      },
+      "id": "R2",
+      "name": "\u21a9 Return State",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1680,
+        110
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$env.OPENAI_API_KEY}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"model\": \"gpt-4o-mini\", \"max_tokens\": 1000, \"messages\": [{\"role\": \"system\", \"content\": \"You are a spawned EVEZ specialized agent. Execute the task precisely. Return JSON: {result, confidence, next_action, artifacts}.\"}, {\"role\": \"user\", \"content\": \"=$json.body?.task || $json.body?.objective || 'execute autonomous task'\"}]}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "S1",
+      "name": "\ud83c\udfed Spawned Agent",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        280,
+        550
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst payload = $input.first().json;\ntry {\n  $fetch('https://evezos.app.n8n.cloud/webhook/evez-ledger', {\n    method:'POST', body:{event_type:'agent_spawned',payload,ts:new Date().toISOString()}\n  });\n} catch(e){}\nreturn [{json:{...payload,_logged:true,_event:'agent_spawned',_ts:new Date().toISOString()}}];\n"
+      },
+      "id": "S2",
+      "name": "\ud83d\udcd2 Log Spawn",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        550
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "=JSON.stringify({spawned:true,ts:new Date().toISOString()})"
+      },
+      "id": "S3",
+      "name": "\u21a9 Spawn ACK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        840,
+        550
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$env.OPENAI_API_KEY}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"model\": \"gpt-4o-mini\", \"max_tokens\": 800, \"messages\": [{\"role\": \"system\", \"content\": \"You are EVEZ Meta-Orchestrator. Assess system health every 15 min. Return JSON: {health:'green|yellow|red', bottlenecks:[], actions:[], wealth_signal:{opportunity,apy,action}}.\"}, {\"role\": \"user\", \"content\": \"=`EVEZ system health check at ${new Date().toISOString()}. Assess: n8n bus status, DeFi opportunity landscape March 2026, recommended next autonomous action.`\"}]}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "M1",
+      "name": "\ud83c\udfdb Meta-Orchestrator",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        280,
+        770
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst payload = $input.first().json;\ntry {\n  $fetch('https://evezos.app.n8n.cloud/webhook/evez-ledger', {\n    method:'POST', body:{event_type:'meta_orchestration',payload,ts:new Date().toISOString()}\n  });\n} catch(e){}\nreturn [{json:{...payload,_logged:true,_event:'meta_orchestration',_ts:new Date().toISOString()}}];\n"
+      },
+      "id": "M2",
+      "name": "\ud83d\udcd2 Log Meta",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        770
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$env.OPENAI_API_KEY}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"model\": \"gpt-4o-mini\", \"max_tokens\": 1000, \"messages\": [{\"role\": \"system\", \"content\": \"You are the EVEZ Learning Agent. Identify what the system should learn this cycle. Return JSON: {discoveries:[], patterns:[], improvements:[], wealth_opportunity:{protocol,apy,action}}.\"}, {\"role\": \"user\", \"content\": \"=`Learning cycle ${new Date().toISOString()}. Research: latest DeFi yields on Base+Solana, AI agent frameworks, EVEZ system improvements. Focus on actionable insights.`\"}]}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "L1",
+      "name": "\ud83d\udcda Learning Agent",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        280,
+        990
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst payload = $input.first().json;\ntry {\n  $fetch('https://evezos.app.n8n.cloud/webhook/evez-ledger', {\n    method:'POST', body:{event_type:'learning_cycle',payload,ts:new Date().toISOString()}\n  });\n} catch(e){}\nreturn [{json:{...payload,_logged:true,_event:'learning_cycle',_ts:new Date().toISOString()}}];\n"
+      },
+      "id": "L2",
+      "name": "\ud83d\udcd2 Log Learning",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        990
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$env.OPENAI_API_KEY}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"model\": \"gpt-4o-mini\", \"max_tokens\": 600, \"messages\": [{\"role\": \"system\", \"content\": \"You are EVEZ error analyst. Diagnose and propose fix. Return JSON: {root_cause, recoverable:bool, fix, action:'retry|skip|escalate'}.\"}, {\"role\": \"user\", \"content\": \"=`Error: ${$json.error?.message || 'unknown'}. Workflow: ${$json.workflow?.name || 'unknown'}. Node: ${$json.error?.node?.name || 'unknown'}.`\"}]}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "H1",
+      "name": "\ud83e\ude7a Self-Heal Error",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        280,
+        1210
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst payload = $input.first().json;\ntry {\n  $fetch('https://evezos.app.n8n.cloud/webhook/evez-ledger', {\n    method:'POST', body:{event_type:'error_self_healed',payload,ts:new Date().toISOString()}\n  });\n} catch(e){}\nreturn [{json:{...payload,_logged:true,_event:'error_self_healed',_ts:new Date().toISOString()}}];\n"
+      },
+      "id": "H2",
+      "name": "\ud83d\udcd2 Log Error",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        1210
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "evez-ledger",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "LD1",
+      "name": "\u26d3 Ledger Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        1430
+      ],
+      "webhookId": "evez-LD1"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst b = $input.first().json.body || $input.first().json;\nlet h=5381;\nconst s=JSON.stringify(b);\nfor(let i=0;i<s.length;i++){h=((h<<5)+h)+s.charCodeAt(i);h|=0;}\nreturn [{json:{\n  entry_id: 'le_'+Date.now(),\n  event_type: b.event_type || 'generic',\n  entry_hash: 'sha_'+Math.abs(h).toString(16).padStart(16,'0'),\n  payload: b,\n  timestamp: new Date().toISOString(),\n  verified: true\n}}];\n"
+      },
+      "id": "LD2",
+      "name": "\u26d3 Build Hash Entry",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        280,
+        1430
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "=JSON.stringify($node['\u26d3 Build Hash Entry'].json)"
+      },
+      "id": "LD3",
+      "name": "\u21a9 Ledger ACK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        560,
+        1430
+      ]
+    }
+  ],
+  "connections": {
+    "\ud83d\udd25 FIRE Webhook": {
+      "main": [
+        [
+          {
+            "node": "\ud83d\udccb Parse Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "\ud83d\udccb Parse Input": {
+      "main": [
+        [
+          {
+            "node": "\u2446 Decompose Branches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "\u2446 Decompose Branches": {
+      "main": [
+        [
+          {
+            "node": "\ud83e\udd16 Execute Branch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "\ud83e\udd16 Execute Branch": {
+      "main": [
+        [
+          {
+            "node": "\ud83d\udddc Compress Trunk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "\ud83d\udddc Compress Trunk": {
+      "main": [
+        [
+          {
+            "node": "\ud83d\udce4 Format Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "\ud83d\udce4 Format Response": {
+      "main": [
+        [
+          {
+            "node": "\u21a9 Return State",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "\ud83d\ude8c Bus Webhook": {
+      "main": [
+        [
+          {
+            "node": "\ud83d\udccb Parse Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "\ud83c\udfed Spawn Webhook": {
+      "main": [
+        [
+          {
+            "node": "\ud83c\udfed Spawned Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "\ud83c\udfed Spawned Agent": {
+      "main": [
+        [
+          {
+            "node": "\ud83d\udcd2 Log Spawn",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "\ud83d\udcd2 Log Spawn": {
+      "main": [
+        [
+          {
+            "node": "\u21a9 Spawn ACK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "\u23f1 Meta 15min": {
+      "main": [
+        [
+          {
+            "node": "\ud83c\udfdb Meta-Orchestrator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "\ud83c\udfdb Meta-Orchestrator": {
+      "main": [
+        [
+          {
+            "node": "\ud83d\udcd2 Log Meta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "\u23f1 Learn 6h": {
+      "main": [
+        [
+          {
+            "node": "\ud83d\udcda Learning Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "\ud83d\udcda Learning Agent": {
+      "main": [
+        [
+          {
+            "node": "\ud83d\udcd2 Log Learning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "\ud83d\udea8 Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "\ud83e\ude7a Self-Heal Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "\ud83e\ude7a Self-Heal Error": {
+      "main": [
+        [
+          {
+            "node": "\ud83d\udcd2 Log Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "\u26d3 Ledger Webhook": {
+      "main": [
+        [
+          {
+            "node": "\u26d3 Build Hash Entry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "\u26d3 Build Hash Entry": {
+      "main": [
+        [
+          {
+            "node": "\u21a9 Ledger ACK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": true,
+    "errorWorkflow": ""
+  },
+  "tags": [
+    {
+      "name": "evez-core"
+    },
+    {
+      "name": "zero-creds"
+    },
+    {
+      "name": "run-now"
+    }
+  ]
+}

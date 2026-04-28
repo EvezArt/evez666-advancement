@@ -1,0 +1,28 @@
+{
+  "rate_limited_jobs": {
+    "money-machine": {
+      "consecutive_hits": 1,
+      "backoff_seconds": 30,
+      "status": "recovering"
+    },
+    "Mem0 Auto-Memory": {
+      "consecutive_hits": 1,
+      "backoff_seconds": 60,
+      "status": "recovering"
+    },
+    "Cognition Enhancement Engine": {
+      "consecutive_hits": 1,
+      "backoff_seconds": 60,
+      "status": "recovering"
+    }
+  },
+  "global_backoff": false,
+  "last_updated": "2026-04-22T04:50:00Z",
+  "defense_level": "active",
+  "cheatcodes": {
+    "1": "Wait backoff_seconds before retry",
+    "2": "Exponential backoff on repeated hits",
+    "3": "Auto-disable after 3 consecutive hits",
+    "4": "Log to heartbeat-state.json for cognition"
+  }
+}

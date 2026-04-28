@@ -1,0 +1,23 @@
+{
+  "name": "cliffy-a16-skill",
+  "version": "0.1.0",
+  "description": "Control Android A16 device from OpenClaw via Termux agent WebSocket bridge",
+  "main": "index.js",
+  "type": "skill",
+  "auth": "none",
+  "tags": ["mobile", "android", "termux", "device-control"],
+  "inputs": [
+    {
+      "name": "ws_url",
+      "type": "string",
+      "required": true,
+      "description": "WebSocket endpoint URL (ws:// or wss://)"
+    },
+    {
+      "name": "secret",
+      "type": "string",
+      "required": true,
+      "description": "Shared secret token for device authentication"
+    }
+  ]
+}

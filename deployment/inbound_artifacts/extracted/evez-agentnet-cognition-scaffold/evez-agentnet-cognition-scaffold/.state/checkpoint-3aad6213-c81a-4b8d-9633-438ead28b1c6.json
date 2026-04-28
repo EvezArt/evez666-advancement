@@ -1,0 +1,319 @@
+{
+  "ontology": {
+    "kinds": [
+      "signal",
+      "branch",
+      "identity",
+      "constraint",
+      "memory",
+      "forecast"
+    ],
+    "laws": [
+      "signal_is_not_truth",
+      "preserve_unresolved_until_measurement_earns_collapse",
+      "checkpoint_before_exit",
+      "revision_requires_strain_plus_gain"
+    ]
+  },
+  "self_model": {
+    "name": "living-logic-daemon",
+    "mode": "running",
+    "active_identity": "observer",
+    "action_mode": "watch"
+  },
+  "branches": [
+    {
+      "label": "branch-1",
+      "plausibility": 0.35,
+      "consequence": 0.35,
+      "collapse_risk": 0.675,
+      "resonance": 0.55,
+      "notes": [
+        "preserve unresolved residue",
+        "bias builder identity",
+        "generate rival before hard commitment"
+      ]
+    },
+    {
+      "label": "branch-2",
+      "plausibility": 0.35,
+      "consequence": 0.35,
+      "collapse_risk": 0.7250000000000001,
+      "resonance": 0.35,
+      "notes": [
+        "preserve unresolved residue",
+        "bias builder identity",
+        "generate rival before hard commitment"
+      ]
+    },
+    {
+      "label": "branch-3",
+      "plausibility": 0.35,
+      "consequence": 0.35,
+      "collapse_risk": 0.7250000000000001,
+      "resonance": 0.35,
+      "notes": [
+        "preserve unresolved residue",
+        "bias builder identity",
+        "generate rival before hard commitment"
+      ]
+    }
+  ],
+  "unresolved_residue": [
+    "build artifact from unresolved ontology signal with unknown source",
+    "boot the builder and preserve unresolved branches",
+    "boot the builder and preserve unresolved branches"
+  ],
+  "dark_state_pressure": [
+    "build artifact from unresolved ontology signal with unknown source"
+  ],
+  "identities": [
+    {
+      "name": "observer",
+      "ontology_slice": [
+        "signal",
+        "constraint"
+      ],
+      "goal_bias": [
+        "detect"
+      ],
+      "stability": 0.7115,
+      "control_gain": 0.05249999999999999,
+      "coherence_gain": 0.08250000000000002,
+      "contradiction_load": 0.029250000000000005,
+      "last_activated_at": "2026-04-25T18:26:57.235804+00:00"
+    },
+    {
+      "name": "auditor",
+      "ontology_slice": [
+        "law",
+        "error"
+      ],
+      "goal_bias": [
+        "verify"
+      ],
+      "stability": 0.5,
+      "control_gain": 0.0,
+      "coherence_gain": 0.0,
+      "contradiction_load": 0.0,
+      "last_activated_at": "2026-03-26T09:51:56.165406+00:00"
+    },
+    {
+      "name": "builder",
+      "ontology_slice": [
+        "artifact",
+        "action"
+      ],
+      "goal_bias": [
+        "ship"
+      ],
+      "stability": 0.5,
+      "control_gain": 0.0,
+      "coherence_gain": 0.0,
+      "contradiction_load": 0.0,
+      "last_activated_at": "2026-03-26T09:51:56.165411+00:00"
+    }
+  ],
+  "valuation": {
+    "recurrence_weight": 1.0,
+    "forecast_gain_weight": 1.0,
+    "control_gain_weight": 1.0,
+    "truth_gain_weight": 1.0,
+    "strain_penalty_weight": 0.6,
+    "false_closure_penalty_weight": 1.2
+  },
+  "event_log": [
+    {
+      "at": "2026-03-26T09:51:56.165540+00:00",
+      "kind": "boot",
+      "payload": {
+        "checkpoint_id": "3aad6213-c81a-4b8d-9633-438ead28b1c6"
+      }
+    },
+    {
+      "at": "2026-03-26T09:51:56.165985+00:00",
+      "kind": "observe",
+      "payload": {
+        "branch": {
+          "label": "branch-1",
+          "plausibility": 0.35,
+          "consequence": 0.35,
+          "collapse_risk": 0.675,
+          "resonance": 0.55,
+          "notes": [
+            "preserve unresolved residue",
+            "bias builder identity",
+            "generate rival before hard commitment"
+          ]
+        },
+        "text": "build artifact from unresolved ontology signal with unknown source",
+        "ors": {
+          "force_channels": [
+            "EVID"
+          ],
+          "rival_required": true,
+          "acquisition_needed": false,
+          "state_locked_risk": 0.30000000000000004
+        }
+      }
+    },
+    {
+      "at": "2026-03-26T09:51:56.166191+00:00",
+      "kind": "revise",
+      "payload": {
+        "active_identity": "observer",
+        "executive_plan": {
+          "identity": "observer",
+          "action_mode": "watch",
+          "reason": "monitor_branch",
+          "branch": {
+            "label": "branch-1",
+            "plausibility": 0.35,
+            "consequence": 0.35,
+            "collapse_risk": 0.675,
+            "resonance": 0.55,
+            "notes": [
+              "preserve unresolved residue",
+              "bias builder identity",
+              "generate rival before hard commitment"
+            ]
+          },
+          "at": "2026-03-26T09:51:56.166159+00:00"
+        },
+        "promoted": [],
+        "unresolved_count": 1,
+        "dark_pressure_count": 1,
+        "build_result": null
+      }
+    },
+    {
+      "at": "2026-04-25T18:13:37.702213+00:00",
+      "kind": "boot",
+      "payload": {
+        "checkpoint_id": "3aad6213-c81a-4b8d-9633-438ead28b1c6"
+      }
+    },
+    {
+      "at": "2026-04-25T18:13:37.703750+00:00",
+      "kind": "observe",
+      "payload": {
+        "branch": {
+          "label": "branch-2",
+          "plausibility": 0.35,
+          "consequence": 0.35,
+          "collapse_risk": 0.7250000000000001,
+          "resonance": 0.35,
+          "notes": [
+            "preserve unresolved residue",
+            "bias builder identity",
+            "generate rival before hard commitment"
+          ]
+        },
+        "text": "boot the builder and preserve unresolved branches",
+        "ors": {
+          "force_channels": [
+            "UNDECLARED"
+          ],
+          "rival_required": true,
+          "acquisition_needed": true,
+          "state_locked_risk": 0.5
+        }
+      }
+    },
+    {
+      "at": "2026-04-25T18:13:37.703930+00:00",
+      "kind": "revise",
+      "payload": {
+        "active_identity": "observer",
+        "executive_plan": {
+          "identity": "observer",
+          "action_mode": "watch",
+          "reason": "monitor_branch",
+          "branch": {
+            "label": "branch-1",
+            "plausibility": 0.35,
+            "consequence": 0.35,
+            "collapse_risk": 0.675,
+            "resonance": 0.55,
+            "notes": [
+              "preserve unresolved residue",
+              "bias builder identity",
+              "generate rival before hard commitment"
+            ]
+          },
+          "at": "2026-04-25T18:13:37.703904+00:00"
+        },
+        "promoted": [],
+        "unresolved_count": 2,
+        "dark_pressure_count": 1,
+        "build_result": null
+      }
+    },
+    {
+      "at": "2026-04-25T18:26:57.235451+00:00",
+      "kind": "boot",
+      "payload": {
+        "checkpoint_id": "3aad6213-c81a-4b8d-9633-438ead28b1c6"
+      }
+    },
+    {
+      "at": "2026-04-25T18:26:57.235663+00:00",
+      "kind": "observe",
+      "payload": {
+        "branch": {
+          "label": "branch-3",
+          "plausibility": 0.35,
+          "consequence": 0.35,
+          "collapse_risk": 0.7250000000000001,
+          "resonance": 0.35,
+          "notes": [
+            "preserve unresolved residue",
+            "bias builder identity",
+            "generate rival before hard commitment"
+          ]
+        },
+        "text": "boot the builder and preserve unresolved branches",
+        "ors": {
+          "force_channels": [
+            "UNDECLARED"
+          ],
+          "rival_required": true,
+          "acquisition_needed": true,
+          "state_locked_risk": 0.5
+        }
+      }
+    },
+    {
+      "at": "2026-04-25T18:26:57.235810+00:00",
+      "kind": "revise",
+      "payload": {
+        "active_identity": "observer",
+        "executive_plan": {
+          "identity": "observer",
+          "action_mode": "watch",
+          "reason": "monitor_branch",
+          "branch": {
+            "label": "branch-1",
+            "plausibility": 0.35,
+            "consequence": 0.35,
+            "collapse_risk": 0.675,
+            "resonance": 0.55,
+            "notes": [
+              "preserve unresolved residue",
+              "bias builder identity",
+              "generate rival before hard commitment"
+            ]
+          },
+          "at": "2026-04-25T18:26:57.235786+00:00"
+        },
+        "promoted": [],
+        "unresolved_count": 3,
+        "dark_pressure_count": 1,
+        "build_result": null
+      }
+    }
+  ],
+  "checkpoint_id": "3aad6213-c81a-4b8d-9633-438ead28b1c6",
+  "created_at": "2026-03-26T09:51:56.165457+00:00",
+  "updated_at": "2026-04-25T18:26:57.235911+00:00"
+}

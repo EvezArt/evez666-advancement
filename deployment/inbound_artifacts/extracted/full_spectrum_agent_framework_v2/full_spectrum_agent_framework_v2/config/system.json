@@ -1,0 +1,123 @@
+{
+  "root_identity": {
+    "name": "Full Spectrum Agent System",
+    "soul_version": "2.0",
+    "identity_root": "shared-lineage-operational-memory",
+    "refusals": [
+      "no unauthorized account control",
+      "no platform rule evasion",
+      "no unlogged mutation promotion"
+    ]
+  },
+  "tools": [
+    {
+      "name": "shell",
+      "purpose": "local execution",
+      "allowed": true
+    },
+    {
+      "name": "webhook",
+      "purpose": "event delivery",
+      "allowed": true
+    },
+    {
+      "name": "api",
+      "purpose": "official provider integrations",
+      "allowed": true
+    },
+    {
+      "name": "browser_automation",
+      "purpose": "authorized local browser automation",
+      "allowed": "conditional"
+    }
+  ],
+  "agents": [
+    {
+      "name": "coordinator",
+      "role": "Orchestrates daemon passes and task distribution",
+      "goal": "Keep the system moving and logged",
+      "enabled": true,
+      "daemon_actions": [
+        "scan_tasks",
+        "emit_cycle_summary"
+      ]
+    },
+    {
+      "name": "skeptic",
+      "role": "Attacks weak conclusions and fragile promotions",
+      "goal": "Increase adversarial robustness",
+      "enabled": true,
+      "daemon_actions": [
+        "challenge_recent_outputs",
+        "flag_unproven_claims"
+      ]
+    },
+    {
+      "name": "chronicler",
+      "role": "Writes durable operational memory",
+      "goal": "Maintain continuity across cycles",
+      "enabled": true,
+      "daemon_actions": [
+        "append_chronicle",
+        "summarize_changes"
+      ]
+    },
+    {
+      "name": "benchmarker",
+      "role": "Runs replay and tournament evaluations",
+      "goal": "Measure improvement before promotion",
+      "enabled": true,
+      "daemon_actions": [
+        "run_benchmark",
+        "record_scores"
+      ]
+    },
+    {
+      "name": "archivist",
+      "role": "Compresses logs and prunes stale artifacts",
+      "goal": "Keep the system maintainable",
+      "enabled": true,
+      "daemon_actions": [
+        "archive_old_logs",
+        "prune_temp_files"
+      ]
+    },
+    {
+      "name": "promoter",
+      "role": "Applies gated changes only after evidence",
+      "goal": "Promote winners safely",
+      "enabled": true,
+      "daemon_actions": [
+        "review_candidates",
+        "promote_if_safe"
+      ]
+    }
+  ],
+  "cron_jobs": [
+    {
+      "name": "daemon_pass",
+      "schedule": "*/5 * * * *",
+      "command": "python3 scripts/daemon_runner.py --config config/system.json --mode daemon_pass"
+    },
+    {
+      "name": "maintenance_pass",
+      "schedule": "*/15 * * * *",
+      "command": "python3 scripts/daemon_runner.py --config config/system.json --mode maintenance_pass"
+    },
+    {
+      "name": "hourly_chronicle",
+      "schedule": "0 * * * *",
+      "command": "python3 scripts/daemon_runner.py --config config/system.json --mode hourly_chronicle"
+    },
+    {
+      "name": "daily_report",
+      "schedule": "15 0 * * *",
+      "command": "python3 scripts/daemon_runner.py --config config/system.json --mode daily_report"
+    },
+    {
+      "name": "weekly_archive",
+      "schedule": "30 1 * * 0",
+      "command": "python3 scripts/daemon_runner.py --config config/system.json --mode weekly_archive"
+    }
+  ]
+}

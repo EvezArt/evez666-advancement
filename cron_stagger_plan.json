@@ -1,0 +1,36 @@
+{
+  "strategy": "stagger_by_provider",
+  "description": "Spread API-heavy jobs across different minute marks to avoid quota spikes",
+  "jobs": {
+    "MoneyMachine": {
+      "current_schedule": "*/5 * * * *",
+      "provider_affinity": ["github_models", "exa"],
+      "stagger_to": "2,7,12,17,22,27,32,37,42,47,52,57  * * * *"
+    },
+    "FullStack": {
+      "current_schedule": "*/15 * * * *",
+      "provider_affinity": ["github_models", "exa"],
+      "stagger_to": "5,20,35,50  */1 * * *"
+    },
+    "Factory": {
+      "current_schedule": "*/30 * * * *",
+      "provider_affinity": ["composio"],
+      "stagger_to": "10,40 * * * *"
+    },
+    "MarketScan": {
+      "current_schedule": "0 */2 * * *",
+      "provider_affinity": ["exa"],
+      "stagger_to": "15,45 */2 * * *"
+    },
+    "QuantumSweep": {
+      "current_schedule": "0 */2 * * *",
+      "provider_affinity": ["github_models"],
+      "stagger_to": "30 */2 * * *"
+    },
+    "SphinxLetters": {
+      "current_schedule": "0 3 * * *",
+      "provider_affinity": ["github_models"],
+      "stagger_to": "3 3 * * *"
+    }
+  }
+}

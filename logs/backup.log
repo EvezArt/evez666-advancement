@@ -1,0 +1,77 @@
+[2026-04-20 18:26:41] === Starting Dropbox Backup ===
+[2026-04-20 18:26:41] Backup folder: KiloClaw_Backups
+[2026-04-20 18:26:41] Checking prerequisites...
+[2026-04-20 18:26:41] Found: /root/.openclaw/openclaw.json (4962 bytes)
+[2026-04-20 18:26:41] Found: /root/.openclaw/cron/jobs.json (5520 bytes)
+[2026-04-20 18:26:41] Found: /root/.openclaw/workspace/memory/2026-04-18.md (21318 bytes)
+[2026-04-20 18:26:41] Found: /root/.openclaw/workspace/memory/2026-04-19.md (1382 bytes)
+[2026-04-20 18:26:41] Found: /root/.openclaw/workspace/factory/cycle_log.json (191002 bytes)
+[2026-04-20 18:26:41] Checking Google Drive for existing backups...
+[2026-04-20 18:26:41] Google Drive check: Would call GOOGLEDRIVE_LIST_FILES
+[2026-04-20 18:26:41] Google Drive integration available for reference only in this backup
+[2026-04-20 18:26:41] Uploading openclaw.json to Dropbox...
+[2026-04-20 18:26:42] WARNING: Failed to upload openclaw.json: [mcporter] Did you mean linear?
+Unknown MCP server 'execute'.
+[2026-04-21 00:11:56] === Starting Dropbox Backup ===
+[2026-04-21 00:11:56] Backup folder: KiloClaw_Backups
+[2026-04-21 00:11:56] Checking prerequisites...
+[2026-04-21 00:11:56] Found: /root/.openclaw/openclaw.json (4962 bytes)
+[2026-04-21 00:11:56] Found: /root/.openclaw/cron/jobs.json (7161 bytes)
+[2026-04-21 00:11:56] Found: /root/.openclaw/workspace/memory/2026-04-18.md (21318 bytes)
+[2026-04-21 00:11:56] Found: /root/.openclaw/workspace/memory/2026-04-19.md (1382 bytes)
+[2026-04-21 00:11:56] Found: /root/.openclaw/workspace/factory/cycle_log.json (5121 bytes)
+[2026-04-21 00:11:56] Checking Google Drive for existing backups...
+[2026-04-21 00:11:56] Google Drive check: Would call GOOGLEDRIVE_LIST_FILES
+[2026-04-21 00:11:56] Google Drive integration available for reference only in this backup
+[2026-04-21 00:11:56] Uploading openclaw.json to Dropbox...
+[2026-04-21 00:11:57] WARNING: Failed to upload openclaw.json: [mcporter] Did you mean linear?
+Unknown MCP server 'execute'.
+[2026-04-21 00:13:12] === Starting Dropbox Backup ===
+[2026-04-21 00:13:12] Backup folder: KiloClaw_Backups
+[2026-04-21 00:13:12] Checking prerequisites...
+[2026-04-21 00:13:12] Found: /root/.openclaw/openclaw.json (4962 bytes)
+[2026-04-21 00:13:12] Found: /root/.openclaw/cron/jobs.json (6986 bytes)
+[2026-04-21 00:13:12] Found: /root/.openclaw/workspace/memory/2026-04-18.md (21318 bytes)
+[2026-04-21 00:13:12] Found: /root/.openclaw/workspace/memory/2026-04-19.md (1382 bytes)
+[2026-04-21 00:13:12] Found: /root/.openclaw/workspace/factory/cycle_log.json (5127 bytes)
+[2026-04-21 00:13:12] Checking Google Drive for existing backups...
+[2026-04-21 00:13:12] Google Drive check: Would call GOOGLEDRIVE_LIST_FILES
+[2026-04-21 00:13:12] Google Drive integration available for reference only in this backup
+[2026-04-21 00:13:12] Uploading openclaw.json to Dropbox...
+[2026-04-21 00:13:14] WARNING: Upload may have failed for openclaw.json: MCP error -32602: Tool COMPOSIO_EXECUTE_TOOL not found
+[2026-04-21 02:04:14] === Starting Dropbox Backup ===
+[2026-04-21 02:04:14] Backup folder: KiloClaw_Backups
+[2026-04-21 02:04:14] Checking prerequisites...
+[2026-04-21 02:04:14] Found: /root/.openclaw/openclaw.json (4962 bytes)
+[2026-04-21 02:04:14] Found: /root/.openclaw/cron/jobs.json (6811 bytes)
+[2026-04-21 02:04:14] Found: /root/.openclaw/workspace/memory/2026-04-18.md (21318 bytes)
+[2026-04-21 02:04:14] Found: /root/.openclaw/workspace/memory/2026-04-19.md (1382 bytes)
+[2026-04-21 02:04:14] Found: /root/.openclaw/workspace/factory/cycle_log.json (5160 bytes)
+[2026-04-21 02:04:14] Checking Google Drive for existing backups...
+[2026-04-21 02:04:14] Google Drive check: Would call GOOGLEDRIVE_LIST_FILES
+[2026-04-21 02:04:14] Google Drive integration available for reference only in this backup
+[2026-04-21 02:04:14] Uploading openclaw.json to Dropbox...
+[2026-04-21 02:04:16] WARNING: Upload may have failed for openclaw.json: MCP error -32602: Tool COMPOSIO_EXECUTE_TOOL not found
+[2026-04-22 02:00:23] === Starting Dropbox Backup ===
+[2026-04-22 02:00:23] Backup folder: KiloClaw_Backups
+[2026-04-22 02:00:23] Checking prerequisites...
+[2026-04-22 02:00:23] Found: /root/.openclaw/openclaw.json (5348 bytes)
+[2026-04-22 02:00:23] Found: /root/.openclaw/cron/jobs.json (16148 bytes)
+[2026-04-22 02:00:23] Found: /root/.openclaw/workspace/memory/2026-04-18.md (21318 bytes)
+[2026-04-22 02:00:23] Found: /root/.openclaw/workspace/memory/2026-04-19.md (1382 bytes)
+[2026-04-22 02:00:23] Found: /root/.openclaw/workspace/factory/cycle_log.json (3200 bytes)
+[2026-04-22 02:00:23] Checking Google Drive for existing backups...
+[2026-04-22 02:00:23] Google Drive check: Would call GOOGLEDRIVE_LIST_FILES
+[2026-04-22 02:00:23] Google Drive integration available for reference only in this backup
+[2026-04-22 02:00:23] Uploading openclaw.json to Dropbox...
+[2026-04-22 02:00:24] WARNING: Upload may have failed for openclaw.json: MCP error -32602: Tool COMPOSIO_EXECUTE_TOOL not found
+
+[2026-04-22 02:03:00] === RETRY: Dropbox Backup ===
+[2026-04-22 02:03:00] Attempting direct Composio upload...
+[2026-04-22 02:03:09] Created backup folder: /KiloClaw_Backups
+[2026-04-22 02:07:00] ERROR: Composio workbench cannot access local files from KiloClaw host
+[2026-04-22 02:07:00] ERROR: local_file_path parameter fails for remote sandbox
+[2026-04-22 02:07:00] ERROR: Backup requires script rewrite - local files not accessible
+[2026-04-22 02:07:00] === Backup FAILED ===
+[2026-04-22 02:07:00] Successful: 0, Failed: 5
+[2026-04-22 02:07:00] WARNING: Dropbox backup integration needs rework

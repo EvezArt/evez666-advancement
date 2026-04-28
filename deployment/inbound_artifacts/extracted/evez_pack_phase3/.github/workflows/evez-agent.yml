@@ -1,0 +1,397 @@
+name: evez-agent
+
+on:
+  push:
+  issues:
+    types: [opened, edited, reopened, labeled]
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: "External orchestrator run id"
+        required: false
+        default: ""
+      task:
+        description: "Task to execute"
+        required: false
+        default: "Autonomous repository review"
+      reason:
+        description: "Dispatch reason"
+        required: false
+        default: "manual_dispatch"
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  actions: write
+
+concurrency:
+  group: evez-agent-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  review_patch_and_callback:
+    if: github.ref != 'refs/heads/bot/patches'
+    runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: "{{OPENAI_API_KEY}}"
+      GITHUB_TOKEN: "{{GITHUB_TOKEN}}"
+      N8N_WEBHOOK_URL: "{{N8N_WEBHOOK_URL}}"
+      GITHUB_REPO: "{{GITHUB_REPO}}"
+      PATCH_BRANCH: "bot/patches"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ env.GITHUB_TOKEN }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Build review context
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import subprocess
+          from pathlib import Path
+
+          event_name = os.environ["GITHUB_EVENT_NAME"]
+          event_path = os.environ["GITHUB_EVENT_PATH"]
+          repo = os.environ.get("GITHUB_REPOSITORY", os.environ.get("GITHUB_REPO", ""))
+          event = json.loads(Path(event_path).read_text())
+          sha = os.environ.get("GITHUB_SHA", "")
+          ref = os.environ.get("GITHUB_REF", "")
+
+          def safe_cmd(args):
+              try:
+                  return subprocess.check_output(args, text=True, stderr=subprocess.STDOUT)
+              except subprocess.CalledProcessError as exc:
+                  return exc.output
+
+          context = {
+              "event_name": event_name,
+              "repository": repo,
+              "sha": sha,
+              "ref": ref,
+              "task": event.get("inputs", {}).get("task", "Autonomous repository review") if event_name == "workflow_dispatch" else "Autonomous repository review",
+              "run_id": event.get("inputs", {}).get("run_id", "") if event_name == "workflow_dispatch" else "",
+              "reason": event.get("inputs", {}).get("reason", "") if event_name == "workflow_dispatch" else "",
+              "event": event,
+          }
+
+          if event_name == "push":
+              before = event.get("before") or "HEAD~1"
+              diff = safe_cmd(["git", "diff", "--unified=3", before, sha])
+              changed_files = safe_cmd(["git", "diff", "--name-only", before, sha]).splitlines()
+              context["analysis_surface"] = {
+                  "mode": "push_diff",
+                  "before": before,
+                  "after": sha,
+                  "changed_files": changed_files,
+                  "diff": diff,
+                  "last_commit": safe_cmd(["git", "log", "-1", "--pretty=fuller"]),
+              }
+          elif event_name == "issues":
+              issue = event.get("issue", {})
+              context["analysis_surface"] = {
+                  "mode": "issue",
+                  "issue_number": issue.get("number"),
+                  "title": issue.get("title", ""),
+                  "body": issue.get("body", ""),
+                  "labels": [x.get("name") for x in issue.get("labels", [])],
+              }
+          else:
+              patch = safe_cmd(["git", "log", "-1", "-p", "--stat"])
+              context["analysis_surface"] = {
+                  "mode": "scheduled_repo_audit",
+                  "head": sha,
+                  "patch": patch,
+              }
+
+          Path("review_context.json").write_text(json.dumps(context, indent=2))
+          PY
+
+      - name: Ask OpenAI for repository review and patch plan
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import urllib.request
+          from pathlib import Path
+
+          context = json.loads(Path("review_context.json").read_text())
+
+          instructions = '''
+          You are an autonomous repository reviewer operating inside GitHub Actions.
+          Analyze the provided repository context and return STRICT JSON only with this schema:
+          {
+            "needs_patch": boolean,
+            "file_operations": [
+              {
+                "action": "upsert",
+                "path": "relative/path/to/file.ext",
+                "content": "full file content"
+              }
+            ],
+            "commit_message": "string",
+            "pr_title": "string",
+            "pr_body": "string",
+            "pr_comment": "string",
+            "issue_comment": "string",
+            "summary": "string",
+            "severity": "low|medium|high"
+          }
+
+          Rules:
+          - Return valid JSON only. No code fences.
+          - If no deterministic patch is safe, set needs_patch=false and file_operations=[].
+          - Keep file operations limited and surgical.
+          - Use UTF-8 text only.
+          - Never invent repository state not present in the context.
+          - pr_comment and issue_comment must be plain markdown.
+          '''
+
+          payload = {
+              "model": "gpt-4o",
+              "instructions": instructions,
+              "input": "Repository review context:\n" + json.dumps(context, indent=2)
+          }
+
+          req = urllib.request.Request(
+              "https://api.openai.com/v1/responses",
+              data=json.dumps(payload).encode("utf-8"),
+              headers={
+                  "Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}",
+                  "Content-Type": "application/json"
+              },
+              method="POST",
+          )
+
+          with urllib.request.urlopen(req) as resp:
+              response = json.loads(resp.read().decode("utf-8"))
+
+          text = ""
+          for item in response.get("output", []):
+              if item.get("type") == "message":
+                  for content in item.get("content", []):
+                      if content.get("type") in ("output_text", "text"):
+                          text += content.get("text", "")
+          text = text.strip()
+          if not text:
+              raise RuntimeError("OpenAI returned no text output")
+
+          review = json.loads(text)
+          Path("review.json").write_text(json.dumps(review, indent=2))
+          print(json.dumps(review, indent=2))
+          PY
+
+      - name: Apply patch plan
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          review = json.loads(Path("review.json").read_text())
+          Path("/tmp/review-summary.md").write_text(review.get("summary", ""))
+          Path("/tmp/pr-comment.md").write_text(review.get("pr_comment", ""))
+          Path("/tmp/issue-comment.md").write_text(review.get("issue_comment", ""))
+
+          needs_patch = bool(review.get("needs_patch"))
+          file_ops = review.get("file_operations") or []
+
+          for op in file_ops:
+              if op.get("action") != "upsert":
+                  continue
+              target = Path(op["path"])
+              target.parent.mkdir(parents=True, exist_ok=True)
+              target.write_text(op.get("content", ""), encoding="utf-8")
+
+          with open(os.environ["GITHUB_ENV"], "a", encoding="utf-8") as fh:
+              fh.write(f"NEEDS_PATCH={'true' if needs_patch and file_ops else 'false'}\n")
+              fh.write(f"COMMIT_MESSAGE={review.get('commit_message', 'chore(bot): autonomous patch')}\n")
+              fh.write(f"PR_TITLE={review.get('pr_title', 'EVEZ autonomous patch')}\n")
+              fh.write("PR_BODY<<EOF\n")
+              fh.write(review.get("pr_body", "Autonomous patch proposed by EVEZ."))
+              fh.write("\nEOF\n")
+          PY
+
+      - name: Commit and push patch branch
+        if: env.NEEDS_PATCH == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "EVEZ Bot"
+          git config user.email "evez-bot@users.noreply.github.com"
+          git checkout -B "${PATCH_BRANCH}"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "PATCH_PUSHED=false" >> "$GITHUB_ENV"
+            exit 0
+          fi
+          git commit -m "${COMMIT_MESSAGE}"
+          git push --force-with-lease "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "${PATCH_BRANCH}"
+          echo "PATCH_PUSHED=true" >> "$GITHUB_ENV"
+
+      - name: Create or update pull request
+        if: env.PATCH_PUSHED == 'true'
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import urllib.request
+
+          owner, repo = os.environ.get("GITHUB_REPOSITORY", os.environ["GITHUB_REPO"]).split("/")
+          token = os.environ["GITHUB_TOKEN"]
+          patch_branch = os.environ["PATCH_BRANCH"]
+
+          def gh(method, url, body=None):
+              data = None if body is None else json.dumps(body).encode("utf-8")
+              req = urllib.request.Request(
+                  url,
+                  data=data,
+                  method=method,
+                  headers={
+                      "Authorization": f"Bearer {token}",
+                      "Accept": "application/vnd.github+json",
+                      "X-GitHub-Api-Version": "2022-11-28",
+                      "Content-Type": "application/json",
+                  },
+              )
+              with urllib.request.urlopen(req) as resp:
+                  raw = resp.read().decode("utf-8")
+                  return json.loads(raw) if raw else {}
+
+          prs = gh("GET", f"https://api.github.com/repos/{owner}/{repo}/pulls?state=open&head={owner}:{patch_branch}")
+          if prs:
+              pr = prs[0]
+          else:
+              pr = gh(
+                  "POST",
+                  f"https://api.github.com/repos/{owner}/{repo}/pulls",
+                  {
+                      "title": os.environ["PR_TITLE"],
+                      "head": patch_branch,
+                      "base": "main",
+                      "body": os.environ.get("PR_BODY", "Autonomous patch proposed by EVEZ.")
+                  },
+              )
+
+          with open(os.environ["GITHUB_ENV"], "a", encoding="utf-8") as fh:
+              fh.write(f"PR_NUMBER={pr['number']}\n")
+              fh.write(f"PR_URL={pr['html_url']}\n")
+          PY
+
+      - name: Post PR comment
+        if: env.PR_NUMBER != ''
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import urllib.request
+          from pathlib import Path
+
+          owner, repo = os.environ.get("GITHUB_REPOSITORY", os.environ["GITHUB_REPO"]).split("/")
+          token = os.environ["GITHUB_TOKEN"]
+          pr_number = os.environ.get("PR_NUMBER", "").strip()
+          body = Path("/tmp/pr-comment.md").read_text(encoding="utf-8").strip()
+          if not pr_number or not body:
+              raise SystemExit(0)
+
+          req = urllib.request.Request(
+              f"https://api.github.com/repos/{owner}/{repo}/issues/{pr_number}/comments",
+              data=json.dumps({"body": body}).encode("utf-8"),
+              method="POST",
+              headers={
+                  "Authorization": f"Bearer {token}",
+                  "Accept": "application/vnd.github+json",
+                  "X-GitHub-Api-Version": "2022-11-28",
+                  "Content-Type": "application/json",
+              },
+          )
+          with urllib.request.urlopen(req) as resp:
+              print(resp.read().decode("utf-8"))
+          PY
+
+      - name: Post issue comment when triggered by issue
+        if: github.event_name == 'issues'
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import urllib.request
+          from pathlib import Path
+
+          owner, repo = os.environ.get("GITHUB_REPOSITORY", os.environ["GITHUB_REPO"]).split("/")
+          token = os.environ["GITHUB_TOKEN"]
+          event = json.loads(Path(os.environ["GITHUB_EVENT_PATH"]).read_text())
+          issue_number = event["issue"]["number"]
+          body = Path("/tmp/issue-comment.md").read_text(encoding="utf-8").strip()
+          if not body:
+              raise SystemExit(0)
+
+          req = urllib.request.Request(
+              f"https://api.github.com/repos/{owner}/{repo}/issues/{issue_number}/comments",
+              data=json.dumps({"body": body}).encode("utf-8"),
+              method="POST",
+              headers={
+                  "Authorization": f"Bearer {token}",
+                  "Accept": "application/vnd.github+json",
+                  "X-GitHub-Api-Version": "2022-11-28",
+                  "Content-Type": "application/json",
+              },
+          )
+          with urllib.request.urlopen(req) as resp:
+              print(resp.read().decode("utf-8"))
+          PY
+
+      - name: Callback n8n
+        if: always()
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import urllib.request
+          from pathlib import Path
+
+          payload = {
+              "source": "github_actions",
+              "task": "GitHub Actions callback",
+              "objective": "Update orchestrator status from GitHub Actions",
+              "context": {
+                  "workflow": "evez-agent.yml",
+                  "repository": os.environ.get("GITHUB_REPOSITORY", os.environ.get("GITHUB_REPO")),
+                  "github_run_id": os.environ.get("GITHUB_RUN_ID"),
+                  "github_sha": os.environ.get("GITHUB_SHA"),
+                  "event_name": os.environ.get("GITHUB_EVENT_NAME"),
+                  "patch_pushed": os.environ.get("PATCH_PUSHED", "false") == "true",
+                  "pr_number": os.environ.get("PR_NUMBER", ""),
+                  "pr_url": os.environ.get("PR_URL", ""),
+                  "summary": Path("/tmp/review-summary.md").read_text(encoding="utf-8") if Path("/tmp/review-summary.md").exists() else ""
+              },
+              "github_repo": os.environ.get("GITHUB_REPO")
+          }
+
+          req = urllib.request.Request(
+              os.environ["N8N_WEBHOOK_URL"].rstrip("/") + "/evez-github",
+              data=json.dumps(payload).encode("utf-8"),
+              method="POST",
+              headers={"Content-Type": "application/json"},
+          )
+          with urllib.request.urlopen(req) as resp:
+              print(resp.read().decode("utf-8"))
+          PY

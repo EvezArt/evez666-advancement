@@ -1,0 +1,25 @@
+{
+  "services": [
+    {
+      "name": "quantum_calc",
+      "price": 0.1,
+      "description": "Quantum computation"
+    },
+    {
+      "name": "code_gen",
+      "price": 0.25,
+      "description": "Code generation"
+    },
+    {
+      "name": "analysis",
+      "price": 0.05,
+      "description": "Data analysis"
+    },
+    {
+      "name": "search",
+      "price": 0.01,
+      "description": "Web search"
+    }
+  ],
+  "registered": "2026-04-22T22:16:36.811059"
+}

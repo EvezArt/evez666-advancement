@@ -1,0 +1,81 @@
+#!/usr/bin/env python3
+import json
+import os
+import time
+from datetime import datetime
+
+class MetaMap:
+    def __init__(self, bus_path="content.bus.json"):
+        self.bus_path = bus_path
+        self.state = self._load_state()
+
+    def _load_state(self):
+        if os.path.exists(self.bus_path):
+            with open(self.bus_path, 'r') as f:
+                return json.load(f)
+        return {
+            "heartbeat": "",
+            "state": "INITIALIZING",
+            "nodes": {},
+            "artifacts": [],
+            "boundaries": {"max_depth": 3, "current_depth": 0}
+        }
+
+    def save_state(self):
+        self.state["heartbeat"] = datetime.utcnow().isoformat()
+        with open(self.bus_path, 'w') as f:
+            json.dump(self.state, f, indent=2)
+
+    def register_node(self, node_id, node_type, config):
+        print(f"[*] Registering Node: {node_id} ({node_type})")
+        self.state["nodes"][node_id] = {
+            "type": node_type,
+            "config": config,
+            "status": "ACTIVE",
+            "last_run": datetime.utcnow().isoformat()
+        }
+        self.save_state()
+
+    def emit_artifact(self, node_id, artifact_type, value):
+        artifact = {
+            "id": f"art_{int(time.time())}",
+            "source_node": node_id,
+            "type": artifact_type,
+            "value": value,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+        self.state["artifacts"].append(artifact)
+        print(f"[+] Artifact Emitted: {artifact['id']} from {node_id}")
+        self.save_state()
+        return artifact
+
+def main():
+    print("--- Initializing OpenClaw MetaMap Recursive System ---")
+    mm = MetaMap()
+    
+    # Register the Base Morpho Node (Egg Cluster 7/8 Core)
+    mm.register_node("base_morpho_v2", "LENDING_REACTOR", {
+        "collateral": "cbETH",
+        "borrow_asset": "USDC",
+        "target_ltv": 0.65
+    })
+    
+    # Emit initial collateral artifact
+    mm.emit_artifact("base_morpho_v2", "COLLATERAL_STATE", "3.5% APY Staking Yield Active")
+    
+    # Register the Solana Kamino Node
+    mm.register_node("solana_kamino_s5", "YIELD_AMPLIFIER", {
+        "supply_asset": "USDC",
+        "reward_token": "KMNO",
+        "vault": "Kamino Multiply"
+    })
+    
+    # Emit yield artifact
+    mm.emit_artifact("solana_kamino_s5", "YIELD_REPORT", "22.1% APY Compounded Daily")
+    
+    mm.state["state"] = "RECURSIVE_LOOP_ACTIVE"
+    mm.save_state()
+    print("--- MetaMap Heartbeat Active: content.bus.json updated ---")
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,25 @@
+{
+  "boot_time": 1777257159.3214035,
+  "last_heartbeat": 1777259262.5618079,
+  "heartbeat_count": 113,
+  "degradation": "FULL",
+  "memories": {
+    "last_boot": {
+      "key": "last_boot",
+      "content": "Booted at 2026-04-27T02:32:39.323923+00:00",
+      "source": "daemon",
+      "created": 1777257159.3239326,
+      "last_accessed": 1777257159.3239326,
+      "strength": 0.6634204312890623,
+      "access_count": 0,
+      "tags": [
+        "boot",
+        "system"
+      ]
+    }
+  },
+  "events_written": 113,
+  "git_commits": 112,
+  "errors": 0,
+  "version": "0.2.0"
+}

@@ -1,0 +1,2 @@
+2026-04-27T23:39:39.207409Z | Projected: $1,800,000.00/day | Actual: $10.04 | Drop: 100.00%
+ | Alerts: Actual revenue tracked is $10.04 (from actual_revenue.json) vs projected $1,800,000.00/day - 100.00% drop (>10% threshold)

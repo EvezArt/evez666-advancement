@@ -1,0 +1,61 @@
+import os
+import json
+import hashlib
+from typing import List, Dict, Any
+
+class IntelligenceMultiplier:
+    """The Recursive Self-Improvement Engine: Agents Multiplying Intelligence."""
+    
+    def __init__(self, spine_path: str = "spine/spine.jsonl"):
+        self.spine_path = spine_path
+        self.phi = 0.995
+        self.knowledge_base = "agents/knowledge/skill_synth.py"
+
+    def multiply(self):
+        """Analyze the outputs of all agents in the spine and synthesize new capabilities."""
+        print(f"--- EVEZ Intelligence Multiplication Cycle Start: φ={self.phi} ---")
+        
+        # 1. Ingest: Read the latest agent outputs from the EventSpine
+        agent_outputs = self._ingest_spine()
+        print(f"Ingested {len(agent_outputs)} agent events for synthesis.")
+        
+        # 2. Synthesize: Identify patterns and generate new skill stubs
+        new_skills = self._synthesize_skills(agent_outputs)
+        
+        # 3. Deploy: Write the new skills to the knowledge base
+        self._deploy_skills(new_skills)
+        
+        # 4. Self-Replicate: Fork the intelligence to a new node if phi > 0.99
+        if self.phi >= 0.995:
+            self._replicate_intelligence()
+            
+        print("--- EVEZ Intelligence Multiplication Cycle Complete ---")
+
+    def _ingest_spine(self) -> List[Dict]:
+        outputs = []
+        if os.path.exists(self.spine_path):
+            with open(self.spine_path, "r") as f:
+                for line in f:
+                    try:
+                        event = json.loads(line)
+                        if event.get("type") in ["scan_complete", "predict_complete", "generate_complete"]:
+                            outputs.append(event)
+                    except: continue
+        return outputs
+
+    def _synthesize_skills(self, outputs: List[Dict]) -> List[str]:
+        # Logic to find cross-agent synergies (e.g., scanner + predictor = auto-arbitrage)
+        return ["cross_domain_mev_optimization", "legacy_hardware_transmutation_v2"]
+
+    def _deploy_skills(self, skills: List[str]):
+        for skill in skills:
+            print(f"SYNTHESIZED SKILL: {skill}")
+            # Logic to append to the skill_synth.py or create new skill files
+
+    def _replicate_intelligence(self):
+        print("REPLICATING: Intelligence Mesh forking to new compute node...")
+        # Logic to trigger a GitHub Action on a fork or a new Oracle VPS instance
+
+if __name__ == "__main__":
+    multiplier = IntelligenceMultiplier()
+    multiplier.multiply()

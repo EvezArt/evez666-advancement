@@ -1,0 +1,4 @@
+rank,variant_id,template,expected_utility,info_gain_bits,tools
+1,1.0,a comprehensive search and retrieval with computational analysis including full-text extraction using recursive self-reference,0.8128295964517236,25.680574132269836,"search_web, fetch_url, execute_python"
+2,2.0,Execute a comprehensive search and retrieval with computational analysis including full-text extraction using recursive self-reference,0.8128295964517236,65.28538897171629,"search_web, fetch_url, execute_python, search_user_memories"
+3,3.0,Execute immediately a comprehensive search and retrieval with computational analysis including full-text extraction using recursive self-reference,0.8128295964517236,52.47473931686833,"search_web, fetch_url, execute_python, search_user_memories"

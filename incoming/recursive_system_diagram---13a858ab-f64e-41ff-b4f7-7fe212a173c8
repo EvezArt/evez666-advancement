@@ -1,0 +1,30 @@
+graph TD
+    subgraph MetaMap_Architecture
+        MM[MetaMap Registry] --> RN[Run Nodes]
+        RN --> AR[Artifacts]
+        AR --> PH[Phenomena]
+        PH --> BO[Boundaries]
+        BO --> RN
+    end
+
+    subgraph Egg_Cluster_8_Loop
+        EC8[Egg Cluster 8: LST/LRT Loop]
+        ETH[ETH] --> ST[stETH 3.5% APY]
+        ST --> WE[weETH +4-8% AVS]
+        WE --> MO[Morpho Supply]
+        MO --> BU[Borrowed USDC]
+        BU --> KA[Kamino Multiply 12-40% APY]
+        KA --> KM[KMNO Rewards]
+        KM --> SW[Swap to SOL/ETH]
+        SW --> ETH
+    end
+
+    subgraph Heartbeat_Bus
+        HB[content.bus.json]
+        HB -.-> MM
+        HB -.-> EC8
+    end
+
+    style MetaMap_Architecture fill:#f9f,stroke:#333,stroke-width:2px
+    style Egg_Cluster_8_Loop fill:#ccf,stroke:#333,stroke-width:2px
+    style Heartbeat_Bus fill:#cfc,stroke:#333,stroke-width:2px

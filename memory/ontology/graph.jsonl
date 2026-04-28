@@ -1,0 +1,19 @@
+{"op": "create", "entity": {"id": "p_001", "type": "Person", "properties": {"name": "Steven Crawford-Maggard", "email": "steven@evbz.ai", "timezone": "America/Los_Angeles", "username": "Evez666"}}}
+{"op": "create", "entity": {"id": "proj_001", "type": "Project", "properties": {"name": "EVEZ Platform v2.0", "status": "operational", "goals": ["ROM-S", "IR Compiler", "Control Plane", "Revenue"]}}}
+{"op": "create", "entity": {"id": "proj_002", "type": "Project", "properties": {"name": "EVEZ STUDIO", "status": "running", "goals": ["Audio", "Visualizer", "Navigation"]}}}
+{"op": "create", "entity": {"id": "sys_001", "type": "System", "properties": {"name": "ROM-S", "url": "http://localhost:3847", "status": "running", "features": ["26 ISAs", "Hebbian learning"]}}}
+{"op": "create", "entity": {"id": "sys_002", "type": "System", "properties": {"name": "EVEZ Orchestrator", "url": "http://localhost:4041", "status": "running"}}}
+{"op": "create", "entity": {"id": "sys_003", "type": "System", "properties": {"name": "EVEZ Server", "url": "http://localhost:4040", "status": "running"}}}
+{"op": "create", "entity": {"id": "sys_004", "type": "InferenceProvider", "properties": {"name": "github_models", "score": 0.92, "calls": 2847}}}
+{"op": "create", "entity": {"id": "sys_005", "type": "InferenceProvider", "properties": {"name": "groq", "score": 0.88, "calls": 1923}}}
+{"op": "create", "entity": {"id": "sys_006", "type": "InferenceProvider", "properties": {"name": "samba_nova", "score": 0.85, "calls": 1456}}}
+{"op": "create", "entity": {"id": "sys_007", "type": "InferenceProvider", "properties": {"name": "cerebras", "score": 0.5, "calls": 0}}}
+{"op": "create", "entity": {"id": "vid_001", "type": "Video", "properties": {"name": "evez_live.mp4", "path": "/root/.openclaw/workspace/evez_live.mp4"}}}
+{"op": "create", "entity": {"id": "vid_002", "type": "Video", "properties": {"name": "testpattern.mp4", "path": "/root/.openclaw/workspace/testpattern.mp4"}}}
+{"op": "relate", "from": "p_001", "rel": "owns", "to": "proj_001"}
+{"op": "relate", "from": "p_001", "rel": "owns", "to": "proj_002"}
+{"op": "relate", "from": "proj_001", "rel": "has_component", "to": "sys_001"}
+{"op": "relate", "from": "proj_001", "rel": "has_component", "to": "sys_002"}
+{"op": "relate", "from": "proj_001", "rel": "has_component", "to": "sys_003"}
+{"op": "relate", "from": "proj_002", "rel": "has_component", "to": "sys_002"}
+{"op": "relate", "from": "proj_002", "rel": "has_component", "to": "sys_003"}

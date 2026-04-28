@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-04-23T14:12:57.163122+00:00",
+  "duration_sec": 60,
+  "fps": 30,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "files": [
+    "ontology_evolution.mp4",
+    "user_cognitive_map.mp4",
+    "quantum_attractor_evolution.mp4",
+    "threat_correlation_timeline.mp4"
+  ],
+  "style": "vivid-military",
+  "version": "2.0"
+}

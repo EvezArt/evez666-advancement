@@ -1,0 +1,43 @@
+graph TD
+    A[ETH] --> B{stake}
+    B --> C[stETH]
+    C --> D{EigenLayer restake}
+    D --> E[weETH LRT]
+    E --> F{Morpho supply}
+    F --> G[Earn supply APY + borrow]
+    G --> H{Borrowed USDC}
+    H --> I[Pendle YT purchase]
+    I --> J[Pendle position]
+    J --> K[Earns PENDLE points + yield]
+    K --> L{PENDLE points}
+    L --> M[Future airdrop]
+    M --> N{sell}
+    N --> O[buy more ETH]
+    O --> A
+
+    subgraph Coinbase Lending
+        P[SOL] --> Q{Deposit as Coinbase collateral}
+        Q --> R[Borrow USDC via Morpho]
+    end
+
+    subgraph Solana Kamino
+        R --> S{Bridge USDC to Solana}
+        S --> T[Deploy USDC into Kamino Finance yield vault]
+        T --> U[Kamino earns USDC + KMNO reward tokens]
+        U --> V{Swap KMNO rewards to SOL}
+        V --> W[Re-deposit SOL back into Coinbase collateral pool]
+        W --> Q
+    end
+
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style C fill:#bbf,stroke:#333,stroke-width:2px
+    style E fill:#ccf,stroke:#333,stroke-width:2px
+    style G fill:#cfc,stroke:#333,stroke-width:2px
+    style I fill:#ffc,stroke:#333,stroke-width:2px
+    style K fill:#fcf,stroke:#333,stroke-width:2px
+    style O fill:#cff,stroke:#333,stroke-width:2px
+    style P fill:#f9f,stroke:#333,stroke-width:2px
+    style R fill:#bbf,stroke:#333,stroke-width:2px
+    style T fill:#ccf,stroke:#333,stroke-width:2px
+    style U fill:#cfc,stroke:#333,stroke-width:2px
+    style W fill:#ffc,stroke:#333,stroke-width:2px

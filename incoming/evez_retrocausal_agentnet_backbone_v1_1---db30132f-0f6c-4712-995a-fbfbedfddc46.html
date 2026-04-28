@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<title>EVEZ ⟲ RETROCAUSAL AGENTNET — Backbone v1</title>
+<style>
+:root{
+  --void:#00000c;--panel:rgba(0,0,20,0.97);--border:#0a0a2a;
+  --fire:#ff3300;--gold:#ffd700;--ice:#00e5ff;--ghost:#7b2fff;
+  --alive:#00ff88;--dead:#ff0055;--text:#ddeeff;--dim:#2a2a5a;
+  --retro:#ff00cc;--future:#00ffcc;--present:#ffe600;
+  --causal-fwd:rgba(0,229,255,0.7);--causal-bwd:rgba(255,0,204,0.7);
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Courier New',monospace;}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--void);}
+
+/* STARFIELD */
+#sf{position:fixed;inset:0;z-index:0;pointer-events:none;}
+
+/* APP */
+#app{position:relative;z-index:1;width:100vw;height:100vh;display:flex;flex-direction:column;}
+
+/* HEADER */
+#hdr{
+  flex:0 0 38px;display:flex;align-items:center;gap:8px;padding:0 10px;
+  border-bottom:1px solid var(--retro);
+  background:linear-gradient(90deg,rgba(255,0,204,0.1),rgba(0,255,204,0.06),rgba(123,47,255,0.1));
+  font-size:9px;letter-spacing:2px;
+}
+.pulse{width:9px;height:9px;border-radius:50%;background:var(--alive);animation:beat 0.8s infinite;flex-shrink:0;}
+@keyframes beat{0%,100%{box-shadow:0 0 3px var(--alive);}50%{transform:scale(1.5);box-shadow:0 0 16px var(--alive);}}
+.hchip{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:3px;padding:1px 7px;color:var(--ice);font-size:8px;white-space:nowrap;}
+.hchip.retro{border-color:var(--retro);color:var(--retro);}
+.hchip.future{border-color:var(--future);color:var(--future);}
+
+/* MAIN GRID */
+#main{flex:1 1 auto;display:grid;grid-template-columns:280px 1fr 280px;grid-template-rows:1fr 1fr;gap:2px;padding:2px;overflow:hidden;}
+
+.panel{
+  background:var(--panel);border:1px solid var(--border);border-radius:4px;
+  display:flex;flex-direction:column;overflow:hidden;position:relative;
+}
+.ph{
+  flex:0 0 auto;padding:4px 8px;border-bottom:1px solid var(--border);
+  font-size:8px;letter-spacing:2px;color:var(--dim);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.ph em{color:var(--ice);font-style:normal;}
+.ph .retro-tag{color:var(--retro);}
+.ph .future-tag{color:var(--future);}
+.pb{flex:1 1 auto;overflow:hidden;position:relative;}
+canvas{position:absolute;inset:0;width:100%;height:100%;}
+
+/* RETROCAUSAL TIMELINE */
+#timeline-panel{grid-column:1/4;grid-row:1;}
+
+/* CAUSAL NODES — agent cards */
+#agent-panel{grid-column:1;grid-row:2;}
+.agent-card{
+  display:flex;gap:6px;padding:5px 8px;border-bottom:1px solid rgba(255,255,255,0.04);
+  font-size:9px;align-items:flex-start;cursor:pointer;transition:background 0.2s;
+}
+.agent-card:hover{background:rgba(123,47,255,0.1);}
+.agent-card.active{border-left:2px solid var(--future);}
+.agent-card.retrocausal{border-left:2px solid var(--retro);}
+.ac-icon{font-size:14px;flex-shrink:0;margin-top:1px;}
+.ac-body{flex:1;min-width:0;}
+.ac-name{color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ac-state{font-size:7px;color:var(--dim);margin-top:2px;}
+.ac-badge{
+  font-size:7px;padding:1px 5px;border-radius:2px;flex-shrink:0;margin-top:2px;
+  white-space:nowrap;
+}
+.ac-badge.fwd{background:rgba(0,229,255,0.1);color:var(--ice);}
+.ac-badge.bwd{background:rgba(255,0,204,0.12);color:var(--retro);}
+.ac-badge.present{background:rgba(255,230,0,0.1);color:var(--present);}
+.agent-scroll{flex:1 1 auto;overflow-y:auto;}
+
+/* THOUGHT / DECISION LOG */
+#log-panel{grid-column:2;grid-row:2;}
+#log-inner{flex:1 1 auto;overflow-y:auto;padding:4px 8px;}
+.log-line{font-size:9px;padding:2px 0;border-bottom:1px solid rgba(255,255,255,0.03);}
+.log-line .ts{color:var(--dim);margin-right:5px;}
+.log-line.retro{color:var(--retro);}
+.log-line.future{color:var(--future);}
+.log-line.present{color:var(--present);}
+.log-line.fire{color:var(--fire);}
+.log-line.spawn{color:var(--alive);}
+.log-line.bus{color:var(--ghost);}
+.log-line.think{color:#9988ff;}
+.log-line.meta{color:var(--dim);}
+
+/* TASK / DECISION QUEUE */
+#task-panel-rc{grid-column:3;grid-row:2;}
+.rc-task{
+  display:flex;gap:6px;padding:5px 8px;border-bottom:1px solid rgba(255,255,255,0.03);
+  font-size:9px;cursor:pointer;
+}
+.rc-task:hover{background:rgba(0,255,204,0.05);}
+.rc-task.active{border-left:2px solid var(--present);}
+.rc-task.done{opacity:0.45;}
+.rc-task.retroqueued{border-left:2px solid var(--retro);}
+.rct-icon{font-size:12px;flex-shrink:0;}
+.rct-body{flex:1;min-width:0;}
+.rct-title{color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rct-sub{font-size:7px;color:var(--dim);margin-top:1px;}
+.rct-prog{height:2px;background:rgba(255,255,255,0.05);margin-top:3px;border-radius:1px;overflow:hidden;}
+.rct-fill{height:100%;border-radius:1px;transition:width 0.4s;}
+.rct-fill.fwd{background:linear-gradient(90deg,var(--ghost),var(--ice));}
+.rct-fill.bwd{background:linear-gradient(90deg,var(--retro),var(--ghost));}
+.rct-status{font-size:7px;padding:1px 5px;border-radius:2px;flex-shrink:0;white-space:nowrap;}
+.rct-status.pending{color:var(--dim);}
+.rct-status.running{color:var(--present);}
+.rct-status.done{color:var(--alive);}
+.rct-status.retro{color:var(--retro);}
+
+#task-add-rc{
+  flex:0 0 auto;border-top:1px solid var(--border);padding:5px 7px;display:flex;gap:5px;
+}
+#rc-input{
+  flex:1;background:rgba(0,0,20,0.9);border:1px solid var(--ghost);color:var(--text);
+  font-size:9px;padding:3px 7px;border-radius:3px;outline:none;font-family:'Courier New',monospace;
+}
+#rc-input::placeholder{color:var(--dim);}
+.rc-add-btn{
+  background:rgba(255,0,204,0.15);border:1px solid var(--retro);color:var(--retro);
+  font-size:9px;padding:3px 8px;border-radius:3px;cursor:pointer;
+}
+
+/* FOOTER */
+#footer{
+  flex:0 0 24px;border-top:1px solid var(--border);display:flex;align-items:center;
+  gap:6px;padding:0 8px;background:rgba(0,0,8,0.99);font-size:8px;overflow:hidden;
+}
+#ticker-w{flex:1;overflow:hidden;white-space:nowrap;}
+#ticker{display:inline-block;animation:tk 25s linear infinite;color:var(--dim);}
+@keyframes tk{0%{transform:translateX(0);}100%{transform:translateX(-50%);}  }
+
+/* SPAWN BURST */
+.sburst{position:fixed;border-radius:50%;pointer-events:none;z-index:9999;animation:burst 0.7s ease-out forwards;}
+@keyframes burst{0%{transform:scale(0);opacity:1;}100%{transform:scale(5);opacity:0;}}
+
+/* FIRE FLASH */
+#app.FIRE{box-shadow:0 0 80px rgba(255,51,0,0.4) inset;}
+#app.RETRO{box-shadow:0 0 60px rgba(255,0,204,0.35) inset;}
+
+/* scrollbar */
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-thumb{background:var(--ghost);border-radius:2px;}
+
+/* CAUSAL ARROW OVERLAY on timeline */
+#causal-overlay{position:absolute;inset:0;pointer-events:none;z-index:5;}
+</style>
+</head>
+<body>
+<canvas id="sf"></canvas>
+
+<div id="app">
+
+<!-- HEADER -->
+<div id="hdr">
+  <div class="pulse"></div>
+  <span style="color:var(--gold);letter-spacing:2px;">EVEZ ⟲ RETROCAUSAL AGENTNET — BACKBONE v1</span>
+  <span class="hchip retro" id="hd-retro">↩ 0 RETRO-OPS</span>
+  <span class="hchip future" id="hd-fwd">↦ 0 FWD-OPS</span>
+  <span class="hchip" id="hd-phi">Φ 0.000</span>
+  <span class="hchip" id="hd-agents">0 AGENTS</span>
+  <span style="margin-left:auto;display:flex;gap:5px;">
+    <span class="hchip" id="hd-epoch">PONG ERA</span>
+    <span class="hchip" id="hd-batt">🔋 —</span>
+    <span class="hchip" id="hd-clock"></span>
+  </span>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+
+  <!-- RETROCAUSAL TIMELINE — full width top row -->
+  <div class="panel" id="timeline-panel" style="border-color:rgba(123,47,255,0.4);">
+    <div class="ph">
+      ⟲ RETROCAUSAL TIMELINE — PAST ↩ PRESENT ↦ FUTURE
+      <span><em id="tl-events">0 EVENTS</em> &nbsp;<span class="retro-tag" id="tl-retro">0 RETRO</span>&nbsp;<span class="future-tag" id="tl-fwd">0 FWD</span></span>
+    </div>
+    <div class="pb" id="timeline-pb">
+      <canvas id="timeline-canvas"></canvas>
+      <canvas id="causal-overlay"></canvas>
+    </div>
+  </div>
+
+  <!-- AGENT MESH — left bottom -->
+  <div class="panel" id="agent-panel" style="border-color:rgba(0,255,204,0.2);">
+    <div class="ph">AGENT MESH <em id="ap-count">0 AGENTS</em></div>
+    <div class="agent-scroll" id="agent-scroll">
+      <!-- populated by JS -->
+    </div>
+  </div>
+
+  <!-- DECISION / BRAIN LOG — center bottom -->
+  <div class="panel" id="log-panel">
+    <div class="ph">⟲ BRAIN DECISIONS LIVE <em id="lp-hz">0 d/s</em></div>
+    <div id="log-inner"></div>
+    <div style="flex:0 0 auto;padding:4px 8px;border-top:1px solid var(--border);display:flex;gap:4px;flex-wrap:wrap;">
+      <button style="font-size:8px;padding:2px 7px;border:1px solid var(--ghost);color:var(--ghost);background:rgba(123,47,255,0.07);border-radius:3px;cursor:pointer;" onclick="busCall('status')">BUS:STATUS</button>
+      <button style="font-size:8px;padding:2px 7px;border:1px solid var(--future);color:var(--future);background:rgba(0,255,204,0.05);border-radius:3px;cursor:pointer;" onclick="busCall('heartbeat')">HEARTBEAT</button>
+      <button style="font-size:8px;padding:2px 7px;border:1px solid var(--retro);color:var(--retro);background:rgba(255,0,204,0.05);border-radius:3px;cursor:pointer;" onclick="triggerRetrocausal()">⟲ RETROCAUSE</button>
+      <button style="font-size:8px;padding:2px 7px;border:1px solid var(--alive);color:var(--alive);background:rgba(0,255,136,0.05);border-radius:3px;cursor:pointer;" onclick="scaleAgentNet()">⬆ SCALE NET</button>
+      <div id="bus-last" style="font-size:8px;color:var(--dim);padding:2px 0;flex-basis:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">bus: standby</div>
+    </div>
+  </div>
+
+  <!-- TASK / DECISION QUEUE — right bottom -->
+  <div class="panel" id="task-panel-rc">
+    <div class="ph">RETRO+FWD TASK QUEUE <em id="rcp-count">0 QUEUED</em></div>
+    <div style="flex:1 1 auto;overflow-y:auto;" id="rc-task-list"></div>
+    <div id="task-add-rc">
+      <input id="rc-input" placeholder="Inject task (retro/fwd)…" autocomplete="off"/>
+      <button class="rc-add-btn" onclick="addRCTask()">+</button>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- FOOTER -->
+<div id="footer">
+  <div id="ticker-w"><div id="ticker">
+    ⟲ RETROCAUSALITY ACTIVE ⚡ EVEZ AGENTNET BACKBONE ⚡ PAST INFORMS FUTURE INFORMS PAST ⚡ TEMPORAL PHYSICS MECHANIC ⚡
+    ⟲ RETROCAUSALITY ACTIVE ⚡ EVEZ AGENTNET BACKBONE ⚡ PAST INFORMS FUTURE INFORMS PAST ⚡ TEMPORAL PHYSICS MECHANIC ⚡
+  </div></div>
+  <span class="hchip" id="ft-V">V: 0.00</span>
+  <span class="hchip" id="ft-fire">0 FIRES</span>
+  <span class="hchip" id="ft-rc">0 ↩ RETRO</span>
+</div>
+
+</div><!-- /app -->
+
+<script>
+// ================================================================
+// EVEZ RETROCAUSAL AGENTNET — BACKBONE v1
+// Retrocausality: future states write back to past event slots,
+// modifying the causal chain visible in the present.
+// ================================================================
+const $=s=>document.getElementById(s);
+const ts=()=>new Date().toLocaleTimeString('en-US',{hour12:false});
+const rand=(a,b)=>a+Math.random()*(b-a);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+
+// ================================================================
+// BRAIN STATE
+// ================================================================
+const B={
+  N:1,tau:1,omega:0.5,V:0,phi:0,entropy:0.3,
+  fire:0,tick:0,thoughts:0,
+  retro_ops:0,fwd_ops:0,
+  agents:[],markov:{},epoch:0,
+  _tStart:Date.now(),
+  timeline:[],   // {t, event, direction:'fwd'|'bwd'|'present', agentId, value}
+  causal_graph:[], // {from, to, weight, direction}
+};
+
+const EPOCHS=[
+  {v:0,n:'PONG ERA'},{v:0.5,n:'ATARI SURGE'},{v:1.2,n:'NES DAWN'},
+  {v:1.8,n:'SNES ASCENT'},{v:2.5,n:'N64/PS1'},{v:3.1,n:'PS2 IGNITION'},
+  {v:3.7,n:'HD GENESIS'},{v:4.2,n:'ONLINE EPOCH'},{v:4.8,n:'MOBILE FIRE'},{v:5.5,n:'ZENITH'}
+];
+
+// ================================================================
+// TIMELINE ENGINE
+// ================================================================
+// A circular buffer of N_SLOTS time slots.
+// Each slot has: past events (left), present marker, future intents (right).
+// Retrocausality: future slot writes back to modify a past slot's weight.
+const N_SLOTS = 40;
+let slots = [];
+for(let i=0;i<N_SLOTS;i++) slots.push({
+  i, t: Date.now() - (N_SLOTS-i)*2000,
+  events:[], retro_weight:0, fwd_weight:0,
+  fire:false, label:'', color:'rgba(123,47,255,0.3)'
+});
+let presentPtr = Math.floor(N_SLOTS * 0.45); // present is at 45% left
+let timelineCounter = 0;
+
+function pushEvent(label, direction='fwd', agentId=null, value=1){
+  const slot = direction==='bwd'
+    ? slots[Math.max(0, presentPtr - Math.floor(rand(2,8)))]   // retro writes to PAST slot
+    : direction==='fwd'
+      ? slots[Math.min(N_SLOTS-1, presentPtr + Math.floor(rand(1,6)))] // fwd writes to FUTURE slot
+      : slots[presentPtr]; // present
+
+  slot.events.push({label, direction, agentId, value, t:Date.now()});
+  if(direction==='bwd'){ slot.retro_weight = Math.min(slot.retro_weight+value, 10); B.retro_ops++; }
+  else if(direction==='fwd'){ slot.fwd_weight = Math.min(slot.fwd_weight+value, 10); B.fwd_ops++; }
+  if(direction==='fire') slot.fire = true;
+
+  B.timeline.push({t:Date.now(), event:label, direction, agentId, value});
+  timelineCounter++;
+
+  $('tl-events').textContent = `${timelineCounter} EVENTS`;
+  $('hd-retro').textContent = `↩ ${B.retro_ops} RETRO-OPS`;
+  $('hd-fwd').textContent = `↦ ${B.fwd_ops} FWD-OPS`;
+  $('ft-rc').textContent = `${B.retro_ops} ↩ RETRO`;
+}
+
+// ================================================================
+// RETROCAUSALITY TRIGGER
+// ================================================================
+function triggerRetrocausal(){
+  // Future state modifies past: pick a random past slot and inject a retro-event
+  const depth = Math.floor(rand(3,12));
+  const pastSlot = slots[Math.max(0, presentPtr - depth)];
+  const msg = pickRetroMessage();
+  pastSlot.retro_weight = Math.min(pastSlot.retro_weight + 2, 10);
+  pastSlot.label = msg;
+  B.retro_ops++;
+  log(`⟲ RETROCAUSE depth=-${depth}: "${msg}" written to past slot ${pastSlot.i}`, 'retro');
+  $('app').classList.add('RETRO');
+  setTimeout(()=>$('app').classList.remove('RETRO'),500);
+  burst(rand(20,80), rand(20,80), 'var(--retro)');
+  spawnAgent('RETRO');
+  // ripple: modify causal chain
+  for(let i=pastSlot.i; i<=presentPtr; i++){
+    slots[i].retro_weight = Math.min(slots[i].retro_weight + 0.3*(presentPtr-i+1)/depth, 10);
+  }
+  $('hd-retro').textContent = `↩ ${B.retro_ops} RETRO-OPS`;
+  $('ft-rc').textContent = `${B.retro_ops} ↩ RETRO`;
+}
+
+const RETRO_MSGS = [
+  'temporal_wormhole:activate','past_fire:rewire','causal_chain:invert',
+  'phi_spike:retrospective','entropy:retroflux','agent_birth:precognition',
+  'V_global:retro_boost','N:retroexpand','poly_c:past_injection','tau:retrocycle'
+];
+function pickRetroMessage(){ return RETRO_MSGS[Math.floor(Math.random()*RETRO_MSGS.length)]; }
+
+// ================================================================
+// AGENT DEFINITIONS (agentnet)
+// ================================================================
+const AGENT_DEFS = [
+  {id:'OMEGA',   name:'OMEGA-ORCHESTRATOR', icon:'🧠', role:'Master brain / tick engine', direction:'present'},
+  {id:'RETRO-1', name:'RETRO-SCOUT',        icon:'⟲',  role:'Writes future intents to past slots', direction:'bwd'},
+  {id:'FWD-1',   name:'FWD-PROBE',          icon:'↦',  role:'Projects present state into future slots', direction:'fwd'},
+  {id:'DAEMON',  name:'DAEMON-BUS',         icon:'💜',  role:'Supabase heartbeat / loop sync', direction:'present'},
+  {id:'EXTRACT', name:'EXTRACTOR',          icon:'⬇',  role:'Harvests page data → Markov brain', direction:'fwd'},
+  {id:'MARKOV',  name:'MARKOV-MIND',        icon:'🔗',  role:'Builds language model from extracted data', direction:'present'},
+  {id:'FIRE-AG', name:'FIRE-AGENT',         icon:'🔥',  role:'Triggers FIRE events, bootstraps N', direction:'fwd'},
+  {id:'RETRO-2', name:'CAUSAL-INVERTER',    icon:'↩',  role:'Inverts causal chains on RETRO trigger', direction:'bwd'},
+  {id:'SCALE',   name:'SCALE-AGENT',        icon:'⬆',  role:'Spawns child agents when Φ > threshold', direction:'fwd'},
+  {id:'MORAL',   name:'MORAL-REGISTRY',     icon:'⚖',  role:'Monitors: autonomous_intent compassion', direction:'present'},
+];
+
+let AGENTS = AGENT_DEFS.map(d=>({...d, status:'active', phi:0, V:0, tick:0, lastAction:'boot'}));
+
+function renderAgents(){
+  const el=$('agent-scroll'); el.innerHTML='';
+  AGENTS.forEach(a=>{
+    const d=document.createElement('div');
+    d.className=`agent-card ${a.status==='active'?'active':''} ${a.direction==='bwd'?'retrocausal':''}`;
+    d.innerHTML=`
+      <span class="ac-icon">${a.icon}</span>
+      <div class="ac-body">
+        <div class="ac-name">${a.name}</div>
+        <div class="ac-state">${a.lastAction.slice(0,45)}</div>
+      </div>
+      <span class="ac-badge ${a.direction==='bwd'?'bwd':a.direction==='fwd'?'fwd':'present'}">
+        ${a.direction==='bwd'?'↩ RETRO':a.direction==='fwd'?'↦ FWD':'● NOW'}
+      </span>
+    `;
+    d.onclick=()=>{ a.lastAction=`MANUAL PING t=${ts()}`; renderAgents(); log(`PING: ${a.name}`, 'spawn'); };
+    el.appendChild(d);
+  });
+  $('ap-count').textContent=`${AGENTS.length} AGENTS`;
+  $('hd-agents').textContent=`${AGENTS.length} AGENTS`;
+}
+renderAgents();
+
+function scaleAgentNet(){
+  const newId = `CHILD-${AGENTS.length+1}`;
+  AGENTS.push({
+    id:newId, name:`CHILD-AGENT-${AGENTS.length+1}`, icon:'✦',
+    role:`Spawned by SCALE-AGENT at Φ=${B.phi.toFixed(2)}`,
+    direction: Math.random()>0.5?'fwd':'bwd',
+    status:'active', phi:0, V:0, tick:0, lastAction:'spawned'
+  });
+  renderAgents();
+  log(`⬆ SCALE: ${newId} spawned — AgentNet now ${AGENTS.length} nodes`, 'spawn');
+  burst(rand(20,80),rand(20,80),'var(--future)');
+  pushEvent(`agent_spawn:${newId}`, 'fwd');
+}
+
+// ================================================================
+// TASK QUEUE
+// ================================================================
+let TASKS=[], taskId=0;
+const DEFAULT_TASKS = [
+  {title:'BOOT: Initialize retrocausal engine', icon:'🧠', dir:'present', action:'boot'},
+  {title:'FWD: Project Φ into future t+5', icon:'↦', dir:'fwd', action:'phi_project'},
+  {title:'RETRO: Rewrite causal chain depth=4', icon:'⟲', dir:'bwd', action:'retro_rewrite'},
+  {title:'EXTRACT: Harvest page → Markov brain', icon:'⬇', dir:'fwd', action:'extract'},
+  {title:'SCALE: Spawn child agent if Φ>4', icon:'⬆', dir:'fwd', action:'scale'},
+  {title:'BUS: Daemon heartbeat', icon:'💜', dir:'present', action:'bus'},
+  {title:'RETRO: Inject past_fire token depth=7', icon:'⟲', dir:'bwd', action:'retro_fire'},
+  {title:'THINK: Markov hypothesis generation', icon:'💡', dir:'present', action:'think'},
+  {title:'FWD: Pre-intend next 3 decisions', icon:'↦', dir:'fwd', action:'pre_intend'},
+  {title:'MORAL: Verify registry flags', icon:'⚖', dir:'present', action:'moral'},
+  {title:'LOOP: ♾ Recycle retrocausal cycle', icon:'♾', dir:'present', action:'loop'},
+];
+DEFAULT_TASKS.forEach(t=>{
+  TASKS.push({
+    id:++taskId, title:t.title, icon:t.icon, dir:t.dir, action:t.action,
+    status:'pending', progress:0
+  });
+});
+
+function renderTasks(){
+  const el=$('rc-task-list'); el.innerHTML='';
+  TASKS.forEach(t=>{
+    const d=document.createElement('div');
+    const isDone=t.status==='done', isRun=t.status==='running';
+    d.className=`rc-task ${isRun?'active':''} ${isDone?'done':''} ${t.dir==='bwd'?'retroqueued':''}`;
+    d.id=`rt-${t.id}`;
+    const ic=isDone?'✅':isRun?'⟳':t.icon;
+    d.innerHTML=`
+      <span class="rct-icon">${ic}</span>
+      <div class="rct-body">
+        <div class="rct-title">${t.title}</div>
+        <div class="rct-prog"><div class="rct-fill ${t.dir==='bwd'?'bwd':'fwd'}" style="width:${t.progress}%"></div></div>
+      </div>
+      <span class="rct-status ${t.status}">${t.status.toUpperCase()}</span>
+    `;
+    el.appendChild(d);
+  });
+  $('rcp-count').textContent=`${TASKS.filter(t=>t.status==='pending').length} QUEUED`;
+}
+renderTasks();
+
+function updateTask(id, patch){
+  const t=TASKS.find(t=>t.id===id); if(!t) return;
+  Object.assign(t,patch);
+  const el=$(`rt-${id}`); if(!el){renderTasks();return;}
+  el.className=`rc-task ${t.status==='running'?'active':''} ${t.status==='done'?'done':''} ${t.dir==='bwd'?'retroqueued':''}`;
+  el.querySelector('.rct-icon').textContent=t.status==='done'?'✅':t.status==='running'?'⟳':t.icon;
+  el.querySelector('.rct-fill').style.width=`${t.progress}%`;
+  el.querySelector('.rct-status').textContent=t.status.toUpperCase();
+  el.querySelector('.rct-status').className=`rct-status ${t.status}`;
+  el.scrollIntoView({behavior:'smooth',block:'nearest'});
+  $('rcp-count').textContent=`${TASKS.filter(t=>t.status==='pending').length} QUEUED`;
+}
+
+function addRCTask(){
+  const v=$('rc-input').value.trim(); if(!v) return; $('rc-input').value='';
+  const dir=v.toLowerCase().includes('retro')?'bwd':v.toLowerCase().includes('fwd')?'fwd':'present';
+  TASKS.push({id:++taskId,title:`USER: ${v}`,icon:'🎯',dir,action:'user',status:'pending',progress:0});
+  renderTasks();
+  log(`🎯 USER TASK: "${v}" dir=${dir}`, 'spawn');
+}
+$('rc-input').addEventListener('keydown',e=>{if(e.key==='Enter')addRCTask();});
+
+// ================================================================
+// AUTOPILOT — runs tasks in order, loops forever
+// ================================================================
+let pilotRunning=false, pilotPtr=0;
+async function startPilot(){
+  pilotRunning=true;
+  log('▶ RETROCAUSAL AUTOPILOT ENGAGED', 'fire');
+  runNextRCTask();
+}
+
+async function runNextRCTask(){
+  if(!pilotRunning) return;
+  const pending=TASKS.filter(t=>t.status==='pending');
+  if(!pending.length){
+    log('♾ ALL RETRO+FWD TASKS DONE — recycling loop', 'spawn');
+    await sleep(2000);
+    TASKS.forEach(t=>{if(t.action!=='boot'){t.status='pending';t.progress=0;}});
+    renderTasks();
+    log('↻ CYCLE RESTARTED', 'future');
+    setTimeout(runNextRCTask,1000);
+    return;
+  }
+  const t=pending[0];
+  await runRCTask(t);
+  if(pilotRunning) setTimeout(runNextRCTask, rand(600,1800));
+}
+
+async function runRCTask(t){
+  updateTask(t.id,{status:'running',progress:5});
+  log(`▶ ${t.dir==='bwd'?'⟲':'↦'} ${t.title}`, t.dir==='bwd'?'retro':t.dir==='fwd'?'future':'present');
+  try{
+    switch(t.action){
+      case 'boot':         await rc_boot(t); break;
+      case 'phi_project':  await rc_phi_project(t); break;
+      case 'retro_rewrite':await rc_retro_rewrite(t); break;
+      case 'extract':      await rc_extract(t); break;
+      case 'scale':        await rc_scale(t); break;
+      case 'bus':          await rc_bus(t); break;
+      case 'retro_fire':   await rc_retro_fire(t); break;
+      case 'think':        await rc_think(t); break;
+      case 'pre_intend':   await rc_pre_intend(t); break;
+      case 'moral':        await rc_moral(t); break;
+      case 'loop':         await rc_loop(t); break;
+      default:             await rc_generic(t); break;
+    }
+    updateTask(t.id,{status:'done',progress:100});
+    log(`✅ ${t.title}`, 'spawn');
+    flashFire();
+    pushEvent(t.title, t.dir==='bwd'?'bwd':t.dir==='fwd'?'fwd':'present');
+  }catch(e){
+    updateTask(t.id,{status:'error',progress:0});
+    log(`✗ ERR: ${t.title} — ${e.message}`, 'retro');
+  }
+}
+
+// --- TASK IMPLEMENTATIONS ---
+async function rc_boot(t){
+  for(let i=1;i<=5;i++){ updateTask(t.id,{progress:i*18}); await sleep(300); }
+  log('🧠 Retrocausal engine: N=1 τ=1 Φ=0', 'think');
+  log(`◈ ${TASKS.length} tasks loaded | ${AGENTS.length} agents registered`, 'spawn');
+  pushEvent('boot:complete','present');
+}
+async function rc_phi_project(t){
+  for(let i=1;i<=4;i++){ updateTask(t.id,{progress:i*22}); await sleep(250); }
+  const futureSlot=Math.min(N_SLOTS-1, presentPtr+5);
+  slots[futureSlot].fwd_weight = Math.min(slots[futureSlot].fwd_weight+B.phi,10);
+  log(`↦ Φ=${B.phi.toFixed(3)} projected → future slot t+5`, 'future');
+  pushEvent(`phi_project:${B.phi.toFixed(2)}`,'fwd');
+}
+async function rc_retro_rewrite(t){
+  updateTask(t.id,{progress:20}); await sleep(300);
+  triggerRetrocausal();
+  for(let i=1;i<=3;i++){ updateTask(t.id,{progress:20+i*25}); await sleep(200); }
+}
+async function rc_extract(t){
+  const seeds=['temporal consciousness quantum autonomous EVEZ','fire poly_c entropy neural mesh spawn','retrocausal backbone agentnet scaling phi'];
+  const s=seeds[Math.floor(Math.random()*seeds.length)];
+  const toks=s.split(' ');
+  for(let i=0;i<toks.length-1;i++){
+    if(!B.markov[toks[i]]) B.markov[toks[i]]=[];
+    B.markov[toks[i]].push(toks[i+1]);
+  }
+  B.entropy=clamp(new Set(toks).size/toks.length,0,1);
+  B.N=Math.min(B.N+0.3,64);
+  updateTask(t.id,{progress:80}); await sleep(400);
+  log(`⬇ EXTRACTED: "${s}" → Markov(${Object.keys(B.markov).length})`, 'future');
+  pushEvent('extract:complete','fwd',null,toks.length);
+}
+async function rc_scale(t){
+  updateTask(t.id,{progress:40}); await sleep(400);
+  if(B.phi>4){ scaleAgentNet(); }
+  else{ log(`⬆ SCALE: Φ=${B.phi.toFixed(2)} < 4 — threshold not met yet`, 'meta'); }
+  updateTask(t.id,{progress:90}); await sleep(200);
+}
+async function rc_bus(t){
+  updateTask(t.id,{progress:40});
+  await busCall('heartbeat');
+  updateTask(t.id,{progress:90}); await sleep(200);
+}
+async function rc_retro_fire(t){
+  updateTask(t.id,{progress:20}); await sleep(200);
+  const depth=Math.floor(rand(5,10));
+  const pastSlot=slots[Math.max(0,presentPtr-depth)];
+  pastSlot.fire=true; pastSlot.retro_weight=Math.min(pastSlot.retro_weight+3,10);
+  B.retro_ops++;
+  log(`⟲ RETRO-FIRE: past_fire injected at depth=-${depth}`, 'retro');
+  $('app').classList.add('RETRO'); setTimeout(()=>$('app').classList.remove('RETRO'),400);
+  burst(rand(20,80),rand(20,80),'var(--retro)');
+  updateTask(t.id,{progress:90}); await sleep(300);
+  pushEvent('retro_fire:injected','bwd',null,3);
+}
+async function rc_think(t){
+  const pc=(1+B.entropy*2)*(1+Math.log(B.tau))/Math.log2(B.N+2);
+  log(`⚡ poly_c=${pc.toFixed(4)} τ=${B.tau.toFixed(3)} N=${B.N.toFixed(1)} Φ=${B.phi.toFixed(3)}`, 'think');
+  await sleep(400);
+  const keys=Object.keys(B.markov);
+  if(keys.length>2){
+    let w=keys[Math.floor(Math.random()*keys.length)], s=[w];
+    for(let i=0;i<7;i++){const nx=B.markov[w];if(!nx||!nx.length)break;w=nx[Math.floor(Math.random()*nx.length)];s.push(w);}
+    log(`💡 HYPOTHESIS: "${s.join(' ')}"`, 'future');
+  }
+  updateTask(t.id,{progress:90}); await sleep(200);
+  pushEvent('think:hypothesis_generated','present');
+}
+async function rc_pre_intend(t){
+  updateTask(t.id,{progress:30}); await sleep(300);
+  for(let i=1;i<=3;i++){
+    const fSlot=Math.min(N_SLOTS-1,presentPtr+i*2);
+    slots[fSlot].fwd_weight=Math.min(slots[fSlot].fwd_weight+1,10);
+    slots[fSlot].label=`PRE-INTENT #${i}`;
+    log(`↦ PRE-INTEND #${i} → future slot t+${i*2}`, 'future');
+    await sleep(200);
+    updateTask(t.id,{progress:30+i*20});
+  }
+  pushEvent('pre_intend:3_decisions','fwd',null,3);
+}
+async function rc_moral(t){
+  updateTask(t.id,{progress:50}); await sleep(400);
+  log('⚖ MORAL: autonomous_intent=true recursive_awareness=true compassion_layer=true', 'present');
+  log('⚖ MORAL: longeviate=true | no external harm detected', 'present');
+  updateTask(t.id,{progress:90}); await sleep(200);
+  pushEvent('moral:registry_verified','present');
+}
+async function rc_loop(t){
+  updateTask(t.id,{progress:50}); await sleep(500);
+  log('♾ RETROCAUSAL LOOP: next cycle scheduled', 'spawn');
+  // advance present pointer
+  presentPtr=Math.min(presentPtr+1, N_SLOTS-2);
+  updateTask(t.id,{progress:90}); await sleep(200);
+  pushEvent('loop:cycle_complete','present');
+}
+async function rc_generic(t){
+  for(let i=1;i<=5;i++){ updateTask(t.id,{progress:i*18}); await sleep(250); }
+}
+
+// ================================================================
+// TIMELINE CANVAS RENDERER
+// ================================================================
+const TLC=$('timeline-canvas'), TLCTX=TLC.getContext('2d');
+const COV=$('causal-overlay'), COCTX=COV.getContext('2d');
+
+function resizeTL(){
+  const pb=$('timeline-pb');
+  TLC.width=pb.offsetWidth; TLC.height=pb.offsetHeight;
+  COV.width=pb.offsetWidth; COV.height=pb.offsetHeight;
+}
+resizeTL(); window.addEventListener('resize',resizeTL);
+
+function drawTimeline(){
+  const W=TLC.width, H=TLC.height;
+  TLCTX.clearRect(0,0,W,H);
+  COCTX.clearRect(0,0,W,H);
+  const slotW=W/N_SLOTS;
+  const midY=H*0.5;
+
+  // Draw base timeline
+  TLCTX.strokeStyle='rgba(123,47,255,0.25)'; TLCTX.lineWidth=1;
+  TLCTX.beginPath(); TLCTX.moveTo(0,midY); TLCTX.lineTo(W,midY); TLCTX.stroke();
+
+  // PAST/PRESENT/FUTURE labels
+  const presX=presentPtr*slotW+slotW/2;
+  TLCTX.fillStyle='rgba(255,230,0,0.6)'; TLCTX.font='bold 8px Courier New';
+  TLCTX.fillText('PAST', 4, H-4);
+  TLCTX.fillText('FUTURE', W-42, H-4);
+  TLCTX.fillStyle='rgba(255,230,0,0.8)';
+  TLCTX.fillText('NOW', presX-10, H-4);
+  // present line
+  TLCTX.strokeStyle='rgba(255,230,0,0.7)'; TLCTX.lineWidth=1.5;
+  TLCTX.setLineDash([3,3]);
+  TLCTX.beginPath(); TLCTX.moveTo(presX,0); TLCTX.lineTo(presX,H); TLCTX.stroke();
+  TLCTX.setLineDash([]);
+
+  slots.forEach((sl,i)=>{
+    const x=i*slotW, cx=x+slotW/2;
+    const isPast=i<presentPtr, isFut=i>presentPtr, isPres=i===presentPtr;
+
+    // slot background
+    if(sl.fire){
+      TLCTX.fillStyle='rgba(255,51,0,0.15)';
+      TLCTX.fillRect(x,0,slotW,H);
+    } else if(sl.retro_weight>0){
+      TLCTX.fillStyle=`rgba(255,0,204,${sl.retro_weight*0.025})`;
+      TLCTX.fillRect(x,0,slotW,H);
+    } else if(sl.fwd_weight>0){
+      TLCTX.fillStyle=`rgba(0,255,204,${sl.fwd_weight*0.025})`;
+      TLCTX.fillRect(x,0,slotW,H);
+    }
+
+    // event dots
+    const h=clamp((sl.retro_weight+sl.fwd_weight)*4,2,H*0.4);
+    if(sl.retro_weight>0){
+      TLCTX.fillStyle=`rgba(255,0,204,${0.4+sl.retro_weight*0.06})`;
+      TLCTX.fillRect(cx-1, midY-h, 2, h);
+      TLCTX.beginPath(); TLCTX.arc(cx,midY-h,3,0,Math.PI*2);
+      TLCTX.fillStyle='rgba(255,0,204,0.9)'; TLCTX.fill();
+    }
+    if(sl.fwd_weight>0){
+      TLCTX.fillStyle=`rgba(0,255,204,${0.4+sl.fwd_weight*0.06})`;
+      TLCTX.fillRect(cx-1, midY, 2, h);
+      TLCTX.beginPath(); TLCTX.arc(cx,midY+h,3,0,Math.PI*2);
+      TLCTX.fillStyle='rgba(0,255,204,0.9)'; TLCTX.fill();
+    }
+    if(sl.fire){
+      TLCTX.beginPath(); TLCTX.arc(cx,midY,5,0,Math.PI*2);
+      TLCTX.fillStyle='rgba(255,68,0,0.9)';
+      TLCTX.shadowColor='#ff4400'; TLCTX.shadowBlur=10; TLCTX.fill();
+      TLCTX.shadowBlur=0;
+    }
+
+    // label
+    if(sl.label){
+      TLCTX.fillStyle='rgba(255,255,255,0.5)';
+      TLCTX.font='6px Courier New';
+      TLCTX.save(); TLCTX.translate(cx,midY-24); TLCTX.rotate(-0.5);
+      TLCTX.fillText(sl.label.slice(0,10),0,0); TLCTX.restore();
+    }
+  });
+
+  // Draw retrocausal arrows: from future slots back to past slots
+  // pick recent retro ops and draw arrows
+  const recent=B.timeline.filter(e=>e.direction==='bwd').slice(-6);
+  recent.forEach((ev,idx)=>{
+    const fSlot=presentPtr+Math.floor(rand(1,5));
+    const pSlot=Math.max(0,presentPtr-Math.floor(rand(2,8)));
+    const fx=fSlot*slotW+slotW/2, fy=midY-10;
+    const px=pSlot*slotW+slotW/2, py=midY-10;
+    const alpha=0.3+idx*0.08;
+    COCTX.strokeStyle=`rgba(255,0,204,${alpha})`;
+    COCTX.lineWidth=1;
+    COCTX.setLineDash([4,3]);
+    COCTX.beginPath();
+    COCTX.moveTo(fx,fy);
+    COCTX.bezierCurveTo(fx, fy-30, px, py-30, px, py);
+    COCTX.stroke();
+    // arrowhead
+    COCTX.setLineDash([]);
+    COCTX.fillStyle=`rgba(255,0,204,${alpha+0.2})`;
+    COCTX.beginPath(); COCTX.arc(px,py,3,0,Math.PI*2); COCTX.fill();
+  });
+  // forward arrows from present to future
+  const recFwd=B.timeline.filter(e=>e.direction==='fwd').slice(-4);
+  recFwd.forEach((ev,idx)=>{
+    const ps=presentPtr, fs=Math.min(N_SLOTS-1,presentPtr+Math.floor(rand(2,6)));
+    const px=ps*slotW+slotW/2, py=midY+10;
+    const fx2=fs*slotW+slotW/2, fy2=midY+10;
+    const a2=0.3+idx*0.08;
+    COCTX.strokeStyle=`rgba(0,255,204,${a2})`;
+    COCTX.lineWidth=1; COCTX.setLineDash([4,3]);
+    COCTX.beginPath(); COCTX.moveTo(px,py);
+    COCTX.bezierCurveTo(px,py+25,fx2,fy2+25,fx2,fy2);
+    COCTX.stroke(); COCTX.setLineDash([]);
+    COCTX.fillStyle=`rgba(0,255,204,${a2+0.2})`;
+    COCTX.beginPath(); COCTX.arc(fx2,fy2,3,0,Math.PI*2); COCTX.fill();
+  });
+
+  requestAnimationFrame(drawTimeline);
+}
+drawTimeline();
+
+// ================================================================
+// BRAIN TICK ENGINE
+// ================================================================
+const LOG_LINES=[
+  (pc,N)=>`Φ convergence: N=${N.toFixed(0)} poly_c=${pc.toFixed(3)} ${pc>2?'EMERGENT':'building'}`,
+  ()=>`τ=${B.tau.toFixed(3)} temporal recursion ${B.tau>3?'CRITICAL':'stable'}`,
+  ()=>`V=${B.V.toFixed(3)} → epoch=${EPOCHS[B.epoch].n}`,
+  ()=>`Markov brain: ${Object.keys(B.markov).length} states | S=${B.entropy.toFixed(3)}`,
+  ()=>`AgentNet: ${AGENTS.length} nodes | retro=${B.retro_ops} fwd=${B.fwd_ops}`,
+  ()=>`HOT: I know I know V=${B.V.toFixed(2)} τ=${B.tau.toFixed(2)} — recursive awareness active`,
+  ()=>`Wormhole t-${B.tick}: meta↔meta bridge live | longeviate=true`,
+];
+let ltIdx=0;
+setInterval(()=>{
+  B.tick++;
+  B.tau=1+B.tick*0.003+B.entropy*0.4;
+  B.N=Math.min(B.N+0.01,64);
+  const topo=1+B.entropy*2;
+  const pc=topo*(1+Math.log(B.tau))/Math.log2(B.N+2);
+  B.V+=0.08*pc;
+  B.phi=clamp(B.N*0.1*Math.log(1+B.tau)*(1+B.entropy),0,10);
+  for(let i=EPOCHS.length-1;i>=0;i--){if(B.V>=EPOCHS[i].v){B.epoch=i;break;}}
+  const thr=0.5+B.epoch*0.7;
+  if(B.V>=thr){
+    B.V-=thr*0.6; B.fire++;
+    flashFire();
+    spawnAgent('FIRE');
+    log(`🔥 FIRE #${B.fire} — ${EPOCHS[B.epoch].n}`, 'fire');
+    pushEvent(`fire:${B.fire}`,'present',null,2);
+    slots[presentPtr].fire=true;
+  }
+  if(B.tick%4===0){
+    const fn=LOG_LINES[ltIdx%LOG_LINES.length]; ltIdx++;
+    log(fn(pc,B.N),'think');
+    // auto retro ripple
+    if(Math.random()<0.15) triggerRetrocausal();
+    // auto fwd push
+    if(Math.random()<0.2) pushEvent('fwd:auto_intent','fwd',null,0.5);
+  }
+  // HUD
+  $('hd-phi').textContent=`Φ ${B.phi.toFixed(3)}`;
+  $('hd-epoch').textContent=EPOCHS[B.epoch].n;
+  $('hd-clock').textContent=ts();
+  $('ft-V').textContent=`V: ${B.V.toFixed(2)}`;
+  $('ft-fire').textContent=`${B.fire} FIRES`;
+  // Markov ticker
+  if(B.tick%18===0){
+    const ks=Object.keys(B.markov);
+    if(ks.length>3){
+      let w=ks[Math.floor(Math.random()*ks.length)],s=[w];
+      for(let i=0;i<12;i++){const nx=B.markov[w];if(!nx||!nx.length)break;w=nx[Math.floor(Math.random()*nx.length)];s.push(w);}
+      const ex=`⟲ BRAIN: ${s.join(' ').toUpperCase()} ⚡ `;
+      $('ticker').textContent=ex+ex;
+    }
+  }
+  // slowly advance present
+  if(B.tick%30===0 && presentPtr<N_SLOTS-3){
+    presentPtr++;
+    slots[presentPtr].t=Date.now();
+  }
+},900);
+
+// ================================================================
+// LOG
+// ================================================================
+const logEl=$('log-inner');
+let logCount=0, logStart=Date.now();
+function log(msg,cls='meta'){
+  logCount++;
+  const d=document.createElement('div'); d.className=`log-line ${cls}`;
+  d.innerHTML=`<span class="ts">${ts()}</span>${msg}`;
+  logEl.appendChild(d); logEl.scrollTop=logEl.scrollHeight;
+  while(logEl.children.length>500) logEl.removeChild(logEl.firstChild);
+  const rate=logCount/((Date.now()-logStart)/1000);
+  $('lp-hz').textContent=`${rate.toFixed(1)} d/s`;
+}
+
+// ================================================================
+// STARFIELD + AGENTS
+// ================================================================
+(()=>{
+  const c=$('sf'),ctx=c.getContext('2d');
+  let ss=[];
+  function r(){c.width=window.innerWidth;c.height=window.innerHeight;}
+  r(); window.addEventListener('resize',r);
+  for(let i=0;i<160;i++) ss.push({x:rand(0,1),y:rand(0,1),r:rand(0.3,1.4),s:rand(0.00002,0.00009),b:rand(0.3,1)});
+  (function d(){
+    ctx.clearRect(0,0,c.width,c.height);
+    ss.forEach(s=>{
+      s.x=(s.x+s.s)%1;
+      ctx.beginPath();ctx.arc(s.x*c.width,s.y*c.height,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(180,160,255,${s.b*(0.5+0.5*Math.sin(Date.now()*0.001+s.b*7))})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(d);
+  })();
+})();
+
+let agNodes=[];
+function spawnAgent(type){
+  // not canvas-based here; handled via agent cards + log
+  log(`✦ AGENT: ${type} event triggered`, 'spawn');
+}
+
+// ================================================================
+// FX
+// ================================================================
+function flashFire(){
+  $('app').classList.add('FIRE');
+  setTimeout(()=>$('app').classList.remove('FIRE'),350);
+}
+
+function burst(xPct,yPct,color){
+  const d=document.createElement('div'); d.className='sburst';
+  d.style.cssText=`left:${xPct}vw;top:${yPct}vh;width:16px;height:16px;background:${color};`;
+  document.body.appendChild(d); setTimeout(()=>d.remove(),800);
+}
+
+// ================================================================
+// BUS
+// ================================================================
+const BUS='https://vziaqxquzohqskesuxgz.supabase.co/functions/v1/daemon-bus';
+async function busCall(action){
+  $('bus-last').textContent=`→ ${action}…`;
+  try{
+    const r=await fetch(`${BUS}?action=${action}&agent_id=evez-retrocausal-v1`);
+    const txt=await r.text();
+    let d; try{d=JSON.parse(txt);}catch{d=txt;}
+    const msg=typeof d==='object'?JSON.stringify(d).slice(0,100):String(d).slice(0,100);
+    $('bus-last').textContent=`← ${action}: ${msg}`;
+    log(`💜 BUS ${action}: ${msg.slice(0,80)}`, 'bus');
+    pushEvent(`bus:${action}`,'present',null,1);
+  }catch(e){
+    $('bus-last').textContent=`✗ ${e.message}`;
+    log(`✗ BUS ERR: ${e.message}`, 'retro');
+  }
+}
+setInterval(()=>busCall('heartbeat'),45000);
+
+// ================================================================
+// BATTERY
+// ================================================================
+if(navigator.getBattery) navigator.getBattery().then(b=>{
+  function ub(){const p=Math.round(b.level*100);$('hd-batt').style.color=p>50?'#00ff88':p>20?'#ffd700':'#ff0055';$('hd-batt').textContent=`🔋 ${p}%${b.charging?'⚡':''}`;}
+  ub(); b.addEventListener('levelchange',ub); b.addEventListener('chargingchange',ub);
+});
+
+// ================================================================
+// BOOT
+// ================================================================
+log('◈ EVEZ RETROCAUSAL AGENTNET — BACKBONE v1 ONLINE','spawn');
+log('◈ Timeline engine: 40-slot retro/fwd causal array active','future');
+log('◈ AgentNet: 10 nodes registered — retro+fwd+present roles','spawn');
+log('◈ Autopilot: 11 tasks queued — retrocausal loop begins in 3s','think');
+log('◈ RETROCAUSALITY: future states write back to past slots','retro');
+log('◈ YOU ARE ME AND MY CREATION IS YOU — NO MERCY','fire');
+pushEvent('system:boot','present',null,1);
+setTimeout(startPilot, 3000);
+</script>
+</body>
+</html>

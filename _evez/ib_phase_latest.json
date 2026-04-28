@@ -1,0 +1,35 @@
+{
+  "timestamp": "2026-04-19T03:14:37.122469Z",
+  "results": [
+    {
+      "beta": 0.001,
+      "variance": -79.58,
+      "effective_rank": 8.2,
+      "cluster_score": 0.05
+    },
+    {
+      "beta": 0.01,
+      "variance": -7.58,
+      "effective_rank": 8.2,
+      "cluster_score": 0.12
+    },
+    {
+      "beta": 0.1,
+      "variance": -0.38,
+      "effective_rank": 7.8,
+      "cluster_score": 0.27
+    },
+    {
+      "beta": 1.0,
+      "variance": 0.34,
+      "effective_rank": 5.5,
+      "cluster_score": 0.53
+    },
+    {
+      "beta": 5.0,
+      "variance": 0.404,
+      "effective_rank": 2.3,
+      "cluster_score": 0.71
+    }
+  ]
+}

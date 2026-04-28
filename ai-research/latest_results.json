@@ -1,0 +1,110 @@
+[
+  {
+    "topic": "agent_memory_retrieval",
+    "result": {
+      "semantic": {
+        "test_query": "What did we decide about the factory?",
+        "tested_at": "2026-04-27T02:46:40.289302"
+      },
+      "keyword": {
+        "test_query": "What did we decide about the factory?",
+        "tested_at": "2026-04-27T02:46:40.289332"
+      },
+      "hybrid": {
+        "test_query": "What did we decide about the factory?",
+        "tested_at": "2026-04-27T02:46:40.289361"
+      },
+      "recent": {
+        "test_query": "What did we decide about the factory?",
+        "tested_at": "2026-04-27T02:46:40.289388"
+      }
+    },
+    "timestamp": "2026-04-27T02:46:40.289390"
+  },
+  {
+    "topic": "code_generation_quality",
+    "result": {
+      "problem": "Write a function that counts word frequency in text",
+      "attempts": 1,
+      "tested_at": "2026-04-27T02:46:40.289448"
+    },
+    "timestamp": "2026-04-27T02:46:40.289450"
+  },
+  {
+    "topic": "model_routing_decisions",
+    "result": {
+      "routing_rules": [
+        [
+          "fast_summary",
+          "length < 100 and simple",
+          "gpt-4o-mini"
+        ],
+        [
+          "detailed_reasoning",
+          "complex analysis needed",
+          "gpt-4.1"
+        ],
+        [
+          "code_generation",
+          "code or technical",
+          "claude-sonnet-4"
+        ],
+        [
+          "creative",
+          "writing or ideas",
+          "gpt-4.1"
+        ]
+      ],
+      "tested_at": "2026-04-27T02:46:40.289480"
+    },
+    "timestamp": "2026-04-27T02:46:40.289481"
+  },
+  {
+    "topic": "hybrid_quantum_algorithms",
+    "result": {
+      "optimization": {
+        "classical_time": "unknown",
+        "quantum_advantage": "to_measure",
+        "tested_at": "2026-04-27T02:46:40.289537"
+      },
+      "search": {
+        "classical_time": "unknown",
+        "quantum_advantage": "to_measure",
+        "tested_at": "2026-04-27T02:46:40.289563"
+      },
+      "simulation": {
+        "classical_time": "unknown",
+        "quantum_advantage": "to_measure",
+        "tested_at": "2026-04-27T02:46:40.289598"
+      },
+      "machine_learning": {
+        "classical_time": "unknown",
+        "quantum_advantage": "to_measure",
+        "tested_at": "2026-04-27T02:46:40.289623"
+      }
+    },
+    "timestamp": "2026-04-27T02:46:40.289625"
+  },
+  {
+    "topic": "streaming_reasoning",
+    "result": {
+      "quick_question": {
+        "latency_target_ms": 500,
+        "quality_score": "to_measure"
+      },
+      "complex_reasoning": {
+        "latency_target_ms": 500,
+        "quality_score": "to_measure"
+      },
+      "code_feedback": {
+        "latency_target_ms": 500,
+        "quality_score": "to_measure"
+      },
+      "creative_writing": {
+        "latency_target_ms": 500,
+        "quality_score": "to_measure"
+      }
+    },
+    "timestamp": "2026-04-27T02:46:40.289651"
+  }
+]

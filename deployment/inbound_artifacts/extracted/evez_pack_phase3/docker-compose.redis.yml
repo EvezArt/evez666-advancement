@@ -1,0 +1,61 @@
+version: "3.9"
+
+services:
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+
+  state-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.state-service
+    restart: unless-stopped
+    ports:
+      - "8100:8100"
+    environment:
+      - REDIS_URL=${REDIS_URL}
+      - REDIS_PREFIX=${REDIS_PREFIX}
+    depends_on:
+      - redis
+
+  hyperbrowser-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile.hyperbrowser-runner
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - HYPERBROWSER_API_KEY=${HYPERBROWSER_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - HYPERBROWSER_BASE_URL=https://api.hyperbrowser.ai
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_HOST=${N8N_HOST}
+      - N8N_PROTOCOL=${N8N_PROTOCOL}
+      - N8N_PORT=5678
+      - WEBHOOK_URL=${WEBHOOK_URL}
+      - N8N_PROXY_HOPS=1
+      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
+      - TZ=${TZ}
+      - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
+    volumes:
+      - n8n_data:/home/node/.n8n
+    depends_on:
+      - redis
+      - state-service
+      - hyperbrowser-runner
+
+volumes:
+  n8n_data:
+  redis_data:

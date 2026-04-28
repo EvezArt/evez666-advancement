@@ -1,0 +1,24 @@
+{
+  "tasks": [
+    {
+      "name": "a16-get-device-info",
+      "description": "Query battery, WiFi, storage from A16",
+      "schedule": { "kind": "every", "everyMs": 300000 }, // 5 min
+      "payload": {
+        "kind": "systemEvent",
+        "text": "Fetching A16 device stats..."
+      },
+      "agentId": "bridge-scheduler",
+      "toolsAllow": ["http_request"]
+    },
+    {
+      "name": "a16-shell-command",
+      "description": "Execute arbitrary shell on A16 via device API",
+      "enabled": false,
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Send shell command to device a16: {{cmd}}"
+      }
+    }
+  ]
+}

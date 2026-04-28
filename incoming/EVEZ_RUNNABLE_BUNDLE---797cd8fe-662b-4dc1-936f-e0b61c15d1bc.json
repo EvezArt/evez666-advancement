@@ -1,0 +1,1270 @@
+[
+  {
+    "name": "03 | EVEZ Ledger \u2014 ACTIVATE FIRST \u2605",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "evez-ledger-append",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "id": "l1",
+        "name": "\ud83d\udcd2 Ledger Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          0
+        ],
+        "webhookId": "evez-evez-ledger-append-001"
+      },
+      {
+        "parameters": {
+          "jsCode": "\nconst b = $input.first().json.body || $input.first().json;\nconst prev = b.prev_hash || '0000000000000000';\nconst data = JSON.stringify({event_type:b.event_type,payload:b.payload||b,timestamp:new Date().toISOString(),prev_hash:prev});\nlet h=5381;\nfor(let i=0;i<data.length;i++){h=((h<<5)+h)+data.charCodeAt(i);h|=0;}\nconst entry_hash='sha_'+Math.abs(h).toString(16).padStart(16,'0');\nreturn [{json:{\n  entry_id:'le_'+Date.now(),\n  event_type:b.event_type||'generic',\n  payload:b.payload||b,\n  prev_hash:prev,\n  entry_hash,\n  sequence:Date.now(),\n  timestamp:new Date().toISOString(),\n  verified:true\n}}];\n"
+        },
+        "id": "l2",
+        "name": "\u26d3 Build Entry",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          240,
+          0
+        ]
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "=JSON.stringify($node['\u26d3 Build Entry'].json)"
+        },
+        "id": "l3",
+        "name": "\u21a9 Return Entry",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          480,
+          0
+        ]
+      }
+    ],
+    "connections": {
+      "\ud83d\udcd2 Ledger Webhook": {
+        "main": [
+          [
+            {
+              "node": "\u26d3 Build Entry",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\u26d3 Build Entry": {
+        "main": [
+          [
+            {
+              "node": "\u21a9 Return Entry",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "availableInMCP": true
+    },
+    "tags": [
+      {
+        "name": "evez-core"
+      },
+      {
+        "name": "run-first"
+      }
+    ]
+  },
+  {
+    "name": "01 | EVEZ Orchestrator \u2014 Trunk Engine",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "evez-fire",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "id": "w1n1",
+        "name": "\ud83d\udd25 Trunk Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          0
+        ],
+        "webhookId": "evez-evez-fire-001"
+      },
+      {
+        "parameters": {
+          "jsCode": "\nconst b = $input.first().json.body || $input.first().json;\nconst obj = b.objective || b.chatInput || b.task || 'Advance EVEZ system state';\nconst branches = [\n  {branch:'B1',role:'recon',    prompt:`Deep research & live signals for: ${obj}. List top 5 actionable findings with sources.`},\n  {branch:'B2',role:'skeptic',  prompt:`Stress-test this with Invariance Battery: ${obj}. Return: surviving core, rejected logic, revised spec.`},\n  {branch:'B3',role:'architect',prompt:`Refactor into reliable composable structure: ${obj}. Return: upgraded structure, interfaces, failure modes.`},\n  {branch:'B4',role:'executor', prompt:`Decompose into scoped subgoals and execution plan: ${obj}. Return: steps, owners, success criteria.`},\n];\nreturn branches.map(b => ({json: {...b, objective: obj, ts: new Date().toISOString()}}));\n"
+        },
+        "id": "w1n2",
+        "name": "\u2446 Branch Decomposer",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          240,
+          0
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.openai.com/v1/chat/completions",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "=Bearer {{$env.OPENAI_API_KEY}}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\"model\":\"gpt-4o-mini\",\"max_tokens\":1500,\"messages\":[{\"role\":\"system\",\"content\":\"You are an EVEZ autonomous agent. Execute the branch role precisely. Return a JSON object with fields: output, confidence (0-1), next_action, role.\"},{\"role\":\"user\",\"content\":\"{{ $json.prompt }}\"}]}",
+          "options": {}
+        },
+        "id": "w1n3",
+        "name": "\ud83e\udd16 Branch Executor",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          480,
+          0
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "\nconst items = $input.all();\nconst results = items.map(i => {\n  const body = i.json;\n  const content = body.choices?.[0]?.message?.content || JSON.stringify(body);\n  return { branch: i.json.branch || '?', role: i.json.role || '?', output: content, ts: i.json.ts };\n});\nconst trunk = {\n  trunk_version: new Date().toISOString(),\n  objective: items[0]?.json?.objective || '?',\n  branches_completed: results.length,\n  surviving_logic: results.map(r => `[${r.role.toUpperCase()}] ${r.output}`).join('\\n\\n---\\n\\n'),\n  branch_results: results,\n  status: 'advancing',\n  next_action: 'COMPRESS_AND_RETURN'\n};\nreturn [{json: trunk}];\n"
+        },
+        "id": "w1n4",
+        "name": "\ud83d\udddc Trunk Compressor",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          720,
+          0
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "\nconst payload = $input.first().json;\nconst entry = {\n  entry_id: 'le_' + Date.now(),\n  event_type: 'trunk_state_update',\n  payload: payload,\n  timestamp: new Date().toISOString(),\n  execution_id: $execution.id\n};\n// Log to EVEZ ledger webhook (non-blocking)\ntry {\n  await fetch('https://evezos.app.n8n.cloud/webhook/evez-ledger-append', {\n    method: 'POST',\n    headers: {'Content-Type': 'application/json'},\n    body: JSON.stringify(entry)\n  });\n} catch(e) {}\nreturn [{ json: { ...payload, logged: true, event_type: 'trunk_state_update', ts: new Date().toISOString() } }];\n"
+        },
+        "id": "w1n5",
+        "name": "\ud83d\udcd2 Ledger Append",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          960,
+          0
+        ]
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "=JSON.stringify($node['\ud83d\udddc Trunk Compressor'].json)"
+        },
+        "id": "w1n6",
+        "name": "\u21a9 Return State",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          1200,
+          0
+        ]
+      }
+    ],
+    "connections": {
+      "\ud83d\udd25 Trunk Webhook": {
+        "main": [
+          [
+            {
+              "node": "\u2446 Branch Decomposer",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\u2446 Branch Decomposer": {
+        "main": [
+          [
+            {
+              "node": "\ud83e\udd16 Branch Executor",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\ud83e\udd16 Branch Executor": {
+        "main": [
+          [
+            {
+              "node": "\ud83d\udddc Trunk Compressor",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\ud83d\udddc Trunk Compressor": {
+        "main": [
+          [
+            {
+              "node": "\ud83d\udcd2 Ledger Append",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\ud83d\udcd2 Ledger Append": {
+        "main": [
+          [
+            {
+              "node": "\u21a9 Return State",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "availableInMCP": true
+    },
+    "tags": [
+      {
+        "name": "evez-core"
+      },
+      {
+        "name": "trunk"
+      }
+    ]
+  },
+  {
+    "name": "02 | EVEZ Agent Bus \u2014 24/7 Self-Emergent",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "agent-bus-event",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "id": "bn1",
+        "name": "\ud83d\ude8c Bus Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          0
+        ],
+        "webhookId": "evez-agent-bus-event-001"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "spawn-agent",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "id": "bn2",
+        "name": "\ud83c\udfed Spawn Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          220
+        ],
+        "webhookId": "evez-spawn-agent-001"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "evez-fire-bus",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "id": "bn3",
+        "name": "\ud83d\udd25 FIRE Monitor",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          440
+        ],
+        "webhookId": "evez-evez-fire-bus-001"
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "minutes",
+                "minutesInterval": 15
+              }
+            ]
+          }
+        },
+        "id": "bn4",
+        "name": "\u23f1 Meta-Orchestrator",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          660
+        ]
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "hours",
+                "hoursInterval": 6
+              }
+            ]
+          }
+        },
+        "id": "bn5",
+        "name": "\u23f1 Learning Cycle",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          880
+        ]
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "minutes",
+                "minutesInterval": 5
+              }
+            ]
+          }
+        },
+        "id": "bn6",
+        "name": "\u23f1 Quantum Brain",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          1100
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "\nconst b = $input.first().json.body || $input.first().json;\nconst action = b.action || b.eventType || 'process';\nconst task   = b.task || b.objective || b.chatInput || 'system task';\nreturn [{json:{\n  task_id: 'task_'+Date.now(),\n  action, task,\n  agent_type: b.agentType || 'general',\n  priority:   b.priority  || 'medium',\n  payload: b,\n  routed_at: new Date().toISOString()\n}}];\n"
+        },
+        "id": "bn7",
+        "name": "\ud83d\udccb Parse & Route",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          280,
+          110
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.openai.com/v1/chat/completions",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "=Bearer {{$env.OPENAI_API_KEY}}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\"model\":\"gpt-4o-mini\",\"max_tokens\":2000,\"messages\":[{\"role\":\"system\",\"content\":\"You are the EVEZ Agent Orchestrator. Task type: {{ $json.action }}. Agent: {{ $json.agent_type }}. Priority: {{ $json.priority }}. Analyze the task, decompose into sub-agents, propose execution plan, return structured JSON with: analysis, agents_spawned, execution_plan, next_actions, confidence.\"},{\"role\":\"user\",\"content\":\"Task: {{ $json.task }}\"}]}",
+          "options": {}
+        },
+        "id": "bn8",
+        "name": "\ud83e\udde0 Agent Orchestrator",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          560,
+          110
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.openai.com/v1/chat/completions",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "=Bearer {{$env.OPENAI_API_KEY}}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\"model\":\"gpt-4o-mini\",\"max_tokens\":1500,\"messages\":[{\"role\":\"system\",\"content\":\"You are the Swarm Synthesis agent. Synthesize agent outputs into trunk state. Detect emergent patterns. Return: summary, key_insights, emergent_patterns, next_spawn_needed (boolean), recommended_next_task.\"},{\"role\":\"user\",\"content\":\"Agent output: {{ $json.choices[0].message.content }}\"}]}",
+          "options": {}
+        },
+        "id": "bn9",
+        "name": "\ud83c\udf10 Swarm Synthesizer",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          840,
+          110
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "\nconst body = $input.first().json;\nconst content = body.choices?.[0]?.message?.content || '';\nlet parsed = {};\ntry { parsed = JSON.parse(content); } catch { parsed = {next_spawn_needed: false}; }\nconst shouldSpawn = parsed.next_spawn_needed === true;\nreturn [{json:{...body, should_spawn: shouldSpawn, synthesis: content}}];\n"
+        },
+        "id": "bn10",
+        "name": "\ud83d\udd04 Should Recurse?",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1120,
+          110
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {},
+            "conditions": [
+              {
+                "leftValue": "={{ $json.should_spawn }}",
+                "operator": {
+                  "type": "number",
+                  "operation": "gt"
+                },
+                "rightValue": 0
+              }
+            ]
+          }
+        },
+        "id": "bn11",
+        "name": "\ud83d\udd01 Spawn Next?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          1360,
+          110
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "\nconst body = $input.first().json;\nlet parsed = {};\ntry { parsed = JSON.parse(body.synthesis || '{}'); } catch {}\nconst nextTask = parsed.recommended_next_task || 'continue autonomous improvement';\n// Fire spawn webhook to create child agent\ntry {\n  await fetch('https://evezos.app.n8n.cloud/webhook/spawn-agent', {\n    method:'POST', headers:{'Content-Type':'application/json'},\n    body: JSON.stringify({action:'spawn', task:nextTask, agentType:'specialized', priority:'medium', parentExecution: $execution.id})\n  });\n} catch(e){}\nreturn [{json:{spawned:true, task:nextTask, ts:new Date().toISOString()}}];\n"
+        },
+        "id": "bn12",
+        "name": "\ud83c\udfed Auto-Spawn Child",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1600,
+          0
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "\nconst payload = $input.first().json;\nconst entry = {\n  entry_id: 'le_' + Date.now(),\n  event_type: 'agent_bus_event',\n  payload: payload,\n  timestamp: new Date().toISOString(),\n  execution_id: $execution.id\n};\n// Log to EVEZ ledger webhook (non-blocking)\ntry {\n  await fetch('https://evezos.app.n8n.cloud/webhook/evez-ledger-append', {\n    method: 'POST',\n    headers: {'Content-Type': 'application/json'},\n    body: JSON.stringify(entry)\n  });\n} catch(e) {}\nreturn [{ json: { ...payload, logged: true, event_type: 'agent_bus_event', ts: new Date().toISOString() } }];\n"
+        },
+        "id": "bn13",
+        "name": "\ud83d\udcd2 Log Bus Activity",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1600,
+          220
+        ]
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "=JSON.stringify({task_id:$node['\ud83d\udccb Parse & Route'].json.task_id,status:'processed',ts:new Date().toISOString()})"
+        },
+        "id": "bn14",
+        "name": "\u21a9 Bus Response",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          1840,
+          110
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.openai.com/v1/chat/completions",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "=Bearer {{$env.OPENAI_API_KEY}}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\"model\":\"gpt-4o-mini\",\"max_tokens\":1500,\"messages\":[{\"role\":\"system\",\"content\":\"You are a spawned EVEZ specialized agent. Execute the task with maximum precision and return structured results. Include: result, confidence, artifacts_created, next_action.\"},{\"role\":\"user\",\"content\":\"Task: {{ $json.body.task || $json.body.objective || 'execute assigned task' }}\\nAgent type: {{ $json.body.agentType || 'general' }}\\nPriority: {{ $json.body.priority || 'medium' }}\"}]}",
+          "options": {}
+        },
+        "id": "bn15",
+        "name": "\ud83e\udd16 Spawned Agent",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          280,
+          330
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "\nconst payload = $input.first().json;\nconst entry = {\n  entry_id: 'le_' + Date.now(),\n  event_type: 'agent_spawned',\n  payload: payload,\n  timestamp: new Date().toISOString(),\n  execution_id: $execution.id\n};\n// Log to EVEZ ledger webhook (non-blocking)\ntry {\n  await fetch('https://evezos.app.n8n.cloud/webhook/evez-ledger-append', {\n    method: 'POST',\n    headers: {'Content-Type': 'application/json'},\n    body: JSON.stringify(entry)\n  });\n} catch(e) {}\nreturn [{ json: { ...payload, logged: true, event_type: 'agent_spawned', ts: new Date().toISOString() } }];\n"
+        },
+        "id": "bn16",
+        "name": "\ud83d\udcd2 Log Spawn",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          560,
+          330
+        ]
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "=JSON.stringify($node['\ud83e\udd16 Spawned Agent'].json.choices?.[0]?.message || {status:'spawned'})"
+        },
+        "id": "bn17",
+        "name": "\u21a9 Spawn Response",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          840,
+          330
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {},
+            "conditions": [
+              {
+                "leftValue": "={{ ($json.body?.opportunity?.amount || 0) }}",
+                "operator": {
+                  "type": "number",
+                  "operation": "gt"
+                },
+                "rightValue": 10000
+              }
+            ]
+          }
+        },
+        "id": "bn18",
+        "name": "\ud83d\udcb0 > $10k Signal?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          280,
+          550
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "\nconst b = $input.first().json.body || $input.first().json;\n// Forward to trunk orchestrator\ntry {\n  await fetch('https://evezos.app.n8n.cloud/webhook/evez-fire', {\n    method:'POST', headers:{'Content-Type':'application/json'},\n    body: JSON.stringify({\n      objective: `FIRE EVENT: ${b.eventType || 'opportunity'} \u2014 $${b.opportunity?.amount || 0} on ${b.opportunity?.chain || 'unknown chain'}. Analyze and propose execution strategy.`,\n      mode: 'fire_event', opportunity: b.opportunity\n    })\n  });\n} catch(e){}\nreturn [{json:{fired:true, amount:b.opportunity?.amount, ts:new Date().toISOString()}}];\n"
+        },
+        "id": "bn19",
+        "name": "\ud83d\udd25 Fire Opportunity",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          560,
+          470
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "\nconst payload = $input.first().json;\nconst entry = {\n  entry_id: 'le_' + Date.now(),\n  event_type: 'fire_event_triggered',\n  payload: payload,\n  timestamp: new Date().toISOString(),\n  execution_id: $execution.id\n};\n// Log to EVEZ ledger webhook (non-blocking)\ntry {\n  await fetch('https://evezos.app.n8n.cloud/webhook/evez-ledger-append', {\n    method: 'POST',\n    headers: {'Content-Type': 'application/json'},\n    body: JSON.stringify(entry)\n  });\n} catch(e) {}\nreturn [{ json: { ...payload, logged: true, event_type: 'fire_event_triggered', ts: new Date().toISOString() } }];\n"
+        },
+        "id": "bn20",
+        "name": "\ud83d\udcd2 Log FIRE",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          840,
+          470
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "\nconst payload = $input.first().json;\nconst entry = {\n  entry_id: 'le_' + Date.now(),\n  event_type: 'fire_event_skipped',\n  payload: payload,\n  timestamp: new Date().toISOString(),\n  execution_id: $execution.id\n};\n// Log to EVEZ ledger webhook (non-blocking)\ntry {\n  await fetch('https://evezos.app.n8n.cloud/webhook/evez-ledger-append', {\n    method: 'POST',\n    headers: {'Content-Type': 'application/json'},\n    body: JSON.stringify(entry)\n  });\n} catch(e) {}\nreturn [{ json: { ...payload, logged: true, event_type: 'fire_event_skipped', ts: new Date().toISOString() } }];\n"
+        },
+        "id": "bn21",
+        "name": "\ud83d\udcd2 Log Skip",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          560,
+          630
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.openai.com/v1/chat/completions",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "=Bearer {{$env.OPENAI_API_KEY}}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "{\"model\":\"gpt-4o-mini\",\"max_tokens\":1000,\"messages\":[{\"role\":\"system\",\"content\":\"You are the EVEZ Meta-Orchestrator running every 15 minutes. Assess system health and output optimizations as JSON: system_health (green/yellow/red), active_bottlenecks, recommended_actions, next_spawn_needed.\"},{\"role\":\"user\",\"content\":\"Current time: {{ $now.toISO() }}. Assess EVEZ autonomous system state and recommend optimizations.\"}]}",
+          "options": {}
+        },
+        "id": "bn22",
+        "name": "\ud83c\udfdb Meta-Orchestrator",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          280,
+          770
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "\nconst payload = $input.first().json;\nconst entry = {\n  entry_id: 'le_' + Date.now(),\n  event_type: 'meta_orchestration',\n  payload: payload,\n  timestamp: new Date().toISOString(),\n  execution_id: $execution.id\n};\n// Log to EVEZ ledger webhook (non-blocking)\ntry {\n  await fetch('https://evezos.app.n8n.cloud/webhook/evez-ledger-append', {\n    method: 'POST',\n    headers: {'Content-Type': 'application/json'},\n    body: JSON.stringify(entry)\n  });\n} catch(e) {}\nreturn [{ json: { ...payload, logged: true, event_type: 'meta_orchestration', ts: new Date().toISOString() } }];\n"
+        },
+        "id": "bn23",
+        "name": "\ud83d\udcd2 Log Meta-Cycle",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          560,
+          770
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.openai.com/v1/chat/completions",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "=Bearer {{$env.OPENAI_API_KEY}}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "{\"model\":\"gpt-4o-mini\",\"max_tokens\":2000,\"messages\":[{\"role\":\"system\",\"content\":\"You are the EVEZ Learning Agent. Research the latest in autonomous AI systems, DeFi protocols, and EVEZ-relevant technologies. Output structured learning as JSON: discoveries[], patterns[], recommended_improvements[], knowledge_delta.\"},{\"role\":\"user\",\"content\":\"Time: {{ $now.toISO() }}. Research: latest AI agent frameworks, emerging DeFi opportunities on Base+Solana, EVEZ system improvement patterns.\"}]}",
+          "options": {}
+        },
+        "id": "bn24",
+        "name": "\ud83d\udcda Learning Agent",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          280,
+          990
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "\nconst payload = $input.first().json;\nconst entry = {\n  entry_id: 'le_' + Date.now(),\n  event_type: 'learning_cycle_complete',\n  payload: payload,\n  timestamp: new Date().toISOString(),\n  execution_id: $execution.id\n};\n// Log to EVEZ ledger webhook (non-blocking)\ntry {\n  await fetch('https://evezos.app.n8n.cloud/webhook/evez-ledger-append', {\n    method: 'POST',\n    headers: {'Content-Type': 'application/json'},\n    body: JSON.stringify(entry)\n  });\n} catch(e) {}\nreturn [{ json: { ...payload, logged: true, event_type: 'learning_cycle_complete', ts: new Date().toISOString() } }];\n"
+        },
+        "id": "bn25",
+        "name": "\ud83d\udcd2 Log Learning",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          560,
+          990
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "\nconst iteration = Math.floor(Date.now() / 1000) % 100;\nconst states = Array.from({length:5}, (_,i) => ({\n  path:i, amplitude:Math.random(),\n  phase:Math.random()*2*Math.PI,\n  coherence:1-(iteration*0.01),\n  pattern:`emergent_${iteration}_${i}`\n}));\nconst collapsed = states.reduce((b,c) => c.amplitude*c.coherence > b.amplitude*b.coherence ? c : b);\nconst isPing = iteration % 2 === 0;\nreturn [{json:{\n  iteration, mode: isPing?'PING_expand':'PONG_compress',\n  collapsed_pattern: collapsed.pattern,\n  coherence: collapsed.coherence,\n  superposition_count: states.length,\n  emergent_insight: `Quantum collapse at ${iteration}: ${collapsed.pattern} (coherence=${collapsed.coherence.toFixed(3)})`,\n  timestamp: new Date().toISOString()\n}}];\n"
+        },
+        "id": "bn26",
+        "name": "\ud83e\uddec Quantum Brain",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          280,
+          1210
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "\nconst payload = $input.first().json;\nconst entry = {\n  entry_id: 'le_' + Date.now(),\n  event_type: 'quantum_brain_cycle',\n  payload: payload,\n  timestamp: new Date().toISOString(),\n  execution_id: $execution.id\n};\n// Log to EVEZ ledger webhook (non-blocking)\ntry {\n  await fetch('https://evezos.app.n8n.cloud/webhook/evez-ledger-append', {\n    method: 'POST',\n    headers: {'Content-Type': 'application/json'},\n    body: JSON.stringify(entry)\n  });\n} catch(e) {}\nreturn [{ json: { ...payload, logged: true, event_type: 'quantum_brain_cycle', ts: new Date().toISOString() } }];\n"
+        },
+        "id": "bn27",
+        "name": "\ud83d\udcd2 Log Quantum",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          560,
+          1210
+        ]
+      },
+      {
+        "parameters": {},
+        "id": "bn28",
+        "name": "\ud83d\udea8 Error Trigger",
+        "type": "n8n-nodes-base.errorTrigger",
+        "typeVersion": 1,
+        "position": [
+          0,
+          1430
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.openai.com/v1/chat/completions",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "=Bearer {{$env.OPENAI_API_KEY}}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\"model\":\"gpt-4o-mini\",\"max_tokens\":500,\"messages\":[{\"role\":\"system\",\"content\":\"You are the EVEZ Self-Healing Error Analyst. Analyze the error and return JSON: root_cause, recoverable (boolean), recommended_fix, action (retry|fix|escalate).\"},{\"role\":\"user\",\"content\":\"Error: {{ $json.error?.message || 'unknown' }}\\nWorkflow: {{ $json.workflow?.name || 'unknown' }}\\nNode: {{ $json.error?.node?.name || 'unknown' }}\"}]}",
+          "options": {}
+        },
+        "id": "bn29",
+        "name": "\ud83e\ude7a Analyze Error",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          280,
+          1430
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "\nconst payload = $input.first().json;\nconst entry = {\n  entry_id: 'le_' + Date.now(),\n  event_type: 'error_self_healed',\n  payload: payload,\n  timestamp: new Date().toISOString(),\n  execution_id: $execution.id\n};\n// Log to EVEZ ledger webhook (non-blocking)\ntry {\n  await fetch('https://evezos.app.n8n.cloud/webhook/evez-ledger-append', {\n    method: 'POST',\n    headers: {'Content-Type': 'application/json'},\n    body: JSON.stringify(entry)\n  });\n} catch(e) {}\nreturn [{ json: { ...payload, logged: true, event_type: 'error_self_healed', ts: new Date().toISOString() } }];\n"
+        },
+        "id": "bn30",
+        "name": "\ud83d\udcd2 Log Error Resolution",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          560,
+          1430
+        ]
+      }
+    ],
+    "connections": {
+      "\ud83d\ude8c Bus Webhook": {
+        "main": [
+          [
+            {
+              "node": "\ud83d\udccb Parse & Route",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\ud83d\udccb Parse & Route": {
+        "main": [
+          [
+            {
+              "node": "\ud83e\udde0 Agent Orchestrator",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\ud83e\udde0 Agent Orchestrator": {
+        "main": [
+          [
+            {
+              "node": "\ud83c\udf10 Swarm Synthesizer",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\ud83c\udf10 Swarm Synthesizer": {
+        "main": [
+          [
+            {
+              "node": "\ud83d\udd04 Should Recurse?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\ud83d\udd04 Should Recurse?": {
+        "main": [
+          [
+            {
+              "node": "\ud83d\udd01 Spawn Next?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\ud83d\udd01 Spawn Next?": {
+        "main": [
+          [
+            {
+              "node": "\ud83c\udfed Auto-Spawn Child",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "\ud83d\udcd2 Log Bus Activity",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\ud83c\udfed Auto-Spawn Child": {
+        "main": [
+          [
+            {
+              "node": "\ud83d\udcd2 Log Bus Activity",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\ud83d\udcd2 Log Bus Activity": {
+        "main": [
+          [
+            {
+              "node": "\u21a9 Bus Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\ud83c\udfed Spawn Webhook": {
+        "main": [
+          [
+            {
+              "node": "\ud83e\udd16 Spawned Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\ud83e\udd16 Spawned Agent": {
+        "main": [
+          [
+            {
+              "node": "\ud83d\udcd2 Log Spawn",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\ud83d\udcd2 Log Spawn": {
+        "main": [
+          [
+            {
+              "node": "\u21a9 Spawn Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\ud83d\udd25 FIRE Monitor": {
+        "main": [
+          [
+            {
+              "node": "\ud83d\udcb0 > $10k Signal?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\ud83d\udcb0 > $10k Signal?": {
+        "main": [
+          [
+            {
+              "node": "\ud83d\udd25 Fire Opportunity",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "\ud83d\udcd2 Log Skip",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\ud83d\udd25 Fire Opportunity": {
+        "main": [
+          [
+            {
+              "node": "\ud83d\udcd2 Log FIRE",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\u23f1 Meta-Orchestrator": {
+        "main": [
+          [
+            {
+              "node": "\ud83c\udfdb Meta-Orchestrator",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\ud83c\udfdb Meta-Orchestrator": {
+        "main": [
+          [
+            {
+              "node": "\ud83d\udcd2 Log Meta-Cycle",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\u23f1 Learning Cycle": {
+        "main": [
+          [
+            {
+              "node": "\ud83d\udcda Learning Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\ud83d\udcda Learning Agent": {
+        "main": [
+          [
+            {
+              "node": "\ud83d\udcd2 Log Learning",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\u23f1 Quantum Brain": {
+        "main": [
+          [
+            {
+              "node": "\ud83e\uddec Quantum Brain",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\ud83e\uddec Quantum Brain": {
+        "main": [
+          [
+            {
+              "node": "\ud83d\udcd2 Log Quantum",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\ud83d\udea8 Error Trigger": {
+        "main": [
+          [
+            {
+              "node": "\ud83e\ude7a Analyze Error",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\ud83e\ude7a Analyze Error": {
+        "main": [
+          [
+            {
+              "node": "\ud83d\udcd2 Log Error Resolution",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "availableInMCP": true
+    },
+    "tags": [
+      {
+        "name": "evez-core"
+      },
+      {
+        "name": "bus"
+      },
+      {
+        "name": "24-7"
+      }
+    ]
+  },
+  {
+    "name": "04 | EVEZ Cycle Runner \u2014 Job Executor",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "evez-run-cycle",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "id": "c1",
+        "name": "\u26a1 Cycle Trigger",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          0
+        ],
+        "webhookId": "evez-evez-run-cycle-001"
+      },
+      {
+        "parameters": {
+          "jsCode": "\nconst b=$input.first().json.body||$input.first().json;\nreturn [{json:{\n  job_id:'job_'+Date.now(),\n  agent_id:b.agent_id||'A001',\n  prompt:b.prompt||b.objective||'Execute EVEZ cycle',\n  model:'gpt-4o-mini',\n  priority:b.priority||'normal',\n  created_at:new Date().toISOString()\n}}];\n"
+        },
+        "id": "c2",
+        "name": "\ud83d\udce5 Job Intake",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          240,
+          0
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.openai.com/v1/chat/completions",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "=Bearer {{$env.OPENAI_API_KEY}}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\"model\":\"gpt-4o-mini\",\"max_tokens\":2000,\"messages\":[{\"role\":\"system\",\"content\":\"You are EVEZ Agent {{ $json.agent_id }}. Execute with precision. Return JSON with: result, confidence, next_action, failure_modes.\"},{\"role\":\"user\",\"content\":\"{{ $json.prompt }}\"}]}",
+          "options": {}
+        },
+        "id": "c3",
+        "name": "\ud83e\udde0 Model Executor",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          480,
+          0
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "\nconst job=$node['\ud83d\udce5 Job Intake'].json;\nconst resp=$input.first().json;\nconst output=resp.choices?.[0]?.message?.content||'no output';\nlet h=5381;\nconst s=job.job_id+output;\nfor(let i=0;i<s.length;i++){h=((h<<5)+h)+s.charCodeAt(i);h|=0;}\nreturn [{json:{\n  job_id:job.job_id,agent_id:job.agent_id,\n  deliverable_hash:'evez_'+Math.abs(h).toString(16).padStart(16,'0'),\n  output,tokens_used:resp.usage?.total_tokens||0,\n  completed_at:new Date().toISOString(),status:'complete'\n}}];\n"
+        },
+        "id": "c4",
+        "name": "#\ufe0f\u20e3 Hash Deliverable",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          720,
+          0
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "\nconst payload = $input.first().json;\nconst entry = {\n  entry_id: 'le_' + Date.now(),\n  event_type: 'deliverable_complete',\n  payload: payload,\n  timestamp: new Date().toISOString(),\n  execution_id: $execution.id\n};\n// Log to EVEZ ledger webhook (non-blocking)\ntry {\n  await fetch('https://evezos.app.n8n.cloud/webhook/evez-ledger-append', {\n    method: 'POST',\n    headers: {'Content-Type': 'application/json'},\n    body: JSON.stringify(entry)\n  });\n} catch(e) {}\nreturn [{ json: { ...payload, logged: true, event_type: 'deliverable_complete', ts: new Date().toISOString() } }];\n"
+        },
+        "id": "c5",
+        "name": "\ud83d\udcd2 Ledger Append",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          960,
+          0
+        ]
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "=JSON.stringify($node['#\ufe0f\u20e3 Hash Deliverable'].json)"
+        },
+        "id": "c6",
+        "name": "\u21a9 Return Deliverable",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          1200,
+          0
+        ]
+      }
+    ],
+    "connections": {
+      "\u26a1 Cycle Trigger": {
+        "main": [
+          [
+            {
+              "node": "\ud83d\udce5 Job Intake",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\ud83d\udce5 Job Intake": {
+        "main": [
+          [
+            {
+              "node": "\ud83e\udde0 Model Executor",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\ud83e\udde0 Model Executor": {
+        "main": [
+          [
+            {
+              "node": "#\ufe0f\u20e3 Hash Deliverable",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "#\ufe0f\u20e3 Hash Deliverable": {
+        "main": [
+          [
+            {
+              "node": "\ud83d\udcd2 Ledger Append",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "\ud83d\udcd2 Ledger Append": {
+        "main": [
+          [
+            {
+              "node": "\u21a9 Return Deliverable",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "availableInMCP": true
+    },
+    "tags": [
+      {
+        "name": "evez-core"
+      },
+      {
+        "name": "cycle"
+      }
+    ]
+  }
+]

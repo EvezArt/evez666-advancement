@@ -1,0 +1,80 @@
+{
+  "profiles": [
+    "baseline",
+    "aggressive",
+    "conservative"
+  ],
+  "iterations_per_profile": 40,
+  "summaries": [
+    {
+      "run_id": "20260324T081204Z",
+      "profile_name": "baseline",
+      "iterations": 40,
+      "commitment_counts": {
+        "ACT": 13,
+        "DISCARD": 27
+      },
+      "discarded_shift_counts": {
+        "state_shift": 26,
+        "time_shift": 27,
+        "adversarial_shift": 26,
+        "identity_goal_shift": 27,
+        "frame_shift": 12
+      },
+      "average_confidence": 0.6646,
+      "act_rate": 0.325,
+      "discard_rate": 0.675,
+      "started_at": "2026-03-24T08:12:04.329259+00:00",
+      "finished_at": "2026-03-24T08:12:04.347502+00:00",
+      "duration_seconds": 0.018,
+      "outdir": "/mnt/data/evez_sensory_entity_protocol/output/benchmark_v1/baseline"
+    },
+    {
+      "run_id": "20260324T081204Z",
+      "profile_name": "aggressive",
+      "iterations": 40,
+      "commitment_counts": {
+        "ACT": 14,
+        "DISCARD": 26
+      },
+      "discarded_shift_counts": {
+        "state_shift": 26,
+        "time_shift": 26,
+        "adversarial_shift": 26,
+        "identity_goal_shift": 26,
+        "frame_shift": 12
+      },
+      "average_confidence": 0.6622,
+      "act_rate": 0.35,
+      "discard_rate": 0.65,
+      "started_at": "2026-03-24T08:12:04.349766+00:00",
+      "finished_at": "2026-03-24T08:12:04.366511+00:00",
+      "duration_seconds": 0.017,
+      "outdir": "/mnt/data/evez_sensory_entity_protocol/output/benchmark_v1/aggressive"
+    },
+    {
+      "run_id": "20260324T081204Z",
+      "profile_name": "conservative",
+      "iterations": 40,
+      "commitment_counts": {
+        "ACT": 13,
+        "DISCARD": 27
+      },
+      "discarded_shift_counts": {
+        "state_shift": 26,
+        "time_shift": 27,
+        "adversarial_shift": 26,
+        "identity_goal_shift": 27,
+        "frame_shift": 12
+      },
+      "average_confidence": 0.6458,
+      "act_rate": 0.325,
+      "discard_rate": 0.675,
+      "started_at": "2026-03-24T08:12:04.368050+00:00",
+      "finished_at": "2026-03-24T08:12:04.391103+00:00",
+      "duration_seconds": 0.023,
+      "outdir": "/mnt/data/evez_sensory_entity_protocol/output/benchmark_v1/conservative"
+    }
+  ],
+  "generated_at": "2026-03-24T08:12:04.392076+00:00"
+}

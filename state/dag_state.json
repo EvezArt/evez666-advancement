@@ -1,0 +1,10 @@
+{
+  "pipeline": "evez-v1",
+  "run_id": 8,
+  "stage_status": {
+    "ingest": "success",
+    "validate": "success",
+    "train": "success",
+    "evaluate": "passed"
+  }
+}

@@ -1,0 +1,4 @@
+Projected Revenue: $1,800,000.00/day
+Actual Revenue: $10.04
+Revenue Drop: 100.00%
+Alert Triggered: True

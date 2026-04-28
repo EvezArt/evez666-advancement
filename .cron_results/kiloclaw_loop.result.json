@@ -1,0 +1,8 @@
+{
+  "script": "kiloclaw_loop.py",
+  "status": "success",
+  "exitCode": 0,
+  "outputSummary": "Ingested: 3, Scored: 3, Executed: 3, Escalated: 0, Payments: 0 - All synthetic leads processed through AUTO_CLOSE/CLOSE/NURTURE pipeline",
+  "error": null,
+  "timestamp": "2026-04-23T17:10:57.075977"
+}

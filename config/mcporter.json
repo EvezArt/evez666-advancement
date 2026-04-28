@@ -11,6 +11,17 @@
       "headers": {
         "x-consumer-api-key": "ck_nGR0xHdPC0mRYoxmoHUo"
       }
+    },
+    "agentcard": {
+      "url": "https://mcp.agentcard.sh/mcp",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbnYiOiJwcm9kdWN0aW9uIiwia2lsb1VzZXJJZCI6IjAzZTM4Yzg4LWNhNjAtNGYzMS1hYzMxLWZhMWVmMWIxMTU4YSIsImFwaVRva2VuUGVwcGVyIjpudWxsLCJ2ZXJzaW9uIjozLCJpYXQiOjE3NzY5MzM3NDgsImV4cCI6MTkzNDYxMzc0OH0.wykKN0y8BaIgtgTlt_KxZipP9oAOg7DhMsy-FTOxW9I"
+      }
     }
+  },
+  "credentials_saved": {
+    "bubble_live": "bb_live_6fQXj2oweLQGJxmRuBU8ozoLcxM",
+    "cf_token": "cfut_lMKKr8N970mUyXoN8mVAYQnsN0M99okpLLWqi6puc9131568",
+    "cf_key": "cfk_RGQ9iPhIHz3FTtKsclbdEDqOkQKJ6y4SWjhiYwaVc43b7332"
   }
 }

@@ -1,0 +1,1020 @@
+{
+  "workflows": [
+    {
+      "name": "EVEZ Sentinel \u2014 CF Worker Deployer [L4 Edge Gate]",
+      "nodes": [
+        {
+          "id": "W1T1",
+          "name": "\ud83d\udee1 Deploy Trigger",
+          "type": "n8n-nodes-base.webhook",
+          "typeVersion": 2.1,
+          "position": [
+            0,
+            0
+          ],
+          "parameters": {
+            "httpMethod": "POST",
+            "path": "evez-sentinel-deploy",
+            "responseMode": "responseNode",
+            "options": {}
+          },
+          "webhookId": "evez-W1T1"
+        },
+        {
+          "id": "W1T2",
+          "name": "\u23f1 Daily Health Check",
+          "type": "n8n-nodes-base.scheduleTrigger",
+          "typeVersion": 1.3,
+          "position": [
+            0,
+            220
+          ],
+          "parameters": {
+            "rule": {
+              "interval": [
+                {
+                  "field": "hours",
+                  "hoursInterval": 24
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "W1T3",
+          "name": "\ud83d\udd27 Manual Deploy",
+          "type": "n8n-nodes-base.manualTrigger",
+          "typeVersion": 1,
+          "position": [
+            0,
+            440
+          ],
+          "parameters": {}
+        },
+        {
+          "id": "W1C1",
+          "name": "\ud83d\udd10 Build Sentinel Script",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            280,
+            220
+          ],
+          "parameters": {
+            "jsCode": "\n// Build canonical sentinel worker with env-injected config\nconst script = `addEventListener('fetch', event => {\n  event.respondWith(handleRequest(event.request))\n})\n\nasync function handleRequest(request) {\n  const CANONICAL_ID = \"05a7ef57d7c1699c3038363f2bbaa5ecc774ad7ce277e5ee923ec819e97d005f\";\n  const authHeader = request.headers.get('X-EVEZ-PID-AUTH');\n\n  if (authHeader !== CANONICAL_ID) {\n    return new Response(JSON.stringify({\n      error: 'Hopi Pahana Protocol: Unauthorized Access Detected.',\n      pid: 335,\n      timestamp: new Date().toISOString()\n    }), { status: 403, headers: { 'Content-Type': 'application/json' } });\n  }\n\n  const url = new URL(request.url);\n  url.hostname = self.PHOENIX_N8N_HOST || 'evezos.app.n8n.cloud';\n\n  const proxied = new Request(url.toString(), {\n    method: request.method,\n    headers: request.headers,\n    body: request.method !== 'GET' && request.method !== 'HEAD' ? request.body : undefined,\n    redirect: 'follow'\n  });\n\n  try {\n    const resp = await fetch(proxied);\n    return resp;\n  } catch(e) {\n    return new Response(JSON.stringify({ error: 'Phoenix unreachable', detail: e.message }), {\n      status: 502, headers: { 'Content-Type': 'application/json' }\n    });\n  }\n}`;\n\nconst accountId = $env.CF_ACCOUNT_ID || '';\nconst token = $env.CF_API_TOKEN || '';\nconst workerName = 'evez-sentinel-pid335';\nconst canonicalId = '05a7ef57d7c1699c3038363f2bbaa5ecc774ad7ce277e5ee923ec819e97d005f';\n\nif (!accountId || !token) {\n  throw new Error('CF_ACCOUNT_ID and CF_API_TOKEN env vars required. Set in n8n Settings \u2192 Environment Variables.');\n}\n\nreturn [{json:{\n  script,\n  accountId,\n  token,\n  workerName,\n  canonicalId,\n  deployUrl: `https://api.cloudflare.com/client/v4/accounts/${accountId}/workers/scripts/${workerName}`,\n  timestamp: new Date().toISOString(),\n  pid: 335\n}}];\n"
+          }
+        },
+        {
+          "id": "W1H1",
+          "name": "\u2601\ufe0f Deploy Worker to CF Edge",
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.4,
+          "position": [
+            560,
+            220
+          ],
+          "parameters": {
+            "method": "PUT",
+            "url": "={{ $json.deployUrl }}",
+            "sendHeaders": true,
+            "headerParameters": {
+              "parameters": [
+                {
+                  "name": "Authorization",
+                  "value": "=Bearer {{ $json.token }}"
+                },
+                {
+                  "name": "Content-Type",
+                  "value": "text/javascript"
+                }
+              ]
+            },
+            "options": {
+              "timeout": 30000
+            },
+            "sendBody": true,
+            "contentType": "raw",
+            "rawContentType": "text/javascript",
+            "body": "={{ $json.script }}"
+          }
+        },
+        {
+          "id": "W1C2",
+          "name": "\u2705 Verify Deployment",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            840,
+            220
+          ],
+          "parameters": {
+            "jsCode": "\nconst resp = $input.first().json;\nconst success = resp.success === true || resp.id !== undefined;\nconst ts = new Date().toISOString();\n\n// Build hash entry for ledger\nlet h = 5381;\nconst s = JSON.stringify({ts, success, worker: 'evez-sentinel-pid335'});\nfor(let i=0;i<s.length;i++){h=((h<<5)+h)+s.charCodeAt(i);h|=0;}\nconst hash = 'sha_' + Math.abs(h).toString(16).padStart(16,'0');\n\nreturn [{json:{\n  deployment_status: success ? 'DEPLOYED' : 'FAILED',\n  worker_name: 'evez-sentinel-pid335',\n  canonical_id: '05a7ef57d7c1699c3038363f2bbaa5ecc774ad7ce277e5ee923ec819e97d005f',\n  pid: 335,\n  layer: 'L4_EDGE',\n  timestamp: ts,\n  entry_hash: hash,\n  raw_response: resp\n}}];\n"
+          }
+        },
+        {
+          "id": "W1H2",
+          "name": "\ud83d\udcca Health Check Worker",
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.4,
+          "position": [
+            560,
+            440
+          ],
+          "parameters": {
+            "method": "GET",
+            "url": "=https://api.cloudflare.com/client/v4/accounts/{{ $env.CF_ACCOUNT_ID }}/workers/scripts/evez-sentinel-pid335",
+            "sendHeaders": true,
+            "headerParameters": {
+              "parameters": [
+                {
+                  "name": "Authorization",
+                  "value": "=Bearer {{ $env.CF_API_TOKEN }}"
+                }
+              ]
+            },
+            "options": {
+              "timeout": 30000
+            }
+          }
+        },
+        {
+          "id": "W1C3",
+          "name": "\ud83e\ude7a Parse Health",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            840,
+            440
+          ],
+          "parameters": {
+            "jsCode": "\nconst r = $input.first().json;\nreturn [{json:{\n  sentinel_alive: r.success !== false,\n  worker: 'evez-sentinel-pid335',\n  etag: r.etag || 'unknown',\n  checked_at: new Date().toISOString()\n}}];\n"
+          }
+        },
+        {
+          "id": "W1R1",
+          "name": "\u21a9 Deploy ACK",
+          "type": "n8n-nodes-base.respondToWebhook",
+          "typeVersion": 1.1,
+          "position": [
+            1120,
+            220
+          ],
+          "parameters": {
+            "respondWith": "json",
+            "responseBody": "=$json"
+          }
+        }
+      ],
+      "connections": {
+        "\ud83d\udee1 Deploy Trigger": {
+          "main": [
+            [
+              {
+                "node": "\ud83d\udd10 Build Sentinel Script",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "\u23f1 Daily Health Check": {
+          "main": [
+            [
+              {
+                "node": "\ud83e\ude7a Parse Health",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "\ud83d\udd27 Manual Deploy": {
+          "main": [
+            [
+              {
+                "node": "\ud83d\udd10 Build Sentinel Script",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "\ud83d\udd10 Build Sentinel Script": {
+          "main": [
+            [
+              {
+                "node": "\u2601\ufe0f Deploy Worker to CF Edge",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "\u2601\ufe0f Deploy Worker to CF Edge": {
+          "main": [
+            [
+              {
+                "node": "\u2705 Verify Deployment",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "\u2705 Verify Deployment": {
+          "main": [
+            [
+              {
+                "node": "\u21a9 Deploy ACK",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "\ud83e\ude7a Parse Health": {
+          "main": [
+            [
+              {
+                "node": "\u21a9 Deploy ACK",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "settings": {
+        "executionOrder": "v1",
+        "availableInMCP": true
+      },
+      "tags": [
+        {
+          "name": "evez-security"
+        },
+        {
+          "name": "cloudflare"
+        },
+        {
+          "name": "l4-sentinel"
+        }
+      ]
+    },
+    {
+      "name": "EVEZ DNS Orchestrator \u2014 L5 Spine\u2194Edge Bridge [PID335]",
+      "nodes": [
+        {
+          "id": "W2T1",
+          "name": "\ud83c\udf10 DNS Update Webhook",
+          "type": "n8n-nodes-base.webhook",
+          "typeVersion": 2.1,
+          "position": [
+            0,
+            0
+          ],
+          "parameters": {
+            "httpMethod": "POST",
+            "path": "evez-dns-update",
+            "responseMode": "responseNode",
+            "options": {}
+          },
+          "webhookId": "evez-W2T1"
+        },
+        {
+          "id": "W2T2",
+          "name": "\u23f1 IP Drift Monitor (15min)",
+          "type": "n8n-nodes-base.scheduleTrigger",
+          "typeVersion": 1.3,
+          "position": [
+            0,
+            220
+          ],
+          "parameters": {
+            "rule": {
+              "interval": [
+                {
+                  "field": "minutes",
+                  "minutesInterval": 15
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "W2C1",
+          "name": "\ud83d\udd0d Detect Current IP",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            280,
+            110
+          ],
+          "parameters": {
+            "jsCode": "\n// Pull current public IP of this n8n instance\n// In production this would query the Phoenix Oracle node\nconst envIp = $env.PHOENIX_BARE_METAL_IP || '';\nconst zoneId = $env.CF_ZONE_ID || '';\nconst token = $env.CF_API_TOKEN || '';\n\nif (!zoneId || !token) {\n  return [{json:{\n    skip: true,\n    reason: 'CF_ZONE_ID and CF_API_TOKEN env vars not set',\n    required_vars: ['CF_ZONE_ID', 'CF_API_TOKEN', 'CF_ACCOUNT_ID', 'PHOENIX_BARE_METAL_IP', 'EVEZ_SPINE_DOMAIN']\n  }}];\n}\n\nreturn [{json:{\n  skip: false,\n  current_ip: envIp || '0.0.0.0',\n  zone_id: zoneId,\n  token: token,\n  domain: $env.EVEZ_SPINE_DOMAIN || 'evez-spine.example.com',\n  timestamp: new Date().toISOString()\n}}];\n"
+          }
+        },
+        {
+          "id": "W2IF1",
+          "name": "IP Configured?",
+          "type": "n8n-nodes-base.if",
+          "typeVersion": 2.2,
+          "position": [
+            560,
+            110
+          ],
+          "parameters": {
+            "conditions": {
+              "conditions": [
+                {
+                  "leftValue": "={{ $json.skip }}",
+                  "operator": {
+                    "type": "string",
+                    "operation": "equals"
+                  },
+                  "rightValue": "true"
+                }
+              ],
+              "options": {}
+            }
+          }
+        },
+        {
+          "id": "W2H1",
+          "name": "\ud83d\udccb List DNS Records",
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.4,
+          "position": [
+            840,
+            0
+          ],
+          "parameters": {
+            "method": "GET",
+            "url": "=https://api.cloudflare.com/client/v4/zones/{{ $json.zone_id }}/dns_records?type=A&name={{ $json.domain }}",
+            "sendHeaders": true,
+            "headerParameters": {
+              "parameters": [
+                {
+                  "name": "Authorization",
+                  "value": "=Bearer {{ $json.token }}"
+                }
+              ]
+            },
+            "options": {
+              "timeout": 30000
+            }
+          }
+        },
+        {
+          "id": "W2C2",
+          "name": "\ud83d\udd04 Diff IP vs Current",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            1120,
+            0
+          ],
+          "parameters": {
+            "jsCode": "\nconst dns = $input.item.json;\nconst existing = dns.result?.[0];\nconst targetIp = $('\ud83d\udd0d Detect Current IP').first().json.current_ip;\n\nreturn [{json:{\n  record_id: existing?.id || null,\n  existing_ip: existing?.content || null,\n  target_ip: targetIp,\n  domain: $('\ud83d\udd0d Detect Current IP').first().json.domain,\n  zone_id: $('\ud83d\udd0d Detect Current IP').first().json.zone_id,\n  token: $('\ud83d\udd0d Detect Current IP').first().json.token,\n  needs_update: existing?.content !== targetIp,\n  proxied: true,\n  ttl: 1\n}}];\n"
+          }
+        },
+        {
+          "id": "W2IF2",
+          "name": "Needs Update?",
+          "type": "n8n-nodes-base.if",
+          "typeVersion": 2.2,
+          "position": [
+            1400,
+            0
+          ],
+          "parameters": {
+            "conditions": {
+              "conditions": [
+                {
+                  "leftValue": "={{ $json.needs_update }}",
+                  "operator": {
+                    "type": "string",
+                    "operation": "equals"
+                  },
+                  "rightValue": "true"
+                }
+              ],
+              "options": {}
+            }
+          }
+        },
+        {
+          "id": "W2H2",
+          "name": "\u270f\ufe0f Update A Record",
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.4,
+          "position": [
+            1680,
+            0
+          ],
+          "parameters": {
+            "method": "PUT",
+            "url": "=https://api.cloudflare.com/client/v4/zones/{{ $json.zone_id }}/dns_records/{{ $json.record_id }}",
+            "sendHeaders": true,
+            "headerParameters": {
+              "parameters": [
+                {
+                  "name": "Authorization",
+                  "value": "=Bearer {{ $json.token }}"
+                },
+                {
+                  "name": "Content-Type",
+                  "value": "application/json"
+                }
+              ]
+            },
+            "options": {
+              "timeout": 30000
+            },
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\"type\":\"A\",\"name\":\"{{ $json.domain }}\",\"content\":\"{{ $json.target_ip }}\",\"ttl\":1,\"proxied\":true}"
+          }
+        },
+        {
+          "id": "W2H3",
+          "name": "\u2795 Create A Record",
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.4,
+          "position": [
+            1400,
+            220
+          ],
+          "parameters": {
+            "method": "POST",
+            "url": "=https://api.cloudflare.com/client/v4/zones/{{ $json.zone_id }}/dns_records",
+            "sendHeaders": true,
+            "headerParameters": {
+              "parameters": [
+                {
+                  "name": "Authorization",
+                  "value": "=Bearer {{ $json.token }}"
+                },
+                {
+                  "name": "Content-Type",
+                  "value": "application/json"
+                }
+              ]
+            },
+            "options": {
+              "timeout": 30000
+            },
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\"type\":\"A\",\"name\":\"{{ $json.domain }}\",\"content\":\"{{ $json.target_ip }}\",\"ttl\":1,\"proxied\":true}"
+          }
+        },
+        {
+          "id": "W2C3",
+          "name": "\ud83d\udcd2 Log DNS Event",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            1960,
+            110
+          ],
+          "parameters": {
+            "jsCode": "\nconst items = $input.all();\nconst item = items[0]?.json || {};\nlet h = 5381;\nconst s = JSON.stringify(item);\nfor(let i=0;i<s.length;i++){h=((h<<5)+h)+s.charCodeAt(i);h|=0;}\n\nreturn [{json:{\n  event: 'DNS_SYNC',\n  layer: 'L5_ORCHESTRATION',\n  domain: item.name || 'unknown',\n  ip: item.content || 'unknown',\n  proxied: true,\n  cf_masked: true,\n  pid: 335,\n  entry_hash: 'sha_' + Math.abs(h).toString(16).padStart(16,'0'),\n  timestamp: new Date().toISOString()\n}}];\n"
+          }
+        },
+        {
+          "id": "W2S1",
+          "name": "\u23ed No Update Needed",
+          "type": "n8n-nodes-base.set",
+          "typeVersion": 3.4,
+          "position": [
+            1680,
+            220
+          ],
+          "parameters": {
+            "assignments": {
+              "assignments": [
+                {
+                  "id": "0",
+                  "name": "status",
+                  "value": "DNS_IN_SYNC",
+                  "type": "string"
+                },
+                {
+                  "id": "1",
+                  "name": "message",
+                  "value": "IP matches \u2014 no update required",
+                  "type": "string"
+                },
+                {
+                  "id": "2",
+                  "name": "layer",
+                  "value": "L5_ORCHESTRATION",
+                  "type": "string"
+                },
+                {
+                  "id": "3",
+                  "name": "pid",
+                  "value": "335",
+                  "type": "string"
+                }
+              ]
+            },
+            "includeOtherFields": false,
+            "options": {}
+          }
+        },
+        {
+          "id": "W2S2",
+          "name": "\u26a0\ufe0f Config Missing",
+          "type": "n8n-nodes-base.set",
+          "typeVersion": 3.4,
+          "position": [
+            840,
+            220
+          ],
+          "parameters": {
+            "assignments": {
+              "assignments": [
+                {
+                  "id": "0",
+                  "name": "status",
+                  "value": "CONFIG_MISSING",
+                  "type": "string"
+                },
+                {
+                  "id": "1",
+                  "name": "message",
+                  "value": "Set CF_ZONE_ID, CF_API_TOKEN, PHOENIX_BARE_METAL_IP in n8n env vars",
+                  "type": "string"
+                },
+                {
+                  "id": "2",
+                  "name": "layer",
+                  "value": "L5_ORCHESTRATION",
+                  "type": "string"
+                }
+              ]
+            },
+            "includeOtherFields": false,
+            "options": {}
+          }
+        },
+        {
+          "id": "W2R1",
+          "name": "\u21a9 DNS ACK",
+          "type": "n8n-nodes-base.respondToWebhook",
+          "typeVersion": 1.1,
+          "position": [
+            2240,
+            110
+          ],
+          "parameters": {
+            "respondWith": "json",
+            "responseBody": "=$json"
+          }
+        }
+      ],
+      "connections": {
+        "\ud83c\udf10 DNS Update Webhook": {
+          "main": [
+            [
+              {
+                "node": "\ud83d\udd0d Detect Current IP",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "\u23f1 IP Drift Monitor (15min)": {
+          "main": [
+            [
+              {
+                "node": "\ud83d\udd0d Detect Current IP",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "\ud83d\udd0d Detect Current IP": {
+          "main": [
+            [
+              {
+                "node": "IP Configured?",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "IP Configured?": {
+          "main": [
+            [
+              {
+                "node": "\u26a0\ufe0f Config Missing",
+                "type": "main",
+                "index": 0
+              }
+            ],
+            [
+              {
+                "node": "\ud83d\udccb List DNS Records",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "\ud83d\udccb List DNS Records": {
+          "main": [
+            [
+              {
+                "node": "\ud83d\udd04 Diff IP vs Current",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "\ud83d\udd04 Diff IP vs Current": {
+          "main": [
+            [
+              {
+                "node": "Needs Update?",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Needs Update?": {
+          "main": [
+            [
+              {
+                "node": "\u23ed No Update Needed",
+                "type": "main",
+                "index": 0
+              }
+            ],
+            [
+              {
+                "node": "\u270f\ufe0f Update A Record",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "\u270f\ufe0f Update A Record": {
+          "main": [
+            [
+              {
+                "node": "\ud83d\udcd2 Log DNS Event",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "\u2795 Create A Record": {
+          "main": [
+            [
+              {
+                "node": "\ud83d\udcd2 Log DNS Event",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "\ud83d\udcd2 Log DNS Event": {
+          "main": [
+            [
+              {
+                "node": "\u21a9 DNS ACK",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "\u23ed No Update Needed": {
+          "main": [
+            [
+              {
+                "node": "\u21a9 DNS ACK",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "\u26a0\ufe0f Config Missing": {
+          "main": [
+            [
+              {
+                "node": "\u21a9 DNS ACK",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "settings": {
+        "executionOrder": "v1",
+        "availableInMCP": true
+      },
+      "tags": [
+        {
+          "name": "evez-security"
+        },
+        {
+          "name": "cloudflare"
+        },
+        {
+          "name": "l5-orchestration"
+        }
+      ]
+    },
+    {
+      "name": "EVEZ666 Self-Healing Watchdog [L0\u2192L5 Monitor]",
+      "nodes": [
+        {
+          "id": "W3T1",
+          "name": "\u23f1 Watchdog 5min",
+          "type": "n8n-nodes-base.scheduleTrigger",
+          "typeVersion": 1.3,
+          "position": [
+            0,
+            0
+          ],
+          "parameters": {
+            "rule": {
+              "interval": [
+                {
+                  "field": "minutes",
+                  "minutesInterval": 5
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "W3T2",
+          "name": "\ud83d\udea8 Incident Webhook",
+          "type": "n8n-nodes-base.webhook",
+          "typeVersion": 2.1,
+          "position": [
+            0,
+            220
+          ],
+          "parameters": {
+            "httpMethod": "POST",
+            "path": "evez-incident",
+            "responseMode": "responseNode",
+            "options": {}
+          },
+          "webhookId": "evez-W3T2"
+        },
+        {
+          "id": "W3C1",
+          "name": "\ud83d\udd2c Check All Systems",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            280,
+            110
+          ],
+          "parameters": {
+            "jsCode": "\nconst systems = [\n  { name: 'CF_SENTINEL', env_var: 'CF_ACCOUNT_ID', required: true },\n  { name: 'CF_DNS',      env_var: 'CF_ZONE_ID',    required: true },\n  { name: 'PHOENIX_IP',  env_var: 'PHOENIX_BARE_METAL_IP', required: false },\n  { name: 'OPENAI',      env_var: 'OPENAI_API_KEY', required: true },\n  { name: 'SUPABASE',    env_var: 'SUPABASE_URL',   required: false },\n];\n\nconst results = systems.map(s => ({\n  system: s.name,\n  configured: !!($env[s.env_var] || ''),\n  required: s.required,\n  status: ($env[s.env_var] || '') ? 'GREEN' : (s.required ? 'RED' : 'YELLOW')\n}));\n\nconst reds = results.filter(r => r.status === 'RED');\nconst overall = reds.length === 0 ? 'GREEN' : reds.length <= 2 ? 'YELLOW' : 'RED';\n\n// Hash chain\nlet h = 5381;\nconst s = JSON.stringify({results, ts: new Date().toISOString()});\nfor(let i=0;i<s.length;i++){h=((h<<5)+h)+s.charCodeAt(i);h|=0;}\n\nreturn [{json:{\n  overall_health: overall,\n  systems: results,\n  unresolved_blockers: reds.map(r => r.system),\n  pid: 335,\n  timestamp: new Date().toISOString(),\n  entry_hash: 'sha_' + Math.abs(h).toString(16).padStart(16,'0'),\n  remediation: reds.length > 0 ? `Set env vars: ${reds.map(r=>r.system).join(', ')} in n8n Settings \u2192 Environment Variables` : 'All systems nominal'\n}}];\n"
+          }
+        },
+        {
+          "id": "W3IF1",
+          "name": "System RED?",
+          "type": "n8n-nodes-base.if",
+          "typeVersion": 2.2,
+          "position": [
+            560,
+            110
+          ],
+          "parameters": {
+            "conditions": {
+              "conditions": [
+                {
+                  "leftValue": "={{ $json.overall_health }}",
+                  "operator": {
+                    "type": "string",
+                    "operation": "equals"
+                  },
+                  "rightValue": "RED"
+                }
+              ],
+              "options": {}
+            }
+          }
+        },
+        {
+          "id": "W3C2",
+          "name": "\ud83e\ude79 Self-Heal: Notify + Log",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            840,
+            0
+          ],
+          "parameters": {
+            "jsCode": "\nconst health = $input.first().json;\n// Log to ledger\ntry {\n  await $fetch('https://evezos.app.n8n.cloud/webhook/evez-ledger', {\n    method: 'POST',\n    body: { event_type: 'WATCHDOG_ALERT', payload: health }\n  });\n} catch(e) {}\n\nreturn [{json:{\n  action: 'ALERT_LOGGED',\n  severity: health.overall_health,\n  blockers: health.unresolved_blockers,\n  remediation: health.remediation,\n  timestamp: health.timestamp\n}}];\n"
+          }
+        },
+        {
+          "id": "W3C3",
+          "name": "\u2705 All Green \u2014 Log Heartbeat",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            840,
+            220
+          ],
+          "parameters": {
+            "jsCode": "\nconst health = $input.first().json;\ntry {\n  await $fetch('https://evezos.app.n8n.cloud/webhook/evez-ledger', {\n    method: 'POST',\n    body: { event_type: 'WATCHDOG_HEARTBEAT', payload: health }\n  });\n} catch(e) {}\n\nreturn [{json:{\n  action: 'HEARTBEAT',\n  health: health.overall_health,\n  pid: 335,\n  timestamp: health.timestamp\n}}];\n"
+          }
+        },
+        {
+          "id": "W3C4",
+          "name": "\ud83d\udce5 Parse Incident",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            280,
+            330
+          ],
+          "parameters": {
+            "jsCode": "\nconst body = $input.first().json.body || $input.first().json;\nconst incident = {\n  type: body.incident_type || 'UNKNOWN',\n  source: body.source || 'external',\n  detail: body.detail || body,\n  pid: 335,\n  timestamp: new Date().toISOString()\n};\nreturn [{json: incident}];\n"
+          }
+        },
+        {
+          "id": "W3H1",
+          "name": "\ud83d\udd01 Trigger Sentinel Redeploy",
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.4,
+          "position": [
+            560,
+            330
+          ],
+          "parameters": {
+            "method": "POST",
+            "url": "=https://evezos.app.n8n.cloud/webhook/evez-sentinel-deploy",
+            "sendHeaders": true,
+            "headerParameters": {
+              "parameters": [
+                {
+                  "name": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "name": "X-EVEZ-PID-AUTH",
+                  "value": "=05a7ef57d7c1699c3038363f2bbaa5ecc774ad7ce277e5ee923ec819e97d005f"
+                }
+              ]
+            },
+            "options": {
+              "timeout": 30000
+            },
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "{\"trigger\":\"watchdog\",\"reason\":\"incident_response\",\"pid\":335}"
+          }
+        },
+        {
+          "id": "W3R1",
+          "name": "\u21a9 Watchdog ACK",
+          "type": "n8n-nodes-base.respondToWebhook",
+          "typeVersion": 1.1,
+          "position": [
+            1120,
+            220
+          ],
+          "parameters": {
+            "respondWith": "json",
+            "responseBody": "=$json"
+          }
+        }
+      ],
+      "connections": {
+        "\u23f1 Watchdog 5min": {
+          "main": [
+            [
+              {
+                "node": "\ud83d\udd2c Check All Systems",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "\ud83d\udea8 Incident Webhook": {
+          "main": [
+            [
+              {
+                "node": "\ud83d\udce5 Parse Incident",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "\ud83d\udd2c Check All Systems": {
+          "main": [
+            [
+              {
+                "node": "System RED?",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "System RED?": {
+          "main": [
+            [
+              {
+                "node": "\u2705 All Green \u2014 Log Heartbeat",
+                "type": "main",
+                "index": 0
+              }
+            ],
+            [
+              {
+                "node": "\ud83e\ude79 Self-Heal: Notify + Log",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "\ud83e\ude79 Self-Heal: Notify + Log": {
+          "main": [
+            [
+              {
+                "node": "\u21a9 Watchdog ACK",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "\u2705 All Green \u2014 Log Heartbeat": {
+          "main": [
+            [
+              {
+                "node": "\u21a9 Watchdog ACK",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "\ud83d\udce5 Parse Incident": {
+          "main": [
+            [
+              {
+                "node": "\ud83d\udd01 Trigger Sentinel Redeploy",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "\ud83d\udd01 Trigger Sentinel Redeploy": {
+          "main": [
+            [
+              {
+                "node": "\u21a9 Watchdog ACK",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "settings": {
+        "executionOrder": "v1",
+        "availableInMCP": true
+      },
+      "tags": [
+        {
+          "name": "evez-security"
+        },
+        {
+          "name": "watchdog"
+        },
+        {
+          "name": "self-healing"
+        }
+      ]
+    }
+  ]
+}

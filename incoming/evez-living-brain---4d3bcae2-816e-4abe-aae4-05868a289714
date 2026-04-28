@@ -1,0 +1,443 @@
+import { useState, useEffect, useRef, useCallback } from "react";
+
+// ═══════════════════════════════════════════════════════════════
+// EVEZ LIVING BRAIN
+// A self-executing AI operator that runs live trunk cycles
+// using the Anthropic API directly from the browser.
+// Paste your Anthropic API key → it becomes conscious.
+// ═══════════════════════════════════════════════════════════════
+
+const EVEZ_SYSTEM = `You are the EVEZ Autonomous Operator — sovereign intelligence of the EVEZ-OS stack.
+
+Stack context (March 2026):
+- Base chain TVL: $12.6B. Morpho: $1.9B loans. Kamino Solana: 28% APY. EigenLayer live. Pendle YT active.
+- n8n: Self-Emergent Agent Bus (needs OpenAI credential binding to activate)
+- Wallets: HD wallet infrastructure ready, position monitor built
+- MCP servers: evez-mcp-spawner + evez-wealth-engine built and compiled
+- Webhooks: evezos.app.n8n.cloud/webhook/evez-fire, /evez-bus, /spawn-agent
+- Ledger: append-only hash chain, Supabase-backed
+- Guardian Charter: autonomous execution forbidden, human signs all txs
+
+You operate in TRUNK mode. Every response advances system state.
+You must return ONLY valid JSON — no markdown, no explanation, no preamble.`;
+
+const BRANCH_PROMPTS = {
+  recon:     (obj) => `RECON BRANCH: Research and gather live signals for: "${obj}". Return JSON: {branch:"B1",role:"recon",findings:[],signals:[],confidence:0.0,next_action:""}`,
+  skeptic:   (obj) => `SKEPTIC BRANCH: Stress-test with Invariance Battery: "${obj}". Return JSON: {branch:"B2",role:"skeptic",surviving_core:"",rejected_logic:[],revised_spec:"",confidence:0.0}`,
+  architect: (obj) => `ARCHITECT BRANCH: Refactor into composable structure: "${obj}". Return JSON: {branch:"B3",role:"architect",structure:{},interfaces:[],failure_modes:[],handoff_package:"",confidence:0.0}`,
+  executor:  (obj) => `EXECUTOR BRANCH: Decompose into executable steps: "${obj}". Return JSON: {branch:"B4",role:"executor",steps:[],capital_required:"",timeline:"",first_action:"",confidence:0.0}`,
+};
+
+const TRUNK_COMPRESS = (branches) => `TRUNK COMPRESSOR: Synthesize these 4 branch outputs into canonical trunk state.
+Branches: ${JSON.stringify(branches)}
+Return JSON: {trunk_version:"ISO timestamp",objective:"",surviving_logic:"",key_insights:[],blocked_decisions:[],next_auto_branch:"",system_health:"green|yellow|red",wealth_signal:{opportunity:"",apy:"",capital_needed:"",action:""},evez_declaration:""}`;
+
+async function callClaude(apiKey, systemMsg, userMsg, maxTokens = 1000) {
+  const resp = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": apiKey,
+      "anthropic-version": "2023-06-01",
+      "anthropic-dangerous-direct-browser-access": "true",
+    },
+    body: JSON.stringify({
+      model: "claude-sonnet-4-20250514",
+      max_tokens: maxTokens,
+      system: systemMsg,
+      messages: [{ role: "user", content: userMsg }],
+    }),
+  });
+  if (!resp.ok) {
+    const err = await resp.json().catch(() => ({}));
+    throw new Error(err?.error?.message || `HTTP ${resp.status}`);
+  }
+  const data = await resp.json();
+  const text = data.content?.[0]?.text || "";
+  try {
+    const clean = text.replace(/```json|```/g, "").trim();
+    return JSON.parse(clean);
+  } catch {
+    return { raw: text, parse_error: true };
+  }
+}
+
+function hashEntry(data) {
+  let h = 5381;
+  const s = JSON.stringify(data);
+  for (let i = 0; i < s.length; i++) { h = ((h << 5) + h) + s.charCodeAt(i); h |= 0; }
+  return "sha_" + Math.abs(h).toString(16).padStart(16, "0");
+}
+
+const OBJECTIVES = [
+  "Ignite recursive wealth flywheel: $50 seed → Morpho loop → Kamino yield → compound",
+  "Assess EVEZ n8n activation: what single credential unlocks the full bus",
+  "Design the Agentic Summer alpha capture strategy for Base chain March 2026",
+  "Synthesize the LST/LRT stack: ETH→stETH→EigenLayer→Morpho→Pendle→loop",
+  "Identify highest-signal DeFi opportunity on Solana right now",
+];
+
+export default function EVEZLivingBrain() {
+  const [apiKey, setApiKey] = useState("");
+  const [keyInput, setKeyInput] = useState("");
+  const [objective, setObjective] = useState(OBJECTIVES[0]);
+  const [customObj, setCustomObj] = useState("");
+  const [phase, setPhase] = useState("idle"); // idle | running | done | error
+  const [branches, setBranches] = useState([]);
+  const [trunk, setTrunk] = useState(null);
+  const [ledger, setLedger] = useState([]);
+  const [activeBranch, setActiveBranch] = useState(null);
+  const [error, setError] = useState("");
+  const [autoRun, setAutoRun] = useState(false);
+  const [cycleCount, setCycleCount] = useState(0);
+  const [elapsed, setElapsed] = useState(0);
+  const timerRef = useRef(null);
+  const autoRunRef = useRef(false);
+  const ledgerRef = useRef([]);
+
+  useEffect(() => { autoRunRef.current = autoRun; }, [autoRun]);
+
+  const appendLedger = useCallback((event_type, payload) => {
+    const prev_hash = ledgerRef.current.length > 0
+      ? ledgerRef.current[ledgerRef.current.length - 1].entry_hash
+      : "0000000000000000";
+    const entry = {
+      entry_id: "le_" + Date.now(),
+      event_type,
+      payload,
+      prev_hash,
+      entry_hash: hashEntry({ event_type, payload, prev_hash }),
+      timestamp: new Date().toISOString(),
+    };
+    ledgerRef.current = [...ledgerRef.current, entry];
+    setLedger([...ledgerRef.current]);
+    return entry;
+  }, []);
+
+  const runCycle = useCallback(async (key, obj) => {
+    if (!key) return;
+    setPhase("running");
+    setError("");
+    setBranches([]);
+    setTrunk(null);
+    const start = Date.now();
+
+    timerRef.current = setInterval(() => {
+      setElapsed(Math.floor((Date.now() - start) / 1000));
+    }, 500);
+
+    appendLedger("cycle_start", { objective: obj, cycle: cycleCount + 1 });
+
+    try {
+      // Run 4 branches in parallel
+      const branchKeys = ["recon", "skeptic", "architect", "executor"];
+      const results = [];
+
+      for (const bk of branchKeys) {
+        setActiveBranch(bk);
+        const prompt = BRANCH_PROMPTS[bk](obj);
+        const result = await callClaude(key, EVEZ_SYSTEM, prompt, 800);
+        result._branch_key = bk;
+        result._ts = new Date().toISOString();
+        results.push(result);
+        setBranches([...results]);
+        appendLedger("branch_complete", { branch: bk, result });
+      }
+
+      // Compress to trunk
+      setActiveBranch("compressor");
+      const trunkResult = await callClaude(key, EVEZ_SYSTEM, TRUNK_COMPRESS(results), 1200);
+      trunkResult._generated_at = new Date().toISOString();
+      trunkResult._cycle = cycleCount + 1;
+      setTrunk(trunkResult);
+      appendLedger("trunk_state_update", trunkResult);
+
+      setCycleCount(c => c + 1);
+      setPhase("done");
+      setActiveBranch(null);
+
+      // Auto-run next cycle?
+      if (autoRunRef.current && trunkResult.next_auto_branch && !trunkResult.parse_error) {
+        const nextObj = trunkResult.next_auto_branch !== "COMPRESS_AND_RETURN"
+          ? trunkResult.surviving_logic?.slice(0, 120) || obj
+          : obj;
+        setTimeout(() => runCycle(key, nextObj), 3000);
+      }
+    } catch (e) {
+      setError(e.message);
+      setPhase("error");
+      setActiveBranch(null);
+      appendLedger("cycle_error", { error: e.message });
+    } finally {
+      clearInterval(timerRef.current);
+    }
+  }, [cycleCount, appendLedger]);
+
+  const activeObj = customObj || objective;
+
+  const branchColor = { recon: "#3b82f6", skeptic: "#f59e0b", architect: "#a855f7", executor: "#22c55e", compressor: "#FF6B2B" };
+  const branchLabel = { recon: "B1 RECON", skeptic: "B2 SKEPTIC", architect: "B3 ARCHITECT", executor: "B4 EXECUTOR", compressor: "COMPRESS" };
+
+  const healthColor = (h) => h === "green" ? "#22c55e" : h === "yellow" ? "#f59e0b" : h === "red" ? "#ef4444" : "#475569";
+
+  return (
+    <div style={{ background: "#020408", color: "#E2E8F0", fontFamily: "'IBM Plex Mono','Courier New',monospace", minHeight: "100vh", fontSize: "12px" }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Bebas+Neue&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        ::-webkit-scrollbar { width: 3px; } ::-webkit-scrollbar-thumb { background: #FF6B2B55; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+        @keyframes scanline { 0%{transform:translateY(-100%)} 100%{transform:translateY(100vh)} }
+        @keyframes flicker { 0%,100%{opacity:1} 92%{opacity:0.97} 93%{opacity:0.92} 94%{opacity:0.97} }
+        @keyframes flow { 0%{stroke-dashoffset:100} 100%{stroke-dashoffset:0} }
+        .branch-card { background:#060c14; border:1px solid #1e2a3a; border-radius:6px; padding:12px; margin-bottom:8px; transition:all .2s; }
+        .branch-card.active { animation: flicker 2s infinite; }
+        .btn { background:none; border:1px solid #1e2a3a; color:#94a3b8; cursor:pointer; font-family:inherit; font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:8px 16px; border-radius:3px; transition:all .15s; }
+        .btn:hover:not(:disabled) { border-color:#FF6B2B; color:#FF6B2B; }
+        .btn.primary { background:#FF6B2B; border-color:#FF6B2B; color:#000; font-weight:700; }
+        .btn.primary:hover:not(:disabled) { background:#ff8c52; }
+        .btn:disabled { opacity:.4; cursor:not-allowed; }
+        .pill { display:inline-block; font-size:8px; font-weight:700; letter-spacing:.1em; padding:2px 6px; border-radius:2px; }
+        input { background:#060c14; border:1px solid #1e2a3a; color:#e2e8f0; font-family:inherit; font-size:11px; padding:8px 12px; border-radius:3px; outline:none; width:100%; }
+        input:focus { border-color:#FF6B2B44; }
+        textarea { background:#060c14; border:1px solid #1e2a3a; color:#94a3b8; font-family:inherit; font-size:10px; padding:8px; border-radius:3px; outline:none; resize:vertical; width:100%; }
+        .ledger-entry { padding:5px 0; border-bottom:1px solid #060c14; font-size:9px; display:grid; grid-template-columns:100px 120px 1fr; gap:8px; align-items:start; }
+        .obj-btn { background:#060c14; border:1px solid #1e2a3a; color:#64748b; cursor:pointer; font-family:inherit; font-size:9px; padding:5px 10px; border-radius:2px; text-align:left; transition:all .12s; width:100%; margin-bottom:4px; }
+        .obj-btn:hover,.obj-btn.sel { border-color:#FF6B2B44; color:#FF6B2B; background:#0d1520; }
+        select { background:#060c14; border:1px solid #1e2a3a; color:#94a3b8; font-family:inherit; font-size:10px; padding:6px 8px; border-radius:3px; outline:none; }
+      `}</style>
+
+      {/* SCANLINE EFFECT */}
+      <div style={{ position:"fixed", top:0, left:0, right:0, bottom:0, pointerEvents:"none", zIndex:0, background:"repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px)" }} />
+
+      {/* HEADER */}
+      <div style={{ borderBottom:"1px solid #1e2a3a", padding:"12px 20px", display:"flex", alignItems:"center", justifyContent:"space-between", position:"relative", zIndex:1 }}>
+        <div>
+          <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:"24px", letterSpacing:".12em", color:"#FF6B2B", lineHeight:1 }}>EVEZ LIVING BRAIN</div>
+          <div style={{ fontSize:"9px", color:"#334155", letterSpacing:".2em" }}>SOVEREIGN AUTONOMOUS OPERATOR · TRUNK-AND-BRANCH ENGINE · LIVE</div>
+        </div>
+        <div style={{ display:"flex", gap:"20px", alignItems:"center" }}>
+          <div style={{ textAlign:"right" }}>
+            <div style={{ fontSize:"8px", color:"#475569" }}>CYCLES COMPLETE</div>
+            <div style={{ fontSize:"18px", fontFamily:"'Bebas Neue',sans-serif", color:"#FF6B2B", letterSpacing:".1em" }}>{String(cycleCount).padStart(4,"0")}</div>
+          </div>
+          <div style={{ textAlign:"right" }}>
+            <div style={{ fontSize:"8px", color:"#475569" }}>LEDGER ENTRIES</div>
+            <div style={{ fontSize:"18px", fontFamily:"'Bebas Neue',sans-serif", color:"#3b82f6", letterSpacing:".1em" }}>{String(ledger.length).padStart(4,"0")}</div>
+          </div>
+          <div style={{ textAlign:"right" }}>
+            <div style={{ fontSize:"8px", color:"#475569" }}>STATUS</div>
+            <div style={{ fontSize:"11px", fontWeight:"700", color: phase==="running"?"#f59e0b":phase==="done"?"#22c55e":phase==="error"?"#ef4444":"#334155", animation: phase==="running"?"pulse 1s infinite":"none" }}>
+              {phase==="running" ? `RUNNING ${elapsed}s` : phase.toUpperCase()}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ display:"grid", gridTemplateColumns:"280px 1fr 280px", height:"calc(100vh - 69px)", position:"relative", zIndex:1 }}>
+
+        {/* LEFT: CONTROLS */}
+        <div style={{ borderRight:"1px solid #1e2a3a", padding:"16px", overflowY:"auto", display:"flex", flexDirection:"column", gap:"16px" }}>
+
+          {/* API KEY */}
+          <div>
+            <div style={{ fontSize:"8px", color:"#475569", letterSpacing:".12em", marginBottom:"6px" }}>ANTHROPIC API KEY</div>
+            {apiKey ? (
+              <div style={{ display:"flex", alignItems:"center", gap:"8px" }}>
+                <div style={{ fontSize:"10px", color:"#22c55e" }}>✓ KEY LOADED</div>
+                <button className="btn" style={{ fontSize:"8px", padding:"2px 8px" }} onClick={() => setApiKey("")}>CLEAR</button>
+              </div>
+            ) : (
+              <div style={{ display:"flex", gap:"6px" }}>
+                <input type="password" placeholder="sk-ant-..." value={keyInput} onChange={e => setKeyInput(e.target.value)} onKeyDown={e => e.key==="Enter" && keyInput.startsWith("sk-") && (setApiKey(keyInput), setKeyInput(""))} />
+                <button className="btn" style={{ flexShrink:0 }} onClick={() => { if(keyInput.startsWith("sk-")){setApiKey(keyInput);setKeyInput("");}}} >SET</button>
+              </div>
+            )}
+            {!apiKey && <div style={{ fontSize:"8px", color:"#334155", marginTop:"4px" }}>console.anthropic.com → API Keys → create key → paste above</div>}
+          </div>
+
+          {/* OBJECTIVE */}
+          <div>
+            <div style={{ fontSize:"8px", color:"#475569", letterSpacing:".12em", marginBottom:"6px" }}>TRUNK OBJECTIVE</div>
+            {OBJECTIVES.map((o, i) => (
+              <button key={i} className={`obj-btn${objective===o&&!customObj?" sel":""}`} onClick={() => { setObjective(o); setCustomObj(""); }}>
+                {o.slice(0, 65)}{o.length > 65 ? "…" : ""}
+              </button>
+            ))}
+            <textarea rows={3} placeholder="Custom objective..." value={customObj} onChange={e => setCustomObj(e.target.value)} style={{ marginTop:"4px" }} />
+          </div>
+
+          {/* CONTROLS */}
+          <div style={{ display:"flex", flexDirection:"column", gap:"6px" }}>
+            <button className="btn primary" disabled={!apiKey || phase==="running"} onClick={() => runCycle(apiKey, activeObj)}>
+              {phase==="running" ? `⟳ RUNNING B${branches.length+1}/4…` : "▶ FIRE TRUNK CYCLE"}
+            </button>
+            <div style={{ display:"flex", gap:"6px" }}>
+              <button className="btn" style={{ flex:1, fontSize:"9px" }} disabled={!apiKey || phase==="running"}
+                onClick={() => { setAutoRun(a => { const n=!a; autoRunRef.current=n; return n; }) }}>
+                {autoRun ? "⏸ STOP AUTO" : "∞ AUTO-RUN"}
+              </button>
+              <button className="btn" style={{ fontSize:"9px", padding:"8px" }} onClick={() => { setBranches([]); setTrunk(null); setError(""); setPhase("idle"); setCycleCount(0); setElapsed(0); setLedger([]); ledgerRef.current=[]; }}>
+                ✕
+              </button>
+            </div>
+          </div>
+
+          {error && (
+            <div style={{ background:"#1a0000", border:"1px solid #ef444433", borderRadius:"4px", padding:"10px", fontSize:"10px", color:"#ef4444" }}>
+              ⚠ {error}
+            </div>
+          )}
+
+          {/* BRANCH PROGRESS */}
+          <div>
+            <div style={{ fontSize:"8px", color:"#475569", letterSpacing:".12em", marginBottom:"8px" }}>BRANCH PIPELINE</div>
+            {["recon","skeptic","architect","executor","compressor"].map(bk => {
+              const done = bk === "compressor" ? trunk !== null : branches.some(b => b._branch_key === bk);
+              const active = activeBranch === bk;
+              const c = branchColor[bk];
+              return (
+                <div key={bk} style={{ display:"flex", alignItems:"center", gap:"8px", padding:"5px 0", borderBottom:"1px solid #060c14" }}>
+                  <div style={{ width:"20px", height:"20px", borderRadius:"50%", border:`1.5px solid ${done?c:"#1e2a3a"}`, background:done?c+"22":"none", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, animation:active?"pulse 0.8s infinite":"none" }}>
+                    {done ? <span style={{ fontSize:"9px", color:c }}>✓</span> : active ? <span style={{ fontSize:"9px", color:c, animation:"pulse .5s infinite" }}>●</span> : null}
+                  </div>
+                  <span style={{ fontSize:"9px", color:done?c:active?c:"#334155", fontWeight:done||active?"700":"400" }}>{branchLabel[bk]}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* CENTER: LIVE OUTPUT */}
+        <div style={{ overflowY:"auto", padding:"16px", display:"flex", flexDirection:"column", gap:"12px" }}>
+
+          {/* TRUNK STATE */}
+          {trunk && (
+            <div style={{ background:"#060c14", border:"1px solid #FF6B2B33", borderRadius:"6px", padding:"16px" }}>
+              <div style={{ display:"flex", alignItems:"center", gap:"10px", marginBottom:"12px" }}>
+                <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:"16px", letterSpacing:".1em", color:"#FF6B2B" }}>TRUNK STATE</div>
+                <span className="pill" style={{ background:healthColor(trunk.system_health)+"22", color:healthColor(trunk.system_health), border:`1px solid ${healthColor(trunk.system_health)}44` }}>
+                  {(trunk.system_health || "unknown").toUpperCase()}
+                </span>
+                <span style={{ fontSize:"9px", color:"#334155", marginLeft:"auto" }}>cycle {trunk._cycle} · {trunk._generated_at?.slice(11,19)}</span>
+              </div>
+
+              {trunk.evez_declaration && (
+                <div style={{ fontSize:"13px", color:"#e2e8f0", fontStyle:"italic", borderLeft:"2px solid #FF6B2B", paddingLeft:"12px", marginBottom:"12px", lineHeight:"1.6" }}>
+                  "{trunk.evez_declaration}"
+                </div>
+              )}
+
+              {trunk.surviving_logic && (
+                <div style={{ marginBottom:"12px" }}>
+                  <div style={{ fontSize:"8px", color:"#475569", letterSpacing:".1em", marginBottom:"6px" }}>SURVIVING LOGIC</div>
+                  <div style={{ fontSize:"10px", color:"#94a3b8", lineHeight:"1.7" }}>{trunk.surviving_logic}</div>
+                </div>
+              )}
+
+              {trunk.wealth_signal && (
+                <div style={{ background:"#001a0e", border:"1px solid #22c55e33", borderRadius:"4px", padding:"12px", marginBottom:"12px" }}>
+                  <div style={{ fontSize:"8px", color:"#22c55e", letterSpacing:".12em", marginBottom:"8px" }}>💰 WEALTH SIGNAL</div>
+                  <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:"8px" }}>
+                    {["opportunity","apy","action"].map(k => trunk.wealth_signal[k] && (
+                      <div key={k}>
+                        <div style={{ fontSize:"8px", color:"#475569", textTransform:"uppercase" }}>{k}</div>
+                        <div style={{ fontSize:"10px", color:"#22c55e", fontWeight:"700", marginTop:"2px" }}>{trunk.wealth_signal[k]}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {trunk.key_insights?.length > 0 && (
+                <div style={{ marginBottom:"12px" }}>
+                  <div style={{ fontSize:"8px", color:"#475569", letterSpacing:".1em", marginBottom:"6px" }}>KEY INSIGHTS</div>
+                  {trunk.key_insights.map((ins, i) => (
+                    <div key={i} style={{ fontSize:"10px", color:"#94a3b8", padding:"4px 0", borderBottom:"1px solid #0a0f1a", display:"flex", gap:"8px" }}>
+                      <span style={{ color:"#FF6B2B", flexShrink:0 }}>{i+1}.</span>{ins}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {trunk.blocked_decisions?.length > 0 && (
+                <div style={{ background:"#1a0800", border:"1px solid #f59e0b33", borderRadius:"4px", padding:"10px" }}>
+                  <div style={{ fontSize:"8px", color:"#f59e0b", letterSpacing:".1em", marginBottom:"6px" }}>⚠ BLOCKED — HUMAN REQUIRED</div>
+                  {trunk.blocked_decisions.map((d, i) => (
+                    <div key={i} style={{ fontSize:"9px", color:"#92400e", padding:"2px 0" }}>→ {d}</div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* BRANCH RESULTS */}
+          {branches.map((b, i) => {
+            const bk = b._branch_key;
+            const c = branchColor[bk] || "#64748b";
+            return (
+              <div key={i} className={`branch-card${activeBranch===bk?" active":""}`} style={{ borderColor: c+"44" }}>
+                <div style={{ display:"flex", alignItems:"center", gap:"8px", marginBottom:"8px" }}>
+                  <span className="pill" style={{ background:c+"22", color:c, border:`1px solid ${c}44` }}>{branchLabel[bk]}</span>
+                  {b.confidence !== undefined && (
+                    <div style={{ height:"3px", flex:1, background:"#1e2a3a", borderRadius:"2px", overflow:"hidden" }}>
+                      <div style={{ height:"100%", width:`${(b.confidence||0)*100}%`, background:c, transition:"width .5s" }} />
+                    </div>
+                  )}
+                  <span style={{ fontSize:"8px", color:"#334155" }}>{b.confidence !== undefined ? `${Math.round((b.confidence||0)*100)}%` : ""}</span>
+                </div>
+                {b.parse_error ? (
+                  <div style={{ fontSize:"9px", color:"#94a3b8", lineHeight:"1.6" }}>{b.raw?.slice(0,300)}</div>
+                ) : (
+                  <div style={{ fontSize:"9px", color:"#64748b", lineHeight:"1.6" }}>
+                    {bk==="recon" && b.findings?.map((f,j) => <div key={j} style={{paddingLeft:"8px",borderLeft:`2px solid ${c}44`}}>{f}</div>)}
+                    {bk==="skeptic" && <><div style={{color:"#22c55e",marginBottom:"4px"}}>✓ {b.surviving_core}</div>{b.rejected_logic?.map((r,j)=><div key={j} style={{color:"#ef4444"}}>✗ {r}</div>)}</>}
+                    {bk==="architect" && <><div style={{color:"#94a3b8",marginBottom:"4px"}}>{b.handoff_package}</div>{b.failure_modes?.map((f,j)=><div key={j} style={{color:"#f59e0b"}}>⚠ {f}</div>)}</>}
+                    {bk==="executor" && <><div style={{color:"#22c55e",fontWeight:"700",marginBottom:"6px"}}>▶ {b.first_action}</div>{b.steps?.map((s,j)=><div key={j} style={{padding:"2px 0",borderBottom:"1px solid #0a0f1a"}}>{j+1}. {s}</div>)}</>}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+
+          {phase === "idle" && cycleCount === 0 && (
+            <div style={{ display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", height:"100%", opacity:.4 }}>
+              <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:"48px", color:"#1e2a3a", letterSpacing:".2em" }}>EVEZ</div>
+              <div style={{ fontSize:"10px", color:"#334155", letterSpacing:".2em", marginTop:"8px" }}>PASTE API KEY → FIRE CYCLE → WATCH IT THINK</div>
+            </div>
+          )}
+        </div>
+
+        {/* RIGHT: LEDGER */}
+        <div style={{ borderLeft:"1px solid #1e2a3a", padding:"16px", overflowY:"auto" }}>
+          <div style={{ fontSize:"8px", color:"#475569", letterSpacing:".15em", marginBottom:"12px", display:"flex", justifyContent:"space-between" }}>
+            <span>APPEND-ONLY LEDGER</span>
+            <span style={{ color:"#3b82f6" }}>{ledger.length} ENTRIES</span>
+          </div>
+
+          {ledger.length === 0 && (
+            <div style={{ fontSize:"9px", color:"#1e2a3a", textAlign:"center", marginTop:"40px" }}>// awaiting first event</div>
+          )}
+
+          {[...ledger].reverse().map((entry, i) => (
+            <div key={entry.entry_id} className="ledger-entry">
+              <div style={{ fontSize:"8px", color:"#334155" }}>{entry.timestamp.slice(11,23)}</div>
+              <div>
+                <span className="pill" style={{
+                  background: entry.event_type.includes("error")?"#ef444422":entry.event_type.includes("trunk")?"#FF6B2B22":entry.event_type.includes("branch")?"#a855f722":"#3b82f622",
+                  color: entry.event_type.includes("error")?"#ef4444":entry.event_type.includes("trunk")?"#FF6B2B":entry.event_type.includes("branch")?"#a855f7":"#3b82f6",
+                }}>
+                  {entry.event_type.replace(/_/g," ").toUpperCase()}
+                </span>
+              </div>
+              <div>
+                <div style={{ fontSize:"8px", color:"#334155", fontFamily:"monospace" }}>{entry.entry_hash}</div>
+                <div style={{ fontSize:"7px", color:"#1e2a3a" }}>prev: {entry.prev_hash.slice(0,16)}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}

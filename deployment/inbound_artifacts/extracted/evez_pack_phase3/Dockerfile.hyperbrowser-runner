@@ -1,0 +1,6 @@
+FROM python:3.11-slim
+WORKDIR /app
+COPY hyperbrowser_runner.py /app/hyperbrowser_runner.py
+RUN pip install --no-cache-dir fastapi uvicorn requests pydantic
+EXPOSE 8000
+CMD ["uvicorn", "hyperbrowser_runner:app", "--host", "0.0.0.0", "--port", "8000"]

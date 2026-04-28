@@ -1,0 +1,215 @@
+        else:
+            _out_error(f"Confirm failed: {r.get('error', r)}")
+
+    elif action == "reject":
+        if not arg:
+            _out_error("Provide an action_id.  e.g.  reject act_camera_1234")
+            return
+        r = _confirm_action(arg.strip(), approved=False)
+        if r.get("ok"):
+            _out_ok(f"Action {arg} rejected.", None)
+        else:
+            _out_error(f"Reject failed: {r.get('error', r)}")
+
+    # ── Device commands routed through risk gate ──────────────────────────────
+    elif action == "system.info":
+        _dispatch_cmd("system.info", node, {})
+
+    elif action == "location.get":
+        _dispatch_cmd("location.get", node, {})
+
+    elif action == "camera.capture":
+        _dispatch_cmd("camera.capture", node, {})
+
+    elif action == "screen.capture":
+        _dispatch_cmd("screen.capture", node, {})
+
+    elif action == "speaker.speak":
+        text = arg or "Hello from the OpenClaw agent."
+        _dispatch_cmd("speaker.speak", node, {"text": text})
+
+    elif action == "microphone.listen":
+        _dispatch_cmd("microphone.listen", node, {"lang": "en-US", "timeoutMs": 8000})
+
+    elif action == "microphone.listen_n":
+        ms = int(arg) * 1000 if arg else 8000
+        _dispatch_cmd("microphone.listen", node, {"lang": "en-US", "timeoutMs": ms})
+
+    elif action == "notifications.send":
+        body = arg or "Message from OpenClaw agent"
+        _dispatch_cmd("notifications.send", node, {"title": "OpenClaw", "body": body})
+
+    elif action == "shell":
+        if not arg:
+            _out_error("Provide a shell command.  e.g.  run: ls -la")
+            return
+        # Shell is always high-risk — ask for confirmation before even sending
+        print(yellow(f"  ⚠  Shell command: {bold(arg)}"))
+        print(dim("     Risk score: 0.95  —  this will be quarantined by the EVEZ gate."))
+        try:
+            answer = input("     Send anyway? [y/N] ").strip().lower()
+        except (EOFError, KeyboardInterrupt):
+            answer = "n"
+        if answer != "y":
+            _out_info("Cancelled.")
+            return
+        _dispatch_cmd("shell", node, {"cmd": arg})
+
+    elif action == "help":
+        _print_help()
+
+    else:
+        # Unknown intent — show suggestions
+        _out_info(f"Didn't understand: {bold(repr(prompt))}")
+        print(dim("  Try one of these:"))
+        examples = [
+            "take a photo", "where am i", "say hello world",
+            "send a notification: meeting in 5",
+            "listen for 10 seconds", "system info",
+            "verify", "manifest", "show pending",
+            "confirm <action_id>", "reject <action_id>",
+            "run: ls ~/Downloads", "nodes", "history", "health",
+        ]
+        for ex in examples:
+            print(f"  {dim('·')} {ex}")
+
+
+def _dispatch_cmd(cmd_type: str, node: str, payload: Dict) -> None:
+    """
+    Send command through the gateway's /api/simulate endpoint.
+    That endpoint scores the risk, optionally quarantines, records in chain, and responds.
+    """
+    r = _simulate(cmd_type, node, payload)
+
+    if r.get("_unreachable"):
+        # Gateway is offline — show what *would* happen using local risk table
+        from _local_risk import score as local_score
+        risk, gated = local_score(cmd_type)
+        _out_info(f"Gateway offline — local preview only")
+        print(f"  command  : {bold(cmd_type)}")
+        print(f"  target   : {node}")
+        print(f"  risk     : {_risk_icon(risk)} {risk:.2f}")
+        print(f"  outcome  : {'would be QUARANTINED' if gated else 'would DISPATCH immediately'}")
+        return
+
+    chain_step = r.get("chain_step", "?")
+    chain_hash = str(r.get("chain_hash", ""))[:16]
+    risk       = float(r.get("riskScore", 0))
+    quarantined = r.get("quarantined", False)
+
+    if quarantined:
+        action_id = r.get("actionId", "?")
+        print(f"\n  {yellow('⚠  Queued for confirmation')}")
+        print(f"  command  : {bold(cmd_type)}")
+        print(f"  risk     : {_risk_icon(risk)} {yellow(f'{risk:.2f}')}")
+        print(f"  action   : {cyan(action_id)}")
+        print(f"  chain    : step {chain_step}  {dim(chain_hash+'…')}")
+        print(f"\n  To approve:  {bold(f'confirm {action_id}')}")
+        print(f"  To reject:   {bold(f'reject {action_id}')}")
+    else:
+        result = r.get("result", {})
+        _out_ok(f"Dispatched — {cmd_type}", {
+            "risk":        f"{_risk_icon(risk)} {risk:.2f}  (below gate)",
+            "chain_step":  chain_step,
+            "chain_hash":  chain_hash + "…",
+            **(result if isinstance(result, dict) else {"result": result}),
+        })
+
+def _risk_icon(risk: float) -> str:
+    if risk >= 0.80: return "🔴"
+    if risk >= 0.60: return "🟡"
+    return "🟢"
+
+# ── Output helpers ─────────────────────────────────────────────────────────────
+def _out_ok(title: str, data: Optional[Dict]) -> None:
+    print(f"\n  {green('✓')}  {bold(title)}")
+    if data:
+        for k, v in data.items():
+            print(f"  {dim(f'{k:<14}')} {v}")
+
+def _out_error(msg: str) -> None:
+    print(f"\n  {red('✗')}  {bold(msg)}")
+
+def _out_info(msg: str) -> None:
+    print(f"\n  {blue('·')}  {msg}")
+
+# ── Help ──────────────────────────────────────────────────────────────────────
+def _print_help() -> None:
+    print(f"""
+  {bold('OpenClaw + EVEZOS Task Agent')}
+  {dim('Just describe what you want. Examples:')}
+
+  {cyan('Device commands')}
+    take a photo          →  camera.capture   {dim('(risk 0.80 — needs confirm)')}
+    where am i            →  location.get     {dim('(risk 0.40 — dispatches now)')}
+    say hello world       →  speaker.speak    {dim('(risk 0.20)')}
+    listen for 10 seconds →  microphone.listen {dim('(risk 0.75 — needs confirm)')}
+    screenshot            →  screen.capture   {dim('(risk 0.70 — needs confirm)')}
+    send a notification: meeting in 5         {dim('(risk 0.20)')}
+    system info           →  system.info      {dim('(risk 0.05)')}
+    run: ls ~/Downloads   →  shell            {dim('(risk 0.95 — always asks you first)')}
+
+  {cyan('EVEZOS / chain ops')}
+    verify                →  check chain integrity
+    manifest              →  build Ed25519-signed manifest
+    show pending          →  list quarantined actions
+    confirm <action_id>   →  approve a quarantined command
+    reject <action_id>    →  reject a quarantined command
+    history               →  show recent chain events
+    nodes                 →  list known nodes
+    health                →  gateway status
+
+  {cyan('Interactive mode')}
+    python3 agent.py      {dim('(REPL loop — type prompts, Ctrl-C to exit)')}
+
+  {cyan('One-shot mode')}
+    python3 agent.py "take a photo"
+""")
+
+# ── REPL ──────────────────────────────────────────────────────────────────────
+def _repl() -> None:
+    print(f"\n  {bold('OpenClaw + EVEZOS Agent')}  {dim(f'→ {BASE_URL}')}")
+    print(f"  {dim('Type what you want. Type  help  for examples. Ctrl-C to exit.')}\n")
+    while True:
+        try:
+            raw = input(f"  {cyan('agent')} {dim('›')} ").strip()
+        except (EOFError, KeyboardInterrupt):
+            print(f"\n  {dim('bye.')}\n")
+            break
+        if not raw:
+            continue
+        if raw.lower() in ("exit", "quit", "q"):
+            print(f"\n  {dim('bye.')}\n")
+            break
+        action, arg = parse_intent(raw)
+        _run_action(action, arg, raw)
+        print()
+
+
+# ── Local risk fallback (used when gateway is offline) ───────────────────────
+class _local_risk:
+    SCORES = {
+        "system.info":0.05,"notifications.send":0.20,"speaker.speak":0.20,
+        "location.get":0.40,"screen.capture":0.70,"microphone.listen":0.75,
+        "camera.capture":0.80,"shell":0.95,
+    }
+    THRESHOLD   = 0.60
+    ALLOWED     = {"system.info","notifications.send","speaker.speak","location.get"}
+
+    @classmethod
+    def score(cls, cmd_type: str) -> Tuple[float, bool]:
+        risk  = cls.SCORES.get(cmd_type, 0.30)
+        gated = risk >= cls.THRESHOLD or cmd_type not in cls.ALLOWED
+        return risk, gated
+
+
+# ── Entry point ───────────────────────────────────────────────────────────────
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        # One-shot: join all args into one prompt string
+        prompt = " ".join(sys.argv[1:])
+        action, arg = parse_intent(prompt)
+        _run_action(action, arg, prompt)
+        print()
+    else:
+        _repl()

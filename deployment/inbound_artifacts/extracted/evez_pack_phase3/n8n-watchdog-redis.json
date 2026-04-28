@@ -1,0 +1,322 @@
+{
+  "name": "EVEZ Self-Healing Watchdog Redis",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "*/5 * * * *"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -980,
+        40
+      ],
+      "id": "e10c807a-24cc-44e4-9384-25b1cbf2eef3",
+      "name": "Schedule Every 5m"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "{{N8N_WEBHOOK_URL}}/evez-health",
+        "sendHeaders": true,
+        "parametersHeaders": {
+          "values": [
+            {
+              "name": "Content-Type",
+              "valueProvider": "fieldValue",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -720,
+        40
+      ],
+      "id": "2d6354cf-da31-4fa9-83bb-4e89ce835a05",
+      "name": "Check Orchestrator Health",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 3000
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://state-service:8100/watchdog/increment",
+        "sendHeaders": true,
+        "parametersHeaders": {
+          "values": [
+            {
+              "name": "Content-Type",
+              "valueProvider": "fieldValue",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "rawBody": "={{ JSON.stringify({ checked_at: new Date().toISOString(), last_payload: $('Check Orchestrator Health').first().json }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -460,
+        40
+      ],
+      "id": "f88f8287-8c23-4d5f-bdad-9040246cc360",
+      "name": "Increment Watchdog Failure Counter"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.healthy }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -220,
+        40
+      ],
+      "id": "f51780b6-4d5f-47da-b7c3-544813010470",
+      "name": "Is Healthy?"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{N8N_WEBHOOK_URL}}/evez-orchestrator",
+        "sendHeaders": true,
+        "parametersHeaders": {
+          "values": [
+            {
+              "name": "Content-Type",
+              "valueProvider": "fieldValue",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "rawBody": "={{ JSON.stringify({\n  source: 'watchdog',\n  task: 'Recover orchestrator after failed health check',\n  objective: 'Restore autonomous loop',\n  attempt: Number($json.failureCount || 0),\n  github_repo: '{{GITHUB_REPO}}',\n  github: { workflow: { required: true, workflow_id: 'evez-agent.yml', ref: 'main', inputs: { reason: 'watchdog_recovery' } } }\n}) }}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        20,
+        120
+      ],
+      "id": "a99d0874-6ad1-4115-94f9-d936619af336",
+      "name": "Re-trigger Orchestrator",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.failureCount }}",
+              "operation": "largerEqual",
+              "value2": 3
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        280,
+        120
+      ],
+      "id": "f3d6a213-5bf8-4283-b023-00868c0fa6b1",
+      "name": "Failure Count >= 3?"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'https://api.github.com/repos/' + '{{GITHUB_REPO}}'.split('/')[0] + '/' + '{{GITHUB_REPO}}'.split('/')[1] + '/issues' }}",
+        "sendHeaders": true,
+        "parametersHeaders": {
+          "values": [
+            {
+              "name": "Authorization",
+              "valueProvider": "fieldValue",
+              "value": "Bearer {{GITHUB_TOKEN}}"
+            },
+            {
+              "name": "Accept",
+              "valueProvider": "fieldValue",
+              "value": "application/vnd.github+json"
+            },
+            {
+              "name": "X-GitHub-Api-Version",
+              "valueProvider": "fieldValue",
+              "value": "2022-11-28"
+            },
+            {
+              "name": "Content-Type",
+              "valueProvider": "fieldValue",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "rawBody": "={{ JSON.stringify({\n  title: 'EVEZ watchdog alert: orchestrator unhealthy',\n  body: 'The watchdog observed ' + $json.failureCount + ' consecutive orchestrator health failures.\\n\\nChecked at: ' + $json.checkedAt + '\\n\\nLast payload:\\n```json\\n' + JSON.stringify($json.healthPayload, null, 2) + '\\n```',\n  labels: ['evez', 'watchdog', 'incident']\n}) }}\n",
+        "options": {},
+        "body": "={{ 'The watchdog observed ' + $json.failureCount + ' consecutive orchestrator health failures.\\n\\nChecked at: ' + ($json.checked_at || '') + '\\n\\nLast payload:\\n```json\\n' + JSON.stringify($json.last_payload || {}, null, 2) + '\\n```' }}"
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        540,
+        220
+      ],
+      "id": "63d1d4dc-567b-4185-b6b6-ece9ada57808",
+      "name": "Create Alert Issue",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://state-service:8100/watchdog/reset",
+        "sendHeaders": true,
+        "parametersHeaders": {
+          "values": [
+            {
+              "name": "Content-Type",
+              "valueProvider": "fieldValue",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "rawBody": "={{ JSON.stringify({ checked_at: new Date().toISOString(), status: 'healthy', last_payload: $('Check Orchestrator Health').first().json }) }}",
+        "options": {}
+      },
+      "id": "watchdog-reset",
+      "name": "Reset Watchdog Failure Counter",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -20,
+        -40
+      ]
+    }
+  ],
+  "connections": {
+    "Schedule Every 5m": {
+      "main": [
+        [
+          {
+            "node": "Check Orchestrator Health",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Orchestrator Health": {
+      "main": [
+        [
+          {
+            "node": "Is Healthy?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Healthy?": {
+      "main": [
+        [
+          {
+            "node": "Reset Watchdog Failure Counter",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Increment Watchdog Failure Counter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Re-trigger Orchestrator": {
+      "main": [
+        [
+          {
+            "node": "Failure Count >= 3?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Failure Count >= 3?": {
+      "main": [
+        [
+          {
+            "node": "Create Alert Issue",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Increment Watchdog Failure Counter": {
+      "main": [
+        [
+          {
+            "node": "Re-trigger Orchestrator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "evez-watchdog"
+  },
+  "active": false,
+  "settings": {
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "executionOrder": "v1"
+  },
+  "versionId": "evez-watchdog-redis-v1"
+}

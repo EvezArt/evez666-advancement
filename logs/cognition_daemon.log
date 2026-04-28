@@ -1,0 +1,44 @@
+{
+  "branch": {
+    "label": "branch-2",
+    "plausibility": 0.35,
+    "consequence": 0.35,
+    "collapse_risk": 0.7250000000000001,
+    "resonance": 0.35,
+    "notes": [
+      "preserve unresolved residue",
+      "bias builder identity",
+      "generate rival before hard commitment"
+    ]
+  },
+  "revision": {
+    "active_identity": "observer",
+    "action_mode": "watch",
+    "executive_plan": {
+      "identity": "observer",
+      "action_mode": "watch",
+      "reason": "monitor_branch",
+      "branch": {
+        "label": "branch-1",
+        "plausibility": 0.35,
+        "consequence": 0.35,
+        "collapse_risk": 0.675,
+        "resonance": 0.55,
+        "notes": [
+          "preserve unresolved residue",
+          "bias builder identity",
+          "generate rival before hard commitment"
+        ]
+      },
+      "at": "2026-04-25T18:13:37.703904+00:00"
+    },
+    "promoted": [],
+    "unresolved_count": 2,
+    "dark_pressure_count": 1,
+    "build_result": null
+  },
+  "checkpoint": "/root/.openclaw/workspace/deployment/inbound_artifacts/extracted/evez-agentnet-cognition-scaffold/evez-agentnet-cognition-scaffold/.state/checkpoint-3aad6213-c81a-4b8d-9633-438ead28b1c6.json",
+  "active_identity": "observer",
+  "action_mode": "watch",
+  "lineage_hash": "358b9c91cc6ef8a2d9c44c1289042a697cc4742ebe4512cd6de77fbda75c3983"
+}
