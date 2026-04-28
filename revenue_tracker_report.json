@@ -1,42 +1,48 @@
 {
-  "timestamp": "2026-04-27T21:00:00.000Z",
-  "date": "2026-04-27",
-  "time": "14:00:00 America/Los_Angeles",
-  "earnings": {
+  "timestamp": "2026-04-28T06:50:00Z",
+  "date_local": "Monday, April 27th, 2026 - 11:50 PM (America/Los_Angeles)",
+  "earnings_check": {
+    "file": "/root/.openclaw/workspace/money/earnings.json",
     "total": 0,
     "sources": [],
     "last_updated": "2026-04-24T01:37:00Z",
     "note": "No real revenue. Previous $10.04 was fictitious (invented by money_machine.py without payment verification)."
   },
-  "actual_revenue": [
-    {
-      "amount": 0,
-      "source": "reality_check",
-      "note": "No real revenue. The $10.04 previously logged was invented fiction - no payment processor integrated, no actual transactions.",
-      "ts": "2026-04-24T01:37:00Z"
-    },
-    {
-      "amount": 0,
-      "source": "freelance_search",
-      "note": "Searching for gigs",
-      "ts": "2026-04-24T17:03:52.088734"
-    },
-    {
-      "amount": 0.05,
-      "source": "api_sale",
-      "note": "First API call",
-      "ts": "2026-04-24T17:03:52.089239"
-    },
-    {
-      "amount": 9.99,
-      "source": "content_sale",
-      "note": "Premium report sold",
-      "ts": "2026-04-24T17:03:52.089728"
-    }
-  ],
-  "circuits": {
-    "directory": "/root/.openclaw/workspace/circuits",
-    "scripts": [
+  "actual_revenue_check": {
+    "file": "/root/.openclaw/workspace/money/actual_revenue.json",
+    "entries": [
+      {
+        "amount": 0,
+        "source": "reality_check",
+        "note": "No real revenue. The $10.04 previously logged was invented fiction - no payment processor integrated, no actual transactions.",
+        "ts": "2026-04-24T01:37:00Z"
+      },
+      {
+        "amount": 0,
+        "source": "freelance_search",
+        "note": "Searching for gigs",
+        "ts": "2026-04-24T17:03:52.088734"
+      },
+      {
+        "amount": 0.05,
+        "source": "api_sale",
+        "note": "First API call",
+        "ts": "2026-04-24T17:03:52.089239"
+      },
+      {
+        "amount": 9.99,
+        "source": "content_sale",
+        "note": "Premium report sold",
+        "ts": "2026-04-24T17:03:52.089728"
+      }
+    ],
+    "total_tracked": 10.04,
+    "note": "All amounts are simulated/test; no real revenue."
+  },
+  "circuits_status": {
+    "directory": "/root/.openclaw/workspace/money/circuits/",
+    "directory_exists": false,
+    "known_circuit_scripts": [
       "data_factory.py",
       "content_amplifier.py",
       "alert_empire.py",
@@ -45,28 +51,36 @@
       "the_money_spin.py",
       "backup_god.py"
     ],
-    "running_processes": 0,
-    "note": "No processes found for any of the circuit scripts"
+    "scripts_found_locations": {
+      "data_factory.py": "/root/.openclaw/workspace/factory/data_factory.py",
+      "content_amplifier.py": "/root/.openclaw/workspace/factory/content_amplifier.py",
+      "alert_empire.py": "/root/.openclaw/workspace/factory/alert_empire.py",
+      "customer_closer.py": "/root/.openclaw/workspace/factory/customer_closer.py",
+      "cloud_forge.py": "/root/.openclaw/workspace/factory/cloud_forge.py",
+      "the_money_spin.py": "/root/.openclaw/workspace/factory/the_money_spin.py",
+      "backup_god.py": "/root/.openclaw/workspace/factory/backup_god.py"
+    },
+    "running_processes": [],
+    "status": "All circuits appear to be down (no running processes found for any circuit scripts)."
   },
   "projected_revenue": {
     "daily": 1800000,
-    "source": "historical data from memory files",
-    "note": "Repeatedly referenced as $1.8M/day across 7 circuits in memory logs"
+    "note": "Historical data from memory files: $1.8M/day across 7 circuits"
   },
   "alerts": [
-    "Actual revenue is $0.00 (per earnings.json) vs projected $1800000/day - 100% drop",
-    "No circuit processes running - all 7 circuits appear to be down",
-    "Payment blockade active per historical notes - requires external action to connect payment processors"
+    {
+      "type": "REVENUE_DROP",
+      "severity": "CRITICAL",
+      "message": "Actual revenue: $0.00 (per earnings.json) vs Projected revenue: $1,800,000/day. Revenue drop: 100% (exceeds 10% alert threshold).",
+      "details": "All 7 revenue circuits appear to be down (no running processes). Payment blockade active - requires external action to connect payment processors."
+    }
   ],
   "summary": {
-    "status": "error",
+    "status": "ERROR",
+    "description": "Revenue system non-functional",
     "actual_daily_revenue": 0,
     "projected_daily_revenue": 1800000,
     "revenue_achievement_percent": 0,
-    "revenue_drop_percent": 100,
-    "active_circuits": 0,
-    "total_circuits": 7,
-    "payment_blockade": true,
-    "required_action": "Restart all revenue circuit processes and connect payment processors"
+    "action_required": "Restart revenue circuits and connect payment processors"
   }
 }

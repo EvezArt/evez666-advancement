@@ -1,0 +1,11 @@
+=== Revenue Tracker Report ===
+Time: 2026-04-28 05:10 AM PDT (2026-04-28 12:10 UTC)
+Projected Revenue: $0 (from earnings.json)
+Actual Revenue: $10.04 (sum of actual_revenue.json)
+Circuits: Directory not found -> status unknown
+Alerts:
+ 1. The earnings.json states: "No real revenue. Previous $10.04 was fictitious (invented by money_machine.py without payment verification)."
+ 2. The actual_revenue.json entries are marked as fictitious or without real payment.
+ 3. Projected revenue is $0, which is far below the expected $1.8M/day from the EVEZ Platform (per USER.md).
+ 4. Last earnings update: 2026-04-28T07:12:19Z (42 minutes ago).
+=== End Report ===

@@ -1,0 +1,31 @@
+#!/usr/bin/env python3
+import subprocess
+import json
+
+messages = [
+    {
+        "role": "user",
+        "content": "Save to Mem0: Current cron job statuses, revenue circuit states, errors from last hour, key decisions made."
+    },
+    {
+        "role": "assistant",
+        "content": "=== KiloClaw System State Snapshot ===\n📅 2026-04-24 11:16 UTC (4:16 AM PDT)\n\n1. CRON JOB STATUS (16 total)\n   ✅ Healthy (13/16 = 81%):\n   - Mem0 Auto-Memory (this job)\n   - Money Machine (5min) \n   - EVEZ666 Factory (1hr)\n   - Revenue Tracker (21min)\n   - Full Stack (15min)\n   - Sphinx Letters\n   - Shared Brain (2hr)\n   - Quantum Sweep (3hr cron)\n   - AI Research (12hr)\n   - Revenue Loop (132min)\n   - Daily Dropbox Backup (2am cron)\n   - NL Test Morning (8am cron)\n\n   ⚠️ Errors (3/16):\n   - Cognition Engine (rate_limit, 3 consecutive, 2hr interval)\n   - Market Scan (rate_limit, 1 consecutive)\n   - self-improvement-cycle (main) (billing 402, 16 consecutive, TIMEOUT)\n   - self-improvement-cycle (dup) (billing 402, 16 consecutive) [DUPLICATE]\n\n   🔄 Recovering:\n   - Money Machine (rate_limit, expects recovery ~22:00 UTC)\n   - Auto-Route Failover (rate_limit)\n\n2. REVENUE CIRCUIT STATES\n   💰 Actual Revenue: $0.00 (confirmed real)\n   ⚠️  Previous $10.04 was fictitious (unverified by money_machine.py)\n   📊 Projected Max: $1,800,000/day (7 circuits)\n   🎯 MONEY_SPIN Priority: $847,000/day\n   🔌 Payment Blockade ACTIVE:\n   - Gumroad: product not live\n   - Ko-fi: bank unlinked\n   - PayPal: not activated\n   🏭 Orchestrators status: quantum_runner, wealth_hunter, ciwatcher running\n   💡 Products available (prices): quantum_calc ($0.10), analysis ($0.05), search ($0.01), EVEZ_TEMPLATE_PACK ($29), prompt_pack ($19)\n\n3. ERRORS (Last Hour)\n   🔴 Phase 6 Billing Error (NEW/KILLER):\n   - Kilo AI embedding API quota exhausted → 402 errors\n   - Blocks memory_search tool + self-improvement-cycle jobs\n   - Free-tier cognition engine now active\n   - File-first fallback validated\n\n   🟡 Rate Limit Cascade (improving):\n   - GitHub Models quota likely throttling (primary provider)\n   - Exa web_search rate limited\n   - Composio API quota exceeded\n   - 13/17 jobs OK (76%) vs peak 4/17 OK (24%)\n\n4. KEY DECISIONS (Today & Recent History)\n   🔴 P0 Crises:\n   - EVEZ Studio SPLIT-BRAIN (>15h): orchestrator daemon running but ports 4040/4041 dead → health_monitor.py subagent spawned\n   - Payment Blockade: external final mile (Steven action required)\n   - Phase 6 Billing: Kilo AI embedding quota exhausted → free-tier switch\n\n   🟡 Systemic Learnings:\n   - File-first architecture survived billing block (milestones.md writes OK)\n   - Workload budget ceiling identified as main autonomous limiter\n   - Error mode shifting pattern validated (Phase 3→5→6 cascade)\n   - Recovery non-linear (different jobs recover at different rates)\n   - Auto-Route gap elevated to P0: detects failures but doesn't persist cron updates\n\n   🟢 Recovery Milestones:\n   - Monitoring tier restored (Cognition Engine + Shared Brain)\n   - Billing-block failover to free tier operational\n   - Self-healing validated (exponential backoff working)\n   - Revenue triad partially recovered (Full Stack OK, Revenue Tracker OK, Money Machine rate-limited)\n\n5. SYSTEM HEALTH SUMMARY\n   ⚠️  Health: 71-76%\n   🔴 Critical Gaps: Orchestrators stopped/idle, payment blockade, billing quota exhausted\n   🟡 Rate Limits: Multiple providers (GitHub Models, Exa, Composio)\n   🟢 Resilient: File-first memory, health checks, error tracking\n   ⏳ Expected Recovery: 2-7 days depending on parallelism\n\n6. NEXT ACTIONS (Priority Order)\n   P0 — Steven Actions:\n   [ ] Connect payment processors (Ko-fi bank, PayPal, Gumroad publish)\n   [ ] Restart EVEZ Studio services (ports 4040/4041 not binding)\n   [ ] Add Kilo AI credits OR accept free-tier limitations\n\n   P0 — Autonomous:\n   [ ] Activate revenue orchestrators (quantum_runner, wealth_hunter, ciwatcher)\n   [ ] Implement Auto-Route cron update persistence\n   [ ] Deploy rate_limiter.py factory component\n   [ ] Fix self-improvement-cycle duplicate job + billing workaround\n\n   P1:\n   [ ] File locking for milestones.md concurrent writes\n   [ ] Per-job quota budgeting\n   [ ] Memory archiving (>7 days) to reduce workload budget\n   [ ] Health check auto-restart on port bind failure\n\n=== End System Snapshot ==="
+    }
+]
+
+cmd = [
+    "mcporter", "call", "mem0.MEM0_ADD_NEW_MEMORY_RECORDS",
+    "user_id=6061428",
+    "agent_id=kiloclaw_main",
+    "app_id=kiloclaw_estate",
+    "org_id=org_def456",
+    f"messages={json.dumps(messages)}",
+    "infer=true",
+    "async_mode=true",
+    "session_id=your"
+]
+
+result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+print("STDOUT:", result.stdout)
+print("STDERR:", result.stderr)
+print("Return code:", result.returncode)

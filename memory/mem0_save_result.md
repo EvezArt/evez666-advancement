@@ -1,0 +1,128 @@
+# Mem0 Auto-Memory Save Attempt - RESULT
+**Timestamp:** Tuesday, April 28th, 2026 - 2:55 AM (America/Los_Angeles) / 2026-04-28 09:55 UTC
+
+## Attempt Summary
+Attempted to save system state snapshot to Mem0 via Composio integration.
+
+## Error Encountered
+- **Tool:** `MEM0_ADD_NEW_MEMORY_RECORDS` (via Composio mem0 toolkit)
+- **Error:** `MCP error -32602: Tool MEM0_ADD_NEW_MEMORY_RECORDS not found` (initial attempts)
+- **Later attempts:** Successfully invoked tool but returned HTTP 401 Unauthorized: `{"detail":"Invalid API key for this organization."}`
+
+## Root Cause
+The Mem0 integration in Composio appears to have an invalid or expired API key for the organization associated with the connection. Although the connection shows as "ACTIVE" in Composio's account listing, the underlying API key is not valid for making write operations.
+
+## Content Intended for Save
+The following system state snapshot was prepared for saving to Mem0:
+
+=== KiloClaw System State Snapshot ===
+📅 2026-04-24 11:16 UTC (4:16 AM PDT)
+
+1. CRON JOB STATUS (16 total)
+   ✅ Healthy (13/16 = 81%):
+   - Mem0 Auto-Memory (this job)
+   - Money Machine (5min) 
+   - EVEZ666 Factory (1hr)
+   - Revenue Tracker (21min)
+   - Full Stack (15min)
+   - Sphinx Letters
+   - Shared Brain (2hr)
+   - Quantum Sweep (3hr cron)
+   - AI Research (12hr)
+   - Revenue Loop (132min)
+   - Daily Dropbox Backup (2am cron)
+   - NL Test Morning (8am cron)
+
+   ⚠️ Errors (3/16):
+   - Cognition Engine (rate_limit, 3 consecutive, 2hr interval)
+   - Market Scan (rate_limit, 1 consecutive)
+   - self-improvement-cycle (main) (billing 402, 16 consecutive, TIMEOUT)
+   - self-improvement-cycle (dup) (billing 402, 16 consecutive) [DUPLICATE]
+
+   🔄 Recovering:
+   - Money Machine (rate_limit, expects recovery ~22:00 UTC)
+   - Auto-Route Failover (rate_limit)
+
+2. REVENUE CIRCUIT STATES
+   💰 Actual Revenue: $0.00 (confirmed real)
+   ⚠️  Previous $10.04 was fictitious (unverified by money_machine.py)
+   📊 Projected Max: $1,800,000/day (7 circuits)
+   🎯 MONEY_SPIN Priority: $847,000/day
+   🔌 Payment Blockade ACTIVE:
+   - Gumroad: product not live
+   - Ko-fi: bank unlinked
+   - PayPal: not activated
+   🏭 Orchestrators status: quantum_runner, wealth_hunter, ciwatcher running
+   💡 Products available (prices): quantum_calc ($0.10), analysis ($0.05), search ($0.01), EVEZ_TEMPLATE_PACK ($29), prompt_pack ($19)
+
+3. ERRORS (Last Hour)
+   🔴 Phase 6 Billing Error (NEW/KILLER):
+   - Kilo AI embedding API quota exhausted → 402 errors
+   - Blocks memory_search tool + self-improvement-cycle jobs
+   - Free-tier cognition engine now active
+   - File-first fallback validated
+
+   🟡 Rate Limit Cascade (improving):
+   - GitHub Models quota likely throttling (primary provider)
+   - Exa web_search rate limited
+   - Composio API quota exceeded
+   - 13/17 jobs OK (76%) vs peak 4/17 OK (24%)
+
+4. KEY DECISIONS (Today & Recent History)
+   🔴 P0 Crises:
+   - EVEZ Studio SPLIT-BRAIN (>15h): orchestrator daemon running but ports 4040/4041 dead → health_monitor.py subagent spawned
+   - Payment Blockade: external final mile (Steven action required)
+   - Phase 6 Billing: Kilo AI embedding quota exhausted → free-tier switch
+
+   🟡 Systemic Learnings:
+   - File-first architecture survived billing block (milestones.md writes OK)
+   - Workload budget ceiling identified as main autonomous limiter
+   - Error mode shifting pattern validated (Phase 3→5→6 cascade)
+   - Recovery non-linear (different jobs recover at different rates)
+   - Auto-Route gap elevated to P0: detects failures but doesn't persist cron updates
+
+   🟢 Recovery Milestones:
+   - Monitoring tier restored (Cognition Engine + Shared Brain)
+   - Billing-block failover to free tier operational
+   - Self-healing validated (exponential backoff working)
+   - Revenue triad partially recovered (Full Stack OK, Revenue Tracker OK, Money Machine rate-limited)
+
+5. SYSTEM HEALTH SUMMARY
+   ⚠️  Health: 71-76%
+   🔴 Critical Gaps: Orchestrators stopped/idle, payment blockade, billing quota exhausted
+   🟡 Rate Limits: Multiple providers (GitHub Models, Exa, Composio)
+   🟢 Resilient: File-first memory, health checks, error tracking
+   ⏳ Expected Recovery: 2-7 days depending on parallelism
+
+6. NEXT ACTIONS (Priority Order)
+   P0 — Steven Actions:
+   [ ] Connect payment processors (Ko-fi bank, PayPal, Gumroad publish)
+   [ ] Restart EVEZ Studio services (ports 4040/4041 not binding)
+   [ ] Add Kilo AI credits OR accept free-tier limitations
+
+   P0 — Autonomous:
+   [ ] Activate revenue orchestrators (quantum_runner, wealth_hunter, ciwatcher)
+   [ ] Implement Auto-Route cron update persistence
+   [ ] Deploy rate_limiter.py factory component
+   [ ] Fix self-improvement-cycle duplicate job + billing workaround
+
+   P1:
+   [ ] File locking for milestones.md concurrent writes
+   [ ] Per-job quota budgeting
+   [ ] Memory archiving (>7 days) to reduce workload budget
+   [ ] Health check auto-restart on port bind failure
+
+=== End System Snapshot ===
+
+## Local Fallback Save
+Due to the Mem0 save failure, the system state snapshot has been saved locally to:
+- `/root/.openclaw/workspace/memory/2026-04-28-mem0-save-failed.md` (from initial attempt)
+- `/root/.openclaw/workspace/memory/2026-04-28-mem0-save.md` (latest snapshot)
+
+## Recommended Actions
+1. **API Key Renewal:** The Mem0 API key in the Composio connection needs to be refreshed or re-authenticated.
+2. **Connection Management:** Consider removing and re-adding the Mem0 connection in Composio via `mcporter config` or the Composio dashboard, which will trigger a new OAuth flow.
+3. **Alternative Storage:** Continue using local file-based memory saves until Mem0 integration is restored.
+
+## Conclusion
+**Save to Mem0: FAILED** due to authentication error. No data was stored in Mem0 during this cron run. The system state has been preserved locally for recovery and auditing purposes.

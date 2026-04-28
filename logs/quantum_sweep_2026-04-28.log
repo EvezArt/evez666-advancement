@@ -58,3 +58,363 @@
 [2026-04-28T00:32:10.586167]   Metrics: algo_runs=3972
 [2026-04-28T00:32:10.586278] === Parameter Sweep Complete ===
 [2026-04-28T00:32:19.019991] Daily summary written to /root/.openclaw/workspace/experiments/daily_summary.md
+[2026-04-28T03:49:04.902447] === Starting Quantum Parameter Sweep ===
+[2026-04-28T03:49:04.937297] Available algorithms: ['grover', 'qaoa', 'vqe', 'qft', 'shors', 'bell', 'ghz', 'supremacy']
+[2026-04-28T03:49:04.937438] Testing grover...
+[2026-04-28T03:49:04.972056]   grover {'qubits': 2} -> simulated (0.03s)
+[2026-04-28T03:49:05.006682]   Metrics: algo_runs=3973
+[2026-04-28T03:49:05.042649]   grover {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T03:49:05.078295]   Metrics: algo_runs=3974
+[2026-04-28T03:49:05.114313]   grover {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T03:49:05.147953]   Metrics: algo_runs=3975
+[2026-04-28T03:49:05.148061] Testing qaoa...
+[2026-04-28T03:49:05.183464]   qaoa {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T03:49:05.217483]   Metrics: algo_runs=3976
+[2026-04-28T03:49:05.252744]   qaoa {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T03:49:05.286809]   Metrics: algo_runs=3977
+[2026-04-28T03:49:05.321271]   qaoa {'qubits': 4} -> simulated (0.03s)
+[2026-04-28T03:49:05.354357]   Metrics: algo_runs=3978
+[2026-04-28T03:49:05.354451] Testing vqe...
+[2026-04-28T03:49:05.390422]   vqe {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T03:49:05.423949]   Metrics: algo_runs=3979
+[2026-04-28T03:49:05.458835]   vqe {'qubits': 3} -> simulated (0.03s)
+[2026-04-28T03:49:05.496672]   Metrics: algo_runs=3980
+[2026-04-28T03:49:05.496832] Testing qft...
+[2026-04-28T03:49:05.535256]   qft {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T03:49:05.573009]   Metrics: algo_runs=3981
+[2026-04-28T03:49:05.610386]   qft {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T03:49:05.644814]   Metrics: algo_runs=3982
+[2026-04-28T03:49:05.681506]   qft {'qubits': 6} -> simulated (0.04s)
+[2026-04-28T03:49:05.718260]   Metrics: algo_runs=3983
+[2026-04-28T03:49:05.755353]   qft {'qubits': 8} -> simulated (0.04s)
+[2026-04-28T03:49:05.789717]   Metrics: algo_runs=3984
+[2026-04-28T03:49:05.789826] Testing shors...
+[2026-04-28T03:49:05.826886]   shors {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T03:49:05.861807]   Metrics: algo_runs=3985
+[2026-04-28T03:49:05.899235]   shors {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T03:49:05.935183]   Metrics: algo_runs=3986
+[2026-04-28T03:49:05.935315] Testing bell...
+[2026-04-28T03:49:05.972726]   bell {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T03:49:06.008286]   Metrics: algo_runs=3987
+[2026-04-28T03:49:06.044568]   bell {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T03:49:06.080376]   Metrics: algo_runs=3988
+[2026-04-28T03:49:06.118215]   bell {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T03:49:06.153709]   Metrics: algo_runs=3989
+[2026-04-28T03:49:06.153835] Testing ghz...
+[2026-04-28T03:49:06.190611]   ghz {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T03:49:06.224799]   Metrics: algo_runs=3990
+[2026-04-28T03:49:06.263156]   ghz {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T03:49:06.299311]   Metrics: algo_runs=3991
+[2026-04-28T03:49:06.335458]   ghz {'qubits': 5} -> simulated (0.04s)
+[2026-04-28T03:49:06.369187]   Metrics: algo_runs=3992
+[2026-04-28T03:49:06.404854]   ghz {'qubits': 6} -> simulated (0.04s)
+[2026-04-28T03:49:06.439051]   Metrics: algo_runs=3993
+[2026-04-28T03:49:06.439169] Testing supremacy...
+[2026-04-28T03:49:06.475048]   supremacy {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T03:49:06.510453]   Metrics: algo_runs=3994
+[2026-04-28T03:49:06.547036]   supremacy {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T03:49:06.582021]   Metrics: algo_runs=3995
+[2026-04-28T03:49:06.619667]   supremacy {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T03:49:06.653824]   Metrics: algo_runs=3996
+[2026-04-28T03:49:06.653944] === Parameter Sweep Complete ===
+[2026-04-28T03:49:36.694052] Daily summary written to /root/.openclaw/workspace/experiments/daily_summary.md
+[2026-04-28T06:45:57.052014] === Starting Quantum Parameter Sweep ===
+[2026-04-28T06:45:57.087012] Available algorithms: ['grover', 'qaoa', 'vqe', 'qft', 'shors', 'bell', 'ghz', 'supremacy']
+[2026-04-28T06:45:57.087140] Testing grover...
+[2026-04-28T06:45:57.123709]   grover {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T06:45:57.161022]   Metrics: algo_runs=3997
+[2026-04-28T06:45:57.199230]   grover {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T06:45:57.234828]   Metrics: algo_runs=3998
+[2026-04-28T06:45:57.273431]   grover {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T06:45:57.307873]   Metrics: algo_runs=3999
+[2026-04-28T06:45:57.307989] Testing qaoa...
+[2026-04-28T06:45:57.343754]   qaoa {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T06:45:57.377803]   Metrics: algo_runs=4000
+[2026-04-28T06:45:57.413057]   qaoa {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T06:45:57.447727]   Metrics: algo_runs=4001
+[2026-04-28T06:45:57.483006]   qaoa {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T06:45:57.516676]   Metrics: algo_runs=4002
+[2026-04-28T06:45:57.516788] Testing vqe...
+[2026-04-28T06:45:57.552080]   vqe {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T06:45:57.586098]   Metrics: algo_runs=4003
+[2026-04-28T06:45:57.621479]   vqe {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T06:45:57.656614]   Metrics: algo_runs=4004
+[2026-04-28T06:45:57.656729] Testing qft...
+[2026-04-28T06:45:57.691419]   qft {'qubits': 2} -> simulated (0.03s)
+[2026-04-28T06:45:57.726008]   Metrics: algo_runs=4005
+[2026-04-28T06:45:57.761661]   qft {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T06:45:57.797063]   Metrics: algo_runs=4006
+[2026-04-28T06:45:57.833942]   qft {'qubits': 6} -> simulated (0.04s)
+[2026-04-28T06:45:57.869736]   Metrics: algo_runs=4007
+[2026-04-28T06:45:57.905187]   qft {'qubits': 8} -> simulated (0.04s)
+[2026-04-28T06:45:57.939351]   Metrics: algo_runs=4008
+[2026-04-28T06:45:57.939476] Testing shors...
+[2026-04-28T06:45:57.975967]   shors {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T06:45:58.010127]   Metrics: algo_runs=4009
+[2026-04-28T06:45:58.046240]   shors {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T06:45:58.081617]   Metrics: algo_runs=4010
+[2026-04-28T06:45:58.081739] Testing bell...
+[2026-04-28T06:45:58.118281]   bell {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T06:45:58.152769]   Metrics: algo_runs=4011
+[2026-04-28T06:45:58.188801]   bell {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T06:45:58.223142]   Metrics: algo_runs=4012
+[2026-04-28T06:45:58.258915]   bell {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T06:45:58.294122]   Metrics: algo_runs=4013
+[2026-04-28T06:45:58.294252] Testing ghz...
+[2026-04-28T06:45:58.331656]   ghz {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T06:45:58.366374]   Metrics: algo_runs=4014
+[2026-04-28T06:45:58.403346]   ghz {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T06:45:58.437441]   Metrics: algo_runs=4015
+[2026-04-28T06:45:58.473141]   ghz {'qubits': 5} -> simulated (0.04s)
+[2026-04-28T06:45:58.508702]   Metrics: algo_runs=4016
+[2026-04-28T06:45:58.544627]   ghz {'qubits': 6} -> simulated (0.04s)
+[2026-04-28T06:45:58.581268]   Metrics: algo_runs=4017
+[2026-04-28T06:45:58.581395] Testing supremacy...
+[2026-04-28T06:45:58.618378]   supremacy {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T06:45:58.652094]   Metrics: algo_runs=4018
+[2026-04-28T06:45:58.688139]   supremacy {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T06:45:58.725306]   Metrics: algo_runs=4019
+[2026-04-28T06:45:58.761875]   supremacy {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T06:45:58.797144]   Metrics: algo_runs=4020
+[2026-04-28T06:45:58.797270] === Parameter Sweep Complete ===
+[2026-04-28T06:47:20.514228] Daily summary written to /root/.openclaw/workspace/experiments/daily_summary.md
+[2026-04-28T09:39:24.961657] === Starting Quantum Parameter Sweep ===
+[2026-04-28T09:39:25.000274] Available algorithms: ['grover', 'qaoa', 'vqe', 'qft', 'shors', 'bell', 'ghz', 'supremacy']
+[2026-04-28T09:39:25.000426] Testing grover...
+[2026-04-28T09:39:25.036191]   grover {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T09:39:25.071546]   Metrics: algo_runs=4021
+[2026-04-28T09:39:25.107881]   grover {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T09:39:25.142604]   Metrics: algo_runs=4022
+[2026-04-28T09:39:25.179552]   grover {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T09:39:25.216436]   Metrics: algo_runs=4023
+[2026-04-28T09:39:25.216564] Testing qaoa...
+[2026-04-28T09:39:25.255003]   qaoa {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T09:39:25.294129]   Metrics: algo_runs=4024
+[2026-04-28T09:39:25.333953]   qaoa {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T09:39:25.370058]   Metrics: algo_runs=4025
+[2026-04-28T09:39:25.405836]   qaoa {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T09:39:25.439855]   Metrics: algo_runs=4026
+[2026-04-28T09:39:25.439973] Testing vqe...
+[2026-04-28T09:39:25.475754]   vqe {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T09:39:25.509564]   Metrics: algo_runs=4027
+[2026-04-28T09:39:25.544225]   vqe {'qubits': 3} -> simulated (0.03s)
+[2026-04-28T09:39:25.578275]   Metrics: algo_runs=4028
+[2026-04-28T09:39:25.578387] Testing qft...
+[2026-04-28T09:39:25.614542]   qft {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T09:39:25.650192]   Metrics: algo_runs=4029
+[2026-04-28T09:39:25.686604]   qft {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T09:39:25.725785]   Metrics: algo_runs=4030
+[2026-04-28T09:39:25.768106]   qft {'qubits': 6} -> simulated (0.04s)
+[2026-04-28T09:39:25.802208]   Metrics: algo_runs=4031
+[2026-04-28T09:39:25.838345]   qft {'qubits': 8} -> simulated (0.04s)
+[2026-04-28T09:39:25.873292]   Metrics: algo_runs=4032
+[2026-04-28T09:39:25.873413] Testing shors...
+[2026-04-28T09:39:25.910193]   shors {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T09:39:25.946096]   Metrics: algo_runs=4033
+[2026-04-28T09:39:25.982255]   shors {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T09:39:26.017973]   Metrics: algo_runs=4034
+[2026-04-28T09:39:26.018087] Testing bell...
+[2026-04-28T09:39:26.073868]   bell {'qubits': 2} -> simulated (0.06s)
+[2026-04-28T09:39:26.109970]   Metrics: algo_runs=4035
+[2026-04-28T09:39:26.147064]   bell {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T09:39:26.183018]   Metrics: algo_runs=4036
+[2026-04-28T09:39:26.218564]   bell {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T09:39:26.254860]   Metrics: algo_runs=4037
+[2026-04-28T09:39:26.255006] Testing ghz...
+[2026-04-28T09:39:26.293447]   ghz {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T09:39:26.328518]   Metrics: algo_runs=4038
+[2026-04-28T09:39:26.365558]   ghz {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T09:39:26.400432]   Metrics: algo_runs=4039
+[2026-04-28T09:39:26.437482]   ghz {'qubits': 5} -> simulated (0.04s)
+[2026-04-28T09:39:26.472590]   Metrics: algo_runs=4040
+[2026-04-28T09:39:26.509080]   ghz {'qubits': 6} -> simulated (0.04s)
+[2026-04-28T09:39:26.544050]   Metrics: algo_runs=4041
+[2026-04-28T09:39:26.544173] Testing supremacy...
+[2026-04-28T09:39:26.582762]   supremacy {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T09:39:26.620311]   Metrics: algo_runs=4042
+[2026-04-28T09:39:26.655358]   supremacy {'qubits': 3} -> simulated (0.03s)
+[2026-04-28T09:39:26.690325]   Metrics: algo_runs=4043
+[2026-04-28T09:39:26.726865]   supremacy {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T09:39:26.761393]   Metrics: algo_runs=4044
+[2026-04-28T09:39:26.761503] === Parameter Sweep Complete ===
+[2026-04-28T09:40:29.612084] Daily summary written to /root/.openclaw/workspace/experiments/daily_summary.md
+[2026-04-28T13:22:33.199091] === Starting Quantum Parameter Sweep ===
+[2026-04-28T13:22:33.235839] Available algorithms: ['grover', 'qaoa', 'vqe', 'qft', 'shors', 'bell', 'ghz', 'supremacy']
+[2026-04-28T13:22:33.235974] Testing grover...
+[2026-04-28T13:22:33.271341]   grover {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T13:22:33.305814]   Metrics: algo_runs=4045
+[2026-04-28T13:22:33.340890]   grover {'qubits': 3} -> simulated (0.03s)
+[2026-04-28T13:22:33.375210]   Metrics: algo_runs=4046
+[2026-04-28T13:22:33.411648]   grover {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T13:22:33.449219]   Metrics: algo_runs=4047
+[2026-04-28T13:22:33.449373] Testing qaoa...
+[2026-04-28T13:22:33.486009]   qaoa {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T13:22:33.520434]   Metrics: algo_runs=4048
+[2026-04-28T13:22:33.554528]   qaoa {'qubits': 3} -> simulated (0.03s)
+[2026-04-28T13:22:33.589231]   Metrics: algo_runs=4049
+[2026-04-28T13:22:33.625560]   qaoa {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T13:22:33.659540]   Metrics: algo_runs=4050
+[2026-04-28T13:22:33.659676] Testing vqe...
+[2026-04-28T13:22:33.700112]   vqe {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T13:22:33.738100]   Metrics: algo_runs=4051
+[2026-04-28T13:22:33.774206]   vqe {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T13:22:33.809458]   Metrics: algo_runs=4052
+[2026-04-28T13:22:33.809593] Testing qft...
+[2026-04-28T13:22:33.845184]   qft {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T13:22:33.880116]   Metrics: algo_runs=4053
+[2026-04-28T13:22:33.917328]   qft {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T13:22:33.951087]   Metrics: algo_runs=4054
+[2026-04-28T13:22:33.987015]   qft {'qubits': 6} -> simulated (0.04s)
+[2026-04-28T13:22:34.022982]   Metrics: algo_runs=4055
+[2026-04-28T13:22:34.058708]   qft {'qubits': 8} -> simulated (0.04s)
+[2026-04-28T13:22:34.093326]   Metrics: algo_runs=4056
+[2026-04-28T13:22:34.093451] Testing shors...
+[2026-04-28T13:22:34.129921]   shors {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T13:22:34.164474]   Metrics: algo_runs=4057
+[2026-04-28T13:22:34.199955]   shors {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T13:22:34.233910]   Metrics: algo_runs=4058
+[2026-04-28T13:22:34.234040] Testing bell...
+[2026-04-28T13:22:34.269518]   bell {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T13:22:34.304192]   Metrics: algo_runs=4059
+[2026-04-28T13:22:34.340154]   bell {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T13:22:34.374061]   Metrics: algo_runs=4060
+[2026-04-28T13:22:34.410073]   bell {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T13:22:34.443857]   Metrics: algo_runs=4061
+[2026-04-28T13:22:34.443978] Testing ghz...
+[2026-04-28T13:22:34.479689]   ghz {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T13:22:34.539797]   Metrics: algo_runs=4062
+[2026-04-28T13:22:34.613088]   ghz {'qubits': 4} -> simulated (0.07s)
+[2026-04-28T13:22:34.656041]   Metrics: algo_runs=4063
+[2026-04-28T13:22:34.691942]   ghz {'qubits': 5} -> simulated (0.04s)
+[2026-04-28T13:22:34.725434]   Metrics: algo_runs=4064
+[2026-04-28T13:22:34.769576]   ghz {'qubits': 6} -> simulated (0.04s)
+[2026-04-28T13:22:34.803737]   Metrics: algo_runs=4065
+[2026-04-28T13:22:34.803883] Testing supremacy...
+[2026-04-28T13:22:34.839160]   supremacy {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T13:22:34.873829]   Metrics: algo_runs=4066
+[2026-04-28T13:22:34.911270]   supremacy {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T13:22:34.945158]   Metrics: algo_runs=4067
+[2026-04-28T13:22:34.982793]   supremacy {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T13:22:35.016655]   Metrics: algo_runs=4068
+[2026-04-28T13:22:35.016769] === Parameter Sweep Complete ===
+[2026-04-28T13:22:44.061408] Daily summary written to /root/.openclaw/workspace/experiments/daily_summary.md
+[2026-04-28T15:43:40.414133] Daily summary written to /root/.openclaw/workspace/experiments/daily_summary.md
+[2026-04-28T18:31:44.043646] === Starting Quantum Parameter Sweep ===
+[2026-04-28T18:31:44.079974] Available algorithms: ['grover', 'qaoa', 'vqe', 'qft', 'shors', 'bell', 'ghz', 'supremacy']
+[2026-04-28T18:31:44.080105] Testing grover...
+[2026-04-28T18:31:44.114102]   grover {'qubits': 2} -> simulated (0.03s)
+[2026-04-28T18:31:44.149200]   Metrics: algo_runs=4069
+[2026-04-28T18:31:44.185242]   grover {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T18:31:44.220990]   Metrics: algo_runs=4070
+[2026-04-28T18:31:44.257548]   grover {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T18:31:44.292566]   Metrics: algo_runs=4071
+[2026-04-28T18:31:44.292688] Testing qaoa...
+[2026-04-28T18:31:44.329430]   qaoa {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T18:31:44.364416]   Metrics: algo_runs=4072
+[2026-04-28T18:31:44.400748]   qaoa {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T18:31:44.435738]   Metrics: algo_runs=4073
+[2026-04-28T18:31:44.472133]   qaoa {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T18:31:44.506304]   Metrics: algo_runs=4074
+[2026-04-28T18:31:44.506426] Testing vqe...
+[2026-04-28T18:31:44.553508]   vqe {'qubits': 2} -> simulated (0.05s)
+[2026-04-28T18:31:44.599665]   Metrics: algo_runs=4075
+[2026-04-28T18:31:44.634705]   vqe {'qubits': 3} -> simulated (0.03s)
+[2026-04-28T18:31:44.669794]   Metrics: algo_runs=4076
+[2026-04-28T18:31:44.669914] Testing qft...
+[2026-04-28T18:31:44.704838]   qft {'qubits': 2} -> simulated (0.03s)
+[2026-04-28T18:31:44.739092]   Metrics: algo_runs=4077
+[2026-04-28T18:31:44.774233]   qft {'qubits': 4} -> simulated (0.03s)
+[2026-04-28T18:31:44.808347]   Metrics: algo_runs=4078
+[2026-04-28T18:31:44.844471]   qft {'qubits': 6} -> simulated (0.04s)
+[2026-04-28T18:31:44.879480]   Metrics: algo_runs=4079
+[2026-04-28T18:31:44.915069]   qft {'qubits': 8} -> simulated (0.04s)
+[2026-04-28T18:31:44.949443]   Metrics: algo_runs=4080
+[2026-04-28T18:31:44.949593] Testing shors...
+[2026-04-28T18:31:44.984659]   shors {'qubits': 2} -> simulated (0.03s)
+[2026-04-28T18:31:45.019156]   Metrics: algo_runs=4081
+[2026-04-28T18:31:45.054487]   shors {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T18:31:45.088263]   Metrics: algo_runs=4082
+[2026-04-28T18:31:45.088373] Testing bell...
+[2026-04-28T18:31:45.122017]   bell {'qubits': 2} -> simulated (0.03s)
+[2026-04-28T18:31:45.156733]   Metrics: algo_runs=4083
+[2026-04-28T18:31:45.191828]   bell {'qubits': 3} -> simulated (0.03s)
+[2026-04-28T18:31:45.226723]   Metrics: algo_runs=4084
+[2026-04-28T18:31:45.263434]   bell {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T18:31:45.297643]   Metrics: algo_runs=4085
+[2026-04-28T18:31:45.297761] Testing ghz...
+[2026-04-28T18:31:45.333944]   ghz {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T18:31:45.369808]   Metrics: algo_runs=4086
+[2026-04-28T18:31:45.404963]   ghz {'qubits': 4} -> simulated (0.03s)
+[2026-04-28T18:31:45.439323]   Metrics: algo_runs=4087
+[2026-04-28T18:31:45.474048]   ghz {'qubits': 5} -> simulated (0.03s)
+[2026-04-28T18:31:45.509012]   Metrics: algo_runs=4088
+[2026-04-28T18:31:45.543756]   ghz {'qubits': 6} -> simulated (0.03s)
+[2026-04-28T18:31:45.579346]   Metrics: algo_runs=4089
+[2026-04-28T18:31:45.579476] Testing supremacy...
+[2026-04-28T18:31:45.615566]   supremacy {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T18:31:45.650206]   Metrics: algo_runs=4090
+[2026-04-28T18:31:45.684784]   supremacy {'qubits': 3} -> simulated (0.03s)
+[2026-04-28T18:31:45.721705]   Metrics: algo_runs=4091
+[2026-04-28T18:31:45.759527]   supremacy {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T18:31:45.795236]   Metrics: algo_runs=4092
+[2026-04-28T18:31:45.795369] === Parameter Sweep Complete ===
+[2026-04-28T21:32:23.305292] === Starting Quantum Parameter Sweep ===
+[2026-04-28T21:32:23.342647] Available algorithms: ['grover', 'qaoa', 'vqe', 'qft', 'shors', 'bell', 'ghz', 'supremacy']
+[2026-04-28T21:32:23.342797] Testing grover...
+[2026-04-28T21:32:23.379178]   grover {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T21:32:23.414808]   Metrics: algo_runs=4093
+[2026-04-28T21:32:23.451475]   grover {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T21:32:23.487182]   Metrics: algo_runs=4094
+[2026-04-28T21:32:23.523710]   grover {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T21:32:23.559979]   Metrics: algo_runs=4095
+[2026-04-28T21:32:23.560128] Testing qaoa...
+[2026-04-28T21:32:23.598000]   qaoa {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T21:32:23.632787]   Metrics: algo_runs=4096
+[2026-04-28T21:32:23.669548]   qaoa {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T21:32:23.704322]   Metrics: algo_runs=4097
+[2026-04-28T21:32:23.740041]   qaoa {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T21:32:23.776128]   Metrics: algo_runs=4098
+[2026-04-28T21:32:23.776255] Testing vqe...
+[2026-04-28T21:32:23.812866]   vqe {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T21:32:23.847914]   Metrics: algo_runs=4099
+[2026-04-28T21:32:23.886304]   vqe {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T21:32:23.922384]   Metrics: algo_runs=4100
+[2026-04-28T21:32:23.922506] Testing qft...
+[2026-04-28T21:32:23.957755]   qft {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T21:32:23.992486]   Metrics: algo_runs=4101
+[2026-04-28T21:32:24.028165]   qft {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T21:32:24.063563]   Metrics: algo_runs=4102
+[2026-04-28T21:32:24.099170]   qft {'qubits': 6} -> simulated (0.04s)
+[2026-04-28T21:32:24.133216]   Metrics: algo_runs=4103
+[2026-04-28T21:32:24.169304]   qft {'qubits': 8} -> simulated (0.04s)
+[2026-04-28T21:32:24.206760]   Metrics: algo_runs=4104
+[2026-04-28T21:32:24.206880] Testing shors...
+[2026-04-28T21:32:24.242794]   shors {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T21:32:24.279903]   Metrics: algo_runs=4105
+[2026-04-28T21:32:24.316081]   shors {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T21:32:24.351712]   Metrics: algo_runs=4106
+[2026-04-28T21:32:24.351835] Testing bell...
+[2026-04-28T21:32:24.389460]   bell {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T21:32:24.424462]   Metrics: algo_runs=4107
+[2026-04-28T21:32:24.460000]   bell {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T21:32:24.494646]   Metrics: algo_runs=4108
+[2026-04-28T21:32:24.531067]   bell {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T21:32:24.566217]   Metrics: algo_runs=4109
+[2026-04-28T21:32:24.566353] Testing ghz...
+[2026-04-28T21:32:24.602479]   ghz {'qubits': 3} -> simulated (0.04s)
+[2026-04-28T21:32:24.637591]   Metrics: algo_runs=4110
+[2026-04-28T21:32:24.674664]   ghz {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T21:32:24.709293]   Metrics: algo_runs=4111
+[2026-04-28T21:32:24.745116]   ghz {'qubits': 5} -> simulated (0.04s)
+[2026-04-28T21:32:24.779675]   Metrics: algo_runs=4112
+[2026-04-28T21:32:24.815114]   ghz {'qubits': 6} -> simulated (0.04s)
+[2026-04-28T21:32:24.849679]   Metrics: algo_runs=4113
+[2026-04-28T21:32:24.849796] Testing supremacy...
+[2026-04-28T21:32:24.885786]   supremacy {'qubits': 2} -> simulated (0.04s)
+[2026-04-28T21:32:24.920589]   Metrics: algo_runs=4114
+[2026-04-28T21:32:24.955245]   supremacy {'qubits': 3} -> simulated (0.03s)
+[2026-04-28T21:32:24.989477]   Metrics: algo_runs=4115
+[2026-04-28T21:32:25.025953]   supremacy {'qubits': 4} -> simulated (0.04s)
+[2026-04-28T21:32:25.061455]   Metrics: algo_runs=4116
+[2026-04-28T21:32:25.061577] === Parameter Sweep Complete ===
+[2026-04-28T21:32:43.434453] Daily summary written to /root/.openclaw/workspace/experiments/daily_summary.md

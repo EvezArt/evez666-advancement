@@ -5,7 +5,7 @@
     "messages": [
       {
         "role": "user",
-        "content": "=== CRON JOB STATUSES (2026-04-23 19:18 UTC) ===\nTotal jobs: 17\nHealth: 53% OK (9/17), 8 errors\nActive errors: 6 rate-limit (Money Machine 3+, Quantum Sweep 2, Market Scan, AI Research, Dropbox, NL Test), 2 config decay (self-improvement-cycle main+dup, 15+ consecutive channel misconfig)\nRevenue Triad: Full Stack OK, Money Machine OK (may re-degrade), Revenue Tracker ERROR rate_limit\nMonitoring tier consumed: Cognition Engine 5 consecutive failures\nEVEZ Studio: split-brain - PID 2932 but ports 4040/4041 not listening\nRevenue: $10.04 total earnings\nSystem phase: Phase 3 systemic cascade, monitoring tier consumed, system blind"
+        "content": "Cron Jobs Status (2026-04-28 20:13 UTC):\n- Auto-Route Failover: ok (errors:0) last:03:20 UTC next:07:37 UTC\n- Shared Brain Consolidation: ok (errors:0) last:03:27 UTC next:07:37 UTC\n- Quantum Sweep: ok (errors:0) last:04:36 UTC next:07:37 UTC\n- Money Machine: ok (errors:0) last:07:33 UTC next:07:40 UTC\n- KiloClaw Full Stack: ok (errors:0) last:07:26 UTC next:07:41 UTC\n- Mem0 Auto-Memory: ok (errors:0) last:06:46 UTC next:07:46 UTC\n- Revenue Tracker: ok (errors:0) last:07:27 UTC next:07:48 UTC\n- nl_test_morning: ok (errors:0) last:09:27 UTC next:08:00 UTC\n- Sphinx Letters: ok (errors:0) last:07:37 UTC next:08:03 UTC\n- cron-c-tank-wave: ok (errors:0) last:04:33 UTC next:08:04 UTC\n- Run /root/.openclaw/workspace/factory/run_continuous.sh to\u2026: ok (errors:0) last:07:34 UTC next:08:34 UTC\n- Market Scan: error (errors:1) last:00:55 UTC next:09:17 UTC\n- KiloClaw Revenue Loop: ok (errors:0) last:05:09 UTC next:09:31 UTC\n- Memory Dreaming Promotion: None (errors:0) last:Never next:10:00 UTC\n- AI Research Lab: ok (errors:0) last:02:46 UTC next:14:46 UTC\n- Cognition Enhancement Engine: None (errors:0) last:Never next:01:47 UTC\n- Daily Dropbox Backup: ok (errors:0) last:02:47 UTC next:02:00 UTC"
       }
     ]
   },
@@ -15,7 +15,7 @@
     "messages": [
       {
         "role": "user",
-        "content": "=== REVENUE CIRCUIT STATES ===\nActual: $10.04 (api_sale $0.05, content_sale $9.99)\nProjected: $1.8M/day potential\nPayment blockade: ACTIVE - Ko-fi bank unlinked, PayPal not activated, Gumroad not live\nCircuit status: Money Machine degraded (3+ rate_limits), Full Stack OK, Revenue Tracker ERROR (rate_limit)\nOrchestrators: ACTIVE since 05:06 UTC\nEVEZ Studio: OFFLINE >10h split-brain\nRevenue activation rule: TRIGGERED but blocked by payments and Full Stack\nCircuit state: active_but_payment_disconnected"
+        "content": "Revenue Circuit States (2026-04-28 20:13 UTC):\nEarnings (projected): $0 from 0 sources\nActual revenue: 10.040000000000001 from 4 transactions\nLast updated: 2026-04-28T07:12:19Z\nCircuit state: active_but_payment_disconnected\nPayment gap: Ko-fi/PayPal/Gumroad accounts not configured; EVEZ Studio web endpoints dead (4040/4041) - dual blockade prevents monetization\nRecent threat: Persistent critical blockades: EVEZ Studio split-brain (>18h), payment processors unconnected (>23h)..."
       }
     ]
   },
@@ -25,7 +25,7 @@
     "messages": [
       {
         "role": "user",
-        "content": "=== ERRORS LAST HOUR ===\nMonitoring tier: CONSUMED - Cognition Engine 5 consecutive failures (rate_limit + file edit)\nJob errors (6 rate-limit): Money Machine (3+), Quantum Sweep (2+), Market Scan, AI Research, Dropbox, NL Test\nConfig decay (2): self-improvement-cycle 15+ consecutive channel misconfig (402 billing error)\nPhase 3 cascade: 14/17 competing for GitHub Models quota\nChurn rate: ~23%\nNo syslog accessible; detection via cron & heartbeat-state\nMeta-failure: monitoring consumption = system blind"
+        "content": "Errors from Last Hour (2026-04-28 20:13 UTC):\nNo significant errors found in the last hour"
       }
     ]
   },
@@ -35,22 +35,8 @@
     "messages": [
       {
         "role": "user",
-        "content": "=== KEY DECISIONS MADE ===\n1) Monitoring restoration P0-prerequisite (cannot self-heal blind)\n2) Split-brain gap: agents detect but cannot restart services (Steven needed)\n3) Revenue triad supersedes overall health - ANY triad degraded = revenue blocked\n4) Config decay immune to backoff - surgical fix before monitoring restores\n5) Auto-Route debt (detection-only) becomes P0 during cascade - need automation\n6) File-first memory validated but needs flock for production\n7) Payment blockade independent - technical + external both must clear\n8) Recovery non-monotonic - churn persists despite health gains\nPriority sequence: Restore monitoring -> Contain churn -> Restart EVEZ -> Connect payments -> Fix config decay -> Implement automation\nMeta-learning: monitoring consumption = final systemic failure point"
+        "content": "Key Decisions Made (2026-04-28 20:13 UTC):\nNo recent decisions recorded in milestones\n- Monitoring restoration prioritized (cannot self-heal blind)\n- Revenue triad takes precedence - any triad degraded blocks revenue\n- Payment blockade requires user intervention (Ko-fi/PayPal/Gumroad)\n- EVEZ Studio split-brain requires manual restart of services\n- Free-tier model switch validated for self-improvement cycle"
       }
     ]
-  },
-  {
-    "timestamp": "2026-04-24T03:21:20.334301Z",
-    "user_id": "EvezArt",
-    "cron_job_id": "9132e9c2-a6be-4e7b-994c-ef5c26c552ef",
-    "records_saved": 4,
-    "categories": [
-      "cron_status",
-      "revenue_circuits",
-      "errors_last_hour",
-      "key_decisions"
-    ],
-    "success": true,
-    "mem0_response": "All 4 records saved successfully via Composio_MULTI_EXECUTE_TOOL"
   }
 ]

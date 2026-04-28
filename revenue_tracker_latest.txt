@@ -1,4 +1,4 @@
-REVENUE TRACKER REPORT - Sunday, April 26th, 2026 - 7:50 PM (America/Los_Angeles)
+REVENUE TRACKER REPORT - Monday, April 27th, 2026 - 11:50 PM (America/Los_Angeles)
 
 === EARNINGS CHECK ===
 File: /root/.openclaw/workspace/money/earnings.json
@@ -16,16 +16,18 @@ File: /root/.openclaw/workspace/money/actual_revenue.json
 - Total actual revenue tracked: $10.04 (all simulated/test amounts)
 
 === CIRCUITS STATUS ===
-Directory: /root/.openclaw/workspace/circuits/
-- Found 7 circuit scripts:
-  * data_factory.py
-  * content_amplifier.py
-  * alert_empire.py
-  * customer_closer.py
-  * cloud_forge.py
-  * the_money_spin.py
-  * backup_god.py
-- Status: No processes found for any circuit scripts (all circuits appear down)
+Directory: /root/.openclaw/workspace/money/circuits/
+- Status: Directory does not exist.
+- Known circuit scripts locations:
+  * data_factory.py: /root/.openclaw/workspace/factory/data_factory.py
+  * content_amplifier.py: /root/.openclaw/workspace/factory/content_amplifier.py
+  * alert_empire.py: /root/.openclaw/workspace/factory/alert_empire.py
+  * customer_closer.py: /root/.openclaw/workspace/factory/customer_closer.py
+  * cloud_forge.py: /root/.openclaw/workspace/factory/cloud_forge.py
+  * the_money_spin.py: /root/.openclaw/workspace/factory/the_money_spin.py
+  * backup_god.py: /root/.openclaw/workspace/factory/backup_god.py
+- Running processes: None found for any circuit scripts.
+- Status: All circuits appear to be down (no running processes).
 
 === PROJECTED REVENUE ===
 - Daily: $1,800,000

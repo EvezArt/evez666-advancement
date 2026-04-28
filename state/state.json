@@ -42716,9 +42716,3844 @@
           "timestamp": "2026-04-28T00:33:10.825451"
         }
       }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T00:57:21.167626",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T00:57:21.167673"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T00:57:21.167647",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T00:57:21.167685"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T00:57:21.167650",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T00:57:21.167693"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T00:57:21.167695"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T00:57:59.966242",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T00:57:59.966299"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T00:57:59.966270",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T00:57:59.966311"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T00:57:59.966274",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T00:57:59.966319"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T00:57:59.966321"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T01:13:22.479793",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T01:13:22.479840"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T01:13:22.479814",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T01:13:22.479851"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T01:13:22.479817",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T01:13:22.479859"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T01:13:22.479861"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T01:32:10.109170",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T01:32:10.109232"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T01:32:10.109202",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T01:32:10.109248"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T01:32:10.109206",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T01:32:10.109257"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T01:32:10.109258"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T01:46:29.378760",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T01:46:29.378817"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T01:46:29.378788",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T01:46:29.378828"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T01:46:29.378791",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T01:46:29.378837"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T01:46:29.378839"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T02:15:04.930777",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T02:15:04.930843"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T02:15:04.930812",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T02:15:04.930856"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T02:15:04.930816",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T02:15:04.930864"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T02:15:04.930866"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T03:05:13.353592",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T03:05:13.353648"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T03:05:13.353621",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T03:05:13.353660"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T03:05:13.353625",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T03:05:13.353669"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T03:05:13.353670"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T03:52:07.647240",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T03:52:07.647297"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T03:52:07.647265",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T03:52:07.647309"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T03:52:07.647269",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T03:52:07.647317"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T03:52:07.647319"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T03:52:43.744836",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T03:52:43.744891"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T03:52:43.744863",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T03:52:43.744903"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T03:52:43.744866",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T03:52:43.744911"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T03:52:43.744913"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T04:11:27.945539",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T04:11:27.945589"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T04:11:27.945562",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T04:11:27.945600"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T04:11:27.945566",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T04:11:27.945612"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T04:11:27.945614"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T04:45:12.834049",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T04:45:12.834095"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T04:45:12.834068",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T04:45:12.834107"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T04:45:12.834072",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T04:45:12.834116"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T04:45:12.834117"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T05:02:12.309053",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T05:02:12.309118"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T05:02:12.309087",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T05:02:12.309130"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T05:02:12.309090",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T05:02:12.309138"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T05:02:12.309140"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T05:14:37.625200",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T05:14:37.625241"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T05:14:37.625218",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T05:14:37.625252"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T05:14:37.625221",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T05:14:37.625264"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T05:14:37.625266"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T05:42:02.780795",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T05:42:02.780873"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T05:42:02.780818",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T05:42:02.780887"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T05:42:02.780822",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T05:42:02.780895"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T05:42:02.780897"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T05:56:05.709975",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T05:56:05.710026"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T05:56:05.709999",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T05:56:05.710038"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T05:56:05.710002",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T05:56:05.710046"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T05:56:05.710048"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T06:04:54.394422",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T06:04:54.394470"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T06:04:54.394443",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T06:04:54.394482"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T06:04:54.394447",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T06:04:54.394490"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T06:04:54.394491"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T06:17:42.121411",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T06:17:42.121452"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T06:17:42.121428",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T06:17:42.121467"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T06:17:42.121432",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T06:17:42.121476"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T06:17:42.121478"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T06:49:33.166765",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T06:49:33.166813"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T06:49:33.166787",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T06:49:33.166825"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T06:49:33.166790",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T06:49:33.166834"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T06:49:33.166836"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T07:04:34.320690",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T07:04:34.320736"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T07:04:34.320711",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T07:04:34.320748"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T07:04:34.320714",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T07:04:34.320756"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T07:04:34.320758"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T07:04:51.542420",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T07:04:51.542464"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T07:04:51.542439",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T07:04:51.542476"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T07:04:51.542443",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T07:04:51.542484"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T07:04:51.542486"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T07:51:55.068248",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T07:51:55.068324"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T07:51:55.068291",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T07:51:55.068337"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T07:51:55.068294",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T07:51:55.068444"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T07:51:55.068447"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T08:12:27.488519",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T08:12:27.488596"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T08:12:27.488562",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T08:12:27.488609"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T08:12:27.488566",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T08:12:27.488617"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T08:12:27.488619"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T08:18:35.690879",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T08:18:35.690924"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T08:18:35.690898",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T08:18:35.690974"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T08:18:35.690902",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T08:18:35.690988"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T08:18:35.690990"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T08:33:30.248384",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T08:33:30.248458"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T08:33:30.248423",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T08:33:30.248471"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T08:33:30.248427",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T08:33:30.248479"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T08:33:30.248481"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T08:52:42.370307",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T08:52:42.370380"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T08:52:42.370346",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T08:52:42.370392"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T08:52:42.370350",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T08:52:42.370401"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T08:52:42.370402"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T09:20:48.448584",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T09:20:48.448631"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T09:20:48.448605",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T09:20:48.448643"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T09:20:48.448608",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T09:20:48.448652"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T09:20:48.448653"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T09:42:32.354941",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T09:42:32.355038"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T09:42:32.355007",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T09:42:32.355051"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T09:42:32.355012",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T09:42:32.355059"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T09:42:32.355061"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T09:59:12.127879",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T09:59:12.127928"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T09:59:12.127901",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T09:59:12.127939"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T09:59:12.127905",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T09:59:12.127948"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T09:59:12.127949"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T09:59:47.853136",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T09:59:47.853179"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T09:59:47.853154",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T09:59:47.853194"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T09:59:47.853158",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T09:59:47.853202"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T09:59:47.853203"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T10:14:14.468651",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T10:14:14.468701"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T10:14:14.468675",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T10:14:14.468717"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T10:14:14.468678",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T10:14:14.468726"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T10:14:14.468728"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T10:48:46.641124",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T10:48:46.641175"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T10:48:46.641146",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T10:48:46.641187"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T10:48:46.641150",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T10:48:46.641195"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T10:48:46.641196"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T10:49:15.649092",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T10:49:15.649141"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T10:49:15.649114",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T10:49:15.649153"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T10:49:15.649118",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T10:49:15.649161"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T10:49:15.649162"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T11:08:57.157489",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T11:08:57.157542"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T11:08:57.157516",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T11:08:57.157554"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T11:08:57.157519",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T11:08:57.157563"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T11:08:57.157564"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T11:22:04.431395",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T11:22:04.431456"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T11:22:04.431421",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T11:22:04.431468"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T11:22:04.431426",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T11:22:04.431477"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T11:22:04.431479"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T11:42:33.625341",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T11:42:33.625398"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T11:42:33.625368",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T11:42:33.625410"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T11:42:33.625372",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T11:42:33.625419"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T11:42:33.625421"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T12:09:22.668792",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T12:09:22.668840"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T12:09:22.668814",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T12:09:22.668852"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T12:09:22.668818",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T12:09:22.668863"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T12:09:22.668865"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T12:23:05.201318",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T12:23:05.201402"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T12:23:05.201359",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T12:23:05.201417"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T12:23:05.201366",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T12:23:05.201429"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T12:23:05.201432"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T13:26:41.930168",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T13:26:41.930218"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T13:26:41.930191",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T13:26:41.930230"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T13:26:41.930194",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T13:26:41.930238"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T13:26:41.930240"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T13:35:46.707553",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T13:35:46.707599"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T13:35:46.707572",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T13:35:46.707614"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T13:35:46.707575",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T13:35:46.707625"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T13:35:46.707628"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T13:47:05.694858",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T13:47:05.694904"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T13:47:05.694878",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T13:47:05.694915"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T13:47:05.694881",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T13:47:05.694945"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T13:47:05.694948"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T14:05:10.288797",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T14:05:10.288860"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T14:05:10.288831",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T14:05:10.288872"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T14:05:10.288834",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T14:05:10.288880"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T14:05:10.288882"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T14:21:04.884707",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T14:21:04.884752"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T14:21:04.884727",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T14:21:04.884764"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T14:21:04.884731",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T14:21:04.884772"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T14:21:04.884774"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T14:38:05.012662",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T14:38:05.012708"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T14:38:05.012682",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T14:38:05.012724"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T14:38:05.012685",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T14:38:05.012733"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T14:38:05.012734"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T15:14:39.767332",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T15:14:39.767402"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T15:14:39.767366",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T15:14:39.767414"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T15:14:39.767372",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T15:14:39.767422"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T15:14:39.767424"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T15:45:55.381637",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T15:45:55.381682"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T15:45:55.381657",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T15:45:55.381694"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T15:45:55.381661",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T15:45:55.381702"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T15:45:55.381704"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T16:23:32.806024",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T16:23:32.806077"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T16:23:32.806050",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T16:23:32.806089"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T16:23:32.806053",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T16:23:32.806097"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T16:23:32.806099"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T16:26:15.658166",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T16:26:15.658220"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T16:26:15.658192",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T16:26:15.658233"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T16:26:15.658196",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T16:26:15.658242"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T16:26:15.658244"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T16:40:12.414911",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T16:40:12.414993"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T16:40:12.414939",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T16:40:12.415005"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T16:40:12.414943",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T16:40:12.415013"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T16:40:12.415015"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T17:06:41.913229",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T17:06:41.913284"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T17:06:41.913252",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T17:06:41.913297"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T17:06:41.913256",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T17:06:41.913308"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T17:06:41.913310"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T17:22:40.629920",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T17:22:40.629972"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T17:22:40.629942",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T17:22:40.629984"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T17:22:40.629946",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T17:22:40.629992"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T17:22:40.629994"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T17:39:03.542196",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T17:39:03.542240"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T17:39:03.542215",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T17:39:03.542252"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T17:39:03.542219",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T17:39:03.542260"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T17:39:03.542262"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T18:25:14.306905",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T18:25:14.307016"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T18:25:14.306937",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T18:25:14.307030"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T18:25:14.306944",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T18:25:14.307038"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T18:25:14.307040"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T18:51:44.791862",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T18:51:44.791908"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T18:51:44.791882",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T18:51:44.791920"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T18:51:44.791886",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T18:51:44.791929"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T18:51:44.791930"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T18:52:22.467879",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T18:52:22.467924"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T18:52:22.467900",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T18:52:22.467941"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T18:52:22.467903",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T18:52:22.467950"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T18:52:22.467952"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T19:50:47.166540",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T19:50:47.166599"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T19:50:47.166570",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T19:50:47.166611"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T19:50:47.166574",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T19:50:47.166619"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T19:50:47.166621"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T20:16:03.838781",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T20:16:03.838836"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T20:16:03.838805",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T20:16:03.838852"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T20:16:03.838809",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T20:16:03.838860"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T20:16:03.838862"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T20:29:52.868227",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T20:29:52.868277"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T20:29:52.868251",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T20:29:52.868289"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T20:29:52.868254",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T20:29:52.868297"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T20:29:52.868299"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T20:44:58.294654",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T20:44:58.294703"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T20:44:58.294675",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T20:44:58.294715"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T20:44:58.294679",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T20:44:58.294723"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T20:44:58.294725"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T21:11:47.902578",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T21:11:47.902627"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T21:11:47.902599",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T21:11:47.902639"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T21:11:47.902602",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T21:11:47.902651"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T21:11:47.902652"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T21:14:13.260295",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T21:14:13.260344"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T21:14:13.260318",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T21:14:13.260356"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T21:14:13.260321",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T21:14:13.260365"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T21:14:13.260367"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T21:30:44.886743",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T21:30:44.886797"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T21:30:44.886770",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T21:30:44.886809"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T21:30:44.886773",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T21:30:44.886817"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T21:30:44.886819"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T21:45:12.431090",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T21:45:12.431138"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T21:45:12.431112",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T21:45:12.431150"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T21:45:12.431116",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T21:45:12.431162"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T21:45:12.431164"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T22:17:28.118865",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T22:17:28.118939"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T22:17:28.118906",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T22:17:28.118952"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T22:17:28.118910",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T22:17:28.118961"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T22:17:28.118962"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T22:38:24.428461",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T22:38:24.428517"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T22:38:24.428490",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T22:38:24.428528"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T22:38:24.428494",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T22:38:24.428537"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T22:38:24.428538"
+        }
+      }
+    },
+    {
+      "source": "gmail",
+      "text": "interested in AI automation",
+      "user": "lead1@test.com",
+      "timestamp": "2026-04-28T22:48:40.060682",
+      "thread_id": "c72b2879",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead1@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T22:48:40.060745"
+      }
+    },
+    {
+      "source": "linkedin",
+      "text": "need help with revenue",
+      "user": "lead2@test.com",
+      "timestamp": "2026-04-28T22:48:40.060715",
+      "thread_id": "b572723c",
+      "score": 75,
+      "decision": "CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "sent": true,
+        "method": "gmail",
+        "to": "lead2@test.com",
+        "action": "CLOSE",
+        "timestamp": "2026-04-28T22:48:40.060757"
+      }
+    },
+    {
+      "source": "telegram",
+      "text": "how much for bot?",
+      "user": "lead3@test.com",
+      "timestamp": "2026-04-28T22:48:40.060721",
+      "thread_id": "a796a9f8",
+      "score": 85,
+      "decision": "AUTO_CLOSE",
+      "policy": "EXECUTE",
+      "result": {
+        "offer": {
+          "sent": true,
+          "method": "gmail",
+          "to": "lead3@test.com",
+          "action": "AUTO_CLOSE",
+          "timestamp": "2026-04-28T22:48:40.060765"
+        },
+        "stripe": {
+          "link_created": true,
+          "amount": 2900,
+          "currency": "usd",
+          "timestamp": "2026-04-28T22:48:40.060767"
+        }
+      }
     }
   ],
   "payments": [],
   "scores": {},
-  "saved": "2026-04-28T00:33:10.825503"
+  "saved": "2026-04-28T22:48:40.060815"
 }
