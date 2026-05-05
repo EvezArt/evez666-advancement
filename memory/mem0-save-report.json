@@ -1,0 +1,45 @@
+{
+  "saved_at": "2026-05-04T22:10:00Z",
+  "cron_job_statuses": {
+    "total": 18,
+    "ok": 16,
+    "error": 2,
+    "misconfigured": 0,
+    "critical_jobs": {
+      "money-machine": "OK",
+      "revenue-loop": "OK",
+      "full-stack": "OK"
+    },
+    "error_jobs": [
+      {"name": "Market Scan", "error": "rate_limit", "consecutive": 1},
+      {"name": "Quantum Sweep", "error": "edit_failure", "consecutive": 1}
+    ]
+  },
+  "revenue_circuit_states": {
+    "actual_total": 1.11,
+    "sources_count": 13,
+    "services": {
+      "paid_api": {"status": "RUNNING", "port": 8081},
+      "landing_page": {"status": "RUNNING", "port": 3000}
+    },
+    "gumroad_products": [
+      {"name": "EVEZ-OS-Config-Pack", "price": 29},
+      {"name": "KiloClaw-Setup-Guide", "price": 49},
+      {"name": "Quantum-Calc-API", "price": 0.10}
+    ],
+    "gap_percent": 99.99939
+  },
+  "errors_last_hour": [
+    {"type": "mem0_tools", "status": "unavailable_via_mcporter"},
+    {"type": "market_scan", "error": "rate_limit_exa_api", "consecutive": 1},
+    {"type": "quantum_sweep", "error": "edit_failure", "consecutive": 1},
+    {"type": "cognition_engine", "error": "quota_exhausted_402", "consecutive": 2}
+  ],
+  "key_decisions": [
+    "Revenue activation complete - API port 8081 and landing port 3000 operational",
+    "7 revenue circuits idle - scripts exist but not executing",
+    "Mem0 memory fallback active - using file-first persistence",
+    "No cron adjustments needed - all critical jobs healthy"
+  ],
+  "memory_saved_to": "/root/.openclaw/workspace/memory/2026-05-04.md"
+}

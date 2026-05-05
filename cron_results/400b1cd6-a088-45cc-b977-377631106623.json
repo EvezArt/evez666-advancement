@@ -1,0 +1,36 @@
+{
+  "kiloclaw_loop": {
+    "ingested": 3,
+    "scored": 3,
+    "executed": 3,
+    "escalated": 0,
+    "payments": 0,
+    "timestamp": "2026-05-01T09:48:30.722675"
+  },
+  "inference_fabric": {
+    "status": "ready",
+    "classification": {
+      "model": "phi-mini",
+      "gpu": "node-t4-1",
+      "cost_per_1k": "$0.0002",
+      "latency_ms": 80
+    },
+    "sales_email": {
+      "model": "gpt-class-mid",
+      "gpu": "node-a10g-1",
+      "cost_per_1k": "$0.0020",
+      "latency_ms": 350
+    },
+    "auto_close": {
+      "model": "llama-70b",
+      "gpu": "node-a100-1",
+      "cost_per_1k": "$0.0100",
+      "latency_ms": 900
+    }
+  },
+  "combined": {
+    "status": "success",
+    "rate_limit_encountered": false,
+    "retry_attempts": 0
+  }
+}

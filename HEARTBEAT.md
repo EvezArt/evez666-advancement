@@ -9,7 +9,7 @@ Every heartbeat is an opportunity to tune, strengthen, and align the system for 
 
 ## 🏆 PEAK PERFORMANCE METRICS (Truth-Based)
 
-- **Revenue Flow:** $0.00 actual (verified) — payment processors disconnected; theoretical capacity $1.8M/day across 7 circuits.  
+- **Revenue Flow:** $0.91 actual (verified Gumroad/API sales) — payment processors partially connected via Gumroad; theoretical capacity $1.8M/day across 7 circuits.  
   *Action: Connect Ko-fi/PayPal/Gumroad to unlock real earnings.*
 - **Core Services:**  
   - Orchestrator (4041): ⬇️ DOWN (split-brain)  

@@ -1,0 +1,92 @@
+127.0.0.1 - - [01/May/2026 15:06:44] "GET /product/quantum_calc HTTP/1.1" 200 -
+127.0.0.1 - - [01/May/2026 15:10:59] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 15:10:59] "GET /health HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 15:10:59] "GET /product/quantum_calc HTTP/1.1" 200 -
+127.0.0.1 - - [01/May/2026 15:11:52] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 15:11:52] "GET /health HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 15:11:52] "GET /product/quantum_calc HTTP/1.1" 200 -
+127.0.0.1 - - [01/May/2026 15:12:14] "GET /product/quantum_calc HTTP/1.1" 200 -
+127.0.0.1 - - [01/May/2026 15:12:14] code 400, message Unknown task: quantum
+127.0.0.1 - - [01/May/2026 15:12:14] "POST /api/charge HTTP/1.1" 400 -
+127.0.0.1 - - [01/May/2026 15:12:33] "POST /api/charge HTTP/1.1" 200 -
+127.0.0.1 - - [01/May/2026 15:13:14] "GET /product/analysis HTTP/1.1" 200 -
+127.0.0.1 - - [01/May/2026 15:14:08] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 15:14:08] "GET /api/charge HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 15:14:37] code 400, message Invalid payment token
+127.0.0.1 - - [01/May/2026 15:14:37] "POST /api/charge HTTP/1.1" 400 -
+127.0.0.1 - - [01/May/2026 15:27:07] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 15:27:07] "GET /api/status HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 15:27:10] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 15:27:10] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 15:27:13] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 15:27:13] "GET /api/status HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 15:27:13] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 15:27:13] "GET /health HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 15:42:41] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 15:42:41] "GET /api/charge HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 15:42:46] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 15:42:46] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 15:57:07] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 15:57:07] "GET /api/charge HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 15:58:12] "GET /product/quantum_calc HTTP/1.1" 200 -
+127.0.0.1 - - [01/May/2026 16:00:46] "GET /product/quantum_calc HTTP/1.1" 200 -
+127.0.0.1 - - [01/May/2026 16:22:42] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 16:22:42] "GET /api/charge HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 17:09:06] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 17:09:06] "GET /api/status HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 17:10:06] "GET /product/evez_template HTTP/1.1" 200 -
+127.0.0.1 - - [01/May/2026 17:10:06] "GET /product/prompt_pack HTTP/1.1" 200 -
+127.0.0.1 - - [01/May/2026 17:37:25] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 17:37:25] "GET /api/charge HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 17:37:29] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 17:37:29] "GET /product/test HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 17:37:34] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 17:37:34] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 17:46:12] code 400, message Unknown task: None
+127.0.0.1 - - [01/May/2026 17:46:12] "POST /api/charge HTTP/1.1" 400 -
+127.0.0.1 - - [01/May/2026 18:09:12] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 18:09:12] "GET /api/charge HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 18:09:15] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 18:09:15] "GET /product/evez-os HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 18:10:57] code 400, message Unknown task: None
+127.0.0.1 - - [01/May/2026 18:10:57] "POST /api/charge HTTP/1.1" 400 -
+127.0.0.1 - - [01/May/2026 18:31:19] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 18:31:19] "GET /api/charge HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 18:51:10] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 18:51:10] "GET /api/charge HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 18:51:14] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 18:51:14] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 19:13:19] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 19:13:19] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 19:24:18] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 19:24:18] "GET /api/charge HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 19:24:23] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 19:24:23] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 19:24:56] code 400, message Unknown task: quantum
+127.0.0.1 - - [01/May/2026 19:24:56] "POST /api/charge HTTP/1.1" 400 -
+127.0.0.1 - - [01/May/2026 19:35:18] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 19:35:18] "GET /api/charge HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 19:36:18] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 19:36:18] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 19:39:21] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 19:39:21] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 19:56:35] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 19:56:35] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 19:58:29] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 19:58:29] "GET /api/charge HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 19:58:33] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 19:58:33] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 19:58:44] code 400, message Unknown task: quantum
+127.0.0.1 - - [01/May/2026 19:58:44] "POST /api/charge HTTP/1.1" 400 -
+127.0.0.1 - - [01/May/2026 19:58:48] "POST /api/charge HTTP/1.1" 200 -
+127.0.0.1 - - [01/May/2026 20:30:05] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 20:30:05] "GET /api/status HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 20:30:45] "GET /product/quantum_calc HTTP/1.1" 200 -
+127.0.0.1 - - [01/May/2026 20:38:27] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 20:38:27] "GET /api/charge HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 20:38:38] code 404, message Not Found
+127.0.0.1 - - [01/May/2026 20:38:38] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [01/May/2026 20:39:10] code 400, message Unknown task: None
+127.0.0.1 - - [01/May/2026 20:39:10] "POST /api/charge HTTP/1.1" 400 -
+127.0.0.1 - - [01/May/2026 20:39:34] code 400, message Unknown task: quantum
+127.0.0.1 - - [01/May/2026 20:39:34] "POST /api/charge HTTP/1.1" 400 -

@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-05-01T19:18:00Z",
+  "cron_list": "openclaw cron list",
+  "jobs_checked": 19,
+  "jobs_error": 5,
+  "jobs_ok": 14,
+  "analysis": [
+    {"job": "Mem0 Auto-Memory", "consecutive_errors": 3, "threshold": 3, "adjustment": "none"},
+    {"job": "Cognition Enhancement", "consecutive_errors": 2, "threshold": 3, "adjustment": "none"},
+    {"job": "Market Scan", "consecutive_errors": 1, "threshold": 3, "adjustment": "none"},
+    {"job": "KiloClaw Revenue Loop", "consecutive_errors": 1, "threshold": 3, "action": "immediate_retry_enqueued"},
+    {"job": "AI Research Lab", "consecutive_errors": 1, "threshold": 3, "adjustment": "none"}
+  ],
+  "adjustments_made": [],
+  "critical_job_retries": ["f2662e72-8dd4-4548-bcdf-87d67f16bedc"],
+  "summary": "All jobs below error threshold of 3. No schedule adjustments required. KiloClaw Revenue Loop (critical) enqueued for retry."
+}

@@ -1,19 +1,79 @@
 {
-  "timestamp": "2026-04-28T23:27:50.779479Z",
-  "actual_revenue": 10.040000000000001,
-  "earnings": 0,
-  "projected_revenue_daily": 1800000,
-  "circuits_count": 7,
-  "circuits": [
-    "data_factory.py",
-    "content_amplifier.py",
-    "alert_empire.py",
-    "customer_closer.py",
-    "cloud_forge.py",
-    "the_money_spin.py",
-    "backup_god.py"
-  ],
+  "timestamp": "2026-05-04T12:23:00Z",
+  "date_local": "Monday, May 04th, 2026 - 5:23 AM (America/Los_Angeles)",
+  "earnings_check": {
+    "file": "/root/.openclaw/workspace/money/earnings.json",
+    "total": 1.11,
+    "sources_count": 13,
+    "latest_entry": {
+      "amount": 0.1,
+      "source": "api_quantum_calc",
+      "timestamp": "2026-05-03T02:38:56.422091+00:00"
+    },
+    "services": {
+      "paid_api": {"status": "RUNNING", "port": 8081},
+      "landing_page": {"status": "RUNNING", "port": 3000}
+    },
+    "last_updated": "2026-05-04T07:26:00.000Z",
+    "gumroad_products_ready": 3
+  },
+  "actual_revenue_check": {
+    "file": "/root/.openclaw/workspace/money/actual_revenue.json",
+    "entries_count": 14,
+    "total_tracked": 1.11
+  },
+  "circuits_status": {
+    "directory": "/root/.openclaw/workspace/circuits",
+    "scripts_available": 7,
+    "scripts": ["alert_empire.py", "backup_god.py", "cloud_forge.py", "content_amplifier.py", "customer_closer.py", "data_factory.py", "the_money_spin.py"],
+    "running_processes": 0,
+    "status": "STATIC - NOT EXECUTING",
+    "services_defined": ["Stripe", "Gmail", "Supabase", "Discord", "Slack"]
+  },
+  "projected_revenue": {
+    "daily": 1800000,
+    "source": "historical data from memory files",
+    "note": "Repeatedly referenced as $1.8M/day across 7 circuits in memory logs"
+  },
+  "revenue_analysis": {
+    "actual_vs_projected": {
+      "actual": 1.11,
+      "projected": 1800000,
+      "gap_percent": 99.99939
+    },
+    "change_from_last_check": {
+      "previous_actual": 0.91,
+      "current_actual": 1.11,
+      "change": 0.20,
+      "change_percent": 21.98
+    }
+  },
   "alerts": [
-    "Revenue dropped 100.00% (actual 10.040000000000001 vs projected 1800000/day)"
-  ]
+    {
+      "type": "REVENUE_DROP",
+      "severity": "CRITICAL",
+      "message": "Real revenue: $1.11 vs Projected: $1,800,000/day - 99.99939% gap"
+    },
+    {
+      "type": "CIRCUIT_DOWN",
+      "severity": "WARNING",
+      "message": "All 7 revenue circuits exist but are not running as active processes"
+    },
+    {
+      "type": "POSITIVE_MOVEMENT",
+      "severity": "INFO",
+      "message": "Actual revenue up from $0.91 to $1.11 (+$0.20, +22%) since last check"
+    },
+    {
+      "type": "INFRASTRUCTURE_OK",
+      "severity": "INFO",
+      "message": "API service (port 8081) and landing page (port 3000) both operational"
+    }
+  ],
+  "summary": {
+    "status": "PARTIAL_FUNCTIONALITY",
+    "actual_daily_revenue": 1.11,
+    "projected_daily_revenue": 1800000,
+    "infrastructure_status": "API service and landing page active, circuits static"
+  }
 }

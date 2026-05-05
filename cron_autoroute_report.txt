@@ -1,0 +1,26 @@
+Auto-Route Failover Report - 2026-05-03 07:26 UTC
+==================================================
+
+Checked all 17 cron jobs for consecutiveErrors > 3.
+
+RESULTS:
+- Jobs with consecutiveErrors > 3: NONE
+- Jobs with errors (consecutiveErrors 1-2): 6 jobs
+  * Market Scan (1 error - timeout)
+  * Sphinx Letters (1 error - intermittent)
+  * Cognition Enhancement Engine (2 errors - channel config fixed)
+  * Mem0 Auto-Memory (1-2 errors - file-first backup working)
+  * Shared Brain Consolidation (1-3 errors - file-first backup working)
+  * AI Research Lab (1 error - rate_limit)
+
+CRITICAL JOBS STATUS:
+- Money Machine: OK (consecutiveErrors 0)
+- KiloClaw Revenue Loop: OK (consecutiveErrors 0)
+- KiloClaw Full Stack: OK (consecutiveErrors 0)
+- Revenue Tracker: OK (consecutiveErrors 0)
+
+ADJUSTMENTS: None required - no jobs exceeded threshold
+RETRIES: None required - all critical jobs healthy
+
+SYSTEM STATUS: STABLE
+Next check in ~3 hours.

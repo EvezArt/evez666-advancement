@@ -1,0 +1,38 @@
+{
+  "last_updated": "2026-05-03T02:42:00Z",
+  "cron_jobs_status": {
+    "total": 17,
+    "ok": 13,
+    "with_errors": 4,
+    "error_threshold_exceeded": 0
+  },
+  "revenue_circuit_state": {
+    "total_verified_usd": 1.06,
+    "sales_count": 12,
+    "services": {
+      "paid_api": {"port": 8081, "status": "RUNNING"},
+      "landing_page": {"port": 3000, "status": "RUNNING"}
+    },
+    "last_sale": "2026-05-03T02:38:56Z - quantum_calc $0.10"
+  },
+  "errors_last_hour": {
+    "api_errors": [
+      "404 on /api/charge (GET requests)",
+      "404 on /health endpoint",
+      "404 on /api/status endpoint"
+    ],
+    "cron_errors": [
+      {"job": "Money Machine", "error": "Edit failed on earnings.json"},
+      {"job": "Daily Dropbox Backup", "error": "Edit failed on backup_fixed.sh"},
+      {"job": "Cognition Enhancement Engine", "error": "Channel config required"},
+      {"job": "Mem0 Auto-Memory", "error": "Edit failed on heartbeat-state.json"}
+    ]
+  },
+  "key_decisions": [
+    "Mem0 composio tools unavailable via mcporter - file-first persistence confirmed as working solution",
+    "Tilde path (~/) fails in isolated cron sessions - must use full path (/root/.openclaw/...)",
+    "Workload-budget ceiling (120s) identified as autonomous constraint",
+    "External blockades (EVEZ Studio split-brain, payment disconnection) require USER intervention"
+  ],
+  "saved_to": "memory/mem0_auto_memory_2026-05-03_02-42.md"
+}

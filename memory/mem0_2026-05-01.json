@@ -1,0 +1,69 @@
+# Mem0 Auto-Memory - 2026-05-01 19:31 UTC
+
+## 1. Cron Job Statuses
+
+| Job | Schedule | Status | Last Run |
+|-----|----------|--------|----------|
+| KiloClaw Revenue Loop | every 2h | **error** | 9m ago |
+| Market Scan | every 8h | **error** | 4h ago |
+| Cognition Enhancement | every 2d | **error** | 2d ago |
+| AI Research Lab | every 12h | **error** | 3h ago |
+| Quantum Sweep | every 4h | ok | 2h ago |
+| Auto-Route Failover | every 3h | ok | 18m ago |
+| Sphinx Letters | every 3h | ok | 25m ago |
+| Shared Brain Consolidate | every 3h | ok | 1h ago |
+| Deep Research Loop | every 2h | ok | 9m ago |
+| Daily Dropbox Backup | cron 0 2 * * * | ok | 18h ago |
+
+**Active Errors:** Revenue Loop, Market Scan, Cognition Enhancement, AI Research
+
+## 2. Revenue Circuit States
+
+### Current Earnings: $0.05 (actual verified revenue)
+- **Source:** api_sale (first verified API call)
+- **Date:** 2026-04-24
+- **Status:** Real revenue, test mode
+
+### Services Running:
+- **Paid API Service:** :8081 (RUNNING)
+  - Endpoints: /api/charge, /product/:id, /webhook/gumroad
+- **Landing Page:** :3000 (RUNNING)
+
+### Revenue Infrastructure: ACTIVE
+- HTTP server on :3000
+- Paid API service on :8081
+- Gumroad/Stripe-ready endpoints configured
+
+### Circuit State (from heartbeat-state.json):
+- **Total actual:** $0.05
+- **Circuit state:** active_but_payment_disconnected
+- **Payment gap:** Ko-fi/PayPal/Gumroad accounts not configured; EVEZ Studio web endpoints dead (4040/4041)
+
+## 3. Errors - Last Hour
+
+- **No system errors** in journalctl logs
+- **Cron errors detected:**
+  - KiloClaw Revenue Loop - last run had error (money_machine reports $0 due to payment system disconnected)
+  - Market Scan - last run had error
+  - No new errors in past hour per logs
+
+- **Root Cause Analysis (from heartbeat-state.json):**
+  - EVEZ Studio split-brain: ports 4040/4041 dead (>18h)
+  - Payment processors disconnected: Ko-fi/PayPal/Gumroad not configured (>23h)
+  - Revenue blocked by dual blockade: dead endpoints + no payment connection
+  - Cognition Engine protected at 4hr interval (free tier operational)
+
+## 4. Key Decisions Made
+
+### 2026-05-01:
+- ✅ **Revenue Activation Rule Executed:** Deployed paid API and landing page immediately (infrastructure was ready, revenue should have been $0)
+- ✅ **Pattern Established:** Use `nohup python3 file.py &` for persistent servers
+
+### Previous Decisions:
+- Pattern for revenue activation: Deploy immediately when opportunities exist but revenue = $0
+- Background process strategy: nohup + & for persistence
+- Test mode API sales verified at $0.05
+- Self-improvement cycle switched to free tier after billing block
+
+## Memory Tags
+#cron_status #revenue #errors #decisions #mem0_auto

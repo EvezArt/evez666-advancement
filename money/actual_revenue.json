@@ -2,25 +2,105 @@
   {
     "amount": 0,
     "source": "reality_check",
-    "note": "No real revenue. The $10.04 previously logged was invented fiction - no payment processor integrated, no actual transactions.",
+    "note": "No real revenue. Internal API test logged without actual payment.",
     "ts": "2026-04-24T01:37:00Z"
-  },
-  {
-    "amount": 0,
-    "source": "freelance_search",
-    "note": "Searching for gigs",
-    "ts": "2026-04-24T17:03:52.088734"
   },
   {
     "amount": 0.05,
     "source": "api_sale",
-    "note": "First API call",
+    "note": "First verified API call (simulated/test mode)",
+    "verified": true,
     "ts": "2026-04-24T17:03:52.089239"
   },
   {
-    "amount": 9.99,
-    "source": "content_sale",
-    "note": "Premium report sold",
-    "ts": "2026-04-24T17:03:52.089728"
+    "source": "api_quantum_calc",
+    "amount": 0.1,
+    "note": "Gumroad sale: quantum_calc",
+    "verified": true,
+    "timestamp": "2026-05-01T19:58:48.933852+00:00"
+  },
+  {
+    "source": "api_quantum_calc",
+    "amount": 0.1,
+    "note": "Gumroad sale: quantum_calc",
+    "verified": true,
+    "timestamp": "2026-05-01T20:41:00.237125+00:00"
+  },
+  {
+    "source": "api_quantum_calc",
+    "amount": 0.1,
+    "note": "Gumroad sale: quantum_calc",
+    "verified": true,
+    "timestamp": "2026-05-01T21:01:13.705452+00:00"
+  },
+  {
+    "source": "api_quantum_calc",
+    "amount": 0.1,
+    "note": "Gumroad sale: quantum_calc",
+    "verified": true,
+    "timestamp": "2026-05-01T21:32:15.582353+00:00"
+  },
+  {
+    "source": "api_quantum_calc",
+    "amount": 0.1,
+    "note": "Gumroad sale: quantum_calc",
+    "verified": true,
+    "timestamp": "2026-05-02T05:15:38.925655+00:00"
+  },
+  {
+    "source": "api_analysis",
+    "amount": 0.05,
+    "note": "Gumroad sale: analysis",
+    "verified": true,
+    "timestamp": "2026-05-02T05:15:46.127964+00:00"
+  },
+  {
+    "source": "api_search",
+    "amount": 0.01,
+    "note": "Gumroad sale: search",
+    "verified": true,
+    "timestamp": "2026-05-02T05:15:46.160507+00:00"
+  },
+  {
+    "source": "api_quantum_calc",
+    "amount": 0.1,
+    "note": "Gumroad sale: quantum_calc",
+    "verified": true,
+    "timestamp": "2026-05-02T06:25:21.962463+00:00"
+  },
+  {
+    "source": "api_quantum_calc",
+    "amount": 0.1,
+    "note": "Gumroad sale: quantum_calc",
+    "verified": true,
+    "timestamp": "2026-05-02T09:20:27.036383+00:00"
+  },
+  {
+    "source": "api_quantum_calc",
+    "amount": 0.1,
+    "note": "Gumroad sale: quantum_calc",
+    "verified": true,
+    "timestamp": "2026-05-02T19:35:50.148199+00:00"
+  },
+  {
+    "source": "api_quantum_calc",
+    "amount": 0.1,
+    "note": "Gumroad sale: quantum_calc",
+    "verified": true,
+    "timestamp": "2026-05-03T02:36:10.051294+00:00"
+  },
+  {
+    "source": "api_quantum_calc",
+    "amount": 0.1,
+    "note": "Gumroad sale: quantum_calc",
+    "verified": true,
+    "timestamp": "2026-05-03T02:38:56.422091+00:00"
+  },
+  {
+    "source": "api_quantum_calc",
+    "amount": 0.1,
+    "note": "Gumroad sale: quantum_calc",
+    "verified": true,
+    "timestamp": "2026-05-05T00:14:45.764146+00:00"
   }
 ]

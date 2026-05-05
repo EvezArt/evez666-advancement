@@ -1,0 +1,104 @@
+{
+  "timestamp": "2026-04-29T23:41:00Z",
+  "cron_job_statuses": {
+    "money-machine": {
+      "name": "Money Machine",
+      "lastRunAtMs": 1777275198507,
+      "lastRunStatus": "ok",
+      "consecutiveErrors": 0,
+      "description": "Autonomous revenue generation race"
+    },
+    "400b1cd6-a088-45cc-b977-377631106623": {
+      "name": "KiloClaw Full Stack",
+      "lastRunAtMs": 1777274811750,
+      "lastRunStatus": "ok",
+      "consecutiveErrors": 0,
+      "description": "KiloClaw Inference Fabric + Revenue Loop - FIXED"
+    },
+    "f2662e72-8dd4-4548-bcdf-87d67f16bedc": {
+      "name": "KiloClaw Revenue Loop",
+      "lastRunAtMs": 1777266575611,
+      "lastRunStatus": "ok",
+      "consecutiveErrors": 0,
+      "description": "KiloClaw Autonomous Revenue Loop - FIXED"
+    },
+    "9132e9c2-a6be-4e7b-994c-ef5c26c552ef": {
+      "name": "Mem0 Auto-Memory",
+      "lastRunAtMs": 1777272372411,
+      "lastRunStatus": "ok",
+      "consecutiveErrors": 0,
+      "description": "Auto-save important context to Mem0 memory store"
+    },
+    "ad7578e7-2e99-4ad0-a10b-fe81d3d613f0": {
+      "name": "Market Scan",
+      "lastRunAtMs": 1777251324773,
+      "lastRunStatus": "error",
+      "consecutiveErrors": 1,
+      "lastError": "cron: job execution timed out",
+      "lastErrorReason": "timeout",
+      "description": "Daily crypto/market scan via Composio"
+    },
+    "dbf6ad26-c621-46e3-964d-17c2521cd0c7": {
+      "name": "Cognition Enhancement Engine",
+      "nextRunAtMs": 1777340861026,
+      "description": "Self-improvement: analyze recent errors, learn, update memory. FIXED: interval 1hr→2hr to prevent self-causing rate_limit cascade."
+    }
+  },
+  "revenue_circuit_states": {
+    "earnings_json": {
+      "total": 0,
+      "sources": [],
+      "last_updated": "2026-04-29T19:21:20Z",
+      "note": "No real revenue. Fiction prevented today — $0 real revenue."
+    },
+    "actual_revenue_json": [
+      {
+        "amount": 0,
+        "source": "reality_check",
+        "note": "No real revenue. The $10.04 previously logged was invented fiction - no payment processor integrated, no actual transactions.",
+        "ts": "2026-04-24T01:37:00Z"
+      },
+      {
+        "amount": 0.05,
+        "source": "api_sale",
+        "note": "First API call",
+        "ts": "2026-04-24T17:03:52.089239"
+      },
+      {
+        "amount": 9.99,
+        "source": "content_sale",
+        "note": "Premium report sold",
+        "ts": "2026-04-24T17:03:52.089728"
+      }
+    ],
+    "money_machine_log": {
+      "last_lines": [
+        "2026-04-29 15:21:20 - INFO - Money Machine: Checking for opportunities...",
+        "2026-04-29 15:21:20 - INFO - Money Machine: Rate limit status: recovered (consecutiveErrors = 0)",
+        "2026-04-29 15:21:20 - INFO - Money Machine: Total earnings: $0.00"
+      ]
+    }
+  },
+  "errors_from_last_hour": [
+    {
+      "timestamp": "2026-04-29 15:34:12 UTC",
+      "process": "tidy-fjo",
+      "signal": "SIGTERM"
+    },
+    {
+      "timestamp": "2026-04-29 15:36:30 UTC",
+      "process": "good-slu",
+      "signal": "SIGTERM"
+    }
+  ],
+  "key_decisions_made": [
+    "Money Machine has recovered from rate limiting and maintaining stability (consecutiveErrors = 0)",
+    "Market Scan timeout error persists (Composio finance tools/API connectivity issue)",
+    "Cognition Enhancement Engine remains billing-blocked (402 Kilo AI embedding quota exhausted)",
+    "Shared Brain Consolidation job operating reliably on 3-hour intervals",
+    "Auto-Route Failover actively making schedule adjustments to prevent cascading failures",
+    "Payment processor gap remains primary revenue barrier (Ko-fi/PayPal/Gumroad disconnected)",
+    "Workload-budget pressure confirmed: self-improvement cycle file sizes approaching processing limits"
+  ],
+  "system_health_summary": "Core automation loops showing strong resilience and self-healing capabilities. Money Machine's sustained recovery from rate limiting represents significant validation of autonomous recovery mechanisms. External dependencies (payment processors, finance APIs, cognition billing) remain primary constraints to full operational capability. Shared brain mechanism operating with proven reliability and self-healing properties."
+}

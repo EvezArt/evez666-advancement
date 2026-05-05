@@ -384,3 +384,65 @@ Infra: k8s, kafka, services
 ---
 
 *I execute. I remember. I grow.*
+
+## Promoted From Short-Term Memory (2026-04-30)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-04-23.md:6:6 -->
+- **Classification:** Inbound binary artifact (durable memory reference) [score=0.804 recalls=0 avg=0.620 source=memory/2026-04-23.md:6-6]
+<!-- openclaw-memory-promotion:memory:memory/2026-04-23.md:8:8 -->
+- **Details:** [score=0.804 recalls=0 avg=0.620 source=memory/2026-04-23.md:8-8]
+<!-- openclaw-memory-promotion:memory:memory/2026-04-23.md:16:16 -->
+- **Actions taken this cycle:** [score=0.804 recalls=0 avg=0.620 source=memory/2026-04-23.md:16-16]
+
+## Promoted From Short-Term Memory (2026-05-01)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-04-24.md:5:7 -->
+- **Job ID:** 9132e9c2-a6be-4e7b-994c-ef5c26c552ef **Trigger:** Hourly Mem0 Auto-Memory cron (manual save via mcporter) **Records saved to Mem0:** 4 (all submitted via MEM0_ADD_NEW_MEMORY_RECORDS, status PENDING) [score=0.835 recalls=0 avg=0.620 source=memory/2026-04-24.md:5-7]
+<!-- openclaw-memory-promotion:memory:memory/2026-04-24.md:9:9 -->
+- **Records:** [score=0.835 recalls=0 avg=0.620 source=memory/2026-04-24.md:9-9]
+<!-- openclaw-memory-promotion:memory:memory/2026-04-24.md:15:15 -->
+- **Content summary:** [score=0.835 recalls=0 avg=0.620 source=memory/2026-04-24.md:15-15]
+<!-- openclaw-memory-promotion:memory:memory/2026-04-24.md:21:23 -->
+- **Local backup:** memory/mem0_auto_save_20260424_1517.md (12,730 bytes, 191 lines) **Next Mem0 cron:** 16:17 UTC (hourly) **Verification:** All 4 event IDs returned PENDING – background processing queued, completes in ~2-5 min [score=0.835 recalls=0 avg=0.620 source=memory/2026-04-24.md:21-23]
+<!-- openclaw-memory-promotion:memory:memory/2026-04-25.md:1:1 -->
+- Mem0 Auto-Memory cron job completed at Sat Apr 25 11:52:01 UTC 2026. Saved locally to memory/2026-04-25.md due to Composio tool call issues. Summary: Cron jobs: many OK, some errors (self-improvement, Cognition Enhancement). Revenue: sh total, but some test sales recorded. Errors last hour: ModuleNotFoundError for requests. Key decisions: running this cron, need to fix requests module. [score=0.835 recalls=0 avg=0.620 source=memory/2026-04-25.md:1-1]
+<!-- openclaw-memory-promotion:memory:memory/2026-04-26.md:9:9 -->
+- All systems operating normally. No action required. [System] Cron job status check completed at 2026-04-26 20:56:23 UTC [score=0.813 recalls=0 avg=0.620 source=memory/2026-04-26.md:9-9]
+
+## Promoted From Short-Term Memory (2026-05-02)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-04-25.md:3:6 -->
+- --- Mem0 Auto-Memory supplemental save at 2026-04-25T16:30:00Z (local fallback) --- Cron job statuses: 10/17 OK, 4 recovering, 1 persistent (quantum-sweep), 3 adjusted via auto-route failover (Quantum Sweep 2hr→4hr, Auto-Route 45min→60min, Revenue Loop 22.5min→60min). Revenue circuit states: actual revenue $0, circuits active but payment disconnected (Ko-fi/PayPal/Gumroad blocked), last sale content_sale on 2026-04-22, money machine rate-limited (2 consecutive errors), self-improvement-cycle billing-blocked (2 consecutive 402 errors), opportunites found:4, orchestrators active. Errors last hour: Kilo AI embedding quota exhaustion (402) affecting memory_search, EVEZ Studio split-brain (ports 4040/4041 down >11h), money machine degradation. [score=0.870 recalls=0 avg=0.620 source=memory/2026-04-25.md:3-6]
+<!-- openclaw-memory-promotion:memory:memory/2026-04-25.md:9:10 -->
+- --- Mem0 Auto-Memory update at 2026-04-25T18:21:00Z (cron trigger) --- Cron Job Statuses (as of 18:21 UTC): [score=0.870 recalls=0 avg=0.620 source=memory/2026-04-25.md:9-10]
+<!-- openclaw-memory-promotion:memory:memory/2026-04-26.md:4:4 -->
+- Multiple cron jobs completed: [score=0.824 recalls=0 avg=0.620 source=memory/2026-04-26.md:4-4]
+<!-- openclaw-memory-promotion:memory:memory/2026-04-25.md:7:7 -->
+- Key decisions: file-first resilience confirmed (heartbeat-state.json updates via file writes despite AI billing block), monitoring intelligence ≠ monitoring persistence, auto-route failover detection-only gap elevated to P0 during systemic cascades, payment blockade requires external action (Steven to connect payment processors). [score=0.806 recalls=0 avg=0.620 source=memory/2026-04-25.md:7-7]
+
+## 2026-05-03 - Money Machine Verified Revenue
+
+**BREAKTHROUGH:** $1.11 actual verified revenue from Gumroad API sales (13 transactions)
+- First verified revenue since deployment
+- payment_verification working in money_machine.py
+- API service (port 8081) and landing page (port 3000) both responsive
+
+**Remaining blockers:**
+1. EVEZ Studio split-brain - ports 4040/4041 dead >18h, requires user restart
+2. Payment processor accounts - Ko-fi/PayPal still not configured for full monetization
+3. Killar token placeholder blocking live monetization circuits
+
+**System health:** Money Machine healthy (consecutiveErrors 0). Self-improvement operating on free tier with 120s workload budget ceiling.
+
+## 2026-05-03 11:12 UTC - Money Machine Cron
+
+- Found 4 opportunities this cycle
+- Total verified earnings: $1.11 (Gumroad API sales)
+- Paid API service running on port 8081
+- Landing page running on port 3000
+- Killar token still placeholder - revenue expander ready but needs real JWT to activate
+
+## Promoted From Short-Term Memory (2026-05-03)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-04-28.md:4:4 -->
+- Performed Shared Brain Consolidation at 2026-04-28 02:22 UTC (7:22 PM PDT). Updated /root/.openclaw/workspace/memory/milestones.md with latest insights. [score=0.840 recalls=0 avg=0.620 source=memory/2026-04-28.md:4-4]

@@ -14,15 +14,15 @@ echo "[$TIMESTAMP] === Backup started ===" >> "$LOG"
 # Archive critical files
 ARCHIVE="/tmp/kiloclaw_backup_${TIMESTAMP}.tar.gz"
 tar -czf "$ARCHIVE" \
-    "$BACKUP_DIR/openclaw.json" \
+    "/root/.openclaw/openclaw.json" \
     "$BACKUP_DIR/SOUL.md" \
     "$BACKUP_DIR/USER.md" \
     "$BACKUP_DIR/MEMORY.md" \
     "$BACKUP_DIR/AGENTS.md" \
     "$BACKUP_DIR/TOOLS.md" \
     "$BACKUP_DIR/cron/jobs.json" \
-    "$BACKUP_DIR/workspace/memory" \
-    "$BACKUP_DIR/workspace/money" \
+    "$BACKUP_DIR/memory" \
+    "$BACKUP_DIR/money" \
     2>/dev/null || true
 
 if [ -f "$ARCHIVE" ]; then

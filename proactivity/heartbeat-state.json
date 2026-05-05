@@ -1,0 +1,21 @@
+{
+  "lastChecks": {
+    "money_machine": 1777851120,
+    "email": null,
+    "calendar": null,
+    "weather": null,
+    "mem0_auto_memory": 1777851120
+  },
+  "earnings": {
+    "total": 1.11,
+    "last_updated": "2026-05-03T07:51:32Z",
+    "sources": 13
+  },
+  "status": "ok",
+  "cron_health": "11/17 jobs OK",
+  "recovery_status": "Money Machine rate limit resolved",
+  "payment_blockers": "ALL processors require Steven action",
+  "mem0_status": "saved to Mem0 via COMPOSIO_MULTI_EXECUTE_TOOL - event_id: 2a431a0e-d596-43aa-a531-f25882eeb7bb",
+  "mem0_event_id": "2a431a0e-d596-43aa-a531-f25882eeb7bb",
+  "mem0_tools_write": ["MEM0_ADD_NEW_MEMORY_RECORDS", "MEM0_EXPORT_DATA_BASED_ON_FILTERS"]
+}

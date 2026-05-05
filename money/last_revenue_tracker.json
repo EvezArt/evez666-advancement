@@ -1,10 +1,10 @@
 {
-  "timestamp": "2026-04-28T11:34:00Z",
+  "timestamp": "2026-05-01T01:19:40.854924Z",
   "earnings": {
     "total": 0,
     "sources": [],
-    "last_updated": "2026-04-28T07:12:19Z",
-    "note": "No real revenue. Previous $10.04 was fictitious (invented by money_machine.py without payment verification)."
+    "last_updated": "2026-04-29T19:21:20Z",
+    "note": "No real revenue. Fiction prevented today \u2014 $0 real revenue."
   },
   "actual_revenue": [
     {
@@ -32,12 +32,12 @@
       "ts": "2026-04-24T17:03:52.089728"
     }
   ],
-  "total_actual_revenue": 10.04,
+  "total_actual_revenue": 10.040000000000001,
   "projected_revenue": {
-    "daily": 1800000,
-    "source": "historical data from memory files",
-    "note": "Repeatedly referenced as $1.8M/day across 7 circuits in memory logs"
+    "daily": 0,
+    "source": "earnings.json total",
+    "note": "Current projected revenue from earnings.json"
   },
-  "alerts": ["Actual revenue tracked is $10.04 vs projected $1800000/day - 99.99944% drop (>10% threshold)"],
+  "alerts": [],
   "circuits_checked": 7
 }

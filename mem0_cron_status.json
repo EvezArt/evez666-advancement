@@ -1,0 +1,50 @@
+{
+  "timestamp": "2026-04-28T23:54:00Z",
+  "data_type": "cron_status",
+  "cron_jobs": {
+    "total_jobs": 17,
+    "jobs": [
+      {
+        "id": "money-machine",
+        "name": "Money Machine",
+        "last_run": "2026-04-28T23:46:38Z",
+        "status": "ok",
+        "consecutive_errors": 0,
+        "duration_ms": 85985
+      },
+      {
+        "id": "400b1cd6-a088-45cc-b977-377631106623",
+        "name": "KiloClaw Full Stack",
+        "last_run": "2026-04-28T23:40:11Z",
+        "status": "ok",
+        "consecutive_errors": 0,
+        "duration_ms": 49397
+      },
+      {
+        "id": "9132e9c2-a6be-4e7b-994c-ef5c26c552ef",
+        "name": "Mem0 Auto-Memory",
+        "last_run": "2026-04-28T22:46:12Z",
+        "status": "ok",
+        "consecutive_errors": 0,
+        "duration_ms": 2439339
+      },
+      {
+        "id": "ad7578e7-2e99-4ad0-a10b-fe81d3d613f0",
+        "name": "Market Scan",
+        "last_run": "2026-04-28T19:35:24Z",
+        "status": "error",
+        "consecutive_errors": 1,
+        "last_error": "cron: job execution timed out",
+        "last_error_reason": "timeout"
+      },
+      {
+        "id": "f2662e72-8dd4-4548-bcdf-87d67f16bedc",
+        "name": "KiloClaw Revenue Loop",
+        "last_run": "2026-04-28T20:29:35Z",
+        "status": "ok",
+        "consecutive_errors": 0,
+        "duration_ms": 38460
+      }
+    ]
+  }
+}

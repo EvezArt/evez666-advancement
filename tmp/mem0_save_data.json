@@ -1,0 +1,147 @@
+{
+  "timestamp": "2026-04-30T22:07:00Z",
+  "date": "2026-04-30",
+  "timezone": "America/Los_Angeles",
+  "cron_job_statuses": {
+    "total_jobs": 17,
+    "ok_jobs": 10,
+    "recovering": 4,
+    "persistent": 1,
+    "critical_degradation": [
+      {
+        "job": "Money Machine",
+        "issue": "rate-limited 2 consecutive",
+        "impact": "revenue-critical"
+      },
+      {
+        "job": "self-improvement-cycle",
+        "issue": "billing-blocked (2 consecutive 402 errors)",
+        "impact": "AI cognition disabled"
+      }
+    ],
+    "recent_adjustments": [
+      "Quantum Sweep: 2hr → 4hr",
+      "Auto-Route itself: 45min → 60min", 
+      "Revenue Loop: 22.5min → 60min"
+    ],
+    "detailed_state": "See cron.json for full job details"
+  },
+  "revenue_circuit_states": {
+    "projected_daily_revenue": 1800000,
+    "actual_revenue_today": 0,
+    "actual_revenue_historical_total": 10.04,
+    "circuit_status": {
+      "checked_circuits": 7,
+      "circuits_with_updates": 0,
+      "circuits_down": [],
+      "note": "No circuit files modified in the last 24 hours"
+    },
+    "alerts": [
+      {
+        "type": "revenue_drop",
+        "message": "Revenue dropped >10%: projected $1,800,000/day vs actual $0 today",
+        "severity": "high"
+      }
+    ],
+    "payment_blockade": {
+      "status": "confirmed",
+      "blocked_processors": ["gumroad", "ko-fi", "paypal"],
+      "reason": "external final mile gate - technical readiness ≠ revenue capability"
+    },
+    "orchestrators": {
+      "activated": true,
+      "activation_time": "2026-04-23T05:06:00Z",
+      "active_processes": ["ci_watcher", "quantum_runner", "wealth_hunter"]
+    }
+  },
+  "errors_last_hour": {
+    "active_errors": 5,
+    "error_axis_breakdown": {
+      "phase3_systemic_cascade": 4,
+      "phase6_billing_exhaustion": 2,
+      "other": 3
+    },
+    "key_errors": [
+      {
+        "type": "billing/quota_exhaustion",
+        "message": "402 Kilo AI embedding quota exhausted",
+        "impact": "memory_search tool disabled, self-improvement cycle billing-blocked"
+      },
+      {
+        "type": "split_brain",
+        "message": "Port-binding failure: PID 2932 running but ports 4040/4041 not listening — split-brain >11h",
+        "impact": "EVEZ Studio services offline despite agent layer running"
+      },
+      {
+        "type": "rate_limit_recovery",
+        "message": "Money Machine rate-limited 2 consecutive",
+        "impact": "revenue generation degraded"
+      }
+    ],
+    "file_first_resilience": {
+      "status": "confirmed",
+      "evidence": "heartbeat-state.json continues updating via file writes even when AI cognition is billing-blocked",
+      "note": "MONITORING INTELLIGENCE ≠ MONITORING PERSISTENCE: Separating AI analysis from data persistence allows continued visibility during provider/billing failures"
+    }
+  },
+  "key_decisions_made": [
+    {
+      "decision": "File-first resilience strategy validated",
+      "reasoning": "heartbeat-state.json updated via direct file write despite AI cognition 402 error",
+      "timestamp": "2026-04-24T06:04:00Z"
+    },
+    {
+      "decision": "Auto-Route failover adjustments enacted",
+      "adjustments": [
+        "Quantum Sweep: 2hr → 4hr",
+        "Auto-Route itself: 45min → 60min",
+        "Revenue Loop: 22.5min → 60min"
+      ],
+      "reasoning": "Rate limit cleared, detection-only gap persists requiring manual cron edits",
+      "timestamp": "2026-04-24T06:04:00Z"
+    },
+    {
+      "decision": "Revenue activation rule triggered",
+      "reasoning": "Revenue circuits identify opportunities but actual revenue = $0 → EXECUTE IMMEDIATELY",
+      "execution_status": "circuits_activated_but_payment_blocked_and_money_machine_degraded",
+      "timestamp": "2026-04-23T05:06:00Z"
+    },
+    {
+      "decision": "Speedrun mode activated for crisis intervals",
+      "adjustments": [
+        "Quantum Sweep: 2hr -> 4hr",
+        "Auto-Route Failover: 45min -> 60min",
+        "KiloClaw Revenue Loop: 22.5min -> 60min"
+      ],
+      "effectiveness": "PARTIAL — Phase 3 receding but Phase 6 billing emerged; file-first fallback proving resilient",
+      "timestamp": "2026-04-24T06:04:00Z"
+    }
+  ],
+  "system_health": {
+    "health_percent": 59,
+    "status": "RECOVERING — 10/17 OK (59%), Phase 3 receding, Phase 6 billing error blocking AI services",
+    "phase_taxonomy": {
+      "phase1_isolated_rate_limits": "resolved",
+      "phase2_self_causing_cascade": "resolved", 
+      "phase3_systemic_cascade": "receding",
+      "phase4_error_mode_shifting": "transient",
+      "phase5_config_decay": "fixed",
+      "phase6_billing_quota_exhaustion": "active"
+    },
+    "mem0_status": {
+      "accountId": "mem0_learnt-penful",
+      "connectionActive": true,
+      "directAccess": true,
+      "memorySearchDisabledByBilling": true,
+      "billingError": "402 Kilo AI embedding quota exhausted",
+      "lastSave": "2026-04-24T00:18:00Z",
+      "lastSaveJobId": "9132e9c2-a6be-4e7b-994c-ef5c26c552ef",
+      "mem0SaveStatus": "successful",
+      "fallbackActive": true,
+      "fixOptions": [
+        "Add credits to Kilo AI account",
+        "Switch embedding model to free tier"
+      ]
+    }
+  }
+}

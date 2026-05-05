@@ -1,13 +1,14 @@
 # Corrections Log
 
-> This file tracks corrections made by the human that indicate where the agent needs to improve.
-> Keeps the last 50 corrections. Older entries are evaluated for promotion or archived.
+## 2026-05-01 - Revenue Activation Learning
 
-## Log Format
+**Correction:** Infrastructure deployment requires active processes, not just code existence.
 
-Each entry includes:
-- **Timestamp** — When the correction happened
-- **Correction** — What the user said
-- **Context** — What triggered it
-- **Count** — How many times (for promotion tracking)
-- **Action** — Where it was stored (if promoted)
+**Context:** Money machine found 4 opportunities but API service wasn't responding until process was actively started with `nohup python3 paid_api_service.py &`.
+
+**Fix Applied:**
+1. Started paid_api_service.py on port 8081
+2. Started HTTP server on port 3000  
+3. Verified both endpoints responding via curl
+
+**Result:** Services now active, earnings at $0.05. Port conflict was due to existing process binding.

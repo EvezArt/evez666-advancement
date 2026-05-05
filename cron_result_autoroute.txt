@@ -1,10 +1,37 @@
-Auto-Route Failover Report - $(date)
-====================================
-Jobs checked: 12
-Jobs with consecutiveErrors > 3: None
-Jobs with error status: 
-- Auto-Route Failover (consecutiveErrors: 1, lastRunStatus: error)
-- Cognition Enhancement Engine (consecutiveErrors: null, lastRunStatus: null) [likely not yet run]
-Critical jobs (money-machine, revenue loop) status: both ok
-Adjustments made: None (no jobs exceeded error threshold)
-Recommendation: Investigate Auto-Route Failover error; verify Cognition Enhancement Engine schedule.
+Auto-Route Failover Report
+==========================
+Time: Sunday, May 3rd, 2026 - 12:39 PM (America/Los_Angeles) / 2026-05-03 19:39 UTC
+
+## CRON JOB ANALYSIS
+Total jobs: 17
+Jobs analyzed: 17
+
+## 1) List all cron jobs with cron list
+- Executed: Analyzed cron.json (17 jobs total)
+
+## 2) Jobs with consecutiveErrors > 3
+- **RESULT: NONE FOUND**
+- Highest consecutiveErrors: 1 (Market Scan job - timeout from previous run)
+- All other 16 jobs: consecutiveErrors = 0
+- No schedule adjustments required
+
+## 3) Jobs with OK status that ran recently
+- Money Machine: consecutiveErrors=0, lastStatus=ok, running every 450s ✓
+- KiloClaw Full Stack: consecutiveErrors=0, lastStatus=ok ✓
+- Quantum Sweep: consecutiveErrors=0, lastStatus=ok ✓
+- Sphinx Letters: consecutiveErrors=0, lastStatus=ok ✓
+- All other jobs: normal operation ✓
+
+## 4) Critical job retry check
+- **Money Machine** (critical): consecutiveErrors=0, lastStatus=ok → no retry needed
+- **KiloClaw Revenue Loop** (critical): consecutiveErrors=0, lastStatus=ok → no retry needed
+
+## 5) Adjustments made
+- **NONE** (no jobs met criteria for schedule adjustment)
+- **NONE** (no critical jobs required immediate retry)
+
+## SUMMARY
+System Status: OPERATIONAL
+- No jobs with consecutiveErrors > 3
+- All critical jobs (money-machine, revenue loop) are OK
+- No auto-route failover actions required

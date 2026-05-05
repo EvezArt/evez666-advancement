@@ -1,109 +1,132 @@
+#!/usr/bin/env python3
 import json
 import os
-from datetime import datetime
+import sys
+import glob
+import datetime
+from pathlib import Path
 
-# Load actual revenue
-actual_file = 'money/actual_revenue.json'
+money_dir = Path('money')
+circuits_dir = Path('circuits')  # relative to workspace root
+
+# 1. earnings.json
+earnings_file = money_dir / 'earnings.json'
+with open(earnings_file) as f:
+    earnings = json.load(f)
+projected = earnings.get('total', 0)
+
+# 2. actual_revenue.json
+actual_file = money_dir / 'actual_revenue.json'
 with open(actual_file) as f:
-    actual_data = json.load(f)
-total_actual = sum(item['amount'] for item in actual_data)
-print('Total actual revenue:', total_actual)
+    actual_list = json.load(f)
+actual = sum(item.get('amount', 0) for item in actual_list)
 
-# Load earnings
-earnings_file = 'money/earnings.json'
-try:
-    with open(earnings_file) as f:
-        earnings_data = json.load(f)
-    earnings_total = earnings_data.get('total', 0)
-except:
-    earnings_total = 0
-print('Earnings total:', earnings_total)
-
-# Projected revenue from memory or last run
-# We'll try to read from last_revenue_tracker.json
-last_file = 'money/last_revenue_tracker.json'
-if os.path.exists(last_file):
-    with open(last_file) as f:
-        last_data = json.load(f)
-    projected_daily = last_data.get('projected_revenue', {}).get('daily', 0)
+# 3. last_revenue_tracker.json
+tracker_file = money_dir / 'last_revenue_tracker.json'
+if tracker_file.exists():
+    with open(tracker_file) as f:
+        tracker = json.load(f)
+    prev_projected = tracker.get('projected_revenue', {}).get('daily')
+    prev_actual = tracker.get('total_actual_revenue')
 else:
-    projected_daily = 0
-print('Projected daily revenue:', projected_daily)
+    prev_projected = None
+    prev_actual = None
 
-# Check circuits
-circuits_dir = 'money/circuits'
-if not os.path.exists(circuits_dir):
-    circuits_dir = 'circuits'
-circuit_files = []
-if os.path.exists(circuits_dir):
-    circuit_files = [f for f in os.listdir(circuits_dir) if f.endswith('.py')]
-print('Number of circuit scripts:', len(circuit_files))
-for cf in circuit_files:
-    print('  -', cf)
+# 4. circuits
+circuit_scripts = list(circuits_dir.glob('*.py'))
+circuit_down = []
+for script in circuit_scripts:
+    if not os.access(script, os.R_OK):
+        circuit_down.append('{}: not readable'.format(script.name))
+    elif os.path.getsize(script) == 0:
+        circuit_down.append('{}: empty file'.format(script.name))
 
-# Determine alerts
+# 5. revenue change alerts
 alerts = []
-if projected_daily > 0:
-    drop_pct = (projected_daily - total_actual) / projected_daily * 100
-    if drop_pct > 10:
-        alerts.append('Revenue dropped {:.2f}% (actual {} vs projected {}/day)'.format(drop_pct, total_actual, projected_daily))
+if prev_projected is not None and prev_projected > 0:
+    drop = (prev_projected - projected) / prev_projected * 100
+    if drop > 10:
+        alerts.append('Projected revenue dropped {:.1f}% (from ${:,.2f} to ${:,.2f})'.format(drop, prev_projected, projected))
+if prev_actual is not None and prev_actual > 0:
+    drop = (prev_actual - actual) / prev_actual * 100
+    if drop > 10:
+        alerts.append('Actual revenue dropped {:.1f}% (from ${:,.2f} to ${:,.2f})'.format(drop, prev_actual, actual))
+
+# 6. circuit down alerts
+if circuit_down:
+    alerts.extend(['Circuit issue: {}'.format(issue) for issue in circuit_down])
+
+# 7. report
+report = []
+report.append('Revenue Tracker Report - {}'.format(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S %Z')))
+report.append('')
+report.append('1. Projected Revenue (earnings.json): ${:,.2f}'.format(projected))
+report.append('   - Last updated: {}'.format(earnings.get('last_updated', 'unknown')))
+report.append('   - Note: {}'.format(earnings.get('note', '')))
+report.append('')
+report.append('2. Actual Revenue (actual_revenue.json): ${:,.2f}'.format(actual))
+for item in actual_list:
+    report.append('   - {}: ${:,.2f} ({}) - {}'.format(
+        item.get('source', 'unknown'),
+        item.get('amount', 0),
+        item.get('ts', 'unknown'),
+        item.get('note', '')
+    ))
+report.append('')
+report.append('3. Circuits Status:')
+report.append('   - Found {} circuit scripts'.format(len(circuit_scripts)))
+for script in circuit_scripts:
+    mtime = datetime.datetime.fromtimestamp(os.path.getmtime(script)).strftime('%Y-%m-%d %H:%M')
+    report.append('     * {} (last modified: {})'.format(script.name, mtime))
+if circuit_down:
+    report.append('   - ISSUES DETECTED:')
+    for issue in circuit_down:
+        report.append('     * {}'.format(issue))
 else:
-    # If no projected, but we have actual, still note if actual is low?
-    pass
-
-# Check for circuit issues: we can do a simple syntax check
-for cf in circuit_files:
-    path = os.path.join(circuits_dir, cf)
-    try:
-        with open(path) as f:
-            compile(f.read(), path, 'exec')
-    except SyntaxError as e:
-        alerts.append('Circuit {} has syntax error: {}'.format(cf, e))
-    except Exception as e:
-        alerts.append('Circuit {} error reading: {}'.format(cf, e))
-
-# Prepare report
-report = {
-    'timestamp': datetime.utcnow().isoformat() + 'Z',
-    'actual_revenue': total_actual,
-    'earnings': earnings_total,
-    'projected_revenue_daily': projected_daily,
-    'circuits_count': len(circuit_files),
-    'circuits': circuit_files,
-    'alerts': alerts
-}
-
-# Write JSON report
-report_file = 'money/revenue_tracker_report.json'
-with open(report_file, 'w') as f:
-    json.dump(report, f, indent=2)
-print('Report written to', report_file)
-
-# Write text summary
-text_file = 'money/revenue_tracker_report.txt'
-with open(text_file, 'w') as f:
-    f.write('Revenue Tracker Report\n')
-    f.write('====================\n')
-    f.write('Timestamp: {}\n'.format(report['timestamp']))
-    f.write('Actual Revenue: ${:.2f}\n'.format(total_actual))
-    f.write('Earnings Total: ${:.2f}\n'.format(earnings_total))
-    f.write('Projected Daily Revenue: ${:.2f}\n'.format(projected_daily))
-    f.write('Circuits Checked: {}\n'.format(len(circuit_files)))
-    for cf in circuit_files:
-        f.write('  - {}\n'.format(cf))
-    if alerts:
-        f.write('\nALERTS:\n')
-        for alert in alerts:
-            f.write('  - {}\n'.format(alert))
-    else:
-        f.write('\nNo alerts.\n')
-print('Text report written to', text_file)
-
-# Update latest.txt
-latest_file = 'money/revenue_tracker_latest.txt'
-latest_content = '{:.2f} actual vs {:.2f} projected'.format(total_actual, projected_daily)
+    report.append('   - All circuit scripts present and readable.')
+report.append('')
+report.append('4. Revenue Change Analysis:')
+if prev_projected is not None:
+    report.append('   - Previous projected: ${:,.2f}'.format(prev_projected))
+    report.append('   - Current projected: ${:,.2f}'.format(projected))
+    if prev_projected > 0:
+        change = (projected - prev_projected) / prev_projected * 100
+        report.append('   - Change: {:+.1f}%'.format(change))
+else:
+    report.append('   - No previous projected revenue data.')
+if prev_actual is not None:
+    report.append('   - Previous actual: ${:,.2f}'.format(prev_actual))
+    report.append('   - Current actual: ${:,.2f}'.format(actual))
+    if prev_actual > 0:
+        change = (actual - prev_actual) / prev_actual * 100
+        report.append('   - Change: {:+.1f}%'.format(change))
+else:
+    report.append('   - No previous actual revenue data.')
+report.append('')
 if alerts:
-    latest_content += ' | ALERT: {}'.format(alerts[0])
-with open(latest_file, 'w') as f:
-    f.write(latest_content)
-print('Latest updated:', latest_file)
+    report.append('5. ALERTS:')
+    for alert in alerts:
+        report.append('   - {}'.format(alert))
+else:
+    report.append('5. No alerts.')
+report.append('')
+
+# Output report
+print('\n'.join(report))
+
+# 8. Update tracker
+tracker_data = {
+    'timestamp': datetime.datetime.now().isoformat() + 'Z',
+    'earnings': earnings,
+    'actual_revenue': actual_list,
+    'total_actual_revenue': actual,
+    'projected_revenue': {
+        'daily': projected,
+        'source': 'earnings.json total',
+        'note': 'Current projected revenue from earnings.json'
+    },
+    'alerts': alerts,
+    'circuits_checked': len(circuit_scripts)
+}
+with open(tracker_file, 'w') as f:
+    json.dump(tracker_data, f, indent=2)
